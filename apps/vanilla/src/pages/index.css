@@ -3,3 +3,35 @@
 .title {
   color: var(--heading-color-1);
 }
+
+.select {
+  margin: 20px 0;
+}
+
+.table {
+  border: 1px solid black;
+  width: 100%;
+}
+
+.table-head {
+  border: 1px solid black;
+}
+
+.pagination {
+  display: flex;
+  width: 20%;
+  justify-content: space-around;
+}
+
+.pagination-button {
+  background-color: #333;
+  color: white;
+  margin: 20px 0;
+  padding: 5px;
+  border-radius: 20%;
+  cursor: pointer;
+}
+
+.pagination-button:hover {
+  background-color: #555;
+}
