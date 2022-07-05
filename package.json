@@ -98,5 +98,16 @@
     "typescript": "~4.7.2",
     "vite": "^2.9.9",
     "vite-plugin-eslint": "1.3.0"
-  }
+  },
+  "description": "Monorepo with Angular, React, Vanilla TS boilerplates for JS camp. Created with [Nx](https://nx.dev/). Update project name and description, when you start working on your own project.",
+  "main": "jest.preset.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saritasa-nest/camp-js-2022-loc-tran.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/saritasa-nest/camp-js-2022-loc-tran/issues"
+  },
+  "homepage": "https://github.com/saritasa-nest/camp-js-2022-loc-tran#readme"
 }
