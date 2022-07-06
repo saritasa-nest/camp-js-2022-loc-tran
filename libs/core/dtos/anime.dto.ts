@@ -2,10 +2,10 @@
 interface AiredDto {
 
   /** End date Anime. */
-  readonly end: string;
+  readonly end: Date;
 
   /** Start date Anime. */
-  readonly start: string;
+  readonly start: Date;
 }
 
 /** Class for anime. */
