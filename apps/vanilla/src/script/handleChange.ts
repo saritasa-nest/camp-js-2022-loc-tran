@@ -11,12 +11,16 @@ import { DEFAULT_QUERY, LIMIT } from './constants';
  */
 export async function updateAnime(url: string): Promise<void> {
   const data = await fetchAnime(url);
-  if (!(data instanceof Error)) {
-    localStorage.setItem('NEXT_PAGE_ANIME', data.next ?? '');
-    localStorage.setItem('PREVIOUS_PAGE_ANIME', data.previous ?? '');
-    localStorage.setItem('COUNT', data.count.toString());
-    renderAnime(data);
+
+  if (data instanceof Error) {
+    throw new Error(data.message);
   }
+
+  localStorage.setItem('NEXT_PAGE_ANIME', data.next ?? '');
+  localStorage.setItem('PREVIOUS_PAGE_ANIME', data.previous ?? '');
+  localStorage.setItem('COUNT', data.count.toString());
+  renderAnime(data);
+
   renderPagination();
 }
 

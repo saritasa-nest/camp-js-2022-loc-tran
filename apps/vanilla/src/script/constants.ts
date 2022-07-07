@@ -8,7 +8,7 @@ export enum Sorting {
   Default = '',
 }
 
-export const apiHeader = 'Api-Key';
+export const API_HEADER = 'Api-Key';
 export const OFFSET = 0;
 export const LIMIT = 25;
 export const PAGE_STEP = 3;
