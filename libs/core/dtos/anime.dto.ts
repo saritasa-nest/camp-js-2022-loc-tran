@@ -1,5 +1,5 @@
 /** Aired DTO. */
-interface AiredDto {
+interface DateRange {
 
   /** End date Anime. */
   readonly end: Date;
@@ -24,7 +24,7 @@ export interface AnimeDto {
   readonly image: string;
 
   /** Aired start of the anime. */
-  readonly aired: AiredDto;
+  readonly aired: DateRange;
 
   /** Type of the anime. */
   readonly type: string;
