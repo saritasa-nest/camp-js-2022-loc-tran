@@ -1,7 +1,7 @@
 import { AnimeDto } from '../dtos/anime.dto';
 import { Anime } from '../models/anime';
 
-export namespace animeMapper {
+export namespace AnimeMapper {
 
   /**
    * @param dto Anime dto.
