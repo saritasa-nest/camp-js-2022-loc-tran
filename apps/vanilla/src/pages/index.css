@@ -12,7 +12,11 @@
   margin: 20px 0;
 }
 
-table th td {
+.table__row td {
+  padding: 10px;
+}
+
+.table th td {
   border: var(--border-color) 1px solid;
   width: 100%;
 }
@@ -36,10 +40,6 @@ table th td {
 .table__head th {
   padding: 20px;
   text-align: start;
-}
-
-.table__row td {
-  padding: 10px;
 }
 
 .table__row-image {
