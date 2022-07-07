@@ -15,10 +15,10 @@ export interface AnimeDto {
   readonly id: number;
 
   /** English title of the anime. */
-  readonly titleEng: string;
+  readonly title_eng: string;
 
   /** Japan title of the anime. */
-  readonly titleJapan: string;
+  readonly title_jpn: string;
 
   /** Image of the anime. */
   readonly image: string;

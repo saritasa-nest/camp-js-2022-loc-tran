@@ -8,5 +8,3 @@ export const http: AxiosInstance = axios.create({
     [apiHeader]: import.meta.env.VITE_API_KEY,
   },
 });
-
-// http.interceptors.request.use(schemaInterceptor);

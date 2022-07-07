@@ -1,5 +1,5 @@
 /**
- * Enum for ordering.
+ * Enum for sorting.
  */
 export enum Sorting {
   EnglishTitle = 'title_eng',
@@ -28,5 +28,15 @@ export const SORT_OPTIONS = [
   {
     title: 'Default',
     value: Sorting.Default,
+  },
+];
+export const ORDER_OPTIONS = [
+  {
+    title: 'Ascending',
+    value: '+',
+  },
+  {
+    title: 'Descending',
+    value: '-',
   },
 ];

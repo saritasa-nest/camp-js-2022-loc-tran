@@ -1,9 +1,9 @@
 :root {
   /* Using html color names here only for showcase,
    * you shouldn't be using color names in real projects. */
-  --primary-color: #184f9c;
-  --primary-light-color: #3e6fb4;
-  --primary-dark-color: #043171;
+  --primary-color: #2458a2;
+  --primary-light-color: #5584c5;
+  --primary-dark-color: #032656;
   --primary-contrast-color: white;
   --primary-dark-contrast-color: white;
   --primary-light-contrast-color: white;
@@ -13,4 +13,5 @@
   --border-color: black;
   --primary-font-color: black;
   --primary-contrast-font-color: white;
+  --heading-color-1: #1229a7;
 }

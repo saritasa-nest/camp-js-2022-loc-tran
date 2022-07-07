@@ -1,8 +1,7 @@
 import { updateAnime } from '../script/handleChange';
 import { generateUrl } from '../script/generateUrl';
-import { renderPagination, renderSortOptions } from '../script/renderToDOM';
-import { LIMIT } from '../script/constants';
+import { initFilter, initPagination } from '../script/init';
 
-updateAnime(generateUrl(0, LIMIT, ''));
-renderPagination();
-renderSortOptions();
+updateAnime(generateUrl());
+initPagination();
+initFilter();

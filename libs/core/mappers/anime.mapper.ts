@@ -12,8 +12,8 @@ export namespace animeMapper {
     const results = dto.results.map(animeDto => {
       const anime: Anime = {
         id: animeDto.id,
-        titleEng: animeDto.titleEng,
-        titleJapan: animeDto.titleJapan,
+        titleEng: animeDto.title_eng,
+        titleJapan: animeDto.title_jpn,
         image: animeDto.image,
         start: animeDto.aired.start,
         end: animeDto.aired.end,
