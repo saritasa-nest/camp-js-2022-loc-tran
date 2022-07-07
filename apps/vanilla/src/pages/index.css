@@ -1,5 +1,4 @@
 @import url("../global/index.css");
-@import url("../global/variables.css");
 
 .title {
   color: var(--heading-color-1);
@@ -79,6 +78,8 @@ table th td {
 
 .filter {
   display: flex;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 #sort,
