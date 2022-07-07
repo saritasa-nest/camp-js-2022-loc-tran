@@ -3,7 +3,7 @@ import { PaginationDto } from '../dtos/pagination.dto';
 import { Anime } from '../models/anime';
 import { AnimeDto } from '../dtos/anime.dto';
 
-import { animeMapper } from './anime.mapper';
+import { AnimeMapper } from './anime.mapper';
 
 export namespace paginationMapper {
 
@@ -11,7 +11,7 @@ export namespace paginationMapper {
    * @param dto Pagination dto.
    */
   export function fromDto(dto: PaginationDto<AnimeDto>): Pagination<Anime> {
-    const results = dto.results.map(anime => animeMapper.fromDto(anime));
+    const results = dto.results.map(anime => AnimeMapper.fromDto(anime));
     const pagination: Pagination<Anime> = {
       count: dto.count,
       next: dto.next,
