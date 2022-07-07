@@ -80,7 +80,7 @@ export function renderSortOptions(): void {
       select.append(optionElement);
     });
     select.addEventListener('change', changeSorting);
-    select.id = 'sort';
+    select.classList.add('sort');
     sortNode.append(select);
   }
 }
@@ -100,7 +100,7 @@ export function renderOrderOptions(): void {
       optionElement.defaultSelected = initOrder === option.value;
       select.append(optionElement);
     });
-    select.id = 'order';
+    select.classList.add('order');
     select.addEventListener('change', changeOrdering);
     orderNode.append(select);
   }

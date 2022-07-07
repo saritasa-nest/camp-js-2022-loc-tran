@@ -82,8 +82,8 @@
   margin-bottom: 20px;
 }
 
-#sort,
-#order {
+.sort,
+.order {
   min-height: 2rem;
   min-width: 200px;
   font-size: 1rem;
