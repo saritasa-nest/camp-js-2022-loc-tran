@@ -54,7 +54,7 @@ export function goToLastPage(): void {
 export function changeSorting(): void {
   const sortOption = document.querySelector<HTMLSelectElement>('#sort')?.value;
   localStorage.setItem('ANIME_SORT', sortOption ?? '');
-  updateAnime(generateUrl(undefined, undefined, sortOption, undefined));
+  updateAnime(generateUrl(undefined, undefined, sortOption));
 }
 
 /**
