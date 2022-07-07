@@ -1,6 +1,4 @@
-/**
- * Enum for sorting.
- */
+/** Enum for sorting. */
 export enum Sorting {
   EnglishTitle = 'title_eng',
   AiredStart = 'aired__startswith',

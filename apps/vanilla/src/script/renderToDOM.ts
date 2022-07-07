@@ -32,9 +32,7 @@ export function renderAnime(paginationAnime: Pagination<Anime>): void {
   }
 }
 
-/**
- * Render pagination to DOM.
- */
+/** Render pagination to DOM. */
 export function renderPagination(): void {
   const pagination = document.querySelector('.pagination__numeric');
   const count = Number.parseInt(localStorage.getItem('COUNT') ?? '0', 10);
@@ -64,9 +62,7 @@ function createButtonPagination(page: number, isActive: boolean): HTMLElement {
   return button;
 }
 
-/**
- * Create select element for sorting.
- */
+/** Create select element for sorting. */
 export function renderSortOptions(): void {
   const sortNode = document.querySelector('.filter__sort');
   const initSort = localStorage.getItem('ANIME_SORT') ?? Sorting.Default;
@@ -85,9 +81,7 @@ export function renderSortOptions(): void {
   }
 }
 
-/**
- * Create order element for ordering.
- */
+/** Create order element for ordering. */
 export function renderOrderOptions(): void {
   const initOrder = localStorage.getItem('ANIME_ORDER') ?? '+';
   const orderNode = document.querySelector('.filter__order');

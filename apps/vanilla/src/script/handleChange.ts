@@ -27,17 +27,13 @@ export function choosePage(newPage: number): void {
   updateAnime(generateUrl(LIMIT * (newPage - 1)));
 }
 
-/**
- * Get new data for first page.
- */
+/** Get new data for first page. */
 export function goToFirstPage(): void {
   localStorage.setItem('ANIME_PAGE', '1');
   updateAnime(generateUrl());
 }
 
-/**
- * Get new data for last page.
- */
+/** Get new data for last page. */
 export function goToLastPage(): void {
   const count = localStorage.getItem('COUNT');
   if (count) {
@@ -48,18 +44,14 @@ export function goToLastPage(): void {
   }
 }
 
-/**
- * Change sorting type.
- */
+/** Change sorting type. */
 export function changeSorting(): void {
   const sortOption = document.querySelector<HTMLSelectElement>('#sort')?.value;
   localStorage.setItem('ANIME_SORT', sortOption ?? '');
   updateAnime(generateUrl(undefined, undefined, sortOption));
 }
 
-/**
- * Change ordering type.
- */
+/** Change ordering type. */
 export function changeOrdering(): void {
   const orderOption = document.querySelector<HTMLSelectElement>('#order')?.value;
   localStorage.setItem('ANIME_ORDER', orderOption ?? '');

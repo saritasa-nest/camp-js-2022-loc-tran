@@ -8,7 +8,8 @@ import { animeMapper } from '@js-camp/core/mappers/anime.mapper';
 
 import { http } from '../api';
 
-/** Fetch anime data from api.
+/**
+ * Fetch anime data from api.
  * @param url Api address.
  */
 export async function fetchAnime(url: string): Promise<Pagination<Anime> | Error > {

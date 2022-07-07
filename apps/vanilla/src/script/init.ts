@@ -1,9 +1,7 @@
 import { goToFirstPage, goToLastPage } from './handleChange';
 import { renderOrderOptions, renderPagination, renderSortOptions } from './renderToDOM';
 
-/**
- * Init event listener for pagination and render it to DOM.
- */
+/** Init event listener for pagination and render it to DOM. */
 export function initPagination(): void {
   const firstPageButton = document.querySelector('#first-page-button');
   firstPageButton?.addEventListener('click', goToFirstPage);
@@ -12,9 +10,7 @@ export function initPagination(): void {
   renderPagination();
 }
 
-/**
- * Init filter option.
- */
+/** Init filter option. */
 export function initFilter(): void {
   renderOrderOptions();
   renderSortOptions();
