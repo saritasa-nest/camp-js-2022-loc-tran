@@ -36,7 +36,7 @@ export function renderAnime(paginationAnime: Pagination<Anime>): void {
 export function renderPagination(): void {
   const pagination = document.querySelector('.pagination__numeric');
   const count = Number.parseInt(localStorage.getItem('COUNT') ?? '0', 10);
-  if (pagination) {
+  if (pagination !== null) {
     pagination.innerHTML = '';
     const currentPage = Number.parseInt(localStorage.getItem('ANIME_PAGE') ?? '1', 10);
     const first = currentPage - PAGE_STEP > 0 ? currentPage - PAGE_STEP : 1;
@@ -53,7 +53,7 @@ export function renderPagination(): void {
  */
 function createButtonPagination(page: number, isActive: boolean): HTMLElement {
   const button = document.createElement('div');
-  if (isActive) {
+  if (isActive !== false) {
     button.classList.add('active');
   }
   button.classList.add('pagination__button');
@@ -66,7 +66,7 @@ function createButtonPagination(page: number, isActive: boolean): HTMLElement {
 export function renderSortOptions(): void {
   const sortNode = document.querySelector('.filter__sort');
   const initSort = localStorage.getItem('ANIME_SORT') ?? Sorting.Default;
-  if (sortNode) {
+  if (sortNode !== null) {
     const select = document.createElement('select');
     SORT_OPTIONS.forEach(option => {
       const optionElement = document.createElement('option');
@@ -85,7 +85,7 @@ export function renderSortOptions(): void {
 export function renderOrderOptions(): void {
   const initOrder = localStorage.getItem('ANIME_ORDER') ?? '+';
   const orderNode = document.querySelector('.filter__order');
-  if (orderNode) {
+  if (orderNode !== null) {
     const select = document.createElement('select');
     ORDER_OPTIONS.forEach(option => {
       const optionElement = document.createElement('option');
