@@ -1,7 +1,9 @@
+import { Query } from '@js-camp/core/models/query';
+
 import { renderAnime, renderPagination } from './renderToDOM';
 import { fetchAnime } from './fetchAnime';
 import { generateUrl } from './generateUrl';
-import { LIMIT } from './constants';
+import { DEFAULT_QUERY, LIMIT } from './constants';
 
 /**
  * Update Anime data after change something like sort or page.
@@ -24,13 +26,20 @@ export async function updateAnime(url: string): Promise<void> {
  */
 export function choosePage(newPage: number): void {
   localStorage.setItem('ANIME_PAGE', newPage.toString());
-  updateAnime(generateUrl(LIMIT * (newPage - 1)));
+
+  const query: Query = {
+    offset: LIMIT * (newPage - 1),
+    limit: LIMIT,
+    sorting: '',
+    ordering: '',
+  };
+  updateAnime(generateUrl(query));
 }
 
 /** Get new data for first page. */
 export function goToFirstPage(): void {
   localStorage.setItem('ANIME_PAGE', '1');
-  updateAnime(generateUrl());
+  updateAnime(generateUrl(DEFAULT_QUERY));
 }
 
 /** Get new data for last page. */
@@ -40,7 +49,13 @@ export function goToLastPage(): void {
     const page = Math.floor(Number.parseInt(count, 10) / LIMIT);
     localStorage.setItem('ANIME_PAGE', page.toString());
     const offset = (page - 1) * LIMIT;
-    updateAnime(generateUrl(offset));
+    const query: Query = {
+      offset,
+      limit: LIMIT,
+      sorting: '',
+      ordering: '',
+    };
+    updateAnime(generateUrl(query));
   }
 }
 
@@ -48,12 +63,24 @@ export function goToLastPage(): void {
 export function changeSorting(): void {
   const sortOption = document.querySelector<HTMLSelectElement>('#sort')?.value;
   localStorage.setItem('ANIME_SORT', sortOption ?? '');
-  updateAnime(generateUrl(undefined, undefined, sortOption));
+  const query: Query = {
+    offset: -1,
+    limit: -1,
+    sorting: sortOption ?? '',
+    ordering: '',
+  };
+  updateAnime(generateUrl(query));
 }
 
 /** Change ordering type. */
 export function changeOrdering(): void {
   const orderOption = document.querySelector<HTMLSelectElement>('#order')?.value;
   localStorage.setItem('ANIME_ORDER', orderOption ?? '');
-  updateAnime(generateUrl(undefined, undefined, undefined, orderOption));
+  const query: Query = {
+    offset: -1,
+    limit: -1,
+    sorting: '',
+    ordering: orderOption ?? '',
+  };
+  updateAnime(generateUrl(query));
 }

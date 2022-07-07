@@ -1,3 +1,5 @@
+import { Query } from '@js-camp/core/models/query';
+
 /** Enum for sorting. */
 export enum Sorting {
   EnglishTitle = 'title_eng',
@@ -38,3 +40,9 @@ export const ORDER_OPTIONS = [
     value: '-',
   },
 ];
+export const DEFAULT_QUERY: Query = {
+  offset: 0,
+  limit: LIMIT,
+  ordering: '',
+  sorting: '',
+};

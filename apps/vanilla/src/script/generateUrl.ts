@@ -1,19 +1,25 @@
+import { Query } from '@js-camp/core/models/query';
+
 import { LIMIT } from './constants';
 
 /**
  * Generate api address with query string.
- * @param offset Index of first anime request.
- * @param limit Max number of anime in response.
- * @param sorting Sorting type.
- * @param ordering Ordering type.
+ * @param query Object store query variable.
  */
-export function generateUrl(offset = 0, limit: number = LIMIT,
-  sorting = localStorage.getItem('ANIME_SORT') ?? '',
-  ordering = localStorage.getItem('ANIME_ORDER') ?? ''): string {
-  let offsetAfterCheck = offset;
-  if (!offset) {
+export function generateUrl(query: Query): string {
+  let { offset, limit, sorting, ordering } = query;
+  if (offset === -1) {
     const currentPage = localStorage.getItem('ANIME_PAGE') ?? '1';
-    offsetAfterCheck = (Number.parseInt(currentPage, 10) - 1) * LIMIT;
+    offset = (Number.parseInt(currentPage, 10) - 1) * LIMIT;
   }
-  return `${import.meta.env.VITE_API_URL}?limit=${limit}&offset=${offsetAfterCheck}&ordering=${ordering}${sorting ?? ''}`;
+  if (limit === -1) {
+    limit = LIMIT;
+  }
+  if (sorting === '') {
+    sorting = localStorage.getItem('ANIME_SORT') ?? '';
+  }
+  if (ordering === '') {
+    ordering = localStorage.getItem('ANIME_ORDER') ?? '';
+  }
+  return `${import.meta.env.VITE_API_URL}?limit=${limit}&offset=${offset}&ordering=${ordering}${sorting ?? ''}`;
 }
