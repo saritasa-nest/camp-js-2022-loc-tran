@@ -1,33 +1,22 @@
 import { AnimeDto } from '../dtos/anime.dto';
 import { Anime } from '../models/anime';
-import { Pagination } from '../models/pagination';
-import { PaginationDto } from '../dtos/pagination.dto';
 
 export namespace animeMapper {
 
   /**
-   * @param dto Pagination dto.
+   * @param dto Anime dto.
    */
-  export function fromDto(dto: PaginationDto<AnimeDto>): Pagination<Anime> {
-    const results = dto.results.map(animeDto => {
-      const anime: Anime = {
-        id: animeDto.id,
-        titleEng: animeDto.title_eng,
-        titleJapan: animeDto.title_jpn,
-        image: animeDto.image,
-        start: animeDto.aired.start,
-        end: animeDto.aired.end,
-        type: animeDto.type,
-        status: animeDto.status,
-      };
-      return anime;
-    });
-    const pagination: Pagination<Anime> = {
-      count: dto.count,
-      next: dto.next,
-      previous: dto.previous,
-      results,
+  export function fromDto(dto: AnimeDto): Anime {
+    const anime: Anime = {
+      id: dto.id,
+      titleEng: dto.title_eng,
+      titleJapan: dto.title_jpn,
+      image: dto.image,
+      start: dto.aired.start,
+      end: dto.aired.end,
+      type: dto.type,
+      status: dto.status,
     };
-    return pagination;
+    return anime;
   }
 }

@@ -4,7 +4,7 @@ import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 import { Anime } from '@js-camp/core/models/anime';
 import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
 
-import { animeMapper } from '@js-camp/core/mappers/anime.mapper';
+import { paginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 
 import { http } from '../api';
 
@@ -15,9 +15,9 @@ import { http } from '../api';
 export async function fetchAnime(url: string): Promise<Pagination<Anime> | Error > {
   try {
     const response = await http.get<PaginationDto<AnimeDto>>(url);
-    const animeData = response.data;
+    const paginationData = response.data;
 
-    return animeMapper.fromDto(animeData);
+    return paginationMapper.fromDto(paginationData);
   } catch (error: unknown) {
     return new Error('Unknown error');
   }

@@ -2,10 +2,10 @@
 interface DateRange {
 
   /** End date Anime. */
-  readonly end: Date;
+  readonly end: string;
 
   /** Start date Anime. */
-  readonly start: Date;
+  readonly start: string;
 }
 
 /** Class for anime. */

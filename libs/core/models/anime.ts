@@ -14,10 +14,10 @@ export interface Anime {
   readonly image: string;
 
   /** Aired start of the anime. */
-  readonly start: Date;
+  readonly start: string;
 
   /** Aired end of the anime. */
-  readonly end: Date;
+  readonly end: string;
 
   /** Type of the anime. */
   readonly type: string;
