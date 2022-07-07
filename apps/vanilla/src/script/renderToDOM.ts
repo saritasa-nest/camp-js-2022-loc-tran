@@ -9,7 +9,7 @@ import { choosePage, changeSorting, changeOrdering } from './handleChange';
  */
 export function renderAnime(paginationAnime: Pagination<Anime>): void {
   const tableRow = document.querySelector('.table');
-  if (tableRow) {
+  if (tableRow != null) {
     let htmlString = `<tr class="table__head">
     <th>Image</th>
     <th>Title Eng</th>
@@ -40,7 +40,7 @@ export function renderPagination(): void {
     pagination.innerHTML = '';
     const currentPage = Number.parseInt(localStorage.getItem('ANIME_PAGE') ?? '1', 10);
     const first = currentPage - PAGE_STEP > 0 ? currentPage - PAGE_STEP : 1;
-    for (let i = first; i <= first + 6 && i <= Math.ceil(count / LIMIT); i++) {
+    for (let i = first; i <= first + PAGE_STEP * 2 && i <= Math.ceil(count / LIMIT); i++) {
       pagination.append(createButtonPagination(i, currentPage === i));
     }
   }
@@ -52,7 +52,7 @@ export function renderPagination(): void {
  * @param isActive Add class for active button.
  */
 function createButtonPagination(page: number, isActive: boolean): HTMLElement {
-  const button = document.createElement('div');
+  const button = document.createElement('button');
   if (isActive !== false) {
     button.classList.add('active');
   }

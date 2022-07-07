@@ -45,7 +45,7 @@ export function goToFirstPage(): void {
 /** Get new data for last page. */
 export function goToLastPage(): void {
   const count = localStorage.getItem('COUNT');
-  if (count) {
+  if (count != null) {
     const page = Math.floor(Number.parseInt(count, 10) / LIMIT);
     localStorage.setItem('ANIME_PAGE', page.toString());
     const offset = (page - 1) * LIMIT;
