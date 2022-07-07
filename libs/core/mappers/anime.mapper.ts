@@ -3,7 +3,7 @@ import { Anime } from '../models/anime';
 import { Pagination } from '../models/pagination';
 import { PaginationDto } from '../dtos/pagination.dto';
 
-export namespace animeMapper {
+export namespace AnimeMapper {
 
   /**
    * @param dto Pagination dto.
