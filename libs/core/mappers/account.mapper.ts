@@ -4,16 +4,15 @@ import { Account } from '../models/account';
 export namespace AccountMapper {
 
   /**
-   * Maps dto to model.
+   * Maps model to dto.
    * @param account Account data.
    */
   export function toDto(account: Account): AccountDto {
-    const accountDto: AccountDto = {
+    return {
       email: account.email,
       first_name: account.firstName,
       last_name: account.lastName,
       password: account.password,
     };
-    return accountDto;
   }
 }
