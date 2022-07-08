@@ -23,7 +23,7 @@ export function renderAnime(paginationAnime: Pagination<Anime>): void {
       <td><img class="table__row-image" src="${anime.image}"/></td>
       <td>${anime.titleEnglish ?? ''}</td>
       <td>${anime.titleJapan ?? ''}</td>
-      <td>${new Date(anime.start).toLocaleString()}</td>
+      <td>${anime.aired.start.toLocaleString()}</td>
       <td>${anime.type}</td>
       <td>${anime.status}</td>
     </tr>`;
@@ -54,7 +54,7 @@ export function renderPagination(): void {
 function createButtonPagination(page: number, isActive: boolean): HTMLElement {
   const button = document.createElement('button');
   if (isActive !== false) {
-    button.classList.add('active');
+    button.classList.add('pagination__button-active');
   }
   button.classList.add('pagination__button');
   button.innerHTML = `${page}`;

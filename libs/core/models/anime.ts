@@ -1,3 +1,5 @@
+import { DateRange } from './dateRange';
+
 /** Class for anime. */
 export interface Anime {
 
@@ -13,11 +15,8 @@ export interface Anime {
   /** Image of the anime. */
   readonly image: string;
 
-  /** Aired start of the anime. */
-  readonly start: string;
-
-  /** Aired end of the anime. */
-  readonly end: string;
+  /** Aired of the anime. */
+  readonly aired: DateRange;
 
   /** Type of the anime. */
   readonly type: string;

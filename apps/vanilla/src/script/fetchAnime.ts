@@ -15,7 +15,6 @@ import { http } from '../api';
 export async function fetchAnime(url: string): Promise<Pagination<Anime> | Error > {
   try {
     const response = await http.get<PaginationDto<AnimeDto>>(url);
-    const paginationData = response.data;
 
     return paginationMapper.fromDto(response.data);
   } catch (error: unknown) {

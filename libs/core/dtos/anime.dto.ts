@@ -1,12 +1,4 @@
-/** Aired DTO. */
-interface DateRange {
-
-  /** End date Anime. */
-  readonly end: string;
-
-  /** Start date Anime. */
-  readonly start: string;
-}
+import { DateRangeDto } from './dateRange.dto';
 
 /** Class for anime. */
 export interface AnimeDto {
@@ -24,7 +16,7 @@ export interface AnimeDto {
   readonly image: string;
 
   /** Aired start of the anime. */
-  readonly aired: DateRange;
+  readonly aired: DateRangeDto;
 
   /** Type of the anime. */
   readonly type: string;

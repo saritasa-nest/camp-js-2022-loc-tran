@@ -1,17 +1,25 @@
 :root {
   /* Using html color names here only for showcase,
    * you shouldn't be using color names in real projects. */
+
+  /* Primary color. */
   --primary-color: #2458a2;
   --primary-light-color: #5584c5;
   --primary-dark-color: #032656;
   --primary-contrast-color: white;
   --primary-dark-contrast-color: white;
   --primary-light-contrast-color: white;
+  --primary-font-color: black;
+  --primary-contrast-font-color: white;
+
+  /* Background color. */
   --dark-background-color: #ccc;
   --light-background-color: #fff;
   --background-color: #ddd;
+
+  /* Border color. */
   --border-color: black;
-  --primary-font-color: black;
-  --primary-contrast-font-color: white;
+
+  /* Header color. */
   --heading-color-1: #1229a7;
 }

@@ -1,6 +1,8 @@
 import { AnimeDto } from '../dtos/anime.dto';
 import { Anime } from '../models/anime';
 
+import { DateRangeMapper } from './dateRange.mapper';
+
 export namespace AnimeMapper {
 
   /**
@@ -12,8 +14,7 @@ export namespace AnimeMapper {
       titleEnglish: dto.title_eng,
       titleJapan: dto.title_jpn,
       image: dto.image,
-      start: dto.aired.start,
-      end: dto.aired.end,
+      aired: DateRangeMapper.fromDto(dto.aired),
       type: dto.type,
       status: dto.status,
     };
