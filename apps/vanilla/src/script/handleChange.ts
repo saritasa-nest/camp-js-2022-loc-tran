@@ -65,7 +65,7 @@ export function goToLastPage(): void {
 
 /** Change sorting type. */
 export function changeSorting(): void {
-  const sortOption = document.querySelector<HTMLSelectElement>('#sort')?.value;
+  const sortOption = document.querySelector<HTMLSelectElement>('.sort')?.value;
   localStorage.setItem('ANIME_SORT', sortOption ?? '');
   const query: Query = {
     offset: NULL_OFFSET,
@@ -78,7 +78,7 @@ export function changeSorting(): void {
 
 /** Change ordering type. */
 export function changeOrdering(): void {
-  const orderOption = document.querySelector<HTMLSelectElement>('#order')?.value;
+  const orderOption = document.querySelector<HTMLSelectElement>('.order')?.value;
   localStorage.setItem('ANIME_ORDER', orderOption ?? '');
   const query: Query = {
     offset: NULL_OFFSET,
