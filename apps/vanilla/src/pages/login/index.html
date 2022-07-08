@@ -9,12 +9,14 @@
   <body class="default-layout">
     <h1 class="title">Sign in</h1>
     <form class="form">
-      <div class="form__inputGroup">
-        <label for="email" class="form__inputGroup-label">Email:</label>
-        <input id="email" placeholder="email" class="form__inputGroup-input form__inputGroup-email" />
-        <label for="password" class="form__inputGroup-label">Password:</label>
-        <input type="password" placeholder="password" id="password" class="form__inputGroup-input form__inputGroup-password" />
-      </div>
+        <label class="form__label">
+          <span class="form__label-text">Email: </span>
+          <input placeholder="email" class="form__label-input form__label-email" />
+        </label>
+        <label class="form__label">
+          <span class="form__label-text">Password:</span>
+          <input type="password" placeholder="password" class="form__label-input form__label-password" />
+        </label>
       <div class="form__buttonGroup">
         <button type="submit" class="form__buttonGroup-submit">Sign in</button>
       </div>
