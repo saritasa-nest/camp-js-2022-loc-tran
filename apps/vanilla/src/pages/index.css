@@ -12,13 +12,8 @@
   margin: 20px 0;
 }
 
-.table__row td {
+.table__row-content {
   padding: 10px;
-}
-
-.table th td {
-  border: var(--border-color) 1px solid;
-  width: 100%;
 }
 
 .table__row {
@@ -37,7 +32,7 @@
   color: var(--primary-contrast-font-color);
 }
 
-.table__head th {
+.table__head-title {
   padding: 20px;
   text-align: start;
 }

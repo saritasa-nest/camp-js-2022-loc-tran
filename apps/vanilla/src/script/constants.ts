@@ -13,6 +13,7 @@ export const NULL_LIMIT = -1;
 export const NULL_ORDERING = '';
 export const NULL_SORTING = '';
 export const API_HEADER = 'Api-Key';
+export const NUMBER_OF_COLUMNS = 6;
 export const OFFSET = 0;
 export const LIMIT = 25;
 export const PAGE_STEP = 3;

@@ -11,12 +11,12 @@ export function renderAnime(paginationAnime: Pagination<Anime>): void {
   const tableRow = document.querySelector('.table');
   if (tableRow != null) {
     let htmlString = `<tr class="table__head">
-    <th>Image</th>
-    <th>Title Eng</th>
-    <th>Title Jap</th>
-    <th>Aired start</th>
-    <th>Type</th>
-    <th>Status</th>
+    <th class="table__head-title">Image</th>
+    <th class="table__head-title">Title Eng</th>
+    <th class="table__head-title">Title Jap</th>
+    <th class="table__head-title">Aired start</th>
+    <th class="table__head-title">Type</th>
+    <th class="table__head-title">Status</th>
   </tr>`;
     paginationAnime.results.forEach((anime: Anime) => {
       htmlString += `<tr class="table__row">

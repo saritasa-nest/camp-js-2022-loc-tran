@@ -1,8 +1,5 @@
-import { updateAnime } from '../script/handleChange';
-import { generateUrl } from '../script/generateUrl';
-import { initFilter, initPagination } from '../script/init';
-import { DEFAULT_QUERY } from '../script/constants';
+import { initAnimeTable, initFilter, initPagination } from '../script/init';
 
-updateAnime(generateUrl(DEFAULT_QUERY));
+initAnimeTable();
 initPagination();
 initFilter();
