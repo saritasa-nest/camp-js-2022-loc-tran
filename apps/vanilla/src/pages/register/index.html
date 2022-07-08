@@ -8,9 +8,27 @@
   </head>
   <body class="default-layout">
     <h1 class="title">Sign up</h1>
-    <div class="links">
-      Already have an account? <a href="/login/">Sign in.</a>
-    </div>
+    <form class="form">
+      <div class="form__inputGroup">
+        <label for="email" class="form__inputGroup-label">Email:</label>
+        <input id="email" placeholder="email" class="form__inputGroup-input form__inputGroup-email" />
+        <label for="first-name" class="form__inputGroup-label">First name:</label>
+        <input id="first-name" placeholder="First name" class="form__inputGroup-input form__inputGroup-firstname" />
+        <label for="last-name" class="form__inputGroup-label">Last name:</label>
+        <input id="last-name" placeholder="Last name" class="form__inputGroup-input form__inputGroup-lastname" />
+
+        <label for="password" class="form__inputGroup-label">Password:</label>
+        <input type="password" placeholder="password" id="password" class="form__inputGroup-input form__inputGroup-password" />
+        <label for="retype-password" class="form__inputGroup-label">Retype password:</label>
+        <input id="retype-password" placeholder="Retype password" class="form__inputGroup-input form__inputGroup-retypepassword" />
+      </div>
+      <div class="form__buttonGroup">
+        <button type="submit" class="form__buttonGroup-submit">Sign up</button>
+      </div>
+      <div class="links">
+        Already have an account? <a href="/login/">Sign in.</a>
+      </div>
+    </form>
     <script type="module" src="./register.ts"></script>
   </body>
 </html>
