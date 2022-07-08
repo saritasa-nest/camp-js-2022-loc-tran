@@ -21,5 +21,5 @@ export function generateUrl(query: Query): string {
   if (ordering === NULL_ORDERING) {
     ordering = localStorage.getItem('ANIME_ORDER') ?? NULL_ORDERING;
   }
-  return `${import.meta.env.VITE_API_URL}?limit=${limit}&offset=${offset}&ordering=${ordering}${sorting ?? ''}`;
+  return `${import.meta.env.VITE_API_URL}/api/v1/anime/anime/?limit=${limit}&offset=${offset}&ordering=${ordering}${sorting ?? ''}`;
 }
