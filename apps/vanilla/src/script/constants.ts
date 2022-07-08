@@ -19,6 +19,8 @@ export const LIMIT = 25;
 export const PAGE_STEP = 3;
 export const DECIMAL = 10;
 export const DEFAULT_PAGE = 1;
+
+/** Options for sorting. */
 export const SORT_OPTIONS = [
   {
     title: 'Title in English',
@@ -37,6 +39,8 @@ export const SORT_OPTIONS = [
     value: Sorting.Default,
   },
 ];
+
+/** Options for ordering. */
 export const ORDER_OPTIONS = [
   {
     title: 'Ascending',
@@ -47,6 +51,8 @@ export const ORDER_OPTIONS = [
     value: '-',
   },
 ];
+
+/** Default data for query. */
 export const DEFAULT_QUERY: Query = {
   offset: 0,
   limit: LIMIT,
