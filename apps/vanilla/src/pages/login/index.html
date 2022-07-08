@@ -7,10 +7,22 @@
     <title>Vite App</title>
   </head>
   <body class="default-layout">
-    <h1 class="title">Nested page 😱</h1>
-    <div class="links">
-      <a href="/">Take me to main page</a>
-    </div>
+    <h1 class="title">Sign in</h1>
+    <form class="form">
+      <div class="form__inputGroup">
+        <label for="email" class="form__inputGroup-label">Email:</label>
+        <input id="email" placeholder="email" class="form__inputGroup-input form__inputGroup-email" />
+        <label for="password" class="form__inputGroup-label">Password:</label>
+        <input type="password" placeholder="password" id="password" class="form__inputGroup-input form__inputGroup-password" />
+      </div>
+      <div class="form__buttonGroup">
+        <button type="submit" class="form__buttonGroup-submit">Sign in</button>
+      </div>
+      <div class="links">
+        Don't have an account yet? <a href="/register/">Sign up.</a>
+      </div>
+    </form>
+
     <script type="module" src="./login.ts"></script>
   </body>
 </html>
