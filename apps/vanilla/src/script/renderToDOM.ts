@@ -58,6 +58,7 @@ function createButtonPagination(page: number, isActive: boolean): HTMLElement {
   }
   button.classList.add('pagination__button');
   button.innerHTML = `${page}`;
+  button.type = 'button';
   button.addEventListener('click', choosePage.bind(null, page));
   return button;
 }
