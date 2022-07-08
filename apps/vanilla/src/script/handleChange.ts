@@ -3,7 +3,7 @@ import { Query } from '@js-camp/core/models/query';
 import { renderAnime, renderPagination } from './renderToDOM';
 import { fetchAnime } from './fetchAnime';
 import { generateUrl } from './generateUrl';
-import { DEFAULT_QUERY, LIMIT } from './constants';
+import { DECIMAL, DEFAULT_QUERY, LIMIT, NULL_LIMIT, NULL_OFFSET, NULL_ORDERING, NULL_SORTING } from './constants';
 
 /**
  * Update Anime data after change something like sort or page.
@@ -34,8 +34,8 @@ export function choosePage(newPage: number): void {
   const query: Query = {
     offset: LIMIT * (newPage - 1),
     limit: LIMIT,
-    sorting: '',
-    ordering: '',
+    sorting: NULL_SORTING,
+    ordering: NULL_ORDERING,
   };
   updateAnime(generateUrl(query));
 }
@@ -50,14 +50,14 @@ export function goToFirstPage(): void {
 export function goToLastPage(): void {
   const count = localStorage.getItem('COUNT');
   if (count != null) {
-    const page = Math.floor(Number.parseInt(count, 10) / LIMIT);
+    const page = Math.floor(Number.parseInt(count, DECIMAL) / LIMIT);
     localStorage.setItem('ANIME_PAGE', page.toString());
     const offset = (page - 1) * LIMIT;
     const query: Query = {
       offset,
       limit: LIMIT,
-      sorting: '',
-      ordering: '',
+      sorting: NULL_SORTING,
+      ordering: NULL_ORDERING,
     };
     updateAnime(generateUrl(query));
   }
@@ -68,10 +68,10 @@ export function changeSorting(): void {
   const sortOption = document.querySelector<HTMLSelectElement>('#sort')?.value;
   localStorage.setItem('ANIME_SORT', sortOption ?? '');
   const query: Query = {
-    offset: -1,
-    limit: -1,
-    sorting: sortOption ?? '',
-    ordering: '',
+    offset: NULL_OFFSET,
+    limit: NULL_LIMIT,
+    sorting: sortOption ?? NULL_SORTING,
+    ordering: NULL_ORDERING,
   };
   updateAnime(generateUrl(query));
 }
@@ -81,10 +81,10 @@ export function changeOrdering(): void {
   const orderOption = document.querySelector<HTMLSelectElement>('#order')?.value;
   localStorage.setItem('ANIME_ORDER', orderOption ?? '');
   const query: Query = {
-    offset: -1,
-    limit: -1,
-    sorting: '',
-    ordering: orderOption ?? '',
+    offset: NULL_OFFSET,
+    limit: NULL_LIMIT,
+    sorting: NULL_SORTING,
+    ordering: orderOption ?? NULL_ORDERING,
   };
   updateAnime(generateUrl(query));
 }

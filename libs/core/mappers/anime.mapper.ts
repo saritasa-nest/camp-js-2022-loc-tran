@@ -9,7 +9,7 @@ export namespace AnimeMapper {
   export function fromDto(dto: AnimeDto): Anime {
     const anime: Anime = {
       id: dto.id,
-      titleEng: dto.title_eng,
+      titleEnglish: dto.title_eng,
       titleJapan: dto.title_jpn,
       image: dto.image,
       start: dto.aired.start,

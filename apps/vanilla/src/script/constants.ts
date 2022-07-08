@@ -8,10 +8,16 @@ export enum Sorting {
   Default = '',
 }
 
+export const NULL_OFFSET = -1;
+export const NULL_LIMIT = -1;
+export const NULL_ORDERING = '';
+export const NULL_SORTING = '';
 export const API_HEADER = 'Api-Key';
 export const OFFSET = 0;
 export const LIMIT = 25;
 export const PAGE_STEP = 3;
+export const DECIMAL = 10;
+export const DEFAULT_PAGE = 1;
 export const SORT_OPTIONS = [
   {
     title: 'Title in English',

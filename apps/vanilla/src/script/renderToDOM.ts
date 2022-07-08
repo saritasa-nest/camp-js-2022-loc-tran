@@ -21,7 +21,7 @@ export function renderAnime(paginationAnime: Pagination<Anime>): void {
     paginationAnime.results.forEach((anime: Anime) => {
       htmlString += `<tr class="table__row">
       <td><img class="table__row-image" src="${anime.image}"/></td>
-      <td>${anime.titleEng ?? ''}</td>
+      <td>${anime.titleEnglish ?? ''}</td>
       <td>${anime.titleJapan ?? ''}</td>
       <td>${new Date(anime.start).toLocaleString()}</td>
       <td>${anime.type}</td>

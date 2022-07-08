@@ -5,7 +5,7 @@ export interface Anime {
   readonly id: number;
 
   /** English title of the anime. */
-  readonly titleEng: string;
+  readonly titleEnglish: string;
 
   /** Japan title of the anime. */
   readonly titleJapan: string;
