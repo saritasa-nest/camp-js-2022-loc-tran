@@ -9,11 +9,11 @@
   --primary-color: #2458a2;
   --primary-light-color: #5584c5;
   --primary-dark-color: #032656;
-  --primary-contrast-color: white;
-  --primary-dark-contrast-color: white;
-  --primary-light-contrast-color: white;
-  --primary-font-color: black;
-  --primary-contrast-font-color: white;
+  --primary-contrast-color: #fff;
+  --primary-dark-contrast-color: #fff;
+  --primary-light-contrast-color: #fff;
+  --primary-font-color: #000;
+  --primary-contrast-font-color: #fff;
 
   /* Background color. */
   --dark-background-color: #ccc;
@@ -21,7 +21,7 @@
   --background-color: #ddd;
 
   /* Border color. */
-  --border-color: black;
+  --border-color: #000;
 
   /* Header color. */
   --heading-color-1: #1229a7;
