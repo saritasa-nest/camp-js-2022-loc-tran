@@ -4,7 +4,8 @@ import { Pagination } from '@js-camp/core/models/pagination';
 import { PAGE_STEP, LIMIT, SORT_OPTIONS, ORDER_OPTIONS, Sorting } from './constants';
 import { choosePage, changeSorting, changeOrdering } from './handleChange';
 
-/** Print anime list to DOM.
+/**
+ * Print anime list to DOM.
  * @param paginationAnime Store anime data response from api.
  */
 export function renderAnime(paginationAnime: Pagination<Anime>): void {
@@ -59,7 +60,7 @@ function createButtonPagination(page: number, isActive: boolean): HTMLElement {
   button.classList.add('pagination__button');
   button.innerHTML = `${page}`;
   button.type = 'button';
-  button.addEventListener('click', choosePage.bind(null, page));
+  button.addEventListener('click', () => choosePage(page));
   return button;
 }
 

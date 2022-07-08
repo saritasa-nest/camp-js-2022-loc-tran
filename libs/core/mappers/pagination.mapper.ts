@@ -9,12 +9,11 @@ export namespace paginationMapper {
    */
   export function fromDto<Dto, Model>(dto: PaginationDto<Dto>, resultFromDto: (result: Dto) => Model): Pagination<Model> {
     const results = dto.results.map(result => resultFromDto(result));
-    const pagination: Pagination<Model> = {
+    return {
       count: dto.count,
       next: dto.next,
       previous: dto.previous,
       results,
     };
-    return pagination;
   }
 }

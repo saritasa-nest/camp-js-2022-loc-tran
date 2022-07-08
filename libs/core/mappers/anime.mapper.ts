@@ -9,7 +9,7 @@ export namespace AnimeMapper {
    * @param dto Anime dto.
    */
   export function fromDto(dto: AnimeDto): Anime {
-    const anime: Anime = {
+    return {
       id: dto.id,
       titleEnglish: dto.title_eng,
       titleJapan: dto.title_jpn,
@@ -18,6 +18,5 @@ export namespace AnimeMapper {
       type: dto.type,
       status: dto.status,
     };
-    return anime;
   }
 }
