@@ -19,6 +19,6 @@ export async function fetchAnime(url: string): Promise<Pagination<Anime> | Error
 
     return paginationMapper.fromDto(response.data, AnimeMapper.fromDto);
   } catch (error: unknown) {
-    return new Error((error as Error).message);
+    throw Error((error as Error).message);
   }
 }
