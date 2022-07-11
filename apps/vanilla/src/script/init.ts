@@ -1,4 +1,5 @@
 import { loginFormSubmit, registerFormSubmit } from './handleSubmit';
+import { renderUserData } from './renderToUI';
 
 /** Init event for login form. */
 export function initLoginForm(): void {
@@ -14,4 +15,9 @@ export function initRegisterForm(): void {
   if (form !== null) {
     (form as HTMLFormElement).addEventListener('submit', registerFormSubmit);
   }
+}
+
+/** Init data for user profile. */
+export function initHomeProfile(): void {
+  renderUserData();
 }

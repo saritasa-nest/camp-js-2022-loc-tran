@@ -17,6 +17,7 @@ export function requestInterceptor(config: AxiosRequestConfig): AxiosRequestConf
     headers: {
       ...headers,
       'Api-Key': CONFIG.apiKey,
+      'Authorization': localStorage.getItem('ACCESS_TOKEN') ?? '',
     },
   };
 }
