@@ -1,4 +1,4 @@
-import { Query } from '@js-camp/core/models/query';
+import { OrderingType, Query } from '@js-camp/core/models/query';
 
 /** Enum for sorting. */
 export enum Sorting {
@@ -45,11 +45,11 @@ export const SORT_OPTIONS = [
 export const ORDER_OPTIONS = [
   {
     title: 'Ascending',
-    value: '+',
+    value: OrderingType.Ascending,
   },
   {
     title: 'Descending',
-    value: '-',
+    value: OrderingType.Descending,
   },
 ];
 
@@ -57,6 +57,6 @@ export const ORDER_OPTIONS = [
 export const DEFAULT_QUERY: Query = {
   offset: 0,
   limit: LIMIT,
-  ordering: '',
+  ordering: OrderingType.Ascending,
   sorting: '',
 };

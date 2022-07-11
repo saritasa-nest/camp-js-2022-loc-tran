@@ -1,3 +1,10 @@
+/** Enum for ordering type. */
+export enum OrderingType {
+  Ascending = '',
+  Descending = '-',
+  Empty = '',
+}
+
 /** Store query variable. */
 export interface Query {
 
@@ -11,5 +18,5 @@ export interface Query {
   readonly sorting: string;
 
   /** Ordering anime list by descending or ascending. */
-  readonly ordering: string;
+  readonly ordering: OrderingType;
 }

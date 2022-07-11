@@ -23,7 +23,7 @@ export function renderAnime(paginationAnime: Pagination<Anime>): void {
       htmlString += `<tr class="table__row">
       <td><img class="table__row-image" src="${anime.image}"/></td>
       <td>${anime.titleEnglish ?? ''}</td>
-      <td>${anime.titleJapan ?? ''}</td>
+      <td>${anime.titleJapanese ?? ''}</td>
       <td>${anime.aired.start.toLocaleString()}</td>
       <td>${anime.type}</td>
       <td>${anime.status}</td>

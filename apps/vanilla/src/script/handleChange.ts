@@ -1,9 +1,9 @@
-import { Query } from '@js-camp/core/models/query';
+import { OrderingType, Query } from '@js-camp/core/models/query';
 
 import { renderAnime, renderPagination } from './renderToDOM';
 import { fetchAnime } from './fetchAnime';
 import { generateUrl } from './generateUrl';
-import { DECIMAL, DEFAULT_QUERY, LIMIT, NULL_LIMIT, NULL_OFFSET, NULL_ORDERING, NULL_SORTING } from './constants';
+import { DECIMAL, DEFAULT_QUERY, LIMIT, NULL_LIMIT, NULL_OFFSET, NULL_SORTING } from './constants';
 
 /**
  * Update Anime data after change something like sort or page.
@@ -35,7 +35,7 @@ export function choosePage(newPage: number): void {
     offset: LIMIT * (newPage - 1),
     limit: LIMIT,
     sorting: NULL_SORTING,
-    ordering: NULL_ORDERING,
+    ordering: OrderingType.Empty,
   };
   updateAnime(generateUrl(query));
 }
@@ -57,7 +57,7 @@ export function goToLastPage(): void {
       offset,
       limit: LIMIT,
       sorting: NULL_SORTING,
-      ordering: NULL_ORDERING,
+      ordering: OrderingType.Empty,
     };
     updateAnime(generateUrl(query));
   }
@@ -71,7 +71,7 @@ export function changeSorting(): void {
     offset: NULL_OFFSET,
     limit: NULL_LIMIT,
     sorting: sortOption ?? NULL_SORTING,
-    ordering: NULL_ORDERING,
+    ordering: OrderingType.Empty,
   };
   updateAnime(generateUrl(query));
 }
@@ -84,7 +84,7 @@ export function changeOrdering(): void {
     offset: NULL_OFFSET,
     limit: NULL_LIMIT,
     sorting: NULL_SORTING,
-    ordering: orderOption ?? NULL_ORDERING,
+    ordering: OrderingType[orderOption as keyof typeof OrderingType] ?? OrderingType.Empty,
   };
   updateAnime(generateUrl(query));
 }
