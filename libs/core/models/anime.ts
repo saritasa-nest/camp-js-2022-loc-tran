@@ -1,3 +1,5 @@
+import { AnimeStatus, AnimeType } from '../dtos/anime.dto';
+
 import { DateRange } from './dateRange';
 
 /** Class for anime. */
@@ -10,7 +12,7 @@ export interface Anime {
   readonly titleEnglish: string;
 
   /** Japan title of the anime. */
-  readonly titleJapan: string;
+  readonly titleJapanese: string;
 
   /** Image of the anime. */
   readonly image: string;
@@ -19,8 +21,8 @@ export interface Anime {
   readonly aired: DateRange;
 
   /** Type of the anime. */
-  readonly type: string;
+  readonly type: AnimeType;
 
   /** Status of the anime. */
-  readonly status: string;
+  readonly status: AnimeStatus;
 }

@@ -4,6 +4,7 @@ import { PaginationDto } from '../dtos/pagination.dto';
 export namespace paginationMapper {
 
   /**
+   * Maps dto to model.
    * @param dto Pagination dto.
    * @param resultFromDto Mapper function.
    */
