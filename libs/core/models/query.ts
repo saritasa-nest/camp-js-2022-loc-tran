@@ -7,9 +7,9 @@ export interface Query {
   /** Max number of anime in response. */
   readonly limit: number;
 
-  /** Sorting type. */
+  /** Specify the sorting type to sort anime list descending or ascending. */
   readonly sorting: string;
 
-  /** Ordering type. */
+  /** Ordering anime list by descending or ascending. */
   readonly ordering: string;
 }
