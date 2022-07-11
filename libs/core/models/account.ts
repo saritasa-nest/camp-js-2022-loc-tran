@@ -1,16 +1,28 @@
-/** Interface for Account. */
-export interface Account {
+import { Immerable, OmitImmerable } from './immerable';
+
+/** Class for Account. */
+export class Account extends Immerable {
 
   /** Email of user. */
-  readonly email: string;
+  public readonly email: string;
 
   /** First name of user. */
-  readonly firstName: string;
+  public readonly firstName: string;
 
   /** Last name of user. */
-  readonly lastName: string;
+  public readonly lastName: string;
 
   /** Password of user. */
-  readonly password: string;
+  public readonly password: string;
+
+  public constructor(data: AccountArgs) {
+    super();
+    this.email = data.email;
+    this.firstName = data.firstName;
+    this.lastName = data.lastName;
+    this.password = data.password;
+  }
 
 }
+
+type AccountArgs = OmitImmerable<Account>;

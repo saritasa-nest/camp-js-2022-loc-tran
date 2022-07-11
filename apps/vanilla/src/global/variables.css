@@ -6,13 +6,14 @@
   --primary-color: #2458a2;
   --primary-light-color: #5584c5;
   --primary-dark-color: #032656;
-  --primary-contrast-color: white;
-  --primary-dark-contrast-color: white;
-  --primary-light-contrast-color: white;
+  --primary-contrast-color: #fff;
+  --primary-dark-contrast-color: #fff;
+  --primary-light-contrast-color: #fff;
 
   /* Font color. */
-  --primary-font-color: black;
-  --primary-contrast-font-color: white;
+  --primary-font-color: #000;
+  --primary-contrast-font-color: #fff;
+  --error-font-color: #f00;
 
   /* Background color. */
   --dark-background-color: #ccc;

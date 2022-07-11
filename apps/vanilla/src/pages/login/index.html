@@ -11,15 +11,16 @@
     <form class="form">
         <label class="form__label">
           <span class="form__label-text">Email: </span>
-          <input placeholder="email" class="form__label-input form__label-email" />
+          <input required name="email" type="email" placeholder="email" class="form__label-input form__label-email" />
         </label>
         <label class="form__label">
           <span class="form__label-text">Password:</span>
-          <input type="password" placeholder="password" class="form__label-input form__label-password" />
+          <input required name="password" type="password" placeholder="password" class="form__label-input form__label-password" />
         </label>
       <div class="form__buttonGroup">
         <button type="submit" class="form__buttonGroup-submit">Sign in</button>
       </div>
+      <span class="form__error-login"></span>
       <div class="links">
         Don't have an account yet? <a href="/register/">Sign up.</a>
       </div>
