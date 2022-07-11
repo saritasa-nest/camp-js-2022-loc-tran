@@ -19,6 +19,7 @@ export const LIMIT = 25;
 export const PAGE_STEP = 3;
 export const DECIMAL = 10;
 export const DEFAULT_PAGE = 1;
+export const API_URL = import.meta.env.VITE_API_URL;
 
 /** Options for sorting. */
 export const SORT_OPTIONS = [
