@@ -1,6 +1,6 @@
 import { Query } from '@js-camp/core/models/query';
 
-import { API_URL, DECIMAL, DEFAULT_PAGE, LIMIT, NULL_LIMIT, NULL_OFFSET, NULL_ORDERING, NULL_SORTING } from './constants';
+import { DECIMAL, DEFAULT_PAGE, LIMIT, NULL_LIMIT, NULL_OFFSET, NULL_ORDERING, NULL_SORTING } from './constants';
 
 /**
  * Generate api address with query string.
@@ -21,5 +21,5 @@ export function generateUrl(query: Query): string {
   if (ordering === NULL_ORDERING) {
     ordering = localStorage.getItem('ANIME_ORDER') ?? NULL_ORDERING;
   }
-  return `${API_URL}/api/v1/anime/anime/?limit=${limit}&offset=${offset}&ordering=${ordering}${sorting ?? ''}`;
+  return `/api/v1/anime/anime/?limit=${limit}&offset=${offset}&ordering=${ordering}${sorting ?? ''}`;
 }
