@@ -12,7 +12,7 @@ export function generateUrl(url: string, queries: Queries): string {
     if (value === query.nullValue) {
       value = localStorage.getItem(query.localStorageName) ?? query.nullValue;
     }
-    queryString += `${query.name}=${query.value}&`;
+    queryString += `${query.name}=${value}&`;
   });
   return queryString;
 }
