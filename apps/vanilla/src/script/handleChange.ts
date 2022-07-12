@@ -1,9 +1,10 @@
-import { Query } from '@js-camp/core/models/query';
+import { Queries } from '@js-camp/core/models/query';
 
 import { renderAnime, renderPagination } from './renderToDOM';
 import { fetchAnime } from './fetchAnime';
 import { generateUrl } from './generateUrl';
-import { DECIMAL, DEFAULT_QUERY, LIMIT, NULL_LIMIT, NULL_OFFSET, NULL_ORDERING, NULL_SORTING } from './constants';
+import { ANIME_ROUTE, DECIMAL, DEFAULT_QUERIES, LIMIT, LIMIT_HEADER, NULL_OFFSET, NULL_SORTING, OFFSET_HEADER, SORT_HEADER } from './constants';
+import { generateQuery } from './helpers';
 
 /**
  * Update Anime data after change something like sort or page.
@@ -31,19 +32,19 @@ export async function updateAnime(url: string): Promise<void> {
 export function choosePage(newPage: number): void {
   localStorage.setItem('ANIME_PAGE', newPage.toString());
 
-  const query: Query = {
-    offset: LIMIT * (newPage - 1),
-    limit: LIMIT,
-    sorting: NULL_SORTING,
-    ordering: NULL_ORDERING,
+  const queries: Queries = {
+    queryList: [
+      generateQuery(OFFSET_HEADER, LIMIT * (newPage - 1), 'ANIME_OFFSET'),
+      generateQuery(LIMIT_HEADER, LIMIT, 'ANIME_LIMIT'),
+    ],
   };
-  updateAnime(generateUrl(query));
+  updateAnime(generateUrl(ANIME_ROUTE, queries));
 }
 
 /** Get new data for first page. */
 export function goToFirstPage(): void {
   localStorage.setItem('ANIME_PAGE', '1');
-  updateAnime(generateUrl(DEFAULT_QUERY));
+  updateAnime(generateUrl(ANIME_ROUTE, DEFAULT_QUERIES));
 }
 
 /** Get new data for last page. */
@@ -53,38 +54,33 @@ export function goToLastPage(): void {
     const page = Math.floor(Number.parseInt(count, DECIMAL) / LIMIT);
     localStorage.setItem('ANIME_PAGE', page.toString());
     const offset = (page - 1) * LIMIT;
-    const query: Query = {
-      offset,
-      limit: LIMIT,
-      sorting: NULL_SORTING,
-      ordering: NULL_ORDERING,
+
+    const queries: Queries = {
+      queryList: [
+        generateQuery(OFFSET_HEADER, offset, 'ANIME_OFFSET'),
+        generateQuery(LIMIT_HEADER, LIMIT, 'ANIME_LIMIT'),
+      ],
     };
-    updateAnime(generateUrl(query));
+    updateAnime(generateUrl(ANIME_ROUTE, queries));
   }
 }
 
 /** Change sorting type. */
 export function changeSorting(): void {
-  const sortOption = document.querySelector<HTMLSelectElement>('.sort')?.value;
-  localStorage.setItem('ANIME_SORT', sortOption ?? '');
-  const query: Query = {
-    offset: NULL_OFFSET,
-    limit: NULL_LIMIT,
-    sorting: sortOption ?? NULL_SORTING,
-    ordering: NULL_ORDERING,
-  };
-  updateAnime(generateUrl(query));
-}
-
-/** Change ordering type. */
-export function changeOrdering(): void {
+  let sortOption = document.querySelector<HTMLSelectElement>('.sort')?.value;
   const orderOption = document.querySelector<HTMLSelectElement>('.order')?.value;
-  localStorage.setItem('ANIME_ORDER', orderOption ?? '');
-  const query: Query = {
-    offset: NULL_OFFSET,
-    limit: NULL_LIMIT,
-    sorting: NULL_SORTING,
-    ordering: orderOption ?? NULL_ORDERING,
-  };
-  updateAnime(generateUrl(query));
+  if (sortOption !== null && orderOption !== null) {
+    sortOption = `${orderOption}${sortOption}`;
+    localStorage.setItem('ANIME_SORT', sortOption ?? '');
+    localStorage.setItem('ANIME_ORDER', orderOption ?? '');
+
+    const queries: Queries = {
+      queryList: [
+        generateQuery(OFFSET_HEADER, NULL_OFFSET, 'ANIME_OFFSET', NULL_OFFSET),
+        generateQuery(LIMIT_HEADER, LIMIT, 'ANIME_LIMIT'),
+        generateQuery(SORT_HEADER, sortOption ?? NULL_SORTING, 'ANIME_SORT', NULL_SORTING),
+      ],
+    };
+    updateAnime(generateUrl(ANIME_ROUTE, queries));
+  }
 }

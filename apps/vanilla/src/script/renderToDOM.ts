@@ -2,7 +2,7 @@ import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 
 import { PAGE_STEP, LIMIT, SORT_OPTIONS, ORDER_OPTIONS, Sorting } from './constants';
-import { choosePage, changeSorting, changeOrdering } from './handleChange';
+import { choosePage, changeSorting } from './handleChange';
 
 /**
  * Print anime list to DOM.
@@ -97,7 +97,7 @@ export function renderOrderOptions(): void {
       select.append(optionElement);
     });
     select.classList.add('order');
-    select.addEventListener('change', changeOrdering);
+    select.addEventListener('change', changeSorting);
     orderNode.append(select);
   }
 }

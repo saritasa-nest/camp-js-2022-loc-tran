@@ -1,25 +1,18 @@
-import { Query } from '@js-camp/core/models/query';
-
-import { DECIMAL, DEFAULT_PAGE, LIMIT, NULL_LIMIT, NULL_OFFSET, NULL_ORDERING, NULL_SORTING } from './constants';
+import { Queries } from '@js-camp/core/models/query';
 
 /**
  * Generate api address with query string.
- * @param query Object store query variable.
+ * @param queries Object store queries variable.
+ * @param url Request address.
  */
-export function generateUrl(query: Query): string {
-  let { offset, limit, sorting, ordering } = query;
-  if (offset === NULL_OFFSET) {
-    const currentPage = localStorage.getItem('ANIME_PAGE') ?? DEFAULT_PAGE.toString();
-    offset = (Number.parseInt(currentPage, DECIMAL) - 1) * LIMIT;
-  }
-  if (limit === NULL_LIMIT) {
-    limit = LIMIT;
-  }
-  if (sorting === NULL_SORTING) {
-    sorting = localStorage.getItem('ANIME_SORT') ?? NULL_SORTING;
-  }
-  if (ordering === NULL_ORDERING) {
-    ordering = localStorage.getItem('ANIME_ORDER') ?? NULL_ORDERING;
-  }
-  return `/api/v1/anime/anime/?limit=${limit}&offset=${offset}&ordering=${ordering}${sorting ?? ''}`;
+export function generateUrl(url: string, queries: Queries): string {
+  let queryString = `${url}?`;
+  queries.queryList.forEach(query => {
+    let { value } = query;
+    if (value === query.nullValue) {
+      value = localStorage.getItem(query.localStorageName) ?? query.nullValue;
+    }
+    queryString += `${query.name}=${query.value}&`;
+  });
+  return queryString;
 }
