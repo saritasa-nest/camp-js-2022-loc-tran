@@ -1,3 +1,3 @@
-import { initRegisterForm } from '../../script/init';
+import { isAccessAbleRegister } from '../../script/accessPage';
 
-initRegisterForm();
+isAccessAbleRegister();

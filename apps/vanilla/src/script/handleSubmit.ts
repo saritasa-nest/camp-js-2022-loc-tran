@@ -31,7 +31,6 @@ export async function loginFormSubmit(event: SubmitEvent): Promise<void> {
     } else {
       showErrorLogin('Email and password is required!');
     }
-
   }
 }
 
@@ -71,4 +70,11 @@ export async function registerFormSubmit(event: SubmitEvent): Promise<void> {
       showErrorRegister('All fields need to be filled!');
     }
   }
+}
+
+/** Handle logout request. */
+export function handleLogout(): void {
+  localStorage.removeItem('ACCESS_TOKEN');
+  localStorage.removeItem('REFRESH_TOKEN');
+  location.replace(HOME_URL);
 }

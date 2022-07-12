@@ -1,3 +1,3 @@
-import { initLoginForm } from '../../script/init';
+import { isAccessAbleLogin } from '../../script/accessPage';
 
-initLoginForm();
+isAccessAbleLogin();

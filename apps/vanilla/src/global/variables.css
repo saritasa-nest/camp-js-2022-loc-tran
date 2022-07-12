@@ -2,6 +2,9 @@
   /* Using html color names here only for showcase,
    * you shouldn't be using color names in real projects. */
 
+  /* Font family */
+  --secondary-font: arial, helvetica, sans-serif;
+
   /* Primary color. */
   --primary-color: #2458a2;
   --primary-light-color: #5584c5;
@@ -14,6 +17,8 @@
   --primary-font-color: #000;
   --primary-contrast-font-color: #fff;
   --error-font-color: #f00;
+  --error-font-light-color: #f66d6d;
+  --secondary-font-color: #bbb;
 
   /* Background color. */
   --dark-background-color: #ccc;
@@ -21,7 +26,7 @@
   --background-color: #ddd;
 
   /* Border color. */
-  --border-color: black;
+  --border-color: #000;
 
   /* Header color. */
   --heading-color-1: #1229a7;
