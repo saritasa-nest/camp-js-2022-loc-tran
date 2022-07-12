@@ -8,7 +8,7 @@ export namespace UserMapper {
    * @param userDto User data dto.
    */
   export function fromDto(userDto: UserDto): User {
-    const userData = new User({
+    return new User({
       email: userDto.email,
       firstName: userDto.first_name,
       lastName: userDto.last_name,
@@ -16,6 +16,5 @@ export namespace UserMapper {
       created: new Date(userDto.created),
       modified: new Date(userDto.modified),
     });
-    return userData;
   }
 }

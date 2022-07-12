@@ -37,41 +37,41 @@ export async function renderUserData(): Promise<void> {
     if (profile) {
       profile.innerHTML = `<h2 class="profile__message">Log in to view your profile!</h2>`;
     }
-    return;
-  }
-  const profile = document.querySelector('.profile');
-  if (profile) {
-    const links = document.querySelector('.links');
-    if (links !== null) {
-      const logoutButton = document.createElement('button');
-      logoutButton.type = 'button';
-      logoutButton.innerHTML = 'Logout';
-      logoutButton.classList.add('links__logout');
-      logoutButton.addEventListener('click', handleLogout);
-      links.append(logoutButton);
+  } else {
+    const profile = document.querySelector('.profile');
+    if (profile) {
+      const links = document.querySelector('.links');
+      if (links !== null) {
+        const logoutButton = document.createElement('button');
+        logoutButton.type = 'button';
+        logoutButton.innerHTML = 'Logout';
+        logoutButton.classList.add('links__logout');
+        logoutButton.addEventListener('click', handleLogout);
+        links.append(logoutButton);
+      }
+      profile.innerHTML = `
+      <h2 class="profile__title">Your profile</h2>
+      <label class="profile__label">
+        <span class="profile__label-text">Email: </span>
+        <input disabled type="email" class="profile__label-input profile__label-email" value="${userData.email}" />
+      </label>
+      <label class="profile__label">
+        <span class="profile__label-text">First name: </span>
+        <input disabled type="text" class="profile__label-input profile__label-firstname" value="${userData.firstName}" />
+      </label>
+      <label class="profile__label">
+        <span class="profile__label-text">Last name: </span>
+        <input disabled type="text" class="profile__label-input profile__label-lastname" value="${userData.lastName}" />
+      </label>
+      <label class="profile__label">
+        <span class="profile__label-text">Created at: </span>
+        <input disabled type="datetime" class="profile__label-input profile__label-created" value="${userData.created.toLocaleString()}" />
+      </label>
+      <label class="profile__label">
+        <span class="profile__label-text">Last modified at: </span>
+        <input disabled type="datetime" class="profile__label-input profile__label-modified" value="${userData.modified.toLocaleString()}"
+          />
+      </label>`;
     }
-    profile.innerHTML = `
-    <h2 class="profile__title">Your profile</h2>
-    <label class="profile__label">
-      <span class="profile__label-text">Email: </span>
-      <input disabled type="email" class="profile__label-input profile__label-email" value="${userData.email}" />
-    </label>
-    <label class="profile__label">
-      <span class="profile__label-text">First name: </span>
-      <input disabled type="text" class="profile__label-input profile__label-firstname" value="${userData.firstName}" />
-    </label>
-    <label class="profile__label">
-      <span class="profile__label-text">Last name: </span>
-      <input disabled type="text" class="profile__label-input profile__label-lastname" value="${userData.lastName}" />
-    </label>
-    <label class="profile__label">
-      <span class="profile__label-text">Created at: </span>
-      <input disabled type="datetime" class="profile__label-input profile__label-created" value="${userData.created.toLocaleString()}" />
-    </label>
-    <label class="profile__label">
-      <span class="profile__label-text">Last modified at: </span>
-      <input disabled type="datetime" class="profile__label-input profile__label-modified" value="${userData.modified.toLocaleString()}"
-        />
-    </label>`;
   }
 }

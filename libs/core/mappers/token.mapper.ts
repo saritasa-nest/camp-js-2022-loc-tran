@@ -8,10 +8,9 @@ export namespace TokenMapper {
    * @param tokenDto Auth dto data.
    */
   export function fromDto(tokenDto: TokenDto): Token {
-    const token = new Token({
+    return new Token({
       accessToken: tokenDto.access,
       refreshToken: tokenDto.refresh,
     });
-    return token;
   }
 }

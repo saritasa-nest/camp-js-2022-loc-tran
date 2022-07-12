@@ -22,8 +22,7 @@ export async function getUserData(): Promise<User | Error> {
 
   try {
     const response = await http.get<UserDto>(PROFILE_URL);
-    const userData = UserMapper.fromDto(response.data);
-    return userData;
+    return UserMapper.fromDto(response.data);
   } catch (error: unknown) {
     return new Error((error as Error).message);
   }
