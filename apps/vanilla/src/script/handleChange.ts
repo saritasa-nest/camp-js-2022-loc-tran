@@ -3,7 +3,7 @@ import { Queries } from '@js-camp/core/models/query';
 import { renderAnime, renderPagination } from './renderToDOM';
 import { fetchAnime } from './fetchAnime';
 import { generateUrl } from './generateUrl';
-import { ANIME_ROUTE, DECIMAL, DEFAULT_QUERIES, LIMIT, LIMIT_HEADER, NULL_OFFSET, NULL_SORTING, OFFSET_HEADER, SORT_HEADER } from './constants';
+import { ANIME_ROUTE, DECIMAL, DEFAULT_OFFSET, DEFAULT_ORDERING, DEFAULT_QUERIES, LIMIT, LIMIT_HEADER, OFFSET_HEADER, SORT_HEADER } from './constants';
 import { generateQuery } from './helpers';
 
 /**
@@ -76,9 +76,9 @@ export function changeSorting(): void {
 
     const queries: Queries = {
       queryList: [
-        generateQuery(OFFSET_HEADER, NULL_OFFSET, 'ANIME_OFFSET', NULL_OFFSET),
+        generateQuery(OFFSET_HEADER, DEFAULT_OFFSET, 'ANIME_OFFSET'),
         generateQuery(LIMIT_HEADER, LIMIT, 'ANIME_LIMIT'),
-        generateQuery(SORT_HEADER, sortOption ?? NULL_SORTING, 'ANIME_SORT', NULL_SORTING),
+        generateQuery(SORT_HEADER, sortOption ?? DEFAULT_ORDERING, 'ANIME_SORT', DEFAULT_ORDERING),
       ],
     };
     updateAnime(generateUrl(ANIME_ROUTE, queries));

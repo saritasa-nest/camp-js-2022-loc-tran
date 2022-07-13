@@ -8,10 +8,10 @@ export enum Sorting {
   Default = '',
 }
 
-export const NULL_OFFSET = '';
-export const NULL_LIMIT = '';
-export const NULL_ORDERING = '';
-export const NULL_SORTING = '';
+export const DEFAULT_OFFSET = '';
+export const DEFAULT_LIMIT = '';
+export const DEFAULT_ORDERING = '';
+export const DEFAULT_SORTING = '';
 export const API_HEADER = 'Api-Key';
 export const NUMBER_OF_COLUMNS = 6;
 export const OFFSET = 0;
@@ -64,19 +64,19 @@ export const DEFAULT_QUERIES: Queries = {
       name: 'offset',
       localStorageName: 'ANIME_OFFSET',
       value: 0,
-      nullValue: '0',
+      defaultValue: DEFAULT_OFFSET,
     },
     {
       name: 'limit',
       localStorageName: 'ANIME_LIMIT',
       value: LIMIT,
-      nullValue: '0',
+      defaultValue: DEFAULT_LIMIT,
     },
     {
       name: 'ordering',
       localStorageName: 'ANIME_SORT',
       value: '',
-      nullValue: '',
+      defaultValue: DEFAULT_ORDERING,
     },
   ],
 };
