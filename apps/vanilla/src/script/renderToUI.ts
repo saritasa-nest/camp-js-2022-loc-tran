@@ -69,8 +69,7 @@ export async function renderUserData(): Promise<void> {
       </label>
       <label class="profile__label">
         <span class="profile__label-text">Last modified at: </span>
-        <input disabled type="datetime" class="profile__label-input profile__label-modified" value="${userData.modified.toLocaleString()}"
-          />
+        <input disabled type="datetime" class="profile__label-input profile__label-modified" value="${userData.modified.toLocaleString()}"/>
       </label>`;
     }
   }

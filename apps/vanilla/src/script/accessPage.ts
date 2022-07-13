@@ -3,7 +3,7 @@ import { initLoginForm, initRegisterForm } from './init';
 import { isAuthorized } from './isAuthorized';
 
 /** Check if logged in user request login page. */
-export async function isAccessAbleLogin(): Promise<void> {
+export async function isAccessableLogin(): Promise<void> {
   const isLoggedIn = await isAuthorized();
   if (isLoggedIn === true) {
     location.replace(PROFILE_PAGE);
@@ -13,7 +13,7 @@ export async function isAccessAbleLogin(): Promise<void> {
 }
 
 /** Check if logged in user request login page. */
-export async function isAccessAbleRegister(): Promise<void> {
+export async function isAccessableRegister(): Promise<void> {
   const isLoggedIn = await isAuthorized();
   if (isLoggedIn === true) {
     location.replace(PROFILE_PAGE);

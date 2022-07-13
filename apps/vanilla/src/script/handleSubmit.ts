@@ -11,7 +11,7 @@ import { showErrorLogin, showErrorRegister } from './renderToUI';
  * Handle submit for login form.
  * @param event Event of submit login form.
  */
-export async function loginFormSubmit(event: SubmitEvent): Promise<void> {
+export async function submitLoginForm(event: SubmitEvent): Promise<void> {
   event.preventDefault();
   if (event.target !== null) {
     const formData = new FormData(event.target as HTMLFormElement);
@@ -38,7 +38,7 @@ export async function loginFormSubmit(event: SubmitEvent): Promise<void> {
  * Handle submit for register form.
  * @param event Event of submit register form.
  */
-export async function registerFormSubmit(event: SubmitEvent): Promise<void> {
+export async function submitRegisterForm(event: SubmitEvent): Promise<void> {
   event.preventDefault();
   if (event.target !== null) {
     const formData = new FormData(event.target as HTMLFormElement);
