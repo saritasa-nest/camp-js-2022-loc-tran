@@ -7,12 +7,13 @@ import { Token } from '@js-camp/core/models/token';
 
 import { http } from '../api';
 import { REGISTER_URL } from '../script/constants';
+import { showErrorRegister } from '../script/renderToUI';
 
 /**
  * Handle register request.
  * @param data Account data of user.
  */
-export async function register(data: Account): Promise<Token | Error> {
+export async function register(data: Account): Promise<Token> {
   try {
     const accountDataDto = AccountMapper.toDto(data);
     const response = await http.post(REGISTER_URL, accountDataDto);
@@ -24,6 +25,7 @@ export async function register(data: Account): Promise<Token | Error> {
       errorList.push(...errorData.data[i]);
     }
     errorList.push(errorData.detail);
-    return new Error(errorList.join('<br>'));
+    showErrorRegister(errorList);
+    throw new Error((error as Error).message);
   }
 }

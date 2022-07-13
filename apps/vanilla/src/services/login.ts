@@ -7,12 +7,13 @@ import { LoginData } from '@js-camp/core/models/loginData';
 
 import { http } from '../api';
 import { LOGIN_URL } from '../script/constants';
+import { showErrorLogin } from '../script/renderToUI';
 
 /**
  * Handle login request.
  * @param data Login data.
  */
-export async function login(data: LoginData): Promise<Token | Error> {
+export async function login(data: LoginData): Promise<Token> {
   try {
     const response = await http.post<TokenDto>(LOGIN_URL, data);
     return TokenMapper.fromDto(response.data);
@@ -25,6 +26,7 @@ export async function login(data: LoginData): Promise<Token | Error> {
       }
     }
     errorList.push(errorData.detail);
-    return new Error(errorList.join('<br>'));
+    showErrorLogin(errorList);
+    throw new Error((error as Error).message);
   }
 }

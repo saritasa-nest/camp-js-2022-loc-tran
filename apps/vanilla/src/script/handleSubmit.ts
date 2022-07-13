@@ -21,15 +21,11 @@ export async function submitLoginForm(event: SubmitEvent): Promise<void> {
     if (email !== null && password !== null) {
       const loginData = new LoginData({ email: email.toString(), password: password.toString() });
       const auth = await login(loginData);
-      if (auth instanceof Error) {
-        showErrorLogin(auth.message);
-        return;
-      }
       localStorage.setItem('ACCESS_TOKEN', auth.accessToken);
       localStorage.setItem('REFRESH_TOKEN', auth.refreshToken);
       location.replace(PROFILE_PAGE);
     } else {
-      showErrorLogin('Email and password is required!');
+      showErrorLogin(['Email and password is required!']);
     }
   }
 }
@@ -49,7 +45,7 @@ export async function submitRegisterForm(event: SubmitEvent): Promise<void> {
     const retypePassword = formData.get('retype-password');
     if (email !== null && firstName !== null && lastName !== null && password !== null && retypePassword !== null) {
       if (password.toString() !== retypePassword.toString()) {
-        showErrorRegister('Retype password does not matched!');
+        showErrorRegister(['Retype password does not matched!']);
         return;
       }
       const newAccount = new Account({
@@ -59,15 +55,11 @@ export async function submitRegisterForm(event: SubmitEvent): Promise<void> {
         password: password.toString(),
       });
       const auth = await register(newAccount);
-      if (auth instanceof Error) {
-        showErrorRegister(auth.message);
-        return;
-      }
       localStorage.setItem('ACCESS_TOKEN', auth.accessToken);
       localStorage.setItem('REFRESH_TOKEN', auth.refreshToken);
       location.replace(PROFILE_PAGE);
     } else {
-      showErrorRegister('All fields need to be filled!');
+      showErrorRegister(['All fields need to be filled!']);
     }
   }
 }

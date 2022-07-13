@@ -1,3 +1,3 @@
-import { isAccessAbleLogin } from '../../script/accessPage';
+import { isAccessableLogin } from '../../script/accessPage';
 
-isAccessAbleLogin();
+isAccessableLogin();

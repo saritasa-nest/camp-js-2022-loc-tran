@@ -1,3 +1,3 @@
-import { isAccessAbleRegister } from '../../script/accessPage';
+import { isAccessableRegister } from '../../script/accessPage';
 
-isAccessAbleRegister();
+isAccessableRegister();
