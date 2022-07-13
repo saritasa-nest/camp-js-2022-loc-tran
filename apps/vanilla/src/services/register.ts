@@ -24,6 +24,6 @@ export async function register(data: Account): Promise<Token | Error> {
       errorList.push(...errorData.data[i]);
     }
     errorList.push(errorData.detail);
-    return new Error(errorList[0]);
+    return new Error(errorList.join('<br>'));
   }
 }

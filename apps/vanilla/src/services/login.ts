@@ -25,6 +25,6 @@ export async function login(data: LoginData): Promise<Token | Error> {
       }
     }
     errorList.push(errorData.detail);
-    return new Error(errorList[0]);
+    return new Error(errorList.join('<br>'));
   }
 }

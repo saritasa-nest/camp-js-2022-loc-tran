@@ -5,7 +5,7 @@ import { isAuth } from './isAuth';
 /** Check if logged in user request login page. */
 export async function isAccessAbleLogin(): Promise<void> {
   const isLoggedIn = await isAuth();
-  if (isLoggedIn) {
+  if (isLoggedIn === true) {
     location.replace(HOME_URL);
     return;
   }
@@ -15,7 +15,7 @@ export async function isAccessAbleLogin(): Promise<void> {
 /** Check if logged in user request login page. */
 export async function isAccessAbleRegister(): Promise<void> {
   const isLoggedIn = await isAuth();
-  if (isLoggedIn) {
+  if (isLoggedIn === true) {
     location.replace(HOME_URL);
     return;
   }
