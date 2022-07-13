@@ -6,4 +6,5 @@ export const VERIFY_URL = '/api/v1/auth/token/verify/';
 export const REFRESH_URL = '/api/v1/auth/token/refresh/';
 
 /** Redirect Url. */
-export const HOME_URL = '/';
+export const HOME_PAGE = '/';
+export const PROFILE_PAGE = '/profile/';

@@ -4,7 +4,7 @@ import { LoginData } from '@js-camp/core/models/loginData';
 import { login } from '../services/login';
 import { register } from '../services/register';
 
-import { HOME_URL } from './constants';
+import { PROFILE_PAGE } from './constants';
 import { showErrorLogin, showErrorRegister } from './renderToUI';
 
 /**
@@ -27,7 +27,7 @@ export async function loginFormSubmit(event: SubmitEvent): Promise<void> {
       }
       localStorage.setItem('ACCESS_TOKEN', auth.accessToken);
       localStorage.setItem('REFRESH_TOKEN', auth.refreshToken);
-      location.replace(HOME_URL);
+      location.replace(PROFILE_PAGE);
     } else {
       showErrorLogin('Email and password is required!');
     }
@@ -65,7 +65,7 @@ export async function registerFormSubmit(event: SubmitEvent): Promise<void> {
       }
       localStorage.setItem('ACCESS_TOKEN', auth.accessToken);
       localStorage.setItem('REFRESH_TOKEN', auth.refreshToken);
-      location.replace(HOME_URL);
+      location.replace(PROFILE_PAGE);
     } else {
       showErrorRegister('All fields need to be filled!');
     }
@@ -76,5 +76,5 @@ export async function registerFormSubmit(event: SubmitEvent): Promise<void> {
 export function handleLogout(): void {
   localStorage.removeItem('ACCESS_TOKEN');
   localStorage.removeItem('REFRESH_TOKEN');
-  location.replace(HOME_URL);
+  location.replace(PROFILE_PAGE);
 }

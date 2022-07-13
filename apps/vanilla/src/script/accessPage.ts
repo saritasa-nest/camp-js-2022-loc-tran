@@ -1,4 +1,4 @@
-import { HOME_URL } from './constants';
+import { PROFILE_PAGE } from './constants';
 import { initLoginForm, initRegisterForm } from './init';
 import { isAuth } from './isAuth';
 
@@ -6,7 +6,7 @@ import { isAuth } from './isAuth';
 export async function isAccessAbleLogin(): Promise<void> {
   const isLoggedIn = await isAuth();
   if (isLoggedIn === true) {
-    location.replace(HOME_URL);
+    location.replace(PROFILE_PAGE);
     return;
   }
   initLoginForm();
@@ -16,7 +16,7 @@ export async function isAccessAbleLogin(): Promise<void> {
 export async function isAccessAbleRegister(): Promise<void> {
   const isLoggedIn = await isAuth();
   if (isLoggedIn === true) {
-    location.replace(HOME_URL);
+    location.replace(PROFILE_PAGE);
     return;
   }
   initRegisterForm();
