@@ -1,7 +1,7 @@
 @import url("../global/index.css");
 
 .title {
-  color: var(--heading-color-1);
+  color: var(--font-color-heading-1);
   font-size: 4rem;
   font-family: var(--header-font);
   letter-spacing: 0.5rem;
@@ -22,14 +22,14 @@
 
 .table__row:nth-child(even) {
   background-color: var(--dark-background-color);
-  color: var(--primary-font-color);
+  color: var(--font-color-primary);
 }
 
 .table__head {
   border: 1px solid var(--border-color);
   font-size: 1.3rem;
   background-color: var(--primary-color);
-  color: var(--primary-contrast-font-color);
+  color: var(--font-color-contrast-primary);
 }
 
 .table__head-title {
@@ -56,7 +56,7 @@
 
 .pagination__button {
   background-color: var(--primary-color);
-  color: var(--primary-contrast-font-color);
+  color: var(--font-color-contrast-primary);
   margin: 20px 0;
   padding: 5px 15px;
   border-radius: 10%;

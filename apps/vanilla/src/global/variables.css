@@ -12,8 +12,6 @@
   --primary-contrast-color: #fff;
   --primary-dark-contrast-color: #fff;
   --primary-light-contrast-color: #fff;
-  --primary-font-color: #000;
-  --primary-contrast-font-color: #fff;
 
   /* Background color. */
   --dark-background-color: #ccc;
@@ -24,5 +22,9 @@
   --border-color: #000;
 
   /* Header color. */
-  --heading-color-1: #1229a7;
+  --font-color-heading-1: #1229a7;
+
+  /** Font color */
+  --font-color-contrast-primary: #fff;
+  --font-color-primary: #000;
 }
