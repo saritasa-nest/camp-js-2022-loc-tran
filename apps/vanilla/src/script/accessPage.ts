@@ -1,6 +1,6 @@
 import { PROFILE_PAGE } from './constants';
 import { initLoginForm, initRegisterForm } from './init';
-import { isAuthorized } from './isAuthenticated';
+import { isAuthorized } from './isAuthorized';
 
 /** Check if logged in user request login page. */
 export async function isAccessAbleLogin(): Promise<void> {
