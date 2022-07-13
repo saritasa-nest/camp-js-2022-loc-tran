@@ -1,7 +1,7 @@
 import { getRefreshedToken, storeTokens, verifyToken } from '../services/token';
 
 /** Check is user have authenticated. */
-export async function isAuth(): Promise<boolean> {
+export async function isAuthorized(): Promise<boolean> {
   const accessToken = localStorage.getItem('ACCESS_TOKEN');
   const refreshToken = localStorage.getItem('REFRESH_TOKEN');
   if (accessToken === null || refreshToken === null) {
