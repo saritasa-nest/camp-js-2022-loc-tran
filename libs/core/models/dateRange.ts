@@ -1,4 +1,4 @@
-/** Date range interface. */
+/** Define data for DateRange. */
 export interface DateRange {
 
   /** End date Anime. */

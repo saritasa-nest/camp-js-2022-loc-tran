@@ -1,4 +1,4 @@
-/** Interface for 1 query. */
+/** Define data of one Query. */
 export interface Query {
 
   /** Name of the query. */

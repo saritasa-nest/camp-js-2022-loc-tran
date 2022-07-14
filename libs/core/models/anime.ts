@@ -2,7 +2,7 @@ import { AnimeStatus, AnimeType } from '../dtos/anime.dto';
 
 import { DateRange } from './dateRange';
 
-/** Class for anime. */
+/** Define data in class Anime. */
 export interface Anime {
 
   /** Id of the anime. */
