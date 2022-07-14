@@ -18,7 +18,7 @@ export namespace SortHandler {
 
       const queries: Queries = {
         queryList: [
-          generateQuery(OFFSET_HEADER, DEFAULT_OFFSET, OFFSET_LS),
+          generateQuery(OFFSET_HEADER, DEFAULT_OFFSET, OFFSET_LS, DEFAULT_OFFSET),
           generateQuery(LIMIT_HEADER, LIMIT, LIMIT_LS),
           generateQuery(SORT_HEADER, sortOption ?? DEFAULT_ORDERING, SORT_LS, DEFAULT_ORDERING),
         ],

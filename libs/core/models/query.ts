@@ -11,7 +11,7 @@ export interface Query {
   readonly value: string | number;
 
   /** Null value of the query. */
-  readonly defaultValue: string;
+  readonly defaultValue: string | number;
 }
 
 /** Store query variable. */

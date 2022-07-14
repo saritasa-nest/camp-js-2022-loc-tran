@@ -20,8 +20,8 @@ export const API_URL = import.meta.env.VITE_API_URL;
 export const ANIME_ROUTE = '/api/v1/anime/anime/';
 
 /** Default values of query if user don't pass any value. */
-export const DEFAULT_OFFSET = '';
-export const DEFAULT_LIMIT = '';
+export const DEFAULT_OFFSET = '0';
+export const DEFAULT_LIMIT = 25;
 export const DEFAULT_ORDERING = '';
 export const DEFAULT_SORTING = '';
 export const DEFAULT_PAGE = 1;
@@ -81,7 +81,7 @@ export const DEFAULT_QUERIES: Queries = {
     {
       name: 'offset',
       localStorageName: 'ANIME_OFFSET',
-      value: 0,
+      value: OFFSET,
       defaultValue: DEFAULT_OFFSET,
     },
     {
@@ -94,7 +94,7 @@ export const DEFAULT_QUERIES: Queries = {
       name: 'ordering',
       localStorageName: 'ANIME_SORT',
       value: '',
-      defaultValue: DEFAULT_ORDERING,
+      defaultValue: DEFAULT_SORTING,
     },
   ],
 };

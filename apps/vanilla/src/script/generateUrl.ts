@@ -13,7 +13,7 @@ export function generateUrl(url: string, queries: Queries): string {
   queries.queryList.forEach(query => {
     let { value } = query;
     if (value === query.defaultValue) {
-      value = findInLocalStorage(value, query.localStorageName);
+      value = findInLocalStorage(value.toString(), query.localStorageName);
     }
     searchParams.append(query.name, value.toString());
   });

@@ -1,6 +1,6 @@
 import { Queries } from '@js-camp/core/models/query';
 
-import { ANIME_ROUTE, COUNT_LS, DECIMAL, DEFAULT_PAGE, DEFAULT_QUERIES, LIMIT, LIMIT_HEADER, LIMIT_LS, OFFSET_HEADER, OFFSET_LS, PAGE_LS } from '../script/constants';
+import { ANIME_ROUTE, COUNT_LS, DECIMAL, DEFAULT_PAGE, DEFAULT_QUERIES, DEFAULT_SORTING, LIMIT, LIMIT_HEADER, LIMIT_LS, OFFSET_HEADER, OFFSET_LS, PAGE_LS, SORT_HEADER, SORT_LS } from '../script/constants';
 import { generateUrl } from '../script/generateUrl';
 import { generateQuery } from '../script/helpers';
 import { updateAnime } from '../services/fetchAnime';
@@ -13,11 +13,13 @@ export namespace PageHandler {
    */
   export function goToPageByNum(newPage: number): void {
     localStorage.setItem(PAGE_LS, newPage.toString());
+    localStorage.setItem(OFFSET_LS, (LIMIT * (newPage - 1)).toString());
 
     const queries: Queries = {
       queryList: [
         generateQuery(OFFSET_HEADER, LIMIT * (newPage - 1), OFFSET_LS),
         generateQuery(LIMIT_HEADER, LIMIT, LIMIT_LS),
+        generateQuery(SORT_HEADER, DEFAULT_SORTING, SORT_LS, DEFAULT_SORTING),
       ],
     };
     updateAnime(generateUrl(ANIME_ROUTE, queries));
@@ -41,6 +43,7 @@ export namespace PageHandler {
         queryList: [
           generateQuery(OFFSET_HEADER, offset, OFFSET_LS),
           generateQuery(LIMIT_HEADER, LIMIT, LIMIT_LS),
+          generateQuery(SORT_HEADER, DEFAULT_SORTING, SORT_LS, DEFAULT_SORTING),
         ],
       };
       updateAnime(generateUrl(ANIME_ROUTE, queries));
@@ -48,5 +51,4 @@ export namespace PageHandler {
       throw new Error('Cannot find COUNT variable in local storage!');
     }
   }
-
 }
