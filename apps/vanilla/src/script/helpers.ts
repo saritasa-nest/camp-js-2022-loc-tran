@@ -1,6 +1,7 @@
 import { Query } from '@js-camp/core/models/query';
 
-/** Generate Query object.
+/**
+ * Generate Query object.
  * @param name Name of the query.
  * @param value Value of the query.
  * @param localStorageName Name to store value in local storage.

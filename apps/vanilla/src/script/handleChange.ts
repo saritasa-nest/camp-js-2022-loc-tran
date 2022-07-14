@@ -25,7 +25,7 @@ export async function updateAnime(url: string): Promise<void> {
  * Get new data for next page.
  * @param newPage Next page number.
  */
-export function choosePage(newPage: number): void {
+export function goToPageByNum(newPage: number): void {
   localStorage.setItem(PAGE_LS, newPage.toString());
 
   const queries: Queries = {

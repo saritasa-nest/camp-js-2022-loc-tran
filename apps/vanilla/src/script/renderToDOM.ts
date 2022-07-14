@@ -2,7 +2,7 @@ import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 
 import { PAGE_STEP, LIMIT, SORT_OPTIONS, ORDER_OPTIONS, Sorting } from './constants';
-import { choosePage, changeSorting } from './handleChange';
+import { goToPageByNum, changeSorting } from './handleChange';
 
 /**
  * Print anime list to DOM.
@@ -60,7 +60,7 @@ function createButtonPagination(page: number, isActive: boolean): HTMLElement {
   button.classList.add('pagination__button');
   button.innerHTML = `${page}`;
   button.type = 'button';
-  button.addEventListener('click', () => choosePage(page));
+  button.addEventListener('click', () => goToPageByNum(page));
   return button;
 }
 
