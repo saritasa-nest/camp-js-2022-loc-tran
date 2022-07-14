@@ -12,7 +12,7 @@ export interface SortOption {
 /** Define the data in one order option. */
 export interface OrderOption {
 
-  /** Title or name of the opotion. */
+  /** Title or name of the option. */
   title: string;
 
   /** Value of the option. */
