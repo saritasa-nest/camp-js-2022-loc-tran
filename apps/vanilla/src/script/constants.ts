@@ -33,6 +33,16 @@ export const NUMBER_OF_COLUMNS = 6;
 export const PAGE_STEP = 3;
 export const DECIMAL = 10;
 
+/** Local storage name. */
+export const NEXT_PAGE_LS = 'NEXT_PAGE_ANIME';
+export const PREVIOUS_PAGE_LS = 'PREVIOUS_PAGE_ANIME';
+export const COUNT_LS = 'COUNT';
+export const PAGE_LS = 'ANIME_PAGE';
+export const LIMIT_LS = 'ANIME_LIMIT';
+export const OFFSET_LS = 'ANIME_OFFSET';
+export const SORT_LS = 'ANIME_SORT';
+export const ORDER_LS = 'ANIME_ORDER';
+
 /** Options for sorting. */
 export const SORT_OPTIONS: Array<SortOption> = [
   {
