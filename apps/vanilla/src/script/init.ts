@@ -1,14 +1,16 @@
+import { PageHandler } from '../namespaces/PageHandler';
+import { updateAnime } from '../services/fetchAnime';
+
 import { ANIME_ROUTE, DEFAULT_QUERIES, NUMBER_OF_COLUMNS } from './constants';
 import { generateUrl } from './generateUrl';
-import { goToFirstPage, goToLastPage, updateAnime } from './handleChange';
 import { renderOrderOptions, renderPagination, renderSortOptions } from './renderToDOM';
 
 /** Init event listener for pagination and render it to DOM. */
 export function initPagination(): void {
   const firstPageButton = document.querySelector('.first-page-button');
-  firstPageButton?.addEventListener('click', goToFirstPage);
+  firstPageButton?.addEventListener('click', PageHandler.goToFirstPage);
   const lastPageButton = document.querySelector('.last-page-button');
-  lastPageButton?.addEventListener('click', goToLastPage);
+  lastPageButton?.addEventListener('click', PageHandler.goToLastPage);
   renderPagination();
 }
 

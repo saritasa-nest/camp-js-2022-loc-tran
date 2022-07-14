@@ -1,8 +1,10 @@
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 
+import { PageHandler } from '../namespaces/PageHandler';
+import { SortHandler } from '../namespaces/SortHandler';
+
 import { PAGE_STEP, LIMIT, SORT_OPTIONS, ORDER_OPTIONS, Sorting } from './constants';
-import { goToPageByNum, changeSorting } from './handleChange';
 
 /**
  * Print anime list to DOM.
@@ -62,7 +64,7 @@ function createButtonPagination(page: number, isActive: boolean): HTMLElement {
   button.classList.add('pagination__button');
   button.innerHTML = `${page}`;
   button.type = 'button';
-  button.addEventListener('click', () => goToPageByNum(page));
+  button.addEventListener('click', () => PageHandler.goToPageByNum(page));
   return button;
 }
 
@@ -79,7 +81,7 @@ export function renderSortOptions(): void {
       optionElement.defaultSelected = option.value === initSort;
       select.append(optionElement);
     });
-    select.addEventListener('change', changeSorting);
+    select.addEventListener('change', SortHandler.changeSorting);
     select.classList.add('sort');
     sortNode.append(select);
   } else {
@@ -101,7 +103,7 @@ export function renderOrderOptions(): void {
       select.append(optionElement);
     });
     select.classList.add('order');
-    select.addEventListener('change', changeSorting);
+    select.addEventListener('change', SortHandler.changeSorting);
     orderNode.append(select);
   } else {
     throw new Error('Cannot get order element in DOM');
