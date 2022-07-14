@@ -66,7 +66,7 @@ function createButtonPagination(page: number, isActive: boolean): HTMLElement {
 
 /** Create select element for sorting. */
 export function renderSortOptions(): void {
-  const sortNode = document.querySelector('.filter__label-sort');
+  const sortNode = document.querySelector('.query__label-sort');
   const initSort = localStorage.getItem('ANIME_SORT') ?? Sorting.Default;
   if (sortNode !== null) {
     const select = document.createElement('select');
@@ -86,7 +86,7 @@ export function renderSortOptions(): void {
 /** Create order element for ordering. */
 export function renderOrderOptions(): void {
   const initOrder = localStorage.getItem('ANIME_ORDER') ?? '+';
-  const orderNode = document.querySelector('.filter__label-order');
+  const orderNode = document.querySelector('.query__label-order');
   if (orderNode !== null) {
     const select = document.createElement('select');
     ORDER_OPTIONS.forEach(option => {

@@ -1,5 +1,5 @@
-import { initAnimeTable, initFilter, initPagination } from '../script/init';
+import { initAnimeTable, initPagination, initQuery } from '../script/init';
 
 initAnimeTable();
 initPagination();
-initFilter();
+initQuery();

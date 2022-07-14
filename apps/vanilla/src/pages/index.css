@@ -71,13 +71,13 @@
   background-color: var(--primary-light-color);
 }
 
-.filter {
+.query {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.filter__label {
+.query__label {
   display: flex;
   align-items: center;
 }

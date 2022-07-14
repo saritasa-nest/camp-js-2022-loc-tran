@@ -12,8 +12,8 @@ export function initPagination(): void {
   renderPagination();
 }
 
-/** Init filter option. */
-export function initFilter(): void {
+/** Init query option. */
+export function initQuery(): void {
   renderOrderOptions();
   renderSortOptions();
 }
