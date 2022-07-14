@@ -67,7 +67,7 @@ export const SORT_OPTIONS: Array<SortOption> = [
 export const ORDER_OPTIONS: Array<OrderOption> = [
   {
     title: 'Ascending',
-    value: '+',
+    value: '',
   },
   {
     title: 'Descending',
