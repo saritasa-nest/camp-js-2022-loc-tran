@@ -13,7 +13,7 @@ import { http } from '../api';
  * Fetch anime data from api.
  * @param url Api address.
  */
-export async function fetchAnime(url: string): Promise<Pagination<Anime> | Error > {
+export async function fetchAnime(url: string): Promise<Pagination<Anime>> {
   try {
     const response = await http.get<PaginationDto<AnimeDto>>(url);
 
