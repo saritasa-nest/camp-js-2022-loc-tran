@@ -44,6 +44,8 @@ export function renderPagination(): void {
     for (let i = first; i <= first + PAGE_STEP * 2 && i <= Math.ceil(count / LIMIT); i++) {
       pagination.append(createButtonPagination(i, currentPage === i));
     }
+  } else {
+    throw new Error('Cannot get pagination element in DOM');
   }
 }
 
@@ -80,6 +82,8 @@ export function renderSortOptions(): void {
     select.addEventListener('change', changeSorting);
     select.classList.add('sort');
     sortNode.append(select);
+  } else {
+    throw new Error('Cannot get sort element in DOM');
   }
 }
 
@@ -99,5 +103,7 @@ export function renderOrderOptions(): void {
     select.classList.add('order');
     select.addEventListener('change', changeSorting);
     orderNode.append(select);
+  } else {
+    throw new Error('Cannot get order element in DOM');
   }
 }

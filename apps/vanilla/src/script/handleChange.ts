@@ -58,6 +58,8 @@ export function goToLastPage(): void {
       ],
     };
     updateAnime(generateUrl(ANIME_ROUTE, queries));
+  } else {
+    throw new Error('Cannot find COUNT variable in local storage!');
   }
 }
 
@@ -78,5 +80,7 @@ export function changeSorting(): void {
       ],
     };
     updateAnime(generateUrl(ANIME_ROUTE, queries));
+  } else {
+    throw new Error('Cannot get sort element and order element in DOM!');
   }
 }

@@ -32,6 +32,8 @@ export function initAnimeTable(): void {
       cell.append(loadingImage);
       tableRow.append(cell);
     }
+  } else {
+    throw new Error('Cannot get table row element in DOM!');
   }
   updateAnime(generateUrl(ANIME_ROUTE, DEFAULT_QUERIES));
 }
