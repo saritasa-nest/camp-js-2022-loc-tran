@@ -1,10 +1,12 @@
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 
+import { FilterHandler } from '../namespaces/FilterHandler';
+
 import { PageHandler } from '../namespaces/PageHandler';
 import { SortHandler } from '../namespaces/SortHandler';
 
-import { PAGE_STEP, LIMIT, SORT_OPTIONS, ORDER_OPTIONS, Sorting, DEFAULT_ORDERING } from './constants';
+import { PAGE_STEP, LIMIT, SORT_OPTIONS, ORDER_OPTIONS, Sorting, DEFAULT_ORDERING, DEFAULT_FILTERING, FILTER_OPTIONS } from './constants';
 
 /**
  * Print anime list to DOM.
@@ -107,5 +109,26 @@ export function renderOrderOptions(): void {
     orderNode.append(select);
   } else {
     throw new Error('Cannot get order element in DOM');
+  }
+}
+
+/** Create filter element for filtering. */
+export function renderFilterOptions(): void {
+  const initFilter = localStorage.getItem('ANIME_ORDER') ?? DEFAULT_FILTERING;
+  const filterNode = document.querySelector('.query__label-filter');
+  if (filterNode !== null) {
+    const select = document.createElement('select');
+    FILTER_OPTIONS.forEach(option => {
+      const optionElement = document.createElement('option');
+      optionElement.value = option.value;
+      optionElement.innerHTML = option.title;
+      optionElement.defaultSelected = initFilter === option.value;
+      select.append(optionElement);
+    });
+    select.classList.add('filter');
+    select.addEventListener('change', FilterHandler.changeFiltering);
+    filterNode.append(select);
+  } else {
+    throw new Error('Cannot get filter element in DOM');
   }
 }

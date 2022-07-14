@@ -3,7 +3,7 @@ import { updateAnime } from '../services/fetchAnime';
 
 import { ANIME_ROUTE, DEFAULT_QUERIES, NUMBER_OF_COLUMNS } from './constants';
 import { generateUrl } from './generateUrl';
-import { renderOrderOptions, renderPagination, renderSortOptions } from './renderToDOM';
+import { renderFilterOptions, renderOrderOptions, renderPagination, renderSortOptions } from './renderToDOM';
 
 /** Init event listener for pagination and render it to DOM. */
 export function initPagination(): void {
@@ -18,6 +18,7 @@ export function initPagination(): void {
 export function initQuery(): void {
   renderOrderOptions();
   renderSortOptions();
+  renderFilterOptions();
 }
 
 /** Init anime table. */

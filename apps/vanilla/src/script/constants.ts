@@ -1,4 +1,5 @@
-import { OrderOption, SortOption } from '@js-camp/core/models/option';
+import { AnimeType } from '@js-camp/core/dtos/anime.dto';
+import { FilterOption, OrderOption, SortOption } from '@js-camp/core/models/option';
 import { Queries } from '@js-camp/core/models/query';
 
 /** Sorting options for user. */
@@ -14,6 +15,7 @@ export const API_HEADER = 'Api-Key';
 export const OFFSET_HEADER = 'offset';
 export const LIMIT_HEADER = 'limit';
 export const SORT_HEADER = 'ordering';
+export const FILTER_HEADER = 'type';
 
 /** Request address. */
 export const API_URL = import.meta.env.VITE_API_URL;
@@ -23,6 +25,7 @@ export const ANIME_ROUTE = '/api/v1/anime/anime/';
 export const DEFAULT_OFFSET = '0';
 export const DEFAULT_LIMIT = 25;
 export const DEFAULT_ORDERING = '';
+export const DEFAULT_FILTERING = '';
 export const DEFAULT_SORTING = '';
 export const DEFAULT_PAGE = 1;
 export const LIMIT = 25;
@@ -42,6 +45,7 @@ export const LIMIT_LS = 'ANIME_LIMIT';
 export const OFFSET_LS = 'ANIME_OFFSET';
 export const SORT_LS = 'ANIME_SORT';
 export const ORDER_LS = 'ANIME_ORDER';
+export const FILTER_LS = 'ANIME_FILTER';
 
 /** Options for sorting. */
 export const SORT_OPTIONS: Array<SortOption> = [
@@ -75,26 +79,64 @@ export const ORDER_OPTIONS: Array<OrderOption> = [
   },
 ];
 
+/** Options for filtering. */
+export const FILTER_OPTIONS: Array<FilterOption> = [
+  {
+    title: 'Default',
+    value: DEFAULT_FILTERING,
+  },
+  {
+    title: 'Tv',
+    value: AnimeType.tv,
+  },
+  {
+    title: 'Ova',
+    value: AnimeType.ova,
+  },
+  {
+    title: 'Movie',
+    value: AnimeType.movie,
+  },
+  {
+    title: 'Special',
+    value: AnimeType.special,
+  },
+  {
+    title: 'Ona',
+    value: AnimeType.ona,
+  },
+  {
+    title: 'Music',
+    value: AnimeType.music,
+  },
+];
+
 /** Default data for queries. */
 export const DEFAULT_QUERIES: Queries = {
   queryList: [
     {
       name: 'offset',
-      localStorageName: 'ANIME_OFFSET',
-      value: OFFSET,
+      localStorageName: OFFSET_LS,
+      value: DEFAULT_OFFSET,
       defaultValue: DEFAULT_OFFSET,
     },
     {
       name: 'limit',
-      localStorageName: 'ANIME_LIMIT',
+      localStorageName: LIMIT_LS,
       value: LIMIT,
       defaultValue: DEFAULT_LIMIT,
     },
     {
       name: 'ordering',
-      localStorageName: 'ANIME_SORT',
-      value: '',
+      localStorageName: SORT_LS,
+      value: DEFAULT_SORTING,
       defaultValue: DEFAULT_SORTING,
+    },
+    {
+      name: 'type',
+      localStorageName: FILTER_LS,
+      value: DEFAULT_FILTERING,
+      defaultValue: DEFAULT_FILTERING,
     },
   ],
 };

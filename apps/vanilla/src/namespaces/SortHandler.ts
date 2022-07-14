@@ -1,6 +1,6 @@
 import { Queries } from '@js-camp/core/models/query';
 
-import { SORT_LS, DEFAULT_SORTING, ORDER_LS, DEFAULT_ORDERING, OFFSET_HEADER, DEFAULT_OFFSET, OFFSET_LS, LIMIT_HEADER, LIMIT, LIMIT_LS, SORT_HEADER, ANIME_ROUTE } from '../script/constants';
+import { SORT_LS, DEFAULT_SORTING, ORDER_LS, DEFAULT_ORDERING, OFFSET_HEADER, DEFAULT_OFFSET, OFFSET_LS, LIMIT_HEADER, LIMIT, LIMIT_LS, SORT_HEADER, ANIME_ROUTE, DEFAULT_FILTERING, FILTER_HEADER, FILTER_LS } from '../script/constants';
 import { generateUrl } from '../script/generateUrl';
 import { generateQuery } from '../script/helpers';
 import { updateAnime } from '../services/fetchAnime';
@@ -21,6 +21,7 @@ export namespace SortHandler {
           generateQuery(OFFSET_HEADER, DEFAULT_OFFSET, OFFSET_LS, DEFAULT_OFFSET),
           generateQuery(LIMIT_HEADER, LIMIT, LIMIT_LS),
           generateQuery(SORT_HEADER, sortOption ?? DEFAULT_ORDERING, SORT_LS, DEFAULT_ORDERING),
+          generateQuery(FILTER_HEADER, DEFAULT_FILTERING, FILTER_LS, DEFAULT_FILTERING),
         ],
       };
       updateAnime(generateUrl(ANIME_ROUTE, queries));
