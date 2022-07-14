@@ -4,7 +4,7 @@ import { Pagination } from '@js-camp/core/models/pagination';
 import { PageHandler } from '../namespaces/PageHandler';
 import { SortHandler } from '../namespaces/SortHandler';
 
-import { PAGE_STEP, LIMIT, SORT_OPTIONS, ORDER_OPTIONS, Sorting, DEFAULT_ORDERING } from './constants';
+import { PAGE_STEP, LIMIT, SORT_OPTIONS, ORDER_OPTIONS, Sorting, DEFAULT_ORDERING, ORDER_LS, SORT_LS } from './constants';
 
 /**
  * Print anime list to DOM.
@@ -71,7 +71,7 @@ function createButtonPagination(page: number, isActive: boolean): HTMLElement {
 /** Create select element for sorting. */
 export function renderSortOptions(): void {
   const sortNode = document.querySelector('.query__label-sort');
-  const initSort = localStorage.getItem('ANIME_SORT') ?? Sorting.Default;
+  const initSort = localStorage.getItem(SORT_LS) ?? Sorting.Default;
   if (sortNode !== null) {
     const select = document.createElement('select');
     SORT_OPTIONS.forEach(option => {
@@ -91,7 +91,7 @@ export function renderSortOptions(): void {
 
 /** Create order element for ordering. */
 export function renderOrderOptions(): void {
-  const initOrder = localStorage.getItem('ANIME_ORDER') ?? DEFAULT_ORDERING;
+  const initOrder = localStorage.getItem(ORDER_LS) ?? DEFAULT_ORDERING;
   const orderNode = document.querySelector('.query__label-order');
   if (orderNode !== null) {
     const select = document.createElement('select');
