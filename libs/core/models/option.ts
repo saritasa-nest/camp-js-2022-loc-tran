@@ -2,10 +2,10 @@
 export interface SortOption {
 
   /** Title or name of the option. */
-  title: string;
+  readonly title: string;
 
   /** Value of the option. */
-  value: string;
+  readonly value: string;
 
 }
 
@@ -13,9 +13,9 @@ export interface SortOption {
 export interface OrderOption {
 
   /** Title or name of the option. */
-  title: string;
+  readonly title: string;
 
   /** Value of the option. */
-  value: string;
+  readonly value: string;
 
 }
