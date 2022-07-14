@@ -1,6 +1,7 @@
+import { OrderOption, SortOption } from '@js-camp/core/models/option';
 import { Queries } from '@js-camp/core/models/query';
 
-/** Enum for sorting. */
+/** Sorting options for user. */
 export enum Sorting {
   EnglishTitle = 'title_eng',
   AiredStart = 'aired__startswith',
@@ -8,25 +9,32 @@ export enum Sorting {
   Default = '',
 }
 
-export const DEFAULT_OFFSET = '';
-export const DEFAULT_LIMIT = '';
-export const DEFAULT_ORDERING = '';
-export const DEFAULT_SORTING = '';
+/** Header for query. */
 export const API_HEADER = 'Api-Key';
-export const NUMBER_OF_COLUMNS = 6;
-export const OFFSET = 0;
-export const LIMIT = 25;
-export const PAGE_STEP = 3;
-export const DECIMAL = 10;
-export const DEFAULT_PAGE = 1;
-export const API_URL = import.meta.env.VITE_API_URL;
-export const ANIME_ROUTE = '/api/v1/anime/anime/';
 export const OFFSET_HEADER = 'offset';
 export const LIMIT_HEADER = 'limit';
 export const SORT_HEADER = 'ordering';
 
+/** Request address. */
+export const API_URL = import.meta.env.VITE_API_URL;
+export const ANIME_ROUTE = '/api/v1/anime/anime/';
+
+/** Default values of query if user don't pass any value. */
+export const DEFAULT_OFFSET = '';
+export const DEFAULT_LIMIT = '';
+export const DEFAULT_ORDERING = '';
+export const DEFAULT_SORTING = '';
+export const DEFAULT_PAGE = 1;
+export const LIMIT = 25;
+export const OFFSET = 0;
+
+/** Pagination config constants. */
+export const NUMBER_OF_COLUMNS = 6;
+export const PAGE_STEP = 3;
+export const DECIMAL = 10;
+
 /** Options for sorting. */
-export const SORT_OPTIONS = [
+export const SORT_OPTIONS: Array<SortOption> = [
   {
     title: 'Title in English',
     value: Sorting.EnglishTitle,
@@ -46,7 +54,7 @@ export const SORT_OPTIONS = [
 ];
 
 /** Options for ordering. */
-export const ORDER_OPTIONS = [
+export const ORDER_OPTIONS: Array<OrderOption> = [
   {
     title: 'Ascending',
     value: '+',
