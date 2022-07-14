@@ -13,10 +13,6 @@ import { generateQuery } from './helpers';
 export async function updateAnime(url: string): Promise<void> {
   const data = await fetchAnime(url);
 
-  if (data instanceof Error) {
-    throw new Error(data.message);
-  }
-
   localStorage.setItem(NEXT_PAGE_LS, data.next ?? '');
   localStorage.setItem(PREVIOUS_PAGE_LS, data.previous ?? '');
   localStorage.setItem(COUNT_LS, data.count.toString());
