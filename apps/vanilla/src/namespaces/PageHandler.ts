@@ -41,7 +41,6 @@ export namespace PageHandler {
       localStorage.setItem(PAGE_LS, page.toString());
       const offset = (page - 1) * LIMIT;
       localStorage.setItem(OFFSET_LS, offset.toString());
-
       const queries: Queries = {
         queryList: [
           generateQuery(OFFSET_HEADER, offset, OFFSET_LS),
