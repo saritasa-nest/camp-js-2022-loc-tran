@@ -37,7 +37,7 @@ export namespace PageHandler {
   export function goToLastPage(): void {
     const count = localStorage.getItem(COUNT_LS);
     if (count != null) {
-      const page = Math.floor(Number.parseInt(count, DECIMAL) / LIMIT);
+      const page = Math.ceil(Number.parseInt(count, DECIMAL) / LIMIT);
       localStorage.setItem(PAGE_LS, page.toString());
       const offset = (page - 1) * LIMIT;
       localStorage.setItem(OFFSET_LS, offset.toString());

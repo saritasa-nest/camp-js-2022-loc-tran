@@ -5,6 +5,8 @@ import { generateUrl } from '../script/generateUrl';
 import { generateQuery } from '../script/helpers';
 import { updateAnime } from '../services/fetchAnime';
 
+import { PageHandler } from './PageHandler';
+
 export namespace FilterHandler {
 
   /** Change filtering type. */
@@ -22,6 +24,7 @@ export namespace FilterHandler {
         ],
       };
       updateAnime(generateUrl(ANIME_ROUTE, queries));
+      PageHandler.goToFirstPage();
     } else {
       throw new Error('Cannot get sort element and order element in DOM!');
     }
