@@ -80,20 +80,20 @@ export const DEFAULT_QUERIES: Queries = {
   queryList: [
     {
       name: 'offset',
-      localStorageName: 'ANIME_OFFSET',
-      value: OFFSET,
+      localStorageName: OFFSET_LS,
+      value: DEFAULT_OFFSET,
       defaultValue: DEFAULT_OFFSET,
     },
     {
       name: 'limit',
-      localStorageName: 'ANIME_LIMIT',
+      localStorageName: LIMIT_LS,
       value: LIMIT,
       defaultValue: DEFAULT_LIMIT,
     },
     {
       name: 'ordering',
-      localStorageName: 'ANIME_SORT',
-      value: '',
+      localStorageName: SORT_LS,
+      value: DEFAULT_SORTING,
       defaultValue: DEFAULT_SORTING,
     },
   ],
