@@ -3,10 +3,10 @@ import { Immerable, OmitImmerable } from './immerable';
 /** Class for login data. */
 export class LoginData extends Immerable {
 
-  /** User 's email. */
+  /** User's email. */
   public readonly email: string;
 
-  /** User 's password. */
+  /** User's password. */
   public readonly password: string;
 
   public constructor(data: LoginDataArgs) {

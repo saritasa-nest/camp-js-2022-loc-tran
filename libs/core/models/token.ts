@@ -1,12 +1,12 @@
 import { Immerable, OmitImmerable } from './immerable';
 
-/** Class for Token data. */
+/** Define Token data. */
 export class Token extends Immerable {
 
-  /** Refresh token string. */
+  /** Data of refresh token. */
   public readonly refreshToken: string;
 
-  /** Access token string. */
+  /** Data of access token. */
   public readonly accessToken: string;
 
   public constructor(data: TokenArgs) {
