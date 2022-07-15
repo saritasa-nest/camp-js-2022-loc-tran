@@ -2,12 +2,12 @@ import { DateRangeDto } from './dateRange.dto';
 
 /** Specify anime types in anime table. */
 export enum AnimeType {
-  tv = 'TV',
-  ova = 'OVA',
-  movie = 'MOVIE',
-  special = 'SPECIAL',
-  ona = 'ONA',
-  music = 'MUSIC',
+  Tv = 'TV',
+  Ova = 'OVA',
+  Movie = 'MOVIE',
+  Special = 'SPECIAL',
+  Ona = 'ONA',
+  Music = 'MUSIC',
 }
 
 /** Specify anime status in anime table. */

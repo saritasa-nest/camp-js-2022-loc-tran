@@ -1,4 +1,4 @@
-import { ANIME_ROUTE, DEFAULT_SORTING, LIMIT, SORT_LS } from '../script/constants';
+import { ANIME_ROUTE, LIMIT, SORT_LS } from '../script/constants';
 import { generateUrl } from '../script/generateUrl';
 import { updateTable } from '../services/fetchAnime';
 
@@ -8,9 +8,9 @@ export namespace SortHandler {
   export function changeSorting(): void {
     let sortOption = document.querySelector<HTMLSelectElement>('.sort')?.value;
     const orderOption = document.querySelector<HTMLSelectElement>('.order')?.value;
-    if (sortOption !== null && orderOption !== null) {
+    if (sortOption !== undefined && orderOption !== undefined) {
       sortOption = `${orderOption}${sortOption}`;
-      localStorage.setItem(SORT_LS, sortOption ?? DEFAULT_SORTING);
+      localStorage.setItem(SORT_LS, sortOption);
       const params = new URLSearchParams({
         offset: '0',
         limit: LIMIT.toString(),
