@@ -38,7 +38,12 @@ export namespace PageHandler {
   export function goToLastPage(): void {
     const count = localStorage.getItem(COUNT_LS);
     if (count !== null) {
-      const page = Math.ceil(Number.parseInt(count, DECIMAL) / LIMIT);
+      let page = Number.parseInt(count, DECIMAL) / LIMIT;
+      if (isNaN(page) === true) {
+        page = 1;
+      } else {
+        page = Math.ceil(page);
+      }
       const offset = (page - 1) * LIMIT;
       const params = new URLSearchParams({
         offset: offset.toString(),
