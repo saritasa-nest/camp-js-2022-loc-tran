@@ -78,10 +78,10 @@ export function renderSortOptions(): void {
   const sortNode = document.querySelector('.query__label-sort');
   if (sortNode !== null) {
     const select = document.createElement('select');
-    SORT_OPTIONS.forEach(option => {
+    SORT_OPTIONS.forEach(selectOption => {
       const optionElement = document.createElement('option');
-      optionElement.value = option.value;
-      optionElement.innerHTML = option.title;
+      optionElement.value = selectOption.value;
+      optionElement.innerHTML = selectOption.title;
       select.append(optionElement);
     });
     select.addEventListener('change', SortHandler.changeSorting);
@@ -97,10 +97,10 @@ export function renderOrderOptions(): void {
   const orderNode = document.querySelector('.query__label-order');
   if (orderNode !== null) {
     const select = document.createElement('select');
-    ORDER_OPTIONS.forEach(option => {
+    ORDER_OPTIONS.forEach(orderOption => {
       const optionElement = document.createElement('option');
-      optionElement.value = option.value;
-      optionElement.innerHTML = option.title;
+      optionElement.value = orderOption.value;
+      optionElement.innerHTML = orderOption.title;
       select.append(optionElement);
     });
     select.classList.add('order');
@@ -116,10 +116,10 @@ export function renderFilterOptions(): void {
   const filterNode = document.querySelector('.query__label-filter');
   assertNonNullish(filterNode);
   const select = document.createElement('select');
-  FILTER_OPTIONS.forEach(option => {
+  FILTER_OPTIONS.forEach(filterOption => {
     const optionElement = document.createElement('option');
-    optionElement.value = option.value;
-    optionElement.innerHTML = option.title;
+    optionElement.value = filterOption.value;
+    optionElement.innerHTML = filterOption.title;
     select.append(optionElement);
   });
   select.classList.add('filter');
