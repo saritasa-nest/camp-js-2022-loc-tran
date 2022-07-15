@@ -1,22 +1,10 @@
-import { Queries } from '@js-camp/core/models/query';
-
-import { findInLocalStorage } from '../services/localStorage';
-
 /**
  * Generate api address with query string.
- * @param queries Object store queries variable.
+ * @param params Object store data query.
  * @param url Request address.
  */
-export function generateUrl(url: string, queries: Queries): string {
+export function generateUrl(url: string, params: URLSearchParams): string {
   let queryString = `${url}?`;
-  const searchParams = new URLSearchParams();
-  queries.queryList.forEach(query => {
-    let { value } = query;
-    if (value === query.defaultValue) {
-      value = findInLocalStorage(value.toString(), query.localStorageName);
-    }
-    searchParams.append(query.name, value.toString());
-  });
-  queryString += searchParams.toString();
+  queryString += params.toString();
   return queryString;
 }

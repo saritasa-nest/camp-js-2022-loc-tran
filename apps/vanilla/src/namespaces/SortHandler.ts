@@ -1,9 +1,6 @@
-import { Queries } from '@js-camp/core/models/query';
-
-import { SORT_LS, DEFAULT_SORTING, ORDER_LS, DEFAULT_ORDERING, OFFSET_HEADER, DEFAULT_OFFSET, OFFSET_LS, LIMIT_HEADER, LIMIT, LIMIT_LS, SORT_HEADER, ANIME_ROUTE } from '../script/constants';
+import { ANIME_ROUTE, DEFAULT_SORTING, LIMIT, SORT_LS } from '../script/constants';
 import { generateUrl } from '../script/generateUrl';
-import { generateQuery } from '../script/helpers';
-import { updateAnime } from '../services/fetchAnime';
+import { updateTable } from '../services/fetchAnime';
 
 export namespace SortHandler {
 
@@ -14,16 +11,12 @@ export namespace SortHandler {
     if (sortOption !== null && orderOption !== null) {
       sortOption = `${orderOption}${sortOption}`;
       localStorage.setItem(SORT_LS, sortOption ?? DEFAULT_SORTING);
-      localStorage.setItem(ORDER_LS, orderOption ?? DEFAULT_ORDERING);
-
-      const queries: Queries = {
-        queryList: [
-          generateQuery(OFFSET_HEADER, DEFAULT_OFFSET, OFFSET_LS, DEFAULT_OFFSET),
-          generateQuery(LIMIT_HEADER, LIMIT, LIMIT_LS),
-          generateQuery(SORT_HEADER, sortOption ?? DEFAULT_ORDERING, SORT_LS, DEFAULT_ORDERING),
-        ],
-      };
-      updateAnime(generateUrl(ANIME_ROUTE, queries));
+      const params = new URLSearchParams({
+        offset: '0',
+        limit: LIMIT.toString(),
+        ordering: sortOption,
+      });
+      updateTable(generateUrl(ANIME_ROUTE, params), 1);
     } else {
       throw new Error('Cannot get sort element and order element in DOM!');
     }

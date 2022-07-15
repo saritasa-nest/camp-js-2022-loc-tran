@@ -1,5 +1,5 @@
 import { PageHandler } from '../namespaces/PageHandler';
-import { updateAnime } from '../services/fetchAnime';
+import { updateTable } from '../services/fetchAnime';
 
 import { ANIME_ROUTE, DEFAULT_QUERIES, NUMBER_OF_COLUMNS } from './constants';
 import { generateUrl } from './generateUrl';
@@ -11,7 +11,7 @@ export function initPagination(): void {
   firstPageButton?.addEventListener('click', PageHandler.goToFirstPage);
   const lastPageButton = document.querySelector('.last-page-button');
   lastPageButton?.addEventListener('click', PageHandler.goToLastPage);
-  renderPagination();
+  renderPagination(0, 0);
 }
 
 /** Init query option. */
@@ -37,5 +37,5 @@ export function initAnimeTable(): void {
   } else {
     throw new Error('Cannot get table row element in DOM!');
   }
-  updateAnime(generateUrl(ANIME_ROUTE, DEFAULT_QUERIES));
+  updateTable(generateUrl(ANIME_ROUTE, DEFAULT_QUERIES), 1);
 }

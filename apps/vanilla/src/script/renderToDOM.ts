@@ -35,13 +35,15 @@ export function renderAnime(paginationAnime: Pagination<Anime>): void {
   }
 }
 
-/** Render pagination to DOM. */
-export function renderPagination(): void {
+/**
+ * Render pagination to DOM.
+ * @param count Number of anime in list.
+ * @param currentPage Current page of table.
+ */
+export function renderPagination(count: number, currentPage: number): void {
   const pagination = document.querySelector('.pagination__numeric');
-  const count = Number.parseInt(localStorage.getItem('COUNT') ?? '0', 10);
   if (pagination !== null) {
     pagination.innerHTML = '';
-    const currentPage = Number.parseInt(localStorage.getItem('ANIME_PAGE') ?? '1', 10);
     const first = currentPage - PAGE_STEP > 0 ? currentPage - PAGE_STEP : 1;
     for (let i = first; i <= first + PAGE_STEP * 2 && i <= Math.ceil(count / LIMIT); i++) {
       pagination.append(createButtonPagination(i, currentPage === i));

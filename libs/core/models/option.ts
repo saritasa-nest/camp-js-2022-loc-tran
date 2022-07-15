@@ -6,7 +6,6 @@ export interface SortOption {
 
   /** Value of the option. */
   readonly value: string;
-
 }
 
 /** Define the data in one order option. */
@@ -17,5 +16,4 @@ export interface OrderOption {
 
   /** Value of the option. */
   readonly value: string;
-
 }
