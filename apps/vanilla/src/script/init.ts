@@ -1,5 +1,7 @@
 import { PageHandler } from '../namespaces/PageHandler';
+import { SearchHandler } from '../namespaces/SearchHandler';
 import { updateTable } from '../services/fetchAnime';
+import { assertNonNullish } from '../utils/assertNonNullish';
 
 import { ANIME_ROUTE, DEFAULT_QUERIES, NUMBER_OF_COLUMNS } from './constants';
 import { generateUrl } from './generateUrl';
@@ -38,4 +40,11 @@ export function initAnimeTable(): void {
     throw new Error('Cannot get table row element in DOM!');
   }
   updateTable(generateUrl(ANIME_ROUTE, DEFAULT_QUERIES), 1);
+}
+
+/** Init event for search button. */
+export function initSearchButton(): void {
+  const searchButton = document.querySelector('.search__button');
+  assertNonNullish(searchButton);
+  searchButton.addEventListener('click', SearchHandler.handleSearch);
 }
