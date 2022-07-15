@@ -1,6 +1,7 @@
 import { ANIME_ROUTE, COUNT_LS, DECIMAL, LIMIT, SORT_LS } from '../script/constants';
 import { generateUrl } from '../script/generateUrl';
 import { updateTable } from '../services/fetchAnime';
+import { assertNonNullish } from '../utils/assertNonNullish';
 
 export namespace PageHandler {
 
@@ -13,49 +14,27 @@ export namespace PageHandler {
       offset: (LIMIT * (newPage - 1)).toString(),
       limit: LIMIT.toString(),
     });
-
     const sortOption = localStorage.getItem(SORT_LS);
-    if (sortOption !== null) {
-      params.append('ordering', sortOption);
-    }
+    assertNonNullish(sortOption);
+    params.append('ordering', sortOption);
     updateTable(generateUrl(ANIME_ROUTE, params), newPage);
   }
 
   /** Get new data for first page. */
   export function goToFirstPage(): void {
-    const params = new URLSearchParams({
-      offset: '0',
-      limit: LIMIT.toString(),
-    });
-    const sortOption = localStorage.getItem(SORT_LS);
-    if (sortOption !== null) {
-      params.append('ordering', sortOption);
-    }
-    updateTable(generateUrl(ANIME_ROUTE, params), 1);
+    goToPageByNum(1);
   }
 
   /** Get new data for last page. */
   export function goToLastPage(): void {
     const count = localStorage.getItem(COUNT_LS);
-    if (count !== null) {
-      let page = Number.parseInt(count, DECIMAL) / LIMIT;
-      if (isNaN(page) === true) {
-        page = 1;
-      } else {
-        page = Math.ceil(page);
-      }
-      const offset = (page - 1) * LIMIT;
-      const params = new URLSearchParams({
-        offset: offset.toString(),
-        limit: LIMIT.toString(),
-      });
-      const sortOption = localStorage.getItem(SORT_LS);
-      if (sortOption !== null) {
-        params.append('ordering', sortOption);
-      }
-      updateTable(generateUrl(ANIME_ROUTE, params), page);
+    assertNonNullish(count);
+    let page = Number.parseInt(count, DECIMAL) / LIMIT;
+    if (isNaN(page) === true) {
+      page = 1;
     } else {
-      throw new Error('Cannot read total of anime');
+      page = Math.ceil(page);
     }
+    goToPageByNum(page);
   }
 }
