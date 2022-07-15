@@ -1,6 +1,5 @@
+import { submitHandler } from '../namespaces/submitHandler';
 import { getUserData } from '../services/getUserData';
-
-import { handleLogout } from './handleSubmit';
 
 /**
  * Show login error message to UI.
@@ -50,7 +49,7 @@ export async function renderUserData(): Promise<void> {
       logoutButton.type = 'button';
       logoutButton.innerHTML = 'Logout';
       logoutButton.classList.add('links__logout');
-      logoutButton.addEventListener('click', handleLogout);
+      logoutButton.addEventListener('click', submitHandler.handleLogout);
       links.append(logoutButton);
     }
     profile.innerHTML = `
