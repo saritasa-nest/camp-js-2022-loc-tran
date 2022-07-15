@@ -75,10 +75,10 @@ export function renderSortOptions(): void {
   const sortNode = document.querySelector('.query__label-sort');
   if (sortNode !== null) {
     const select = document.createElement('select');
-    SORT_OPTIONS.forEach(option => {
+    SORT_OPTIONS.forEach(sortOption => {
       const optionElement = document.createElement('option');
-      optionElement.value = option.value;
-      optionElement.innerHTML = option.title;
+      optionElement.value = sortOption.value;
+      optionElement.innerHTML = sortOption.title;
       select.append(optionElement);
     });
     select.addEventListener('change', SortHandler.changeSorting);
@@ -94,10 +94,10 @@ export function renderOrderOptions(): void {
   const orderNode = document.querySelector('.query__label-order');
   if (orderNode !== null) {
     const select = document.createElement('select');
-    ORDER_OPTIONS.forEach(option => {
+    ORDER_OPTIONS.forEach(orderOption => {
       const optionElement = document.createElement('option');
-      optionElement.value = option.value;
-      optionElement.innerHTML = option.title;
+      optionElement.value = orderOption.value;
+      optionElement.innerHTML = orderOption.title;
       select.append(optionElement);
     });
     select.classList.add('order');
