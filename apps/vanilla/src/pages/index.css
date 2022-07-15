@@ -83,7 +83,8 @@
 }
 
 .sort,
-.order {
+.order,
+.filter {
   min-height: 2rem;
   min-width: 200px;
   font-size: 1rem;

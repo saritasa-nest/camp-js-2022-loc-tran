@@ -17,3 +17,13 @@ export interface OrderOption {
   /** Value of the option. */
   readonly value: string;
 }
+
+/** Define the data in one filter option. */
+export interface FilterOption {
+
+  /** Title or name of the option. */
+  readonly title: string;
+
+  /** Value of the option. */
+  readonly value: string;
+}

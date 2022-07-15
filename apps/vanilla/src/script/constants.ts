@@ -1,4 +1,4 @@
-import { OrderOption, SortOption } from '@js-camp/core/models/option';
+import { FilterOption, OrderOption, SortOption } from '@js-camp/core/models/option';
 
 /** Sorting options for user. */
 export enum Sorting {
@@ -6,6 +6,17 @@ export enum Sorting {
   AiredStart = 'aired__startswith',
   Status = 'status',
   Default = '',
+}
+
+/** Filter options for user. */
+export enum Filtering {
+  Default = '',
+  Tv = 'TV',
+  Ova = 'OVA',
+  Movie = 'Movie',
+  Special = 'SPECIAL',
+  Ona = 'ONA',
+  Music = 'MUSIC',
 }
 
 /** Header for query. */
@@ -35,9 +46,14 @@ export const DECIMAL = 10;
 export const COUNT_LS = 'COUNT';
 export const SORT_LS = 'ANIME_SORT';
 export const ORDER_LS = 'ANIME_ORDER';
+export const FILTER_LS = 'ANIME_FILTER';
 
 /** Options for sorting. */
-export const SORT_OPTIONS: Array<SortOption> = [
+export const SORT_OPTIONS: readonly SortOption[] = [
+  {
+    title: 'Default',
+    value: Sorting.Default,
+  },
   {
     title: 'Title in English',
     value: Sorting.EnglishTitle,
@@ -50,14 +66,10 @@ export const SORT_OPTIONS: Array<SortOption> = [
     title: 'Status',
     value: Sorting.Status,
   },
-  {
-    title: 'Default',
-    value: Sorting.Default,
-  },
 ];
 
 /** Options for ordering. */
-export const ORDER_OPTIONS: Array<OrderOption> = [
+export const ORDER_OPTIONS: readonly OrderOption[] = [
   {
     title: 'Ascending',
     value: '',
@@ -65,6 +77,38 @@ export const ORDER_OPTIONS: Array<OrderOption> = [
   {
     title: 'Descending',
     value: '-',
+  },
+];
+
+/** Options for filtering. */
+export const FILTER_OPTIONS: readonly FilterOption[] = [
+  {
+    title: 'Default',
+    value: Filtering.Default,
+  },
+  {
+    title: 'Tv',
+    value: Filtering.Tv,
+  },
+  {
+    title: 'Ova',
+    value: Filtering.Ova,
+  },
+  {
+    title: 'Movie',
+    value: Filtering.Movie,
+  },
+  {
+    title: 'Special',
+    value: Filtering.Special,
+  },
+  {
+    title: 'Ona',
+    value: Filtering.Ona,
+  },
+  {
+    title: 'Music',
+    value: Filtering.Music,
   },
 ];
 

@@ -1,10 +1,13 @@
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 
+import { FilterHandler } from '../namespaces/FilterHandler';
+
 import { PageHandler } from '../namespaces/PageHandler';
 import { SortHandler } from '../namespaces/SortHandler';
+import { assertNonNullish } from '../utils/assertNonNullish';
 
-import { LIMIT, ORDER_OPTIONS, PAGE_STEP, SORT_OPTIONS } from './constants';
+import { FILTER_OPTIONS, LIMIT, ORDER_OPTIONS, PAGE_STEP, SORT_OPTIONS } from './constants';
 
 /**
  * Print anime list to DOM.
@@ -106,4 +109,20 @@ export function renderOrderOptions(): void {
   } else {
     throw new Error('Cannot get order element in DOM');
   }
+}
+
+/** Create filter element for filtering. */
+export function renderFilterOptions(): void {
+  const filterNode = document.querySelector('.query__label-filter');
+  assertNonNullish(filterNode);
+  const select = document.createElement('select');
+  FILTER_OPTIONS.forEach(option => {
+    const optionElement = document.createElement('option');
+    optionElement.value = option.value;
+    optionElement.innerHTML = option.title;
+    select.append(optionElement);
+  });
+  select.classList.add('filter');
+  select.addEventListener('change', FilterHandler.changeFiltering);
+  filterNode.append(select);
 }

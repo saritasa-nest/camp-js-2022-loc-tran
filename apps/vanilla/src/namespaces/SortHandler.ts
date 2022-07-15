@@ -1,4 +1,4 @@
-import { ANIME_ROUTE, DEFAULT_OFFSET, FIRST_PAGE, LIMIT, SORT_LS } from '../script/constants';
+import { ANIME_ROUTE, DEFAULT_OFFSET, FILTER_LS, FIRST_PAGE, LIMIT, SORT_LS } from '../script/constants';
 import { generateUrl } from '../script/generateUrl';
 import { updateTable } from '../services/fetchAnime';
 import { assertNonNullish } from '../utils/assertNonNullish';
@@ -18,6 +18,10 @@ export namespace SortHandler {
       limit: LIMIT.toString(),
       ordering: sortOption,
     });
+    const filterOption = localStorage.getItem(FILTER_LS);
+    if (filterOption !== null) {
+      params.append('type', filterOption);
+    }
     updateTable(generateUrl(ANIME_ROUTE, params), FIRST_PAGE);
   }
 }
