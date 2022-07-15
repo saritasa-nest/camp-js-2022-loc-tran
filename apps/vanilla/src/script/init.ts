@@ -1,4 +1,4 @@
-import { submitHandler } from '../namespaces/submitHandler';
+import { SubmitHandler } from '../namespaces/submitHandler';
 
 import { renderUserData } from './renderToUI';
 
@@ -6,7 +6,7 @@ import { renderUserData } from './renderToUI';
 export function initLoginForm(): void {
   const form = document.querySelector('.form');
   if (form !== null) {
-    (form as HTMLFormElement).addEventListener('submit', submitHandler.submitLoginForm);
+    (form as HTMLFormElement).addEventListener('submit', SubmitHandler.submitLoginForm);
   }
 }
 
@@ -14,7 +14,7 @@ export function initLoginForm(): void {
 export function initRegisterForm(): void {
   const form = document.querySelector('.form');
   if (form !== null) {
-    (form as HTMLFormElement).addEventListener('submit', submitHandler.submitRegisterForm);
+    (form as HTMLFormElement).addEventListener('submit', SubmitHandler.submitRegisterForm);
   }
 }
 

@@ -6,7 +6,7 @@ import { showErrorLogin, showErrorRegister } from '../script/renderToUI';
 import { login } from '../services/login';
 import { register } from '../services/register';
 
-export namespace submitHandler {
+export namespace SubmitHandler {
 
   /**
    * Handle submit for login form.

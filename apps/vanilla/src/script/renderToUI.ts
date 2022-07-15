@@ -1,4 +1,4 @@
-import { submitHandler } from '../namespaces/submitHandler';
+import { SubmitHandler } from '../namespaces/submitHandler';
 import { getUserData } from '../services/getUserData';
 
 /**
@@ -49,7 +49,7 @@ export async function renderUserData(): Promise<void> {
       logoutButton.type = 'button';
       logoutButton.innerHTML = 'Logout';
       logoutButton.classList.add('links__logout');
-      logoutButton.addEventListener('click', submitHandler.handleLogout);
+      logoutButton.addEventListener('click', SubmitHandler.handleLogout);
       links.append(logoutButton);
     }
     profile.innerHTML = `
