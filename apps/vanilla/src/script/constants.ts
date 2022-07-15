@@ -22,6 +22,7 @@ export const ANIME_ROUTE = '/api/v1/anime/anime/';
 export const DEFAULT_OFFSET = '0';
 export const DEFAULT_LIMIT = '25';
 export const DEFAULT_ORDERING = '';
+export const FIRST_PAGE = 1;
 export const LIMIT = 25;
 export const OFFSET = 0;
 

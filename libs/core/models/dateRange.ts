@@ -1,9 +1,9 @@
 /** Define data for DateRange. */
 export interface DateRange {
 
-  /** End date Anime. */
+  /** End date. */
   readonly end: Date;
 
-  /** Start date Anime. */
+  /** Start date. */
   readonly start: Date;
 }

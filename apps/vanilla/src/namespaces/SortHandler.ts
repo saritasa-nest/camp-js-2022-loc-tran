@@ -1,4 +1,4 @@
-import { ANIME_ROUTE, DEFAULT_OFFSET, LIMIT, SORT_LS } from '../script/constants';
+import { ANIME_ROUTE, DEFAULT_OFFSET, FIRST_PAGE, LIMIT, SORT_LS } from '../script/constants';
 import { generateUrl } from '../script/generateUrl';
 import { updateTable } from '../services/fetchAnime';
 import { assertNonNullish } from '../utils/assertNonNullish';
@@ -18,6 +18,6 @@ export namespace SortHandler {
       limit: LIMIT.toString(),
       ordering: sortOption,
     });
-    updateTable(generateUrl(ANIME_ROUTE, params), 1);
+    updateTable(generateUrl(ANIME_ROUTE, params), FIRST_PAGE);
   }
 }
