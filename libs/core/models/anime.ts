@@ -11,7 +11,7 @@ export interface Anime {
   /** English title of the anime. */
   readonly titleEnglish: string;
 
-  /** Japan title of the anime. */
+  /** Japanese title of the anime. */
   readonly titleJapanese: string;
 
   /** Image of the anime. */
