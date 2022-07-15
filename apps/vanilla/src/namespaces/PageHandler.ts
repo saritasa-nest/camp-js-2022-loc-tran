@@ -8,8 +8,8 @@ import { updateAnime } from '../services/fetchAnime';
 export namespace PageHandler {
 
   /**
-   * Get new data for next page.
-   * @param newPage Next page number.
+   * Get new data for picked page.
+   * @param newPage Picked page number.
    */
   export function goToPageByNum(newPage: number): void {
     localStorage.setItem(PAGE_LS, newPage.toString());
