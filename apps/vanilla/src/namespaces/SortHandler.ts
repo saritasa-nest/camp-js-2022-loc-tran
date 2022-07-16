@@ -7,16 +7,16 @@ export namespace SortHandler {
 
   /** Change sorting type. */
   export function changeSorting(): void {
-    let sortOption = document.querySelector<HTMLSelectElement>('.sort')?.value;
+    const sortOption = document.querySelector<HTMLSelectElement>('.sort')?.value;
     const orderOption = document.querySelector<HTMLSelectElement>('.order')?.value;
     assertNonNullish(sortOption);
     assertNonNullish(orderOption);
-    sortOption = `${orderOption}${sortOption}`;
-    localStorage.setItem(SORT_LS, sortOption);
+    const newSortOption = `${orderOption}${sortOption}`;
+    localStorage.setItem(SORT_LS, newSortOption);
     const params = new URLSearchParams({
       offset: DEFAULT_OFFSET,
       limit: LIMIT.toString(),
-      ordering: sortOption,
+      ordering: newSortOption,
     });
     const filterOption = localStorage.getItem(FILTER_LS);
     if (filterOption !== null) {

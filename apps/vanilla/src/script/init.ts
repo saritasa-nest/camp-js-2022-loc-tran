@@ -30,11 +30,11 @@ export function initAnimeTable(): void {
       loadingImage.src = 'https://img.idesign.vn/2018/10/23/id-loading-1.gif';
       loadingImage.alt = 'Loading...';
       loadingImage.classList.add('table__row-image');
-     
+
       const cell = document.createElement('td');
       cell.classList.add('table__row-content');
       cell.append(loadingImage);
-      
+
       tableRow.append(cell);
     }
   } else {
