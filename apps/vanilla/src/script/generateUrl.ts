@@ -4,7 +4,5 @@
  * @param url Request address.
  */
 export function generateUrl(url: string, params: URLSearchParams): string {
-  let queryString = `${url}?`;
-  queryString += params.toString();
-  return queryString;
+  return `${url}?${params.toString()}`;
 }
