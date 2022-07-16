@@ -12,9 +12,9 @@ export function initLoginForm(): void {
 
 /** Init event for register form. */
 export function initRegisterForm(): void {
-  const form = document.querySelector('.form');
+  const form = document.querySelector<HTMLFormElement>('.form');
   if (form !== null) {
-    (form as HTMLFormElement).addEventListener('submit', SubmitHandler.submitRegisterForm);
+    form.addEventListener('submit', SubmitHandler.submitRegisterForm);
   }
 }
 

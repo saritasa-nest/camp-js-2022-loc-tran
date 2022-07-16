@@ -1,3 +1,5 @@
-import { isAccessableRegister } from '../../script/accessPage';
+import { Middleware } from '../../namespaces/middleware';
+import { initRegisterForm } from '../../script/init';
 
-isAccessableRegister();
+Middleware.isNotLoggedIn();
+initRegisterForm();

@@ -1,3 +1,5 @@
-import { isAccessableLogin } from '../../script/accessPage';
+import { Middleware } from '../../namespaces/middleware';
+import { initLoginForm } from '../../script/init';
 
-isAccessableLogin();
+Middleware.isNotLoggedIn();
+initLoginForm();

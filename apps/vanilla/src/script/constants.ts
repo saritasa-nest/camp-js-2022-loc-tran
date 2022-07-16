@@ -8,3 +8,4 @@ export const REFRESH_URL = '/api/v1/auth/token/refresh/';
 /** Redirect Url. */
 export const HOME_PAGE = '/';
 export const PROFILE_PAGE = '/profile/';
+export const LOGIN_PAGE = '/login/';

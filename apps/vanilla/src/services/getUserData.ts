@@ -17,7 +17,7 @@ export async function getUserData(): Promise<User> {
     throw new Error('Token not found');
   }
   const isValidToken = await verifyToken(accessToken);
-  if (isValidToken === false) {
+  if (!isValidToken) {
     const tokens = await getRefreshedToken(refreshToken);
     storeTokens(tokens);
   }
