@@ -14,7 +14,7 @@ import { isAuthorized } from './isAuthorized';
  * Show login error message to UI.
  * @param errorList List of error message.
  */
-export function showErrorLogin(errorList: string[]): void {
+export function showErrorLogin(errorList: readonly string[]): void {
   const error = document.querySelector('.form__error-login');
   const errorMessage = errorList.join('<br>');
   if (error !== null) {
@@ -26,7 +26,7 @@ export function showErrorLogin(errorList: string[]): void {
  * Show register error message to UI.
  * @param errorList List of error message.
  */
-export function showErrorRegister(errorList: string[]): void {
+export function showErrorRegister(errorList: readonly string[]): void {
   const error = document.querySelector('.form__error-register');
   const errorMessage = errorList.join('<br>');
   if (error !== null) {
