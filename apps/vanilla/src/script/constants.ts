@@ -1,12 +1,5 @@
 import { OrderOption, SortOption } from '@js-camp/core/models/option';
-
-/** Sorting options for user. */
-export enum Sorting {
-  EnglishTitle = 'title_eng',
-  AiredStart = 'aired__startswith',
-  Status = 'status',
-  Default = '',
-}
+import { Params, Sorting } from '@js-camp/core/models/params';
 
 /** Header for query. */
 export const API_HEADER = 'Api-Key';
@@ -19,8 +12,6 @@ export const API_URL = import.meta.env.VITE_API_URL;
 export const ANIME_ROUTE = '/api/v1/anime/anime/';
 
 /** Default values of query if user don't pass any value. */
-export const DEFAULT_OFFSET = '0';
-export const DEFAULT_LIMIT = '25';
 export const DEFAULT_ORDERING = '';
 export const FIRST_PAGE = 1;
 export const LIMIT = 25;
@@ -37,7 +28,7 @@ export const SORT_LS = 'ANIME_SORT';
 export const ORDER_LS = 'ANIME_ORDER';
 
 /** Options for sorting. */
-export const SORT_OPTIONS: Array<SortOption> = [
+export const SORT_OPTIONS: readonly SortOption[] = [
   {
     title: 'Default',
     value: Sorting.Default,
@@ -57,7 +48,7 @@ export const SORT_OPTIONS: Array<SortOption> = [
 ];
 
 /** Options for ordering. */
-export const ORDER_OPTIONS: Array<OrderOption> = [
+export const ORDER_OPTIONS: readonly OrderOption[] = [
   {
     title: 'Ascending',
     value: '',
@@ -69,7 +60,8 @@ export const ORDER_OPTIONS: Array<OrderOption> = [
 ];
 
 /** Default data for queries. */
-export const DEFAULT_QUERIES = new URLSearchParams({
-  offset: DEFAULT_OFFSET,
-  limit: DEFAULT_LIMIT,
+export const DEFAULT_QUERIES = new Params({
+  offset: OFFSET,
+  limit: LIMIT,
+  ordering: Sorting.Default,
 });

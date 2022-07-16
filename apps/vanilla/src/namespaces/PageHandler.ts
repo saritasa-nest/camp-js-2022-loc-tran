@@ -1,5 +1,6 @@
-import { ANIME_ROUTE, COUNT_LS, DECIMAL, DEFAULT_ORDERING, LIMIT, SORT_LS } from '../script/constants';
-import { generateUrl } from '../script/generateUrl';
+import { Params } from '@js-camp/core/models/params';
+
+import { COUNT_LS, DECIMAL, DEFAULT_ORDERING, LIMIT, SORT_LS } from '../script/constants';
 import { updateTable } from '../services/fetchAnime';
 import { assertNonNullish } from '../utils/assertNonNullish';
 
@@ -10,12 +11,12 @@ export namespace PageHandler {
    * @param newPage Next page number.
    */
   export function goToPageByNum(newPage: number): void {
-    const params = new URLSearchParams({
-      offset: (LIMIT * (newPage - 1)).toString(),
-      limit: LIMIT.toString(),
+    const params = new Params({
+      offset: (LIMIT * (newPage - 1)),
+      limit: LIMIT,
       ordering: localStorage.getItem(SORT_LS) ?? DEFAULT_ORDERING,
     });
-    updateTable(generateUrl(ANIME_ROUTE, params), newPage);
+    updateTable(params, newPage);
   }
 
   /** Get new data for first page. */
