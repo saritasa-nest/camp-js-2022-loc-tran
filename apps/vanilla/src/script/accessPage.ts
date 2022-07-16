@@ -15,7 +15,7 @@ export async function isAccessableLogin(): Promise<void> {
 /** Check if logged in user request login page. */
 export async function isAccessableRegister(): Promise<void> {
   const isLoggedIn = await isAuthorized();
-  if (isLoggedIn === true) {
+  if (isLoggedIn) {
     location.replace(PROFILE_PAGE);
     return;
   }
