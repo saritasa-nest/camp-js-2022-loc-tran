@@ -1,10 +1,9 @@
 import axios from 'axios';
 
-import { API_HEADER } from '../script/constants';
+import { requestInterceptor } from './interceptors';
 
 export const http = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  headers: {
-    [API_HEADER]: import.meta.env.VITE_API_KEY,
-  },
 });
+
+http.interceptors.request.use(requestInterceptor);

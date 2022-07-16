@@ -2,6 +2,9 @@
   /* Font family */
   --header-font: arial, helvetica, sans-serif;
 
+  /* Font family */
+  --secondary-font: arial, helvetica, sans-serif;
+
   /* Primary color. */
   --primary-color: #2458a2;
   --primary-light-color: #5584c5;
@@ -9,6 +12,13 @@
   --primary-contrast-color: #fff;
   --primary-dark-contrast-color: #fff;
   --primary-light-contrast-color: #fff;
+
+  /* Font color. */
+  --primary-font-color: #000;
+  --primary-contrast-font-color: #fff;
+  --error-font-color: #f00;
+  --error-font-light-color: #f66d6d;
+  --secondary-font-color: #bbb;
 
   /* Background color. */
   --dark-background-color: #ccc;
@@ -24,4 +34,9 @@
   /** Font color */
   --font-color-contrast-primary: #fff;
   --font-color-primary: #000;
+  --heading-color-1: #1229a7;
+
+  /* Button color */
+  --primary-button-color: #748da6;
+  --primary-button-color-light: #8d9fb1;
 }

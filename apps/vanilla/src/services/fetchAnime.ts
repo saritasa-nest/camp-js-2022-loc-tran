@@ -9,7 +9,7 @@ import { Params } from '@js-camp/core/models/params';
 
 import { http } from '../api';
 import { ANIME_ROUTE, COUNT_LS } from '../script/constants';
-import { renderAnime, renderPagination } from '../script/renderToDOM';
+import { renderAnime, renderPagination } from '../script/renderToUI';
 
 /**
  * Fetch anime data from api.
@@ -35,6 +35,6 @@ export async function updateTable(params: Params, currentPage = 0): Promise<void
   localStorage.setItem(COUNT_LS, data.count.toString());
   renderAnime(data);
   if (currentPage !== 0) {
-    renderPagination(data.count, currentPage);
+    renderPagination();
   }
 }

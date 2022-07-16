@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./login.css" />
+    <title>Login page</title>
+  </head>
+  <body class="default-layout">
+    <header class="header">
+      <ul class="header__nav header__nav-page">
+      </ul>
+      <ul class="header__nav header__nav-authen">
+      </ul>
+    </header>
+    <h1 class="title">Log in</h1>
+    <form class="form">
+        <label class="form__label">
+          <span class="form__label-text">Email: </span>
+          <input required name="email" type="email" placeholder="user@example.com" class="form__label-input form__label-email" />
+        </label>
+        <label class="form__label">
+          <span class="form__label-text">Password:</span>
+          <input required name="password" type="password" placeholder="Enter your password" class="form__label-input form__label-password" />
+        </label>
+      <div class="form__buttonGroup">
+        <button type="submit" class="form__buttonGroup-submit">Sign in</button>
+      </div>
+      <span class="form__error-login"></span>
+      <div class="links">
+        Don't have an account yet? <a href="/register/">Sign up.</a>
+      </div>
+    </form>
+
+    <script type="module" src="./login.ts"></script>
+  </body>
+</html>

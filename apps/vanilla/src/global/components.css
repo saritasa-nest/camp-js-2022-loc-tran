@@ -14,6 +14,13 @@ a:hover,
   --link-color: var(--primary-light-color);
 }
 
+ul li {
+  margin: 0;
+  padding: 0;
+  text-indent: 0;
+  list-style-type: none;
+}
+
 .links {
   display: flex;
   flex-wrap: wrap;

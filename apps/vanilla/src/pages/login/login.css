@@ -1,0 +1,90 @@
+@import url("../../global/index.css");
+
+.title {
+  color: var(--heading-color-1);
+  font-size: 3rem;
+  font-family: var(--secondary-font);
+  letter-spacing: 0.2rem;
+  margin-bottom: 40px;
+}
+
+.header {
+  width: 100vw;
+  min-height: 74px;
+  background-color: var(--primary-color);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__nav {
+  display: flex;
+  margin: 25px 50px;
+}
+
+.header__link {
+  padding: 0;
+  text-indent: 0;
+  list-style-type: none;
+  color: var(--font-color-contrast-primary);
+  margin: 5px 10px;
+}
+
+.header__link-logout {
+  color: var(--error-font-color);
+}
+
+.form {
+  margin-top: 50px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px 1px var(--border-color);
+  background-color: var(--background-color);
+  border-radius: 15px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form__label-input {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  min-height: 1.6rem;
+  width: 100%;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.form__label-text {
+  font-family: var(--secondary-font);
+  font-size: 1.2rem;
+  display: inline-block;
+  min-width: 6rem;
+}
+
+.form__buttonGroup {
+  justify-self: center;
+}
+
+.form__buttonGroup-submit {
+  min-height: 50px;
+  min-width: 130px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: var(--primary-button-color);
+  color: var(--primary-contrast-font-color);
+}
+
+.form__error-login {
+  color: var(--error-font-color);
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.form__buttonGroup-submit:hover {
+  background-color: var(--primary-button-color-light);
+}

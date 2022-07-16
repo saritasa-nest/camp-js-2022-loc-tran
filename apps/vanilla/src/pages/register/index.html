@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./register.css" />
+    <title>Register page</title>
+  </head>
+  <body class="default-layout">
+    <header class="header">
+      <ul class="header__nav header__nav-page">
+      </ul>
+      <ul class="header__nav header__nav-authen">
+      </ul>
+    </header>    <h1 class="title">Sign up</h1>
+    <form class="form">
+      <div class="form__label">
+        <label class="form__label">
+          <span class="form__label-text">Email:</span>
+          <input name="email" type="email" required placeholder="user@example.com" class="form__label-input form__label-email" />
+        </label>
+        <label class="form__label">
+          <span class="form__label-text">First name:</span>
+          <input name="first-name" placeholder="First name" class="form__label-input form__label-firstname" />
+        </label>
+        <label class="form__label">
+          <span class="form__label-text">Last name:</span>
+          <input name="last-name" placeholder="Last name" class="form__label-input form__label-lastname" />
+        </label>
+        <label class="form__label">
+          <span class="form__label-text">Password:</span>
+          <input name="password" required type="password" placeholder="Type your password" class="form__label-input form__label-password" />
+        </label>
+        <label class="form__label">
+          <span class="form__label-text">Retype password:</span>
+          <input name="retype-password" required type="password" placeholder="Retype your password" class="form__label-input form__label-retypepassword" />
+        </label>
+      </div>
+      <div class="form__buttonGroup">
+        <button type="submit" class="form__buttonGroup-submit">Sign up</button>
+      </div>
+      <span class="form__error-register"></span>
+      <div class="links">
+        Already have an account? <a href="/login/">Sign in.</a>
+      </div>
+    </form>
+    <script type="module" src="./register.ts"></script>
+  </body>
+</html>
