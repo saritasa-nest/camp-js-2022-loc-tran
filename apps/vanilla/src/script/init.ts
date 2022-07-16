@@ -48,3 +48,10 @@ export function initSearchButton(): void {
   assertNonNullish(searchButton);
   searchButton.addEventListener('click', SearchHandler.handleSearch);
 }
+
+/** Init enter key event  for search input. */
+export function initSearchOnEnterKeypress(): void {
+  const searchInput = document.querySelector<HTMLInputElement>('.search__input');
+  assertNonNullish(searchInput);
+  searchInput.addEventListener('keypress', event => SearchHandler.searchByEnter(event));
+}

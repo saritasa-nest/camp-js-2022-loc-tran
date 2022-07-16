@@ -21,4 +21,14 @@ export namespace SearchHandler {
 
     updateTable(generateUrl(ANIME_ROUTE, params), FIRST_PAGE);
   }
+
+  /**
+   * Handle searching by press enter key.
+   * @param event Keyboard press event.
+   *  */
+  export function searchByEnter(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  }
 }
