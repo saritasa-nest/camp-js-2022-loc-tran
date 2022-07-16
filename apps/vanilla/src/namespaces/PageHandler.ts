@@ -1,4 +1,4 @@
-import { ANIME_ROUTE, COUNT_LS, DECIMAL, LIMIT, SORT_LS } from '../script/constants';
+import { ANIME_ROUTE, COUNT_LS, DECIMAL, DEFAULT_ORDERING, LIMIT, SORT_LS } from '../script/constants';
 import { generateUrl } from '../script/generateUrl';
 import { updateTable } from '../services/fetchAnime';
 import { assertNonNullish } from '../utils/assertNonNullish';
@@ -13,10 +13,8 @@ export namespace PageHandler {
     const params = new URLSearchParams({
       offset: (LIMIT * (newPage - 1)).toString(),
       limit: LIMIT.toString(),
+      ordering: localStorage.getItem(SORT_LS) ?? DEFAULT_ORDERING,
     });
-    const sortOption = localStorage.getItem(SORT_LS);
-    assertNonNullish(sortOption);
-    params.append('ordering', sortOption);
     updateTable(generateUrl(ANIME_ROUTE, params), newPage);
   }
 

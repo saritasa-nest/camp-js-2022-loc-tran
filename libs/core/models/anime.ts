@@ -1,6 +1,21 @@
-import { AnimeStatus, AnimeType } from '../dtos/anime.dto';
-
 import { DateRange } from './dateRange';
+
+/** Specify anime types in anime table. */
+export enum AnimeType {
+  Tv = 'TV',
+  Ova = 'OVA',
+  Movie = 'MOVIE',
+  Special = 'SPECIAL',
+  Ona = 'ONA',
+  Music = 'MUSIC',
+}
+
+/** Specify anime status in anime table. */
+export enum AnimeStatus {
+  Finished = 'FINISHED',
+  NotYetAired = 'NOT_YET_AIRED',
+  Airing = 'AIRING',
+}
 
 /** Define data in class Anime. */
 export interface Anime {

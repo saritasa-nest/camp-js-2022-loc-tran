@@ -39,6 +39,10 @@ export const ORDER_LS = 'ANIME_ORDER';
 /** Options for sorting. */
 export const SORT_OPTIONS: Array<SortOption> = [
   {
+    title: 'Default',
+    value: Sorting.Default,
+  },
+  {
     title: 'Title in English',
     value: Sorting.EnglishTitle,
   },
@@ -49,10 +53,6 @@ export const SORT_OPTIONS: Array<SortOption> = [
   {
     title: 'Status',
     value: Sorting.Status,
-  },
-  {
-    title: 'Default',
-    value: Sorting.Default,
   },
 ];
 
