@@ -6,6 +6,9 @@ export enum Sorting {
   EnglishTitle = 'titleEnglish',
   AiredStart = 'airedStart',
   Status = 'status',
+  EnglishTitleDecs = '-titleEnglish',
+  AiredStartDecs = '-airedStart',
+  StatusDecs = '-status',
 }
 
 /** Params for query. */
