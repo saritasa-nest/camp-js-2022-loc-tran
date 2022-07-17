@@ -38,3 +38,16 @@ export async function updateTable(params: Params, currentPage = 0): Promise<void
     renderPagination();
   }
 }
+
+/**
+ * Fetch detail for a specific anime.
+ * @param id Id of the anime.
+ */
+export async function getAnimeById(id: string) {
+  try {
+    const response = await http.get<PaginationDto<AnimeDto>>(`${ANIME_ROUTE}/${id}`);
+    return paginationMapper.fromDto(response.data, AnimeMapper.fromDto);
+  } catch (error: unknown) {
+    throw Error((error as Error).message);
+  }
+}
