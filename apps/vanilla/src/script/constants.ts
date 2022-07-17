@@ -12,7 +12,7 @@ export const API_URL = import.meta.env.VITE_API_URL;
 export const ANIME_ROUTE = '/api/v1/anime/anime/';
 
 /** Default values of query if user don't pass any value. */
-export const DEFAULT_ORDERING = '';
+export const DEFAULT_ORDERING = Sorting.Default;
 export const FIRST_PAGE = 1;
 export const LIMIT = 25;
 export const OFFSET = 0;
