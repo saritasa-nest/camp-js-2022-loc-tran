@@ -25,7 +25,7 @@ export namespace SearchHandler {
   /**
    * Handle searching by press enter key.
    * @param event Keyboard press event.
-   *  */
+   */
   export function searchByEnter(event: KeyboardEvent): void {
     if (event.key === 'Enter') {
       handleSearch();
