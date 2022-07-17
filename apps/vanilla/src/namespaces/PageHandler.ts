@@ -1,4 +1,4 @@
-import { Params } from '@js-camp/core/models/params';
+import { Params, Sorting } from '@js-camp/core/models/params';
 
 import { COUNT_LS, DECIMAL, DEFAULT_ORDERING, LIMIT, SORT_LS } from '../script/constants';
 import { updateTable } from '../services/fetchAnime';
@@ -14,7 +14,7 @@ export namespace PageHandler {
     const params = new Params({
       offset: (LIMIT * (newPage - 1)),
       limit: LIMIT,
-      ordering: localStorage.getItem(SORT_LS) ?? DEFAULT_ORDERING,
+      ordering: (<Sorting>localStorage.getItem(SORT_LS)) ?? DEFAULT_ORDERING,
     });
     updateTable(params, newPage);
   }
