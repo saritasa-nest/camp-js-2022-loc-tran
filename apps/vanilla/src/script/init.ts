@@ -1,8 +1,9 @@
 import { PageHandler } from '../namespaces/PageHandler';
 import { SubmitHandler } from '../namespaces/submitHandler';
-import { updateTable } from '../services/fetchAnime';
+import { getAnimeById, updateTable } from '../services/fetchAnime';
 
-import { DEFAULT_QUERIES, NUMBER_OF_COLUMNS } from './constants';
+import { ANIME_LS, DEFAULT_QUERIES, HOME_PAGE, NUMBER_OF_COLUMNS } from './constants';
+import { renderDetail } from './renderDetail';
 import { renderHeader, renderOrderOptions, renderPagination, renderSortOptions, renderUserData } from './renderToUI';
 
 /** Init event listener for pagination and render it to DOM. */
@@ -60,4 +61,16 @@ export function initRegisterForm(): void {
 export function initHomeProfile(): void {
   renderHeader();
   renderUserData();
+}
+
+/** Init detail page for anime. */
+export async function initDetailPage(): Promise<void> {
+  renderHeader();
+  const animeId = localStorage.getItem(ANIME_LS);
+  if (animeId === null) {
+    location.replace(HOME_PAGE);
+    return;
+  }
+  const animeData = await getAnimeById(animeId);
+  renderDetail(animeData);
 }

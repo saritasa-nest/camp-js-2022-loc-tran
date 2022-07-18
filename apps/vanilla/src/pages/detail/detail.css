@@ -41,7 +41,7 @@
 }
 
 .detail__media {
-  width: 70%;
+  flex: 1;
 }
 
 .detail__media-image {
@@ -53,6 +53,12 @@
   min-height: 300px;
 }
 
-.detail__information-label {
+.detail__information {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail__information-title {
   font-weight: bold;
 }

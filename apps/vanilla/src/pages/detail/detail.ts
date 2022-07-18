@@ -1,5 +1,3 @@
-import { renderHeader } from '../../script/renderToUI';
-import { getAnimeById } from '../../services/fetchAnime';
+import { initDetailPage } from '../../script/init';
 
-renderHeader();
-console.log(await getAnimeById('5876'))
+initDetailPage();

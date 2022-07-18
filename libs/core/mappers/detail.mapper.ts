@@ -18,8 +18,7 @@ export namespace DetailMapper {
     const type = animeTypeDtoToModel[dto.type] !== undefined ? animeTypeDtoToModel[dto.type] : AnimeType.Tv;
     return new Detail({
       id: dto.id,
-      created: dto.created,
-      modified: dto.modified,
+      image: dto.image,
       trailerYoutube: dto.trailer_youtube_id,
       titleEnglish: dto.title_eng,
       titleJapanese: dto.title_jpn,

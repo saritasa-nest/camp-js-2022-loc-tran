@@ -7,11 +7,8 @@ export interface DetailDto {
   /** Id of the anime. */
   readonly id: number;
 
-  /** Created date of the anime. */
-  readonly created: string;
-
-  /** Modified date of the anime. */
-  readonly modified: string;
+  /** Image of the anime. */
+  readonly image: string;
 
   /** Link trailer on youtube. */
   readonly trailer_youtube_id: string;

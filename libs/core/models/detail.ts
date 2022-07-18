@@ -8,11 +8,8 @@ export class Detail extends Immerable {
   /** Id of the anime. */
   public readonly id: number;
 
-  /** Created date of the anime. */
-  public readonly created: string;
-
-  /** Modified date of the anime. */
-  public readonly modified: string;
+  /** Image of the anime. */
+  public readonly image: string;
 
   /** Link trailer on youtube. */
   public readonly trailerYoutube: string;
@@ -52,6 +49,7 @@ export class Detail extends Immerable {
     this.id = data.id;
     this.created = data.created;
     this.modified = data.modified;
+    this.image = data.image;
     this.trailerYoutube = data.trailerYoutube;
     this.titleEnglish = data.titleEnglish;
     this.titleJapanese = data.titleJapanese;
