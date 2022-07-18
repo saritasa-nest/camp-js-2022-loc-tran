@@ -55,6 +55,12 @@
   margin-bottom: 30px;
 }
 
+.form__error-register {
+  color: var(--error-font-color);
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
 .form__buttonGroup-submit:hover {
   background-color: var(--primary-button-color-light);
 }
