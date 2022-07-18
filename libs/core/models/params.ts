@@ -7,6 +7,7 @@ export enum Sorting {
   AiredStart = 'aired__startswith',
   Status = 'status',
 }
+
 /** Params for query. */
 export class Params extends Immerable {
 
