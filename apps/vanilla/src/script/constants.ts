@@ -86,6 +86,7 @@ export const REFRESH_URL = '/api/v1/auth/token/refresh/';
 export const HOME_PAGE = '/';
 export const PROFILE_PAGE = '/profile/';
 export const LOGIN_PAGE = '/login/';
+export const DETAIL_PAGE = '/detail/';
 
 /** Key in local storage. */
 export const ACCESS_TOKEN = 'ACCESS_TOKEN';

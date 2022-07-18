@@ -6,7 +6,7 @@ import { SubmitHandler } from '../namespaces/submitHandler';
 import { SortHandler } from '../namespaces/SortHandler';
 import { PageHandler } from '../namespaces/PageHandler';
 
-import { PAGE_STEP, LIMIT, SORT_OPTIONS, ORDER_OPTIONS, DEFAULT_ORDERING, ORDER_LS, SORT_LS, DECIMAL, OFFSET, FIRST_PAGE, Sorting } from './constants';
+import { PAGE_STEP, LIMIT, SORT_OPTIONS, ORDER_OPTIONS, DEFAULT_ORDERING, ORDER_LS, SORT_LS, DECIMAL, OFFSET, FIRST_PAGE, Sorting, DETAIL_PAGE, ANIME_LS } from './constants';
 import { isAuthorized } from './isAuthorized';
 
 /**
@@ -89,11 +89,10 @@ export async function renderUserData(): Promise<void> {
 /**
  * Print anime list to DOM.
  * @param paginationAnime Store anime data response from api.
- */
-export function renderAnime(paginationAnime: Pagination<Anime>): void {
+ */export function renderAnime(paginationAnime: Pagination<Anime>): void {
   const tableRow = document.querySelector('.table');
   if (tableRow != null) {
-    let htmlString = `<tr class="table__head">
+    const htmlString = `<tr class="table__head">
     <th class="table__head-title">Image</th>
     <th class="table__head-title">Title Eng</th>
     <th class="table__head-title">Title Jap</th>
@@ -101,17 +100,22 @@ export function renderAnime(paginationAnime: Pagination<Anime>): void {
     <th class="table__head-title">Type</th>
     <th class="table__head-title">Status</th>
   </tr>`;
+    tableRow.innerHTML = htmlString;
     paginationAnime.results.forEach((anime: Anime) => {
-      htmlString += `<tr class="table__row">
-      <td><img class="table__row-image" src="${anime.image}"/></td>
+      const row = document.createElement('tr');
+      row.classList.add('table__row');
+      row.innerHTML = `<td><img class="table__row-image" src="${anime.image}"/></td>
       <td>${anime.titleEnglish ?? ''}</td>
       <td>${anime.titleJapanese ?? ''}</td>
       <td>${anime.aired.start.toLocaleString()}</td>
       <td>${anime.type}</td>
-      <td>${anime.status}</td>
-    </tr>`;
+      <td>${anime.status}</td>`;
+      row.addEventListener('click', () => {
+        localStorage.setItem(ANIME_LS, anime.id.toString());
+        location.assign(DETAIL_PAGE);
+      });
+      tableRow.append(row);
     });
-    tableRow.innerHTML = htmlString;
   }
 }
 

@@ -46,11 +46,16 @@
 
 .table__row {
   background-color: var(--background-color);
+  cursor: pointer;
 }
 
 .table__row:nth-child(even) {
   background-color: var(--dark-background-color);
   color: var(--font-color-primary);
+}
+
+.table__row:hover {
+  background-color: var(--dark-background-color-2);
 }
 
 .table__head {

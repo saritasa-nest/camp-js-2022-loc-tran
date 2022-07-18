@@ -3,6 +3,7 @@ import { SubmitHandler } from '../namespaces/submitHandler';
 import { getAnimeById, updateTable } from '../services/fetchAnime';
 
 import { ANIME_LS, DEFAULT_QUERIES, HOME_PAGE, NUMBER_OF_COLUMNS } from './constants';
+import { minimizeImage } from './effect';
 import { renderDetail } from './renderDetail';
 import { renderHeader, renderOrderOptions, renderPagination, renderSortOptions, renderUserData } from './renderToUI';
 
@@ -66,6 +67,8 @@ export function initHomeProfile(): void {
 /** Init detail page for anime. */
 export async function initDetailPage(): Promise<void> {
   renderHeader();
+  const backdrop = document.querySelector('.backdrop');
+  backdrop?.addEventListener('click', minimizeImage);
   const animeId = localStorage.getItem(ANIME_LS);
   if (animeId === null) {
     location.replace(HOME_PAGE);

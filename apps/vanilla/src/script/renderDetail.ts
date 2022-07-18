@@ -1,5 +1,7 @@
 import { Detail } from '@js-camp/core/models/detail';
 
+import { showImage } from './effect';
+
 /**
  * Render anime detail to UI.
  * @param data Anime detail data.
@@ -9,10 +11,14 @@ export function renderDetail(data: Detail): void {
   const image = document.createElement('img');
   image.classList.add('detail__media-image');
   image.src = data.image;
-  const video = document.createElement('iframe');
-  video.classList.add('detail__media-video');
-  video.src = `https://www.youtube.com/embed/${data.trailerYoutube}`;
-  media?.append(image, video);
+  image.addEventListener('click', showImage);
+  media?.append(image);
+  if (data.trailerYoutube !== null) {
+    const video = document.createElement('iframe');
+    video.classList.add('detail__media-video');
+    video.src = `https://www.youtube.com/embed/${data.trailerYoutube}`;
+    media?.append(video);
+  }
 
   const information = document.querySelector('.detail__information');
   information?.append(createInformationRaw('English title: ', data.titleEnglish));
@@ -34,6 +40,7 @@ export function renderDetail(data: Detail): void {
  */
 function createInformationRaw(title: string, content: string): HTMLElement {
   const label = document.createElement('label');
+  label.classList.add('detail__information-label');
   const titleNode = document.createElement('span');
   titleNode.classList.add('detail__information-title');
   titleNode.innerHTML = title;
