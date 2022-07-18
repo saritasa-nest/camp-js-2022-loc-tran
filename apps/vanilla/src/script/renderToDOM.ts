@@ -13,7 +13,7 @@ import { LIMIT, ORDER_OPTIONS, PAGE_STEP, SORT_OPTIONS } from './constants';
 export function renderAnime(paginationAnime: Pagination<Anime>): void {
   const tableRow = document.querySelector('.table');
   if (tableRow != null) {
-    let htmlString = `<tr class="table__head">
+    const htmlString = `<tr class="table__head">
     <th class="table__head-title">Image</th>
     <th class="table__head-title">Title Eng</th>
     <th class="table__head-title">Title Jap</th>
@@ -21,17 +21,18 @@ export function renderAnime(paginationAnime: Pagination<Anime>): void {
     <th class="table__head-title">Type</th>
     <th class="table__head-title">Status</th>
   </tr>`;
+    tableRow.innerHTML = htmlString;
     paginationAnime.results.forEach((anime: Anime) => {
-      htmlString += `<tr class="table__row">
-      <td><img class="table__row-image" src="${anime.image}"/></td>
+      const row = document.createElement('tr');
+      row.classList.add('table__row');
+      row.innerHTML = `<td><img class="table__row-image" src="${anime.image}"/></td>
       <td>${anime.titleEnglish ?? ''}</td>
       <td>${anime.titleJapanese ?? ''}</td>
       <td>${anime.aired.start.toLocaleString()}</td>
       <td>${anime.type}</td>
-      <td>${anime.status}</td>
-    </tr>`;
+      <td>${anime.status}</td>`;
+      tableRow.append(row);
     });
-    tableRow.innerHTML = htmlString;
   }
 }
 
