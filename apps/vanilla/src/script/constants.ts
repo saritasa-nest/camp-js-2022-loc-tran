@@ -1,5 +1,13 @@
 import { OrderOption, SortOption } from '@js-camp/core/models/option';
-import { Params, Sorting } from '@js-camp/core/models/params';
+import { Params } from '@js-camp/core/models/params';
+
+/** Sorting options for user. */
+export enum Sorting {
+  Default = '',
+  EnglishTitle = 'title_eng',
+  AiredStart = 'aired__startswith',
+  Status = 'status',
+}
 
 /** Header for query. */
 export const API_HEADER = 'Api-Key';
@@ -12,7 +20,7 @@ export const API_URL = import.meta.env.VITE_API_URL;
 export const ANIME_ROUTE = '/api/v1/anime/anime/';
 
 /** Default values of query if user don't pass any value. */
-export const DEFAULT_ORDERING = '';
+export const DEFAULT_ORDERING = Sorting.Default;
 export const FIRST_PAGE = 1;
 export const LIMIT = 25;
 export const OFFSET = 0;

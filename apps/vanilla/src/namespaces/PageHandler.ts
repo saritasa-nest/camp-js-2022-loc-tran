@@ -1,6 +1,7 @@
 import { Params, Sorting } from '@js-camp/core/models/params';
 
-import { COUNT_LS, DECIMAL, DEFAULT_ORDERING, LIMIT, SORT_LS } from '../script/constants';
+import { LIMIT, SORT_LS, DEFAULT_ORDERING, COUNT_LS, DECIMAL } from '../script/constants';
+
 import { updateTable } from '../services/fetchAnime';
 import { assertNonNullish } from '../utils/assertNonNullish';
 
