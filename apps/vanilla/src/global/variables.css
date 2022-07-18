@@ -5,7 +5,7 @@
   /* Font family */
   --secondary-font: arial, helvetica, sans-serif;
 
-  /* Primary color. */
+  /* Primary colors. */
   --primary-color: #2458a2;
   --primary-light-color: #5584c5;
   --primary-dark-color: #032656;
@@ -28,12 +28,11 @@
   /* Border color. */
   --border-color: #000;
 
-  /* Header color. */
-  --font-color-heading-1: #1229a7;
-
   /** Font color */
   --font-color-contrast-primary: #fff;
   --font-color-primary: #000;
+
+  /* Heading color. */
   --heading-color-1: #1229a7;
 
   /* Button color */

@@ -3,7 +3,8 @@ import { TokenMapper } from '@js-camp/core/mappers/token.mapper';
 import { Token } from '@js-camp/core/models/token';
 
 import { http } from '../api';
-import { REFRESH_URL, VERIFY_URL } from '../script/constants';
+import { ApiUrl } from '../namespaces/apiUrl';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '../script/constants';
 
 /**
  * Verify if a token is valid.
@@ -11,7 +12,7 @@ import { REFRESH_URL, VERIFY_URL } from '../script/constants';
  */
 export async function verifyToken(token: string): Promise<boolean> {
   try {
-    await http.post(VERIFY_URL, {
+    await http.post(ApiUrl.verify, {
       token,
     });
     return true;
@@ -25,14 +26,10 @@ export async function verifyToken(token: string): Promise<boolean> {
  * @param refreshToken Refresh token.
  */
 export async function getRefreshedToken(refreshToken: string): Promise<Token> {
-  try {
-    const response = await http.post<TokenDto>(REFRESH_URL, {
-      token: refreshToken,
-    });
-    return TokenMapper.fromDto(response.data);
-  } catch (error: unknown) {
-    throw new Error((error as Error).message);
-  }
+  const response = await http.post<TokenDto>(ApiUrl.refresh, {
+    token: refreshToken,
+  });
+  return TokenMapper.fromDto(response.data);
 }
 
 /**
@@ -40,6 +37,6 @@ export async function getRefreshedToken(refreshToken: string): Promise<Token> {
  * @param tokens Store Access token and Refresh token received.
  */
 export function storeTokens(tokens: Token): void {
-  localStorage.setItem('ACCESS_TOKEN', tokens.accessToken);
-  localStorage.setItem('REFRESH_TOKEN', tokens.refreshToken);
+  localStorage.setItem(ACCESS_TOKEN, tokens.accessToken);
+  localStorage.setItem(REFRESH_TOKEN, tokens.refreshToken);
 }

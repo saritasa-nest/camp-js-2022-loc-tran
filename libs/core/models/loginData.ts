@@ -1,19 +1,9 @@
-import { Immerable, OmitImmerable } from './immerable';
-
-/** Class for login data. */
-export class LoginData extends Immerable {
+/** Data for login. */
+export interface LoginData {
 
   /** User's email. */
-  public readonly email: string;
+  readonly email: string;
 
   /** User's password. */
-  public readonly password: string;
-
-  public constructor(data: LoginDataArgs) {
-    super();
-    this.email = data.email;
-    this.password = data.password;
-  }
+  readonly password: string;
 }
-
-type LoginDataArgs = OmitImmerable<LoginData>;

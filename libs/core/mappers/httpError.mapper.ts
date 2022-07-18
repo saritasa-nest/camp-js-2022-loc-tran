@@ -1,5 +1,5 @@
-import { HTTPErrorDto } from '../dtos/httpError.dto';
-import { HTTPError } from '../models/httpError';
+import { HttpErrorDto } from '../dtos/httpError.dto';
+import { HttpError } from '../models/httpError';
 
 export namespace HttpErrorMapper {
 
@@ -7,9 +7,8 @@ export namespace HttpErrorMapper {
    * Maps httpError dto to model.
    * @param httpDto Http Error dto data.
    */
-  export function fromDto(httpDto: HTTPErrorDto): HTTPError {
-    return new HTTPError({
-      code: httpDto.response.status,
+  export function fromDto(httpDto: HttpErrorDto): HttpError {
+    return new HttpError({
       detail: httpDto.response.data.detail,
       data: httpDto.response.data.data,
     });
