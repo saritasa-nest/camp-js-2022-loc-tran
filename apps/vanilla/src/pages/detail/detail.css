@@ -35,3 +35,24 @@
 .header__link-logout {
   color: var(--error-font-color);
 }
+
+.detail {
+  display: flex;
+}
+
+.detail__media {
+  width: 70%;
+}
+
+.detail__media-image {
+  width: 100%;
+}
+
+.detail__media-video {
+  width: 100%;
+  min-height: 300px;
+}
+
+.detail__information-label {
+  font-weight: bold;
+}

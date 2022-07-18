@@ -1,13 +1,12 @@
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
-import { Sorting } from '@js-camp/core/models/params';
 
 import { getUserData } from '../services/getUserData';
 import { SubmitHandler } from '../namespaces/submitHandler';
 import { SortHandler } from '../namespaces/SortHandler';
 import { PageHandler } from '../namespaces/PageHandler';
 
-import { PAGE_STEP, LIMIT, SORT_OPTIONS, ORDER_OPTIONS, DEFAULT_ORDERING, ORDER_LS, SORT_LS, DECIMAL, OFFSET, FIRST_PAGE } from './constants';
+import { PAGE_STEP, LIMIT, SORT_OPTIONS, ORDER_OPTIONS, DEFAULT_ORDERING, ORDER_LS, SORT_LS, DECIMAL, OFFSET, FIRST_PAGE, Sorting } from './constants';
 import { isAuthorized } from './isAuthorized';
 
 /**
@@ -104,7 +103,7 @@ export function renderAnime(paginationAnime: Pagination<Anime>): void {
   </tr>`;
     paginationAnime.results.forEach((anime: Anime) => {
       htmlString += `<tr class="table__row">
-      <td><a href='/detail'><img class="table__row-image" src="${anime.image}"/></a></td>
+      <td><a href='/detail/'><img class="table__row-image" src="${anime.image}"/></a></td>
       <td>${anime.titleEnglish ?? ''}</td>
       <td>${anime.titleJapanese ?? ''}</td>
       <td>${anime.aired.start.toLocaleString()}</td>
