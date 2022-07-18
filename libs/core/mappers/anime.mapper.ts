@@ -3,13 +3,13 @@ import { Anime, AnimeStatus, AnimeType } from '../models/anime';
 
 import { DateRangeMapper } from './dateRange.mapper';
 
-const animeStatusDtoToModel: Readonly<Record<AnimeStatusDto, AnimeStatus>> = {
+export const animeStatusDtoToModel: Readonly<Record<AnimeStatusDto, AnimeStatus>> = {
   [AnimeStatusDto.Airing]: AnimeStatus.Airing,
   [AnimeStatusDto.Finished]: AnimeStatus.Finished,
   [AnimeStatusDto.NotYetAired]: AnimeStatus.NotYetAired,
 };
 
-const animeTypeDtoToModel: Readonly<Record<AnimeTypeDto, AnimeType>> = {
+export const animeTypeDtoToModel: Readonly<Record<AnimeTypeDto, AnimeType>> = {
   [AnimeTypeDto.Movie]: AnimeType.Movie,
   [AnimeTypeDto.Music]: AnimeType.Music,
   [AnimeTypeDto.Ona]: AnimeType.Ona,

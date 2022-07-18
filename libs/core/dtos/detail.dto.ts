@@ -1,11 +1,5 @@
-import { AnimeSourceDto } from '../enum/animeSource';
-import { BroadcastDayDto } from '../enum/broadcastDay';
-import { RatingDto } from '../enum/rating';
-import { SeasonDto } from '../enum/season';
-
 import { AnimeStatusDto, AnimeTypeDto } from './anime.dto';
 import { DateRangeDto } from './dateRange.dto';
-import { GenreDto } from './genre.dto';
 
 /** Detail Dto data of the anime. */
 export interface DetailDto {
@@ -34,20 +28,11 @@ export interface DetailDto {
   /** Status of the anime. */
   readonly status: AnimeStatusDto;
 
-  /** Source of the anime. */
-  readonly source: AnimeSourceDto;
-
   /** The anime is airing or not. */
   readonly airing: boolean;
 
   /** Date time range of aired. */
   readonly aired: DateRangeDto;
-
-  /** Rating of the anime. */
-  readonly rating: RatingDto;
-
-  /** Season of the anime. */
-  readonly season: SeasonDto;
 
   /** Synopsis of the anime. */
   readonly synopsis: string;
@@ -55,26 +40,19 @@ export interface DetailDto {
   /** Background of the anime. */
   readonly background: string;
 
-  /** Broadcast day of the anime. */
-  readonly broadcast_day: BroadcastDayDto | null;
-
-  /** Broadcast time of the anime. */
-  readonly broadcast_time: string | null;
-
-  /** Broadcast timezone of the anime. */
-  readonly broadcast_timezone: string | null;
-
-  /** Studios of the anime. */
-  readonly studios: number;
-
   /** Studios data of the anime. */
-  readonly studios_data: StudioDto;
-
-  /** Genres of the anime. */
-  readonly genres: number;
+  readonly studios_data: readonly StudioDto[];
 
   /** Genre data of the anime. */
-  readonly genres_data: GenreDataDto;
+  readonly genres_data: readonly GenreDataDto[];
+}
+
+/** Genre dto types. */
+export enum GenreTypeDto {
+  Genres = 'GENRES',
+  ExplicitGenres = 'EXPLICIT_GENRES',
+  Themes = 'THEMES',
+  Demographics = 'DEMOGRAPHICS',
 }
 
 /** Studio dto data. */
@@ -109,5 +87,5 @@ export interface GenreDataDto {
   readonly name: string;
 
   /** Type of the Genre. */
-  readonly type: GenreDto;
+  readonly type: GenreTypeDto;
 }
