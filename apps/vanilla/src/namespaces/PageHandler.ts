@@ -1,6 +1,6 @@
 import { Params } from '@js-camp/core/models/params';
 
-import { COUNT_LS, DECIMAL, DEFAULT_ORDERING, LIMIT, SORT_LS, SEARCH_QUERY } from '../script/constants';
+import { COUNT_LS, DECIMAL, DEFAULT_ORDERING, LIMIT, SORT_LS, SEARCH_LS } from '../script/constants';
 
 import { updateTable } from '../services/fetchAnime';
 import { assertNonNullish } from '../utils/assertNonNullish';
@@ -12,7 +12,7 @@ export namespace PageHandler {
    * @param newPage Next page number.
    */
   export function goToPageByNum(newPage: number): void {
-    const searchQuery = localStorage.getItem(SEARCH_QUERY);
+    const searchQuery = localStorage.getItem(SEARCH_LS);
     assertNonNullish(searchQuery);
     const params = new Params({
       offset: (LIMIT * (newPage - 1)),

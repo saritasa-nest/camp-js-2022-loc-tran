@@ -34,7 +34,7 @@ export const DECIMAL = 10;
 export const COUNT_LS = 'COUNT';
 export const SORT_LS = 'ANIME_SORT';
 export const ORDER_LS = 'ANIME_ORDER';
-export const SEARCH_QUERY = 'ANIME_SEARCH';
+export const SEARCH_LS = 'ANIME_SEARCH';
 
 /** Options for sorting. */
 export const SORT_OPTIONS: readonly SortOption[] = [
