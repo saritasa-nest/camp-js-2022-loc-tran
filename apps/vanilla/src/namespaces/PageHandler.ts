@@ -12,16 +12,6 @@ export namespace PageHandler {
    * @param newPage Next page number.
    */
   export function goToPageByNum(newPage: number): void {
-    const params = new URLSearchParams({
-      offset: (LIMIT * (newPage - 1)).toString(),
-      limit: LIMIT.toString(),
-      search: searchQuery,
-    });
-    const sortOption = localStorage.getItem(SORT_LS);
-    assertNonNullish(sortOption);
-    params.append('ordering', sortOption);
-
-    updateTable(generateUrl(ANIME_ROUTE, params), newPage);
     const searchQuery = localStorage.getItem(SEARCH_QUERY);
     assertNonNullish(searchQuery);
     const params = new Params({

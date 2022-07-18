@@ -3,12 +3,9 @@ import { Immerable, OmitImmerable } from './immerable';
 /** Sorting options for user. */
 export enum Sorting {
   Default = '',
-  EnglishTitle = 'titleEnglish',
-  AiredStart = 'airedStart',
+  EnglishTitle = 'title_eng',
+  AiredStart = 'aired__startswith',
   Status = 'status',
-  EnglishTitleDecs = '-titleEnglish',
-  AiredStartDecs = '-airedStart',
-  StatusDecs = '-status',
 }
 
 /** Params for query. */
@@ -21,13 +18,17 @@ export class Params extends Immerable {
   public readonly limit: number;
 
   /** Sorting type for anime list. */
-  public readonly ordering: Sorting;
+  public readonly ordering: string;
+
+  /** Search for anime list. */
+  public readonly search: string;
 
   public constructor(data: ParamsArgs) {
     super();
     this.offset = data.offset;
     this.limit = data.limit;
     this.ordering = data.ordering;
+    this.search = data.search;
   }
 }
 

@@ -1,5 +1,6 @@
-import { ANIME_ROUTE, DEFAULT_OFFSET, FIRST_PAGE, LIMIT, SEARCH_QUERY, SORT_LS } from '../script/constants';
-import { generateUrl } from '../script/generateUrl';
+import { Params } from '@js-camp/core/models/params';
+
+import { OFFSET, FIRST_PAGE, LIMIT, SEARCH_QUERY, SORT_LS } from '../script/constants';
 import { updateTable } from '../services/fetchAnime';
 import { assertNonNullish } from '../utils/assertNonNullish';
 
@@ -12,14 +13,14 @@ export namespace SearchHandler {
     localStorage.setItem(SEARCH_QUERY, searchText.value);
     const sortOption = localStorage.getItem(SORT_LS);
     assertNonNullish(sortOption);
-    const params = new URLSearchParams({
-      offset: DEFAULT_OFFSET,
-      limit: LIMIT.toString(),
+    const params = new Params({
+      offset: OFFSET,
+      limit: LIMIT,
       ordering: sortOption,
       search: searchText.value,
     });
 
-    updateTable(generateUrl(ANIME_ROUTE, params), FIRST_PAGE);
+    updateTable(params, FIRST_PAGE);
   }
 
   /**
