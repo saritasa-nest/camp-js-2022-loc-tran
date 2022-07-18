@@ -1,10 +1,10 @@
 import { Account } from '@js-camp/core/models/account';
-import { LoginData } from '@js-camp/core/models/loginData';
 
 import { PROFILE_PAGE } from '../script/constants';
 import { showErrorLogin, showErrorRegister } from '../script/renderToUI';
 import { login } from '../services/login';
 import { register } from '../services/register';
+import { logout } from '../services/logout';
 
 export namespace SubmitHandler {
 
@@ -20,11 +20,12 @@ export namespace SubmitHandler {
       const password = formData.get('password');
 
       if (email !== null && password !== null) {
-        const loginData = new LoginData({ email: email.toString(), password: password.toString() });
-        const auth = await login(loginData);
-        localStorage.setItem('ACCESS_TOKEN', auth.accessToken);
-        localStorage.setItem('REFRESH_TOKEN', auth.refreshToken);
-        location.replace(PROFILE_PAGE);
+        const errorList = await login({ email: email.toString(), password: password.toString() });
+        if (errorList !== null) {
+          showErrorLogin(errorList);
+        } else {
+          location.replace(PROFILE_PAGE);
+        }
       } else {
         showErrorLogin(['Email and password is required!']);
       }
@@ -55,10 +56,12 @@ export namespace SubmitHandler {
           lastName: lastName.toString(),
           password: password.toString(),
         });
-        const auth = await register(newAccount);
-        localStorage.setItem('ACCESS_TOKEN', auth.accessToken);
-        localStorage.setItem('REFRESH_TOKEN', auth.refreshToken);
-        location.replace(PROFILE_PAGE);
+        const errorList = await register(newAccount);
+        if (errorList !== null) {
+          showErrorLogin(errorList);
+        } else {
+          location.replace(PROFILE_PAGE);
+        }
       } else {
         showErrorRegister(['All fields need to be filled!']);
       }
@@ -67,8 +70,7 @@ export namespace SubmitHandler {
 
   /** Handle logout request. */
   export function handleLogout(): void {
-    localStorage.removeItem('ACCESS_TOKEN');
-    localStorage.removeItem('REFRESH_TOKEN');
+    logout();
     location.replace(PROFILE_PAGE);
   }
 }

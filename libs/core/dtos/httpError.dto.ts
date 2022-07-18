@@ -4,10 +4,9 @@ export interface DataError {
 }
 
 /** Interface for HTTP error dto. */
-export interface HTTPErrorDto extends Error {
+export interface HttpErrorDto extends Error {
 
   readonly response: {
-    readonly status: number;
     readonly data: {
       readonly detail: string;
       readonly data: DataError;
