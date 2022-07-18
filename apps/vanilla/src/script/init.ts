@@ -3,8 +3,7 @@ import { SearchHandler } from '../namespaces/SearchHandler';
 import { updateTable } from '../services/fetchAnime';
 import { assertNonNullish } from '../utils/assertNonNullish';
 
-import { ANIME_ROUTE, DEFAULT_QUERIES, NUMBER_OF_COLUMNS } from './constants';
-import { generateUrl } from './generateUrl';
+import { DEFAULT_QUERIES, NUMBER_OF_COLUMNS } from './constants';
 import { renderOrderOptions, renderPagination, renderSortOptions } from './renderToDOM';
 
 /** Init event listener for pagination and render it to DOM. */
@@ -39,7 +38,7 @@ export function initAnimeTable(): void {
   } else {
     throw new Error('Cannot get table row element in DOM!');
   }
-  updateTable(generateUrl(ANIME_ROUTE, DEFAULT_QUERIES), 1);
+  updateTable(DEFAULT_QUERIES, 1);
 }
 
 /** Init event for search button. */
