@@ -1,16 +1,5 @@
 import { Immerable, OmitImmerable } from './immerable';
 
-/** Sorting options for user. */
-export enum Sorting {
-  Default = '',
-  EnglishTitle = 'titleEnglish',
-  AiredStart = 'airedStart',
-  Status = 'status',
-  EnglishTitleDecs = '-titleEnglish',
-  AiredStartDecs = '-airedStart',
-  StatusDecs = '-status',
-}
-
 /** Params for query. */
 export class Params extends Immerable {
 
@@ -21,7 +10,7 @@ export class Params extends Immerable {
   public readonly limit: number;
 
   /** Sorting type for anime list. */
-  public readonly ordering: Sorting;
+  public readonly ordering: string;
 
   public constructor(data: ParamsArgs) {
     super();

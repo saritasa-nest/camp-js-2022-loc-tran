@@ -1,5 +1,13 @@
 import { OrderOption, SortOption } from '@js-camp/core/models/option';
-import { Params, Sorting } from '@js-camp/core/models/params';
+import { Params } from '@js-camp/core/models/params';
+
+/** Sorting options for user. */
+export enum Sorting {
+  Default = '',
+  EnglishTitle = 'titleEnglish',
+  AiredStart = 'airedStart',
+  Status = 'status',
+}
 
 /** Header for query. */
 export const API_HEADER = 'Api-Key';
