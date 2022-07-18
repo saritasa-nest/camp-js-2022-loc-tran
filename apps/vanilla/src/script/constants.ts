@@ -4,8 +4,8 @@ import { Params } from '@js-camp/core/models/params';
 /** Sorting options for user. */
 export enum Sorting {
   Default = '',
-  EnglishTitle = 'titleEnglish',
-  AiredStart = 'airedStart',
+  EnglishTitle = 'title_eng',
+  AiredStart = 'aired__startswith',
   Status = 'status',
 }
 
