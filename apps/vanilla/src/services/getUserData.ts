@@ -21,11 +21,6 @@ export async function getUserData(): Promise<User> {
     const tokens = await getRefreshedToken(refreshToken);
     storeTokens(tokens);
   }
-
-  try {
-    const response = await http.get<UserDto>(PROFILE_URL);
-    return UserMapper.fromDto(response.data);
-  } catch (error: unknown) {
-    throw new Error((error as Error).message);
-  }
+  const response = await http.get<UserDto>(PROFILE_URL);
+  return UserMapper.fromDto(response.data);
 }

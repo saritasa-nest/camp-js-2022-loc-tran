@@ -12,7 +12,7 @@ export namespace Middleware {
       return;
     }
     const isValidToken = await verifyToken(accessToken);
-    if (isValidToken === false) {
+    if (!isValidToken) {
       try {
         const tokens = await getRefreshedToken(refreshToken);
         storeTokens(tokens);
