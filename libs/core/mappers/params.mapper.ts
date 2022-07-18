@@ -1,5 +1,6 @@
 import { ParamsDto } from '../dtos/params.dto';
 import { Params } from '../models/params';
+
 export namespace ParamsMapper {
 
   /**
