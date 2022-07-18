@@ -1,3 +1,11 @@
+.title {
+  color: var(--heading-color-1);
+  font-size: 3rem;
+  font-family: var(--secondary-font);
+  letter-spacing: 0.2rem;
+  margin-bottom: 40px;
+}
+
 .form {
   margin-top: 50px;
   margin-bottom: 20px;

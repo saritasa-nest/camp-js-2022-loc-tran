@@ -1,14 +1,6 @@
 @import url("../../global/index.css");
 @import url("../../global/input-group.css");
 
-.title {
-  color: var(--heading-color-1);
-  font-size: 3rem;
-  font-family: var(--secondary-font);
-  letter-spacing: 0.2rem;
-  margin-bottom: 40px;
-}
-
 .back {
   position: fixed;
   left: 0;
