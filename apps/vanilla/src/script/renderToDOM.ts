@@ -1,10 +1,44 @@
-import { Anime } from '@js-camp/core/models/anime';
+import { Anime, Sorting } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
+import { SelectOption } from '@js-camp/core/models/selectOption';
 
-import { PageHandler } from '../namespaces/PageHandler';
+import { LIMIT, PageHandler } from '../namespaces/PageHandler';
 import { SortHandler } from '../namespaces/SortHandler';
 
-import { LIMIT, ORDER_OPTIONS, PAGE_STEP, SORT_OPTIONS } from './constants';
+/** Pagination config constants. */
+export const PAGE_STEP = 3;
+
+/** Options for sorting. */
+export const SORT_OPTIONS: readonly SelectOption[] = [
+  {
+    title: 'Default',
+    value: Sorting.Default,
+  },
+  {
+    title: 'Title in English',
+    value: Sorting.EnglishTitle,
+  },
+  {
+    title: 'Aired day',
+    value: Sorting.AiredStart,
+  },
+  {
+    title: 'Status',
+    value: Sorting.Status,
+  },
+];
+
+/** Options for ordering. */
+export const ORDER_OPTIONS: readonly SelectOption[] = [
+  {
+    title: 'Ascending',
+    value: '',
+  },
+  {
+    title: 'Descending',
+    value: '-',
+  },
+];
 
 /**
  * Print anime list to DOM.

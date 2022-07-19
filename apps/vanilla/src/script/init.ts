@@ -1,8 +1,13 @@
-import { PageHandler } from '../namespaces/PageHandler';
+import { Sorting } from '@js-camp/core/models/anime';
+import { Params } from '@js-camp/core/models/params';
+
+import { LIMIT, OFFSET, PageHandler } from '../namespaces/PageHandler';
 import { updateTable } from '../services/fetchAnime';
 
-import { DEFAULT_QUERIES, NUMBER_OF_COLUMNS } from './constants';
 import { renderOrderOptions, renderPagination, renderSortOptions } from './renderToDOM';
+
+/** Number of columns of anime table. */
+export const NUMBER_OF_COLUMNS = 6;
 
 /** Init event listener for pagination and render it to DOM. */
 export function initPagination(): void {
@@ -38,3 +43,10 @@ export function initAnimeTable(): void {
   }
   updateTable(DEFAULT_QUERIES, 1);
 }
+
+/** Default data for queries. */
+export const DEFAULT_QUERIES = new Params({
+  offset: OFFSET,
+  limit: LIMIT,
+  ordering: Sorting.Default,
+});
