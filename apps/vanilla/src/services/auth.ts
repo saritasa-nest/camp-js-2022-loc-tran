@@ -59,6 +59,6 @@ export async function register(data: Account): Promise<Array<string> | null> {
 
 /** Remove Access token and Refresh token from local storage. */
 export async function logout(): Promise<void> {
-  await localStorage.removeItem(ACCESS_TOKEN);
-  await localStorage.removeItem(REFRESH_TOKEN);
+  localStorage.removeItem(ACCESS_TOKEN);
+  localStorage.removeItem(REFRESH_TOKEN);
 }

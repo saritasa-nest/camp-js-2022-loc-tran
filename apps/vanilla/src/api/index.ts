@@ -7,4 +7,4 @@ export const http = axios.create({
 });
 
 http.interceptors.request.use(requestInterceptor);
-// http.interceptors.response.use(response => response, errorInterceptor);
+http.interceptors.response.use(response => response, errorInterceptor);
