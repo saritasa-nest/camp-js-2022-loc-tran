@@ -1,0 +1,11 @@
+@import url("../../global/index.css");
+@import url("../../global/input-group.css");
+
+.home {
+  position: fixed;
+  left: 0;
+  top: 0;
+  margin-top: 8vh;
+  margin-left: 8vw;
+  font-size: 1.5rem;
+}
