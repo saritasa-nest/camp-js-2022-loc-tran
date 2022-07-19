@@ -1,6 +1,6 @@
 import { Params } from '@js-camp/core/models/params';
 
-import { SORT_LS } from '../script/constants';
+import { SORT_LS } from '../script/localStorageName';
 import { assertNonNullish } from '../utils/assertNonNullish';
 import { updateTable } from '../services/fetchAnime';
 
