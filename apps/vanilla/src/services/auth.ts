@@ -58,6 +58,7 @@ export async function register(data: Account): Promise<Array<string> | null> {
 }
 
 /** Remove Access token and Refresh token from local storage. */
+// eslint-disable-next-line require-await
 export async function logout(): Promise<void> {
   localStorage.removeItem(ACCESS_TOKEN);
   localStorage.removeItem(REFRESH_TOKEN);
