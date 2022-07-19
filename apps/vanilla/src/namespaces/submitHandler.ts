@@ -2,9 +2,7 @@ import { Account } from '@js-camp/core/models/account';
 
 import { PROFILE_PAGE } from '../script/constants';
 import { showErrorLogin, showErrorRegister } from '../script/renderToUI';
-import { login } from '../services/login';
-import { register } from '../services/register';
-import { logout } from '../services/logout';
+import { login, register, logout } from '../services/auth';
 
 export namespace SubmitHandler {
 
@@ -22,7 +20,6 @@ export namespace SubmitHandler {
       if (email !== null && password !== null) {
         const errorList = await login({ email: email.toString(), password: password.toString() });
         if (errorList !== null) {
-          errorList.pop();
           showErrorLogin(errorList);
         } else {
           location.replace(PROFILE_PAGE);
@@ -59,7 +56,6 @@ export namespace SubmitHandler {
         });
         const errorList = await register(newAccount);
         if (errorList !== null) {
-          errorList.pop();
           showErrorRegister(errorList);
         } else {
           location.replace(PROFILE_PAGE);
@@ -71,8 +67,8 @@ export namespace SubmitHandler {
   }
 
   /** Handle logout request. */
-  export function handleLogout(): void {
-    logout();
+  export async function handleLogout(): Promise<void> {
+    await logout();
     location.replace(PROFILE_PAGE);
   }
 }

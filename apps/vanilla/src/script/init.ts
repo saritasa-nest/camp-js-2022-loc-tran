@@ -4,9 +4,9 @@ import { renderUserData } from './renderToUI';
 
 /** Init event for login form. */
 export function initLoginForm(): void {
-  const form = document.querySelector('.form');
+  const form = document.querySelector<HTMLFormElement>('.form');
   if (form !== null) {
-    (form as HTMLFormElement).addEventListener('submit', SubmitHandler.submitLoginForm);
+    addEventListener('submit', SubmitHandler.submitLoginForm);
   }
 }
 
