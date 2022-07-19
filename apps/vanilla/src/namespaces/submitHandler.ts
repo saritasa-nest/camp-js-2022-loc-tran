@@ -1,6 +1,6 @@
 import { Account } from '@js-camp/core/models/account';
 
-import { PROFILE_PAGE } from '../script/constants';
+import { PROFILE_PAGE } from '../script/constants/redirectUrl';
 import { showErrorLogin, showErrorRegister } from '../script/renderToUI';
 import { login } from '../services/login';
 import { register } from '../services/register';

@@ -6,7 +6,7 @@ import { Account } from '@js-camp/core/models/account';
 
 import { http } from '../api';
 import { ApiUrl } from '../namespaces/apiUrl';
-import { ACCESS_TOKEN, REFRESH_TOKEN } from '../script/constants';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '../script/constants/localStorageName';
 
 /**
  * Handle register request.

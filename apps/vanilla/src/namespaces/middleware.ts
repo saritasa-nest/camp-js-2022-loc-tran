@@ -1,4 +1,5 @@
-import { ACCESS_TOKEN, LOGIN_PAGE, PROFILE_PAGE, REFRESH_TOKEN } from '../script/constants';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '../script/constants/localStorageName';
+import { LOGIN_PAGE, PROFILE_PAGE } from '../script/constants/redirectUrl';
 
 export namespace Middleware {
 

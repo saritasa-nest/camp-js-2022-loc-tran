@@ -4,7 +4,7 @@ import { Token } from '@js-camp/core/models/token';
 
 import { http } from '../api';
 import { ApiUrl } from '../namespaces/apiUrl';
-import { ACCESS_TOKEN, REFRESH_TOKEN } from '../script/constants';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '../script/constants/localStorageName';
 
 /**
  * Verify if a token is valid.

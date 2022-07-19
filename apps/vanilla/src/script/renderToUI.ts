@@ -1,13 +1,15 @@
-import { Anime } from '@js-camp/core/models/anime';
+import { Anime, Sorting } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 
 import { getUserData } from '../services/getUserData';
 import { SubmitHandler } from '../namespaces/submitHandler';
 import { SortHandler } from '../namespaces/SortHandler';
-import { PageHandler } from '../namespaces/PageHandler';
+import { DECIMAL, DEFAULT_ORDERING, FIRST_PAGE, LIMIT, OFFSET, PageHandler } from '../namespaces/PageHandler';
 
-import { PAGE_STEP, LIMIT, SORT_OPTIONS, ORDER_OPTIONS, DEFAULT_ORDERING, ORDER_LS, SORT_LS, DECIMAL, OFFSET, FIRST_PAGE, Sorting, DETAIL_PAGE, ANIME_LS } from './constants';
 import { isAuthorized } from './isAuthorized';
+import { ANIME_LS, SORT_LS, ORDER_LS } from './constants/localStorageName';
+import { DETAIL_PAGE } from './constants/redirectUrl';
+import { PAGE_STEP, SORT_OPTIONS, ORDER_OPTIONS } from './renderToDOM';
 
 /**
  * Show login error message to UI.

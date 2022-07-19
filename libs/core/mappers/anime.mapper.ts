@@ -26,8 +26,8 @@ export namespace AnimeMapper {
    */
   export function fromDto(dto: AnimeDto): Anime {
 
-    const status = animeStatusDtoToModel[dto.status] !== undefined ? animeStatusDtoToModel[dto.status] : AnimeStatus.Airing;
-    const type = animeTypeDtoToModel[dto.type] !== undefined ? animeTypeDtoToModel[dto.type] : AnimeType.Tv;
+    const status = animeStatusDtoToModel[dto.status];
+    const type = animeTypeDtoToModel[dto.type];
 
     return {
       id: dto.id,

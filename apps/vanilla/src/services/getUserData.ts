@@ -4,7 +4,7 @@ import { User } from '@js-camp/core/models/user';
 
 import { http } from '../api';
 import { ApiUrl } from '../namespaces/apiUrl';
-import { ACCESS_TOKEN, REFRESH_TOKEN } from '../script/constants';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '../script/constants/localStorageName';
 import { renderAuthenticatedLink } from '../script/renderToUI';
 
 /** Get user data for profile page. */

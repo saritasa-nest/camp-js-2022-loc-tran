@@ -1,8 +1,10 @@
 import { Params } from '@js-camp/core/models/params';
 
-import { FIRST_PAGE, LIMIT, OFFSET, SORT_LS } from '../script/constants';
-import { updateTable } from '../services/fetchAnime';
+import { SORT_LS } from '../script/constants/localStorageName';
 import { assertNonNullish } from '../utils/assertNonNullish';
+import { updateTable } from '../services/fetchAnime';
+
+import { OFFSET, LIMIT, FIRST_PAGE } from './PageHandler';
 
 export namespace SortHandler {
 

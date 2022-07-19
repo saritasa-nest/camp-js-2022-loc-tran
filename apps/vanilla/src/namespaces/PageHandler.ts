@@ -1,9 +1,18 @@
-import { Params, Sorting } from '@js-camp/core/models/params';
+import { Sorting } from '@js-camp/core/models/anime';
+import { Params } from '@js-camp/core/models/params';
 
-import { LIMIT, SORT_LS, DEFAULT_ORDERING, COUNT_LS, DECIMAL } from '../script/constants';
-
+import { SORT_LS, COUNT_LS } from '../script/constants/localStorageName';
 import { updateTable } from '../services/fetchAnime';
 import { assertNonNullish } from '../utils/assertNonNullish';
+
+/** Value for page. */
+export const FIRST_PAGE = 1;
+export const LIMIT = 25;
+export const OFFSET = 0;
+export const DECIMAL = 10;
+
+/** Default values of query if user don't pass any value. */
+export const DEFAULT_ORDERING = Sorting.Default;
 
 export namespace PageHandler {
 

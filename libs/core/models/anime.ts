@@ -17,6 +17,14 @@ export enum AnimeStatus {
   Airing = 'AIRING',
 }
 
+/** Sorting options for user. */
+export enum Sorting {
+  Default = '',
+  EnglishTitle = 'title_eng',
+  AiredStart = 'aired__startswith',
+  Status = 'status',
+}
+
 /** Define data in class Anime. */
 export interface Anime {
 

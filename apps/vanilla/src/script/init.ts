@@ -1,11 +1,18 @@
-import { PageHandler } from '../namespaces/PageHandler';
+import { Sorting } from '@js-camp/core/models/anime';
+import { Params } from '@js-camp/core/models/params';
+
+import { LIMIT, OFFSET, PageHandler } from '../namespaces/PageHandler';
 import { SubmitHandler } from '../namespaces/submitHandler';
 import { getAnimeById, updateTable } from '../services/fetchAnime';
 
-import { ANIME_LS, DEFAULT_QUERIES, HOME_PAGE, NUMBER_OF_COLUMNS } from './constants';
 import { minimizeImage } from './effect';
+import { ANIME_LS } from './constants/localStorageName';
 import { renderDetail } from './renderDetail';
 import { renderHeader, renderOrderOptions, renderPagination, renderSortOptions, renderUserData } from './renderToUI';
+import { HOME_PAGE } from './constants/redirectUrl';
+
+/** Number of columns of anime table. */
+export const NUMBER_OF_COLUMNS = 6;
 
 /** Init event listener for pagination and render it to DOM. */
 export function initPagination(): void {
@@ -77,3 +84,10 @@ export async function initDetailPage(): Promise<void> {
   const animeData = await getAnimeById(animeId);
   renderDetail(animeData);
 }
+
+/** Default data for queries. */
+export const DEFAULT_QUERIES = new Params({
+  offset: OFFSET,
+  limit: LIMIT,
+  ordering: Sorting.Default,
+});

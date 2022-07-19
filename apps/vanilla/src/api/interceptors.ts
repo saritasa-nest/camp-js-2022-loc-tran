@@ -1,6 +1,8 @@
 import { AxiosError, AxiosRequestConfig } from 'axios';
 
-import { ACCESS_TOKEN, LOGIN_PAGE, REFRESH_TOKEN } from '../script/constants';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '../script/constants/localStorageName';
+import { LOGIN_PAGE } from '../script/constants/redirectUrl';
+
 import { getRefreshedToken, storeTokens } from '../services/token';
 
 import { CONFIG } from './config';

@@ -6,7 +6,7 @@ import { LoginData } from '@js-camp/core/models/loginData';
 
 import { http } from '../api';
 import { ApiUrl } from '../namespaces/apiUrl';
-import { ACCESS_TOKEN, REFRESH_TOKEN } from '../script/constants';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '../script/constants/localStorageName';
 
 /**
  * Handle login request.
