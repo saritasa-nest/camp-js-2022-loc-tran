@@ -1,15 +1,50 @@
 import { Anime, Sorting } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
+import { SelectOption } from '@js-camp/core/models/selectOption';
 
 import { getUserData } from '../services/getUserData';
 import { SubmitHandler } from '../namespaces/submitHandler';
 import { SortHandler } from '../namespaces/SortHandler';
 import { DECIMAL, DEFAULT_ORDERING, FIRST_PAGE, LIMIT, OFFSET, PageHandler } from '../namespaces/PageHandler';
+import { Middleware } from '../namespaces/middleware';
 
-import { isAuthorized } from './isAuthorized';
 import { ANIME_LS, SORT_LS, ORDER_LS } from './constants/localStorageName';
 import { DETAIL_PAGE } from './constants/redirectUrl';
-import { PAGE_STEP, SORT_OPTIONS, ORDER_OPTIONS } from './renderToDOM';
+
+/** Pagination config constants. */
+export const PAGE_STEP = 3;
+
+/** Options for sorting. */
+export const SORT_OPTIONS: readonly SelectOption[] = [
+  {
+    title: 'Default',
+    value: Sorting.Default,
+  },
+  {
+    title: 'Title in English',
+    value: Sorting.EnglishTitle,
+  },
+  {
+    title: 'Aired day',
+    value: Sorting.AiredStart,
+  },
+  {
+    title: 'Status',
+    value: Sorting.Status,
+  },
+];
+
+/** Options for ordering. */
+export const ORDER_OPTIONS: readonly SelectOption[] = [
+  {
+    title: 'Ascending',
+    value: '',
+  },
+  {
+    title: 'Descending',
+    value: '-',
+  },
+];
 
 /**
  * Show login error message to UI.
@@ -203,7 +238,7 @@ export async function renderHeader(): Promise<void> {
 
   // Navigation link for authorization.
   const navAuth = document.querySelector('.header__nav-authen');
-  if (await isAuthorized() === true) {
+  if (await Middleware.isAuthorized() === true) {
     navPage?.append(createLink('/', ['header__link', 'header__link-table'], 'Anime table'));
     navPage?.append(createLink('/profile/', ['header__link', 'header__link-profile'], 'Profile'));
     navAuth?.append(createLink('/logout/', ['header__link', 'header__link-logout'], 'Log out'));
