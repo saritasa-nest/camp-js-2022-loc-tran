@@ -1,4 +1,5 @@
 @import url("../global/index.css");
+@import url("../global/header.css");
 
 .title {
   color: var(--font-color-heading-1);
@@ -6,34 +7,6 @@
   font-family: var(--header-font);
   letter-spacing: 0.5rem;
   margin-bottom: 40px;
-}
-
-.header {
-  width: 100vw;
-  min-height: 74px;
-  background-color: var(--primary-color);
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: space-between;
-}
-
-.header__nav {
-  display: flex;
-  margin: 25px 50px;
-}
-
-.header__link {
-  padding: 0;
-  text-indent: 0;
-  list-style-type: none;
-  color: var(--font-color-contrast-primary);
-  margin: 5px 10px;
-}
-
-.header__link-logout {
-  color: var(--font-color-error);
 }
 
 .select {

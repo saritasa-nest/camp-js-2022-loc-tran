@@ -234,10 +234,10 @@ export function renderOrderOptions(): void {
 /** Render header at top of page. */
 export async function renderHeader(): Promise<void> {
   // Navigation link for anime table and profile.
-  const navPage = document.querySelector('.header__nav-page');
+  const navPage = document.querySelector('.header__page');
 
   // Navigation link for authorization.
-  const navAuth = document.querySelector('.header__nav-authen');
+  const navAuth = document.querySelector('.header__authen');
   if (await Middleware.isAuthorized() === true) {
     navPage?.append(createLink('/', ['header__link', 'header__link-table'], 'Anime table'));
     navPage?.append(createLink('/profile/', ['header__link', 'header__link-profile'], 'Profile'));
