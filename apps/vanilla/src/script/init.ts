@@ -49,9 +49,8 @@ export function initAnimeTable(): void {
 }
 
 /** Default data for queries. */
-const page = Number.parseInt(UrlSearch.getValue(PAGE_QUERY) ?? FIRST_PAGE.toString(), DECIMAL);
 export const DEFAULT_QUERIES = new Params({
-  offset: (LIMIT * (page - 1)),
+  offset: (LIMIT * (Number.parseInt(UrlSearch.getValue(PAGE_QUERY) ?? FIRST_PAGE.toString(), DECIMAL) - 1)),
   limit: LIMIT,
   ordering: UrlSearch.getValue(SORT_QUERY) ?? Sorting.Default,
 });
