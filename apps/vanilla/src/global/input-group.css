@@ -47,17 +47,17 @@
   border-radius: 10px;
   cursor: pointer;
   background-color: var(--primary-button-color);
-  color: var(--primary-contrast-font-color);
+  color: var(--font-color-contrast-primary);
 }
 
 .form__error-login {
-  color: var(--error-font-color);
+  color: var(--font-color-error);
   margin-top: 20px;
   margin-bottom: 30px;
 }
 
 .form__error-register {
-  color: var(--error-font-color);
+  color: var(--font-color-error);
   margin-top: 20px;
   margin-bottom: 30px;
 }

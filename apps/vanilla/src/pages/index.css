@@ -33,7 +33,7 @@
 }
 
 .header__link-logout {
-  color: var(--error-font-color);
+  color: var(--font-color-error);
 }
 
 .select {

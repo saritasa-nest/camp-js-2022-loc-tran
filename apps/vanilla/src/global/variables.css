@@ -14,11 +14,11 @@
   --primary-light-contrast-color: #fff;
 
   /* Font color. */
-  --primary-font-color: #000;
-  --primary-contrast-font-color: #fff;
-  --error-font-color: #f00;
-  --error-font-light-color: #f66d6d;
-  --secondary-font-color: #bbb;
+  --font-color-error: #f00;
+  --font-color-light-error: #f66d6d;
+  --font-color-secondary: #bbb;
+  --font-color-contrast-primary: #fff;
+  --font-color-primary: #000;
 
   /* Background color. */
   --dark-background-color: #ccc;
@@ -28,10 +28,6 @@
 
   /* Border color. */
   --border-color: #000;
-
-  /** Font color */
-  --font-color-contrast-primary: #fff;
-  --font-color-primary: #000;
 
   /* Heading color. */
   --heading-color-1: #1229a7;
