@@ -1,8 +1,8 @@
-import { initAnimeTable, initPagination, initQuery, initSearchButton, initSearchOnEnterKeypress } from '../script/init';
-import { resetStorage } from '../utils/resetStorage';
-resetStorage();
+import { initAnimeTable, initPagination, initQuery, initSearchButton } from '../script/init';
+import { resetLocalStorage } from '../utils/resetLocalStorage';
+
 initAnimeTable();
 initPagination();
+resetLocalStorage();
 initQuery();
 initSearchButton();
-initSearchOnEnterKeypress();

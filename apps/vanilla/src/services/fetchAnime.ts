@@ -8,8 +8,11 @@ import { ParamsMapper } from '@js-camp/core/mappers/params.mapper';
 import { Params } from '@js-camp/core/models/params';
 
 import { http } from '../api';
-import { ANIME_ROUTE, COUNT_LS } from '../script/constants';
+import { COUNT_LS } from '../script/localStorageName';
 import { renderAnime, renderPagination } from '../script/renderToDOM';
+
+/** Request address. */
+export const ANIME_ROUTE = '/api/v1/anime/anime/';
 
 /**
  * Fetch anime data from api.

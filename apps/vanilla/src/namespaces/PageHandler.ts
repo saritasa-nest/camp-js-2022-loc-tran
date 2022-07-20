@@ -1,9 +1,21 @@
+import { Sorting } from '@js-camp/core/models/anime';
 import { Params } from '@js-camp/core/models/params';
+import { DEFAULT_SEARCH_QUERY } from '../script/init';
 
-import { COUNT_LS, DECIMAL, DEFAULT_ORDERING, LIMIT, SORT_LS, SEARCH_LS } from '../script/constants';
+import { COUNT_LS, SEARCH_LS, SORT_QUERY } from '../script/localStorageName';
 
 import { updateTable } from '../services/fetchAnime';
 import { assertNonNullish } from '../utils/assertNonNullish';
+import { UrlSearch } from '../utils/urlSearchParams';
+
+/** Value for page. */
+export const FIRST_PAGE = 1;
+export const LIMIT = 25;
+export const OFFSET = 0;
+export const DECIMAL = 10;
+
+/** Default values of query if user don't pass any value. */
+export const DEFAULT_ORDERING = Sorting.Default;
 
 export namespace PageHandler {
 
@@ -12,14 +24,18 @@ export namespace PageHandler {
    * @param newPage Next page number.
    */
   export function goToPageByNum(newPage: number): void {
-    const searchQuery = localStorage.getItem(SEARCH_LS);
+    const searchQuery = localStorage.getItem(SEARCH_LS) ?? DEFAULT_SEARCH_QUERY;
     assertNonNullish(searchQuery);
     const params = new Params({
       offset: (LIMIT * (newPage - 1)),
       limit: LIMIT,
-      ordering: (localStorage.getItem(SORT_LS)) ?? DEFAULT_ORDERING,
-      search: searchQuery,
+      ordering: UrlSearch.getValue(SORT_QUERY) ?? DEFAULT_ORDERING,
+      search: searchQuery
     });
+    UrlSearch.setUrlSearch(new URLSearchParams({
+      page: newPage.toString(),
+      ordering: UrlSearch.getValue(SORT_QUERY) ?? DEFAULT_ORDERING,
+    }));
     updateTable(params, newPage);
   }
 

@@ -1,9 +1,12 @@
 import { Params } from '@js-camp/core/models/params';
+import { DEFAULT_SEARCH_QUERY } from '../script/init';
 
-import { FIRST_PAGE, LIMIT, OFFSET, SORT_LS, SEARCH_LS } from '../script/constants';
-
+import { PAGE_QUERY, SEARCH_LS } from '../script/localStorageName';
 import { updateTable } from '../services/fetchAnime';
 import { assertNonNullish } from '../utils/assertNonNullish';
+import { UrlSearch } from '../utils/urlSearchParams';
+
+import { DECIMAL, FIRST_PAGE, LIMIT } from './PageHandler';
 
 export namespace SortHandler {
 
@@ -11,18 +14,22 @@ export namespace SortHandler {
   export function changeSorting(): void {
     const sortOption = document.querySelector<HTMLSelectElement>('.sort')?.value;
     const orderOption = document.querySelector<HTMLSelectElement>('.order')?.value;
-    const searchQuery = localStorage.getItem(SEARCH_LS);
+    const searchQuery = localStorage.getItem(SEARCH_LS) ?? DEFAULT_SEARCH_QUERY;
     assertNonNullish(sortOption);
+    const page = Number.parseInt(UrlSearch.getValue(PAGE_QUERY) ?? FIRST_PAGE.toString(), DECIMAL);
     assertNonNullish(orderOption);
     assertNonNullish(searchQuery);
     const newSortOption = `${orderOption}${sortOption}`;
-    localStorage.setItem(SORT_LS, newSortOption);
     const params = new Params({
-      offset: OFFSET,
+      offset: (LIMIT * (page - 1)),
       limit: LIMIT,
       ordering: newSortOption,
       search: searchQuery,
     });
-    updateTable(params, FIRST_PAGE);
+    UrlSearch.setUrlSearch(new URLSearchParams({
+      page: page.toString(),
+      ordering: newSortOption,
+    }));
+    updateTable(params, page);
   }
 }

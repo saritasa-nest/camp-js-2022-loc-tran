@@ -1,10 +1,21 @@
-import { PageHandler } from '../namespaces/PageHandler';
+import { Sorting } from '@js-camp/core/models/anime';
+import { Params } from '@js-camp/core/models/params';
+
+import { DECIMAL, FIRST_PAGE, LIMIT, PageHandler } from '../namespaces/PageHandler';
 import { SearchHandler } from '../namespaces/SearchHandler';
 import { updateTable } from '../services/fetchAnime';
 import { assertNonNullish } from '../utils/assertNonNullish';
+import { UrlSearch } from '../utils/urlSearchParams';
 
-import { DEFAULT_QUERIES, NUMBER_OF_COLUMNS } from './constants';
+import { PAGE_QUERY, SORT_QUERY } from './localStorageName';
+
 import { renderOrderOptions, renderPagination, renderSortOptions } from './renderToDOM';
+
+/** Number of columns of anime table. */
+export const NUMBER_OF_COLUMNS = 6;
+
+/** Default search query. */
+export const DEFAULT_SEARCH_QUERY = '';
 
 /** Init event listener for pagination and render it to DOM. */
 export function initPagination(): void {
@@ -38,19 +49,24 @@ export function initAnimeTable(): void {
   } else {
     throw new Error('Cannot get table row element in DOM!');
   }
-  updateTable(DEFAULT_QUERIES, 1);
+  const page = Number.parseInt(UrlSearch.getValue(PAGE_QUERY) ?? FIRST_PAGE.toString(), DECIMAL);
+  updateTable(DEFAULT_QUERIES, page);
 }
 
 /** Init event for search button. */
 export function initSearchButton(): void {
-  const searchButton = document.querySelector('.search__button');
-  assertNonNullish(searchButton);
-  searchButton.addEventListener('click', SearchHandler.handleSearch);
+  const searchForm = document.querySelector('.search');
+  assertNonNullish(searchForm);
+  searchForm.addEventListener('submit', event => {
+    event.preventDefault();
+    SearchHandler.handleSearch();
+  });
 }
 
-/** Init enter key event  for search input. */
-export function initSearchOnEnterKeypress(): void {
-  const searchInput = document.querySelector<HTMLInputElement>('.search__input');
-  assertNonNullish(searchInput);
-  searchInput.addEventListener('keypress', event => SearchHandler.searchByEnter(event));
-}
+/** Default data for queries. */
+export const DEFAULT_QUERIES = new Params({
+  offset: (LIMIT * (Number.parseInt(UrlSearch.getValue(PAGE_QUERY) ?? FIRST_PAGE.toString(), DECIMAL) - 1)),
+  limit: LIMIT,
+  ordering: UrlSearch.getValue(SORT_QUERY) ?? Sorting.Default,
+  search: DEFAULT_SEARCH_QUERY,
+});

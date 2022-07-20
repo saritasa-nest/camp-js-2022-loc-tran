@@ -1,8 +1,13 @@
 import { Params } from '@js-camp/core/models/params';
 
-import { OFFSET, FIRST_PAGE, LIMIT, SEARCH_LS, SORT_LS } from '../script/constants';
 import { updateTable } from '../services/fetchAnime';
 import { assertNonNullish } from '../utils/assertNonNullish';
+
+import { SEARCH_LS, SORT_QUERY } from '../script/localStorageName';
+
+import { UrlSearch } from '../utils/urlSearchParams';
+
+import { DEFAULT_ORDERING, FIRST_PAGE, LIMIT } from './PageHandler';
 
 export namespace SearchHandler {
 
@@ -11,25 +16,16 @@ export namespace SearchHandler {
     const searchInput = document.querySelector<HTMLInputElement>('.search__input');
     assertNonNullish(searchInput);
     localStorage.setItem(SEARCH_LS, searchInput.value);
-    const sortOption = localStorage.getItem(SORT_LS);
-    assertNonNullish(sortOption);
     const params = new Params({
-      offset: OFFSET,
+      offset: (LIMIT * (FIRST_PAGE - 1)),
       limit: LIMIT,
-      ordering: sortOption,
+      ordering: UrlSearch.getValue(SORT_QUERY) ?? DEFAULT_ORDERING,
       search: searchInput.value,
     });
-
+    UrlSearch.setUrlSearch(new URLSearchParams({
+      page: FIRST_PAGE.toString(),
+      ordering: UrlSearch.getValue(SORT_QUERY) ?? DEFAULT_ORDERING,
+    }));
     updateTable(params, FIRST_PAGE);
-  }
-
-  /**
-   * Handle searching by press enter key.
-   * @param event Keyboard press event.
-   */
-  export function searchByEnter(event: KeyboardEvent): void {
-    if (event.key === 'Enter') {
-      handleSearch();
-    }
   }
 }
