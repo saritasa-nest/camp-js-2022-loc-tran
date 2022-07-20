@@ -27,6 +27,7 @@ export namespace PageHandler {
       limit: LIMIT,
       ordering: localStorage.getItem(SORT_LS) ?? DEFAULT_ORDERING,
     });
+    window.history.pushState({}, '', `?page=${newPage}`);
     updateTable(params, newPage);
   }
 

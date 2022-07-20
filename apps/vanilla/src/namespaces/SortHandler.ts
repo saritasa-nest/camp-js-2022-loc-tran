@@ -1,10 +1,11 @@
 import { Params } from '@js-camp/core/models/params';
 
 import { SORT_LS } from '../script/localStorageName';
-import { assertNonNullish } from '../utils/assertNonNullish';
 import { updateTable } from '../services/fetchAnime';
+import { assertNonNullish } from '../utils/assertNonNullish';
+import { getCurrentPage } from '../utils/getCurrentPage';
 
-import { OFFSET, LIMIT, FIRST_PAGE } from './PageHandler';
+import { LIMIT } from './PageHandler';
 
 export namespace SortHandler {
 
@@ -17,10 +18,10 @@ export namespace SortHandler {
     const newSortOption = `${orderOption}${sortOption}`;
     localStorage.setItem(SORT_LS, newSortOption);
     const params = new Params({
-      offset: OFFSET,
+      offset: (LIMIT * (getCurrentPage() - 1)),
       limit: LIMIT,
       ordering: newSortOption,
     });
-    updateTable(params, FIRST_PAGE);
+    updateTable(params, getCurrentPage());
   }
 }
