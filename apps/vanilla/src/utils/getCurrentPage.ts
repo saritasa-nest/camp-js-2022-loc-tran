@@ -4,6 +4,5 @@ import { FIRST_PAGE, DECIMAL } from '../namespaces/PageHandler';
 export function getCurrentPage(): number {
   /** Default data for queries. */
   const urlParams = new URLSearchParams(window.location.search);
-  const page = Number.parseInt(urlParams.get('page') ?? FIRST_PAGE.toString(), DECIMAL);
-  return page;
+  return Number.parseInt(urlParams.get('page') ?? FIRST_PAGE.toString(), DECIMAL);
 }
