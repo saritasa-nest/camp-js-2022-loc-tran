@@ -18,9 +18,9 @@
   --font-color-primary: #000;
 
   /* Background color. */
-  --dark-background-color: #ccc;
-  --dark-background-color-2: #bbb;
-  --light-background-color: #fff;
+  --background-color-dark: #ccc;
+  --background-color-dark-2: #bbb;
+  --background-color-light: #fff;
   --background-color: #ddd;
 
   /* Border color. */

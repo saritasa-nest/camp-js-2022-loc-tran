@@ -15,7 +15,7 @@
   top: 0;
   position: fixed;
   display: none;
-  background-color: var(--dark-background-color);
+  background-color: var(--background-color-dark);
 }
 
 .show {

@@ -50,12 +50,12 @@
 }
 
 .table__row:nth-child(even) {
-  background-color: var(--dark-background-color);
+  background-color: var(--background-color-dark);
   color: var(--font-color-primary);
 }
 
 .table__row:hover {
-  background-color: var(--dark-background-color-2);
+  background-color: var(--background-color-dark-2);
 }
 
 .table__head {
