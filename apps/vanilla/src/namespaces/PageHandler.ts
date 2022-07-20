@@ -1,10 +1,11 @@
 import { Sorting } from '@js-camp/core/models/anime';
 import { Params } from '@js-camp/core/models/params';
 
-import { SORT_LS, COUNT_LS } from '../script/localStorageName';
+import { COUNT_LS, SORT_QUERY } from '../script/localStorageName';
 
 import { updateTable } from '../services/fetchAnime';
 import { assertNonNullish } from '../utils/assertNonNullish';
+import { UrlSearch } from '../utils/urlSearchParams';
 
 /** Value for page. */
 export const FIRST_PAGE = 1;
@@ -25,9 +26,12 @@ export namespace PageHandler {
     const params = new Params({
       offset: (LIMIT * (newPage - 1)),
       limit: LIMIT,
-      ordering: localStorage.getItem(SORT_LS) ?? DEFAULT_ORDERING,
+      ordering: UrlSearch.getValue(SORT_QUERY) ?? DEFAULT_ORDERING,
     });
-    window.history.pushState({}, '', `?page=${newPage}`);
+    UrlSearch.setUrlSearch(new URLSearchParams({
+      page: newPage.toString(),
+      ordering: UrlSearch.getValue(SORT_QUERY) ?? DEFAULT_ORDERING,
+    }));
     updateTable(params, newPage);
   }
 

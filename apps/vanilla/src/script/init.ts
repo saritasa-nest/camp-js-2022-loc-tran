@@ -1,9 +1,11 @@
 import { Sorting } from '@js-camp/core/models/anime';
 import { Params } from '@js-camp/core/models/params';
 
-import { LIMIT, PageHandler } from '../namespaces/PageHandler';
+import { DECIMAL, FIRST_PAGE, LIMIT, PageHandler } from '../namespaces/PageHandler';
 import { updateTable } from '../services/fetchAnime';
-import { getCurrentPage } from '../utils/getCurrentPage';
+import { UrlSearch } from '../utils/urlSearchParams';
+
+import { PAGE_QUERY, SORT_QUERY } from './localStorageName';
 
 import { renderOrderOptions, renderPagination, renderSortOptions } from './renderToDOM';
 
@@ -42,12 +44,14 @@ export function initAnimeTable(): void {
   } else {
     throw new Error('Cannot get table row element in DOM!');
   }
-  updateTable(DEFAULT_QUERIES, getCurrentPage());
+  const page = Number.parseInt(UrlSearch.getValue(PAGE_QUERY) ?? FIRST_PAGE.toString(), DECIMAL);
+  updateTable(DEFAULT_QUERIES, page);
 }
 
 /** Default data for queries. */
+const page = Number.parseInt(UrlSearch.getValue(PAGE_QUERY) ?? FIRST_PAGE.toString(), DECIMAL);
 export const DEFAULT_QUERIES = new Params({
-  offset: (LIMIT * (getCurrentPage() - 1)),
+  offset: (LIMIT * (page - 1)),
   limit: LIMIT,
-  ordering: Sorting.Default,
+  ordering: UrlSearch.getValue(SORT_QUERY) ?? Sorting.Default,
 });
