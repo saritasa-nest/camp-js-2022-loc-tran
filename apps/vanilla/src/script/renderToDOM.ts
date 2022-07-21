@@ -45,8 +45,8 @@ export const ORDER_OPTIONS: readonly SelectOption[] = [
  * @param paginationAnime Store anime data response from api.
  */
 export function renderAnime(paginationAnime: Pagination<Anime>): void {
-  const tableRow = document.querySelector('.table');
-  if (tableRow != null) {
+  const table = document.querySelector('.table');
+  if (table != null) {
     const htmlString = `<tr class="table__head">
     <th class="table__head-title">Image</th>
     <th class="table__head-title">Title Eng</th>
@@ -55,7 +55,7 @@ export function renderAnime(paginationAnime: Pagination<Anime>): void {
     <th class="table__head-title">Type</th>
     <th class="table__head-title">Status</th>
   </tr>`;
-    tableRow.innerHTML = htmlString;
+    table.innerHTML = htmlString;
     paginationAnime.results.forEach((anime: Anime) => {
       const row = document.createElement('tr');
       row.classList.add('table__row');
@@ -65,7 +65,7 @@ export function renderAnime(paginationAnime: Pagination<Anime>): void {
       <td>${anime.aired.start.toLocaleString()}</td>
       <td>${anime.type}</td>
       <td>${anime.status}</td>`;
-      tableRow.append(row);
+      table.append(row);
     });
   }
 }
