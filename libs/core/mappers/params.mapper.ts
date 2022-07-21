@@ -12,6 +12,7 @@ export namespace ParamsMapper {
       offset: params.offset.toString(),
       limit: params.limit.toString(),
       ordering: params.ordering,
+      search: params.search,
     };
   }
 }
