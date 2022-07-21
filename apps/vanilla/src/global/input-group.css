@@ -41,9 +41,10 @@
 }
 
 .form__submit-button {
+  padding: 10px 30px;
   min-height: 50px;
   min-width: 130px;
-  font-size: 1.2rem;
+  font-size: var(--primary-button-font-size);
   border-radius: 10px;
   cursor: pointer;
   background-color: var(--primary-button-color);

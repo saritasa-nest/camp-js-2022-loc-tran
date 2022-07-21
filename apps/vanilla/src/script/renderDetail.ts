@@ -41,12 +41,12 @@ export function renderDetail(data: Detail): void {
 function createInformationRaw(title: string, content: string): HTMLElement {
   const label = document.createElement('label');
   label.classList.add('detail__information-label');
-  const titleNode = document.createElement('span');
-  titleNode.classList.add('detail__information-title');
-  titleNode.innerHTML = title;
+  const titleElement = document.createElement('span');
+  titleElement.classList.add('detail__information-title');
+  titleElement.innerHTML = title;
   const contentNode = document.createElement('span');
   contentNode.classList.add('detail__information-text');
   contentNode.innerHTML = content;
-  label.append(titleNode, contentNode);
+  label.append(titleElement, contentNode);
   return label;
 }

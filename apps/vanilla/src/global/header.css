@@ -2,7 +2,7 @@
   width: 100vw;
   min-height: 74px;
   background-color: var(--primary-color);
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   display: flex;
@@ -16,9 +16,6 @@
 }
 
 .header__link {
-  padding: 0;
-  text-indent: 0;
-  list-style-type: none;
   color: var(--font-color-contrast-primary);
   margin: 5px 10px;
 }

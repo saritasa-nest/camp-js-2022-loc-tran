@@ -24,7 +24,7 @@ export namespace PageHandler {
     const params = new Params({
       offset: (LIMIT * (newPage - 1)),
       limit: LIMIT,
-      ordering: (<Sorting>localStorage.getItem(SORT_LS)) ?? DEFAULT_ORDERING,
+      ordering: (localStorage.getItem(SORT_LS)) ?? DEFAULT_ORDERING,
     });
     updateTable(params, newPage);
   }
@@ -38,12 +38,8 @@ export namespace PageHandler {
   export function goToLastPage(): void {
     const count = localStorage.getItem(COUNT_LS);
     assertNonNullish(count);
-    let page = Number.parseInt(count, DECIMAL) / LIMIT;
-    if (isNaN(page) === true) {
-      page = 1;
-    } else {
-      page = Math.ceil(page);
-    }
+    const totalPage = Number.parseInt(count, DECIMAL) / LIMIT;
+    const page = isNaN(totalPage) ? FIRST_PAGE : Math.ceil(totalPage);
     goToPageByNum(page);
   }
 }
