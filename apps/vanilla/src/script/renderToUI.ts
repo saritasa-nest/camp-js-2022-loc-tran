@@ -185,7 +185,7 @@ function createButtonPagination(page: number, isActive: boolean): HTMLElement {
   button.classList.add('pagination__button');
   button.innerHTML = `${page}`;
   button.type = 'button';
-  button.addEventListener('click', () => PageHandler.goToPageByNum(page));
+  button.addEventListener('click', () => PageHandler.goToNextPage(page));
   return button;
 }
 
