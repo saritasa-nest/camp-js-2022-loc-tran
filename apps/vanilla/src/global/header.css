@@ -1,0 +1,25 @@
+.header {
+  width: 100vw;
+  min-height: 74px;
+  background-color: var(--primary-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__page,
+.header__authenticate {
+  display: flex;
+  margin: 25px 50px;
+}
+
+.header__link {
+  color: var(--font-color-contrast-primary);
+  margin: 5px 10px;
+}
+
+.header__link-logout {
+  color: var(--font-color-error);
+}
