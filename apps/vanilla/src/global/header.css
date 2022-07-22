@@ -10,7 +10,7 @@
 }
 
 .header__page,
-.header__authen {
+.header__authenticate {
   display: flex;
   margin: 25px 50px;
 }

@@ -5,10 +5,10 @@ import { SelectOption } from '@js-camp/core/models/selectOption';
 import { getUserData } from '../services/getUserData';
 import { SubmitHandler } from '../namespaces/submitHandler';
 import { SortHandler } from '../namespaces/SortHandler';
-import { DECIMAL, DEFAULT_ORDERING, FIRST_PAGE, LIMIT, OFFSET, PageHandler } from '../namespaces/PageHandler';
+import { DEFAULT_ORDERING, FIRST_PAGE, LIMIT, OFFSET, PageHandler } from '../namespaces/PageHandler';
 import { Middleware } from '../namespaces/middleware';
 
-import { ANIME_LS, SORT_LS, ORDER_LS } from './constants/localStorageName';
+import { ANIME_KEY, SORT_KEY, ORDER_KEY } from './constants/localStorageName';
 import { DETAIL_PAGE } from './constants/redirectUrl';
 
 /** Pagination config constants. */
@@ -148,7 +148,7 @@ export async function renderUserData(): Promise<void> {
       <td>${anime.type}</td>
       <td>${anime.status}</td>`;
       row.addEventListener('click', () => {
-        localStorage.setItem(ANIME_LS, anime.id.toString());
+        localStorage.setItem(ANIME_KEY, anime.id.toString());
         location.assign(DETAIL_PAGE);
       });
       tableRow.append(row);
@@ -159,7 +159,7 @@ export async function renderUserData(): Promise<void> {
 /** Render pagination to DOM. */
 export function renderPagination(): void {
   const pagination = document.querySelector('.pagination__numeric');
-  const count = Number.parseInt(localStorage.getItem('COUNT') ?? OFFSET.toString(), DECIMAL);
+  const count = Number.parseInt(localStorage.getItem('COUNT') ?? OFFSET.toString(), 10);
   if (pagination !== null) {
     pagination.innerHTML = '';
     const currentPage = Number.parseInt(localStorage.getItem('ANIME_PAGE') ?? FIRST_PAGE.toString(), 10);
@@ -192,7 +192,7 @@ function createButtonPagination(page: number, isActive: boolean): HTMLElement {
 /** Create select element for sorting. */
 export function renderSortOptions(): void {
   const sortNode = document.querySelector('.query__label-sort');
-  const initSort = localStorage.getItem(SORT_LS) ?? Sorting.Default;
+  const initSort = localStorage.getItem(SORT_KEY) ?? Sorting.Default;
   if (sortNode !== null) {
     const select = document.createElement('select');
     SORT_OPTIONS.forEach(option => {
@@ -212,7 +212,7 @@ export function renderSortOptions(): void {
 
 /** Create order element for ordering. */
 export function renderOrderOptions(): void {
-  const initOrder = localStorage.getItem(ORDER_LS) ?? DEFAULT_ORDERING;
+  const initOrder = localStorage.getItem(ORDER_KEY) ?? DEFAULT_ORDERING;
   const orderNode = document.querySelector('.query__label-order');
   if (orderNode !== null) {
     const select = document.createElement('select');
@@ -237,7 +237,7 @@ export async function renderHeader(): Promise<void> {
   const navPage = document.querySelector('.header__page');
 
   // Navigation link for authorization.
-  const navAuth = document.querySelector('.header__authen');
+  const navAuth = document.querySelector('.header__authenticate');
   if (await Middleware.isAuthorized() === true) {
     navPage?.append(createLink('/', ['header__link', 'header__link-table'], 'Anime table'));
     navPage?.append(createLink('/profile/', ['header__link', 'header__link-profile'], 'Profile'));

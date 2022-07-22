@@ -1,6 +1,5 @@
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../script/constants/localStorageName';
 import { LOGIN_PAGE, PROFILE_PAGE } from '../script/constants/redirectUrl';
-import { verifyToken, getRefreshedToken, storeTokens } from '../services/token';
 
 export namespace Middleware {
 
@@ -24,21 +23,11 @@ export namespace Middleware {
   }
 
   /** Check is user have authenticated. */
-  export async function isAuthorized(): Promise<boolean> {
+  export function isAuthorized(): boolean {
     const accessToken = localStorage.getItem('ACCESS_TOKEN');
     const refreshToken = localStorage.getItem('REFRESH_TOKEN');
     if (accessToken === null || refreshToken === null) {
       return false;
-    }
-    const isValidToken = await verifyToken(accessToken);
-    if (isValidToken === false) {
-      try {
-        const tokens = await getRefreshedToken(refreshToken);
-        storeTokens(tokens);
-        return true;
-      } catch (error: unknown) {
-        return false;
-      }
     }
     return true;
   }

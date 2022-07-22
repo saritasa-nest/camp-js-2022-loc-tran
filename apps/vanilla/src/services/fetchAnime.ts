@@ -11,11 +11,11 @@ import { Pagination } from '@js-camp/core/models/pagination';
 import { Params } from '@js-camp/core/models/params';
 
 import { http } from '../api';
-import { COUNT_LS } from '../script/constants/localStorageName';
+import { COUNT_KEY } from '../script/constants/localStorageName';
 import { renderAnime, renderPagination } from '../script/renderToUI';
 
 /** Request address. */
-export const ANIME_ROUTE = '/api/v1/anime/anime/';
+export const ANIME_URL = '/api/v1/anime/anime/';
 
 /**
  * Fetch anime data from api.
@@ -24,7 +24,7 @@ export const ANIME_ROUTE = '/api/v1/anime/anime/';
 export async function fetchAnime(params: Params): Promise<Pagination<Anime>> {
   try {
     const paramsDto = ParamsMapper.toDto(params);
-    const response = await http.get<PaginationDto<AnimeDto>>(ANIME_ROUTE, { params: paramsDto });
+    const response = await http.get<PaginationDto<AnimeDto>>(ANIME_URL, { params: paramsDto });
     return paginationMapper.fromDto(response.data, AnimeMapper.fromDto);
   } catch (error: unknown) {
     throw Error((error as Error).message);
@@ -38,7 +38,7 @@ export async function fetchAnime(params: Params): Promise<Pagination<Anime>> {
  */
 export async function updateTable(params: Params, currentPage = 0): Promise<void> {
   const data = await fetchAnime(params);
-  localStorage.setItem(COUNT_LS, data.count.toString());
+  localStorage.setItem(COUNT_KEY, data.count.toString());
   renderAnime(data);
   if (currentPage !== 0) {
     renderPagination();
@@ -51,7 +51,7 @@ export async function updateTable(params: Params, currentPage = 0): Promise<void
  */
 export async function getAnimeById(id: string): Promise<Detail> {
   try {
-    const response = await http.get<DetailDto>(`${ANIME_ROUTE}${id}/`);
+    const response = await http.get<DetailDto>(`${ANIME_URL}${id}/`);
     return DetailMapper.fromDto(response.data);
   } catch (error: unknown) {
     throw Error((error as Error).message);

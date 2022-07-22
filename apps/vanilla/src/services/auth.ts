@@ -16,7 +16,7 @@ export namespace Auth {
    * Handle login request.
    * @param data Login data.
    */
-  export async function login(data: LoginData): Promise<Array<string> | null> {
+  export async function login(data: LoginData): Promise<String[] | null> {
     try {
       const response = await http.post<TokenDto>(ApiUrl.login, data);
       const auth = TokenMapper.fromDto(response.data);
@@ -24,15 +24,7 @@ export namespace Auth {
       localStorage.setItem(REFRESH_TOKEN, auth.refreshToken);
       return null;
     } catch (error: unknown) {
-      const errorData = HttpErrorMapper.fromDto(error as HttpErrorDto);
-      const errorList = [];
-      if (errorData.data !== undefined) {
-        for (const i of Object.keys(errorData.data)) {
-          errorList.push(...errorData.data[i]);
-        }
-      }
-      errorList.push(errorData.detail);
-      return errorList;
+      return handleErrorMessages(error);
     }
   }
 
@@ -40,7 +32,7 @@ export namespace Auth {
    * Handle register request.
    * @param data Account data of user.
    */
-  export async function register(data: Account): Promise<Array<string> | null> {
+  export async function register(data: Account): Promise<string[] | null> {
     try {
       const accountDataDto = AccountMapper.toDto(data);
       const response = await http.post(ApiUrl.register, accountDataDto);
@@ -49,13 +41,7 @@ export namespace Auth {
       localStorage.setItem(REFRESH_TOKEN, auth.refreshToken);
       return null;
     } catch (error: unknown) {
-      const errorData = HttpErrorMapper.fromDto(error as HttpErrorDto);
-      const errorList = [];
-      for (const i of Object.keys(errorData.data)) {
-        errorList.push(...errorData.data[i]);
-      }
-      errorList.push(errorData.detail);
-      return errorList;
+      return handleErrorMessages(error);
     }
   }
 
@@ -65,4 +51,18 @@ export namespace Auth {
     localStorage.removeItem(ACCESS_TOKEN);
     localStorage.removeItem(REFRESH_TOKEN);
   }
+}
+
+/**
+ * Return error messages from http error.
+ * @param error Http error.
+ */
+function handleErrorMessages(error: unknown): string[] {
+  const errorData = HttpErrorMapper.fromDto(error as HttpErrorDto);
+  const errorList = [];
+  for (const i of Object.keys(errorData.data)) {
+    errorList.push(...errorData.data[i]);
+  }
+  errorList.push(errorData.detail);
+  return errorList;
 }

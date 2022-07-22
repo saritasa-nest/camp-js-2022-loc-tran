@@ -6,7 +6,7 @@ import { SubmitHandler } from '../namespaces/submitHandler';
 import { getAnimeById, updateTable } from '../services/fetchAnime';
 
 import { minimizeImage } from './effect';
-import { ANIME_LS } from './constants/localStorageName';
+import { ANIME_KEY } from './constants/localStorageName';
 import { renderDetail } from './renderDetail';
 import { renderHeader, renderOrderOptions, renderPagination, renderSortOptions, renderUserData } from './renderToUI';
 import { HOME_PAGE } from './constants/redirectUrl';
@@ -76,7 +76,7 @@ export async function initDetailPage(): Promise<void> {
   renderHeader();
   const backdrop = document.querySelector('.backdrop');
   backdrop?.addEventListener('click', minimizeImage);
-  const animeId = localStorage.getItem(ANIME_LS);
+  const animeId = localStorage.getItem(ANIME_KEY);
   if (animeId === null) {
     location.replace(HOME_PAGE);
     return;
