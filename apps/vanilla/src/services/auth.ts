@@ -1,4 +1,3 @@
-import { HttpErrorDto } from '@js-camp/core/dtos/httpError.dto';
 import { TokenDto } from '@js-camp/core/dtos/token.dto';
 import { AccountMapper } from '@js-camp/core/mappers/account.mapper';
 import { HttpErrorMapper } from '@js-camp/core/mappers/httpError.mapper';
@@ -6,6 +5,7 @@ import { TokenMapper } from '@js-camp/core/mappers/token.mapper';
 import { Account } from '@js-camp/core/models/account';
 import { ErrorList } from '@js-camp/core/models/errorList';
 import { LoginData } from '@js-camp/core/models/loginData';
+import { AxiosError } from 'axios';
 
 import { http } from '../api';
 import { ApiUrl } from '../namespaces/apiUrl';
@@ -59,11 +59,16 @@ export namespace Auth {
  * @param error Http error.
  */
 function handleErrorMessages(error: unknown): ErrorList {
-  const errorData = HttpErrorMapper.fromDto(error as HttpErrorDto);
-  const errorList = [];
-  for (const i of Object.keys(errorData.data)) {
-    errorList.push(...errorData.data[i]);
+  if (error instanceof AxiosError) {
+    const errorData = HttpErrorMapper.fromDto(error.response?.data);
+    const errorList = [];
+    if (errorData.data !== undefined) {
+      for (const i of Object.keys(errorData.data)) {
+        errorList.push(...errorData.data[i]);
+      }
+    }
+    errorList.push(errorData.detail);
+    return { messages: errorList };
   }
-  errorList.push(errorData.detail);
-  return { messages: errorList };
+  return { messages: [] };
 }

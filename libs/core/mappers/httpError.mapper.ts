@@ -9,8 +9,8 @@ export namespace HttpErrorMapper {
    */
   export function fromDto(httpDto: HttpErrorDto): HttpError {
     return new HttpError({
-      detail: httpDto.response.data.detail,
-      data: httpDto.response.data.data,
+      detail: httpDto.detail,
+      data: httpDto.data,
     });
   }
 }
