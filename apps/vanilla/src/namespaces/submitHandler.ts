@@ -20,7 +20,7 @@ export namespace SubmitHandler {
       if (email !== null && password !== null) {
         const errorList = await Auth.login({ email: email.toString(), password: password.toString() });
         if (errorList !== null) {
-          showErrorLogin(errorList);
+          showErrorLogin(errorList.messages);
         } else {
           location.replace(PROFILE_PAGE);
         }
@@ -56,7 +56,7 @@ export namespace SubmitHandler {
         });
         const errorList = await Auth.register(newAccount);
         if (errorList !== null) {
-          showErrorRegister(errorList);
+          showErrorRegister(errorList.messages);
         } else {
           location.replace(PROFILE_PAGE);
         }
