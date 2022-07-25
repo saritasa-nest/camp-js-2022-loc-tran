@@ -58,6 +58,7 @@ export namespace Auth {
  * @param error Http error.
  */
 function handleErrorMessages(error: unknown): string[] {
+  if (error instanceof HttpErrorDto)
   const errorData = HttpErrorMapper.fromDto(error as HttpErrorDto);
   const errorList = [];
   for (const i of Object.keys(errorData.data)) {
