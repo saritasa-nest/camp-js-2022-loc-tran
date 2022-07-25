@@ -2,7 +2,7 @@ import { AnimeStatusDto, AnimeTypeDto } from './anime.dto';
 import { DateRangeDto } from './dateRange.dto';
 
 /** Detail Dto data of the anime. */
-export interface DetailDto {
+export interface AnimeDetailDto {
 
   /** Id of the anime. */
   readonly id: number;

@@ -2,7 +2,7 @@ import { Anime } from './anime';
 import { OmitImmerable } from './immerable';
 
 /** Anime detail data. */
-export class Detail extends Anime {
+export class AnimeDetail extends Anime {
 
   /** Link trailer on youtube. */
   public readonly trailerYoutube: string;
@@ -33,7 +33,7 @@ export class Detail extends Anime {
   }
 }
 
-type DetailArgs = OmitImmerable<Detail>;
+type DetailArgs = OmitImmerable<AnimeDetail>;
 
 /** Genre types. */
 export enum GenreType {

@@ -29,7 +29,7 @@ export namespace AnimeMapper {
     const status = animeStatusDtoToModel[dto.status];
     const type = animeTypeDtoToModel[dto.type];
 
-    return {
+    return new Anime({
       id: dto.id,
       titleEnglish: dto.title_eng,
       titleJapanese: dto.title_jpn,
@@ -37,6 +37,6 @@ export namespace AnimeMapper {
       aired: DateRangeMapper.fromDto(dto.aired),
       type,
       status,
-    };
+    });
   }
 }

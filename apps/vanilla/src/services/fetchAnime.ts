@@ -1,12 +1,12 @@
 import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
-import { DetailDto } from '@js-camp/core/dtos/detail.dto';
+import { AnimeDetailDto } from '@js-camp/core/dtos/detail.dto';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
 import { DetailMapper } from '@js-camp/core/mappers/detail.mapper';
 import { paginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 import { ParamsMapper } from '@js-camp/core/mappers/params.mapper';
 import { Anime } from '@js-camp/core/models/anime';
-import { Detail } from '@js-camp/core/models/detail';
+import { AnimeDetail } from '@js-camp/core/models/detail';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { Params } from '@js-camp/core/models/params';
 
@@ -49,9 +49,9 @@ export async function updateTable(params: Params, currentPage = 0): Promise<void
  * Fetch detail for a specific anime.
  * @param id Id of the anime.
  */
-export async function getAnimeById(id: string): Promise<Detail> {
+export async function getAnimeById(id: string): Promise<AnimeDetail> {
   try {
-    const response = await http.get<DetailDto>(`${ANIME_URL}${id}/`);
+    const response = await http.get<AnimeDetailDto>(`${ANIME_URL}${id}/`);
     return DetailMapper.fromDto(response.data);
   } catch (error: unknown) {
     throw Error((error as Error).message);
