@@ -156,13 +156,15 @@ export async function renderUserData(): Promise<void> {
   }
 }
 
-/** Render pagination to DOM. */
-export function renderPagination(): void {
+/**
+ * Render pagination to DOM.
+ * @param currentPage The number of the active page.
+ */
+export function renderPagination(currentPage: number): void {
   const pagination = document.querySelector('.pagination__numeric');
   const count = Number.parseInt(localStorage.getItem('COUNT') ?? OFFSET.toString(), 10);
   if (pagination !== null) {
     pagination.innerHTML = '';
-    const currentPage = Number.parseInt(localStorage.getItem('ANIME_PAGE') ?? FIRST_PAGE.toString(), 10);
     const first = currentPage - PAGE_STEP > 0 ? currentPage - PAGE_STEP : 1;
     for (let i = first; i <= first + PAGE_STEP * 2 && i <= Math.ceil(count / LIMIT); i++) {
       pagination.append(createButtonPagination(i, currentPage === i));

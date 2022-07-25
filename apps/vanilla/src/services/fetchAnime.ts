@@ -41,7 +41,7 @@ export async function updateTable(params: Params, currentPage = 0): Promise<void
   localStorage.setItem(COUNT_KEY, data.count.toString());
   renderAnime(data);
   if (currentPage !== 0) {
-    renderPagination();
+    renderPagination(currentPage);
   }
 }
 

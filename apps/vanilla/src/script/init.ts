@@ -1,15 +1,17 @@
 import { Sorting } from '@js-camp/core/models/anime';
 import { Params } from '@js-camp/core/models/params';
 
-import { LIMIT, OFFSET, PageHandler } from '../namespaces/PageHandler';
-import { SubmitHandler } from '../namespaces/submitHandler';
+import { FIRST_PAGE, LIMIT, PageHandler } from '../namespaces/PageHandler';
 import { getAnimeById, updateTable } from '../services/fetchAnime';
+import { UrlSearch } from '../utils/urlSearchParams';
+import { SubmitHandler } from '../namespaces/submitHandler';
 
 import { minimizeImage } from './effect';
 import { ANIME_KEY } from './constants/localStorageName';
 import { renderDetail } from './renderDetail';
 import { renderHeader, renderOrderOptions, renderPagination, renderSortOptions, renderUserData } from './renderToUI';
 import { HOME_PAGE } from './constants/redirectUrl';
+import { PAGE_QUERY, SORT_QUERY } from './constants/urlParamsKey';
 
 /** Number of columns of anime table. */
 export const NUMBER_OF_COLUMNS = 6;
@@ -20,7 +22,7 @@ export function initPagination(): void {
   firstPageButton?.addEventListener('click', PageHandler.goToFirstPage);
   const lastPageButton = document.querySelector('.last-page-button');
   lastPageButton?.addEventListener('click', PageHandler.goToLastPage);
-  renderPagination();
+  renderPagination(1);
 }
 
 /** Init query option. */
@@ -46,7 +48,8 @@ export function initAnimeTable(): void {
   } else {
     throw new Error('Cannot get table row element in DOM!');
   }
-  updateTable(DEFAULT_QUERIES, 1);
+  const page = Number.parseInt(UrlSearch.getValue(PAGE_QUERY) ?? FIRST_PAGE.toString(), 10);
+  updateTable(DEFAULT_QUERIES, page);
 }
 
 /** Init event for login form. */
@@ -87,7 +90,7 @@ export async function initDetailPage(): Promise<void> {
 
 /** Default data for queries. */
 export const DEFAULT_QUERIES = new Params({
-  offset: OFFSET,
+  offset: (LIMIT * (Number.parseInt(UrlSearch.getValue(PAGE_QUERY) ?? FIRST_PAGE.toString(), 10) - 1)),
   limit: LIMIT,
-  ordering: Sorting.Default,
+  ordering: UrlSearch.getValue(SORT_QUERY) ?? Sorting.Default,
 });
