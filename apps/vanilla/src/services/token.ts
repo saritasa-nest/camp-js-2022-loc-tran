@@ -5,6 +5,7 @@ import { Token } from '@js-camp/core/models/token';
 import { http } from '../api';
 import { ApiUrl } from '../namespaces/apiUrl';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../script/constants/localStorageName';
+import { LOGIN_PAGE } from '../script/constants/redirectUrl';
 
 /**
  * Verify if a token is valid.
@@ -26,10 +27,16 @@ export async function verifyToken(token: string): Promise<boolean> {
  * @param refreshToken Refresh token.
  */
 export async function getRefreshedToken(refreshToken: string): Promise<Token> {
-  const response = await http.post<TokenDto>(ApiUrl.refresh, {
-    token: refreshToken,
-  });
-  return TokenMapper.fromDto(response.data);
+  try {
+    const response = await http.post<TokenDto>(ApiUrl.refresh, {
+      token: refreshToken,
+    });
+    return TokenMapper.fromDto(response.data);
+  } catch (errorRefreshToken: unknown) {
+    localStorage.clear();
+    location.replace(LOGIN_PAGE);
+    throw errorRefreshToken;
+  }
 }
 
 /**

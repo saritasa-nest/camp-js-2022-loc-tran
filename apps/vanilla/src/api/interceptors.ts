@@ -1,7 +1,6 @@
 import { AxiosError, AxiosRequestConfig } from 'axios';
 
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../script/constants/localStorageName';
-import { LOGIN_PAGE } from '../script/constants/redirectUrl';
 
 import { getRefreshedToken, storeTokens } from '../services/token';
 
@@ -19,8 +18,8 @@ export function requestInterceptor(config: AxiosRequestConfig): AxiosRequestConf
   if (headers == null) {
     throw new Error('Axios did not pass any header.');
   }
-  if (localStorage.getItem('ACCESS_TOKEN') !== null) {
-    headers.Authorization = `Bearer ${localStorage.getItem('ACCESS_TOKEN') ?? ''}`;
+  if (localStorage.getItem(ACCESS_TOKEN) !== null) {
+    headers.Authorization = `Bearer ${localStorage.getItem(ACCESS_TOKEN) ?? ''}`;
   }
   return {
     ...config,
@@ -40,14 +39,8 @@ export async function errorInterceptor(error: AxiosError): Promise<void> {
     const accessToken = localStorage.getItem(ACCESS_TOKEN);
     const refreshToken = localStorage.getItem(REFRESH_TOKEN);
     if (accessToken !== null && refreshToken !== null) {
-      try {
-        const tokens = await getRefreshedToken(refreshToken);
-        storeTokens(tokens);
-      } catch (errorRefreshToken: unknown) {
-        localStorage.clear();
-        location.replace(LOGIN_PAGE);
-        throw errorRefreshToken;
-      }
+      const tokens = await getRefreshedToken(refreshToken);
+      storeTokens(tokens);
     }
   }
   throw error;
