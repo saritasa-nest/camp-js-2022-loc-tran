@@ -1,35 +1,13 @@
-import { AnimeStatusDto, AnimeTypeDto } from './anime.dto';
-import { DateRangeDto } from './dateRange.dto';
+import { AnimeDto } from './anime.dto';
 
 /** Detail Dto data of the anime. */
-export interface AnimeDetailDto {
-
-  /** Id of the anime. */
-  readonly id: number;
-
-  /** Image of the anime. */
-  readonly image: string;
+export interface AnimeDetailDto extends AnimeDto {
 
   /** Link trailer on youtube. */
   readonly trailer_youtube_id: string;
 
-  /** Title in English of the anime. */
-  readonly title_eng: string;
-
-  /** Title in Japanese of the anime. */
-  readonly title_jpn: string;
-
-  /** Type of the anime. */
-  readonly type: AnimeTypeDto;
-
-  /** Status of the anime. */
-  readonly status: AnimeStatusDto;
-
   /** The anime is airing or not. */
   readonly airing: boolean;
-
-  /** Date time range of aired. */
-  readonly aired: DateRangeDto;
 
   /** Synopsis of the anime. */
   readonly synopsis: string;
