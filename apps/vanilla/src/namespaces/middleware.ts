@@ -5,27 +5,22 @@ export namespace Middleware {
 
   /** Check if user is logged in or not. If not, redirect to login page. */
   export function checkIsLoggedIn(): void {
-    const accessToken = localStorage.getItem(ACCESS_TOKEN);
-    const refreshToken = localStorage.getItem(REFRESH_TOKEN);
-    if (accessToken === null || refreshToken === null) {
+    if (!isAuthorized()) {
       location.replace(LOGIN_PAGE);
     }
   }
 
   /** Check if user is logged in then redirect to profile page. */
   export function checkIsNotLoggedIn(): void {
-    const accessToken = localStorage.getItem(ACCESS_TOKEN);
-    const refreshToken = localStorage.getItem(REFRESH_TOKEN);
-    if (accessToken === null || refreshToken === null) {
-      return;
+    if (isAuthorized()) {
+      location.replace(PROFILE_PAGE);
     }
-    location.replace(PROFILE_PAGE);
   }
 
   /** Check is user have authenticated. */
   export function isAuthorized(): boolean {
-    const accessToken = localStorage.getItem('ACCESS_TOKEN');
-    const refreshToken = localStorage.getItem('REFRESH_TOKEN');
+    const accessToken = localStorage.getItem(ACCESS_TOKEN);
+    const refreshToken = localStorage.getItem(REFRESH_TOKEN);
     if (accessToken === null || refreshToken === null) {
       return false;
     }

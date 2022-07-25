@@ -1,36 +1,14 @@
-import { AnimeStatus, AnimeType } from './anime';
-import { DateRange } from './dateRange';
-import { Immerable, OmitImmerable } from './immerable';
+import { Anime } from './anime';
+import { OmitImmerable } from './immerable';
 
 /** Anime detail data. */
-export class Detail extends Immerable {
-
-  /** Id of the anime. */
-  public readonly id: number;
-
-  /** Image of the anime. */
-  public readonly image: string;
+export class Detail extends Anime {
 
   /** Link trailer on youtube. */
   public readonly trailerYoutube: string;
 
-  /** Title in English of the anime. */
-  public readonly titleEnglish: string;
-
-  /** Title in Japanese of the anime. */
-  public readonly titleJapanese: string;
-
-  /** Type of the anime. */
-  public readonly type: AnimeType;
-
-  /** Status of the anime. */
-  public readonly status: AnimeStatus;
-
   /** The anime is airing or not. */
   public readonly airing: boolean;
-
-  /** Date time range of aired. */
-  public readonly aired: DateRange;
 
   /** Synopsis of the anime. */
   public readonly synopsis: string;
@@ -45,18 +23,9 @@ export class Detail extends Immerable {
   public readonly genresData: readonly GenreData[];
 
   public constructor(data: DetailArgs) {
-    super();
-    this.id = data.id;
-    this.created = data.created;
-    this.modified = data.modified;
-    this.image = data.image;
+    super(data);
     this.trailerYoutube = data.trailerYoutube;
-    this.titleEnglish = data.titleEnglish;
-    this.titleJapanese = data.titleJapanese;
-    this.type = data.type;
-    this.status = data.status;
     this.airing = data.airing;
-    this.aired = data.aired;
     this.synopsis = data.synopsis;
     this.background = data.background;
     this.studiosData = data.studiosData;

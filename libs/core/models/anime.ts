@@ -1,4 +1,5 @@
 import { DateRange } from './dateRange';
+import { Immerable, OmitImmerable } from './immerable';
 
 /** Specify anime types in anime table. */
 export enum AnimeType {
@@ -26,26 +27,39 @@ export enum Sorting {
 }
 
 /** Define data in class Anime. */
-export interface Anime {
+export class Anime extends Immerable {
 
   /** Id of the anime. */
-  readonly id: number;
+  public readonly id: number;
 
   /** English title of the anime. */
-  readonly titleEnglish: string;
+  public readonly titleEnglish: string;
 
   /** Japanese title of the anime. */
-  readonly titleJapanese: string;
+  public readonly titleJapanese: string;
 
   /** Image of the anime. */
-  readonly image: string;
+  public readonly image: string;
 
   /** Aired of the anime. */
-  readonly aired: DateRange;
+  public readonly aired: DateRange;
 
   /** Type of the anime. */
-  readonly type: AnimeType;
+  public readonly type: AnimeType;
 
   /** Status of the anime. */
-  readonly status: AnimeStatus;
+  public readonly status: AnimeStatus;
+
+  public constructor(data: AnimeArgs) {
+    super();
+    this.id = data.id;
+    this.titleEnglish = data.titleEnglish;
+    this.titleJapanese = data.titleJapanese;
+    this.image = data.image;
+    this.aired = data.aired;
+    this.type = data.type;
+    this.status = data.status;
+  }
 }
+
+type AnimeArgs = OmitImmerable<Anime>;

@@ -19,7 +19,7 @@ export namespace PageHandler {
    * Get new data for next page.
    * @param newPage Next page number.
    */
-  export function goToPageByNum(newPage: number): void {
+  export function goToNextPage(newPage: number): void {
     const params = new Params({
       offset: (LIMIT * (newPage - 1)),
       limit: LIMIT,
@@ -30,7 +30,7 @@ export namespace PageHandler {
 
   /** Get new data for first page. */
   export function goToFirstPage(): void {
-    goToPageByNum(1);
+    goToNextPage(1);
   }
 
   /** Get new data for last page. */
@@ -39,6 +39,6 @@ export namespace PageHandler {
     assertNonNullish(count);
     const totalPage = Number.parseInt(count, 10) / LIMIT;
     const page = isNaN(totalPage) ? FIRST_PAGE : Math.ceil(totalPage);
-    goToPageByNum(page);
+    goToNextPage(page);
   }
 }
