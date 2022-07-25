@@ -5,7 +5,7 @@ import { SelectOption } from '@js-camp/core/models/selectOption';
 import { getUserData } from '../services/getUserData';
 import { SubmitHandler } from '../namespaces/submitHandler';
 import { SortHandler } from '../namespaces/SortHandler';
-import { DEFAULT_ORDERING, FIRST_PAGE, LIMIT, OFFSET, PageHandler } from '../namespaces/PageHandler';
+import { DEFAULT_ORDERING, LIMIT, OFFSET, PageHandler } from '../namespaces/PageHandler';
 import { Middleware } from '../namespaces/middleware';
 
 import { ANIME_KEY, SORT_KEY, ORDER_KEY } from './constants/localStorageName';
