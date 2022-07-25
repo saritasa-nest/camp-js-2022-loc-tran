@@ -1,6 +1,6 @@
-import { AnimeDetailDto } from '../dtos/detail.dto';
+import { AnimeDetailDto } from '../dtos/animeDetail.dto';
 import { AnimeStatus, AnimeType } from '../models/anime';
-import { AnimeDetail } from '../models/detail';
+import { AnimeDetail } from '../models/animeDetail';
 
 import { animeStatusDtoToModel, animeTypeDtoToModel } from './anime.mapper';
 import { DateRangeMapper } from './dateRange.mapper';

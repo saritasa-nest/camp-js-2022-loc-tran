@@ -1,5 +1,5 @@
-import { GenreDataDto, GenreTypeDto } from '../dtos/detail.dto';
-import { GenreData, GenreType } from '../models/detail';
+import { GenreDataDto, GenreTypeDto } from '../dtos/animeDetail.dto';
+import { GenreData, GenreType } from '../models/animeDetail';
 
 export const typeGenreDtoToModel: Readonly<Record<GenreTypeDto, GenreType>> = {
   [GenreTypeDto.Demographics]: GenreType.Demographics,

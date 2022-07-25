@@ -1,5 +1,5 @@
-import { StudioDto } from '../dtos/detail.dto';
-import { Studio } from '../models/detail';
+import { StudioDto } from '../dtos/animeDetail.dto';
+import { Studio } from '../models/animeDetail';
 
 export namespace StudioMapper {
 
