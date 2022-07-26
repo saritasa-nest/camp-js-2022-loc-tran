@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Anime } from '@js-camp/core/models/anime';
-import { Pagination } from '@js-camp/core/models/pagination';
+import { Observable } from 'rxjs';
 
 import { AnimeService } from '../../../core/services/anime.service';
 
@@ -10,22 +10,15 @@ import { AnimeService } from '../../../core/services/anime.service';
   templateUrl: './anime-table.component.html',
   styleUrls: ['./anime-table.component.css'],
 })
-export class AnimeTableComponent implements OnInit {
+export class AnimeTableComponent {
 
-  /** Anime Pagination. */
-  public animePagination: Pagination<Anime> = {
-    count: 0,
-    next: null,
-    previous: null,
-    results: [],
-  };
+  /** Header title of anime table. */
+  public readonly columnTitles = ['Image', 'Title English', 'Title Japanese', 'Aired start', 'Type', 'Status'];
 
-  public constructor(private animeService: AnimeService) {}
+  /** Anime data response from BE. */
+  public animeList$: Observable<readonly Anime[]>;
 
-  /** Init function. */
-  public ngOnInit(): void {
-    this.animeService.getAnime().subscribe(pagination => {
-      this.animePagination = pagination;
-    });
+  public constructor(private readonly animeService: AnimeService) {
+    this.animeList$ = animeService.getAnime();
   }
 }
