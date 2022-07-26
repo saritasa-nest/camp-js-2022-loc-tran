@@ -12,11 +12,11 @@ import { AnimeService } from '../../../core/services/anime.service';
 })
 export class AnimeTableComponent {
 
-  /** Header title of anime table. */
+  /** Column title of anime table. */
   public readonly columnTitles = ['Image', 'Title English', 'Title Japanese', 'Aired start', 'Type', 'Status'];
 
   /** Anime data response from BE. */
-  public animeList$: Observable<readonly Anime[]>;
+  public readonly animeList$: Observable<readonly Anime[]>;
 
   public constructor(private readonly animeService: AnimeService) {
     this.animeList$ = animeService.getAnime();

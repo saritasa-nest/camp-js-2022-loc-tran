@@ -4,7 +4,7 @@
     <th *ngFor="let title of columnTitles" class="table__head-title">{{ title }}</th>
   </tr>
   <tr class="table__row" *ngFor="let anime of animeList$ | async">
-    <td><img class="table__row-image" [src]="anime.image"/></td>
+    <td><img class="table__row-image" alt="" [src]="anime.image"/></td>
     <td>{{ anime.titleEnglish }}</td>
     <td>{{ anime.titleJapanese }}</td>
     <td>{{ anime.aired.start.toLocaleString() }}</td>
