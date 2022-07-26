@@ -1,0 +1,24 @@
+/* stylelint-disable selector-pseudo-element-no-unknown */
+::ng-deep .cdk-overlay-container,
+::ng-deep .cdk-global-overlay-wrapper {
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+::ng-deep .cdk-overlay-container {
+  position: fixed;
+  z-index: 1000;
+}
+
+::ng-deep .cdk-overlay-pane {
+  position: absolute;
+  pointer-events: auto;
+  box-sizing: border-box;
+  z-index: 1000;
+  display: flex;
+  max-width: 100%;
+  max-height: 100%;
+}

@@ -6,7 +6,7 @@ describe('AnimeTableComponent', () => {
   let component: AnimeTableComponent;
   let fixture: ComponentFixture<AnimeTableComponent>;
 
-  beforeEach(async () => {
+  beforeEach(async() => {
     await TestBed.configureTestingModule({
       declarations: [AnimeTableComponent],
     }).compileComponents();

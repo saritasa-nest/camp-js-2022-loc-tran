@@ -8,12 +8,16 @@ import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 
+import { environment } from '../../environments/environment';
+
+const ANIME_URL = '/api/v1/anime/anime/';
+
 /** Anime service. */
 @Injectable({
   providedIn: 'root',
 })
 export class AnimeService {
-  private apiUrl = 'https://api.camp-js.saritasa.rocks';
+  private apiUrl = environment.apiUrl + ANIME_URL;
 
   public constructor(private http: HttpClient) {}
 

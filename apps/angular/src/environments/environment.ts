@@ -4,6 +4,8 @@
 
 export const environment = {
   production: false,
+  apiUrl: 'https://api.camp-js.saritasa.rocks',
+  apiKey: '99bb5777-ffe1-458f-9549-90f3a964fc84',
 };
 
 /*
