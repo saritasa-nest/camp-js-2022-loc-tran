@@ -15,8 +15,6 @@ export class PaginationComponent implements OnInit {
   /** Number of pages. */
   @Input() public pageSize = 5;
 
-  @Output() public pageEvent
-
   /** Page event for pagination. */
   public pageEvent: PageEvent = new PageEvent();
 
