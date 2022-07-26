@@ -1,6 +1,9 @@
 /* App-specific variables. */
 @import "./variables.css";
 
+/* Base css for html. */
+@import "./base.css";
+
 /* Element-specific styles. */
 @import "./elements/index.css";
 
