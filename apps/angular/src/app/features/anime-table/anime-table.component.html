@@ -1,6 +1,6 @@
-<camp-pagination [length]="animePagination.count"></camp-pagination>
 <table class="table">
-  <caption>Anime collection</caption>
+  <caption class="table__title">Anime collection</caption>
+  <camp-pagination (paginationEvent)="handlePaginationChange($event)" class="table__pagination" [length]="animePagination.count"></camp-pagination>
   <tr class="table__head">
     <th class="table__head-title">Image</th>
     <th class="table__head-title">Title Eng</th>

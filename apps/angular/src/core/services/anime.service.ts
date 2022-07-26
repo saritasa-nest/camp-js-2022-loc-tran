@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
@@ -21,9 +21,12 @@ export class AnimeService {
 
   public constructor(private http: HttpClient) {}
 
-  /** Get Anime data. */
-  public getAnime(): Observable<Pagination<Anime>> {
-    return this.http.get<PaginationDto<AnimeDto>>(this.apiUrl)
+  /**
+   * Get anime data.
+   * @param params Query params.
+   */
+  public getAnime(params: HttpParams = new HttpParams()): Observable<Pagination<Anime>> {
+    return this.http.get<PaginationDto<AnimeDto>>(this.apiUrl, { params })
       .pipe(map(pagination => paginationMapper.fromDto(pagination, AnimeMapper.fromDto)));
   }
 }

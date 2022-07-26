@@ -1,4 +1,6 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 
@@ -19,6 +21,22 @@ export class AnimeTableComponent implements OnInit {
     previous: null,
     results: [],
   };
+
+  /**
+   * Handle change for pagination.
+   * @param event Pagination event.
+   */
+  public handlePaginationChange(event: PageEvent): void {
+    const params = new HttpParams({
+      fromObject: {
+        offset: event.pageIndex * event.pageSize,
+        limit: event.pageSize,
+      },
+    });
+    this.animeService.getAnime(params).subscribe(pagination => {
+      this.animePagination = pagination;
+    });
+  }
 
   public constructor(private animeService: AnimeService) {}
 

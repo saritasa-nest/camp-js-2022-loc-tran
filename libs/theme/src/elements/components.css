@@ -1,0 +1,35 @@
+a,
+:link,
+.link {
+  --link-color: var(--primary-color);
+
+  color: var(--link-color);
+  text-decoration: none;
+  border-bottom: 1px solid var(--link-color);
+}
+
+a:hover,
+:link:hover,
+.link:hover {
+  --link-color: var(--primary-light-color);
+}
+
+ul li {
+  margin: 0;
+  padding: 0;
+  text-indent: 0;
+  list-style-type: none;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.default-layout {
+  --default-layout-width: 1500px;
+
+  margin: 80px auto 0;
+  max-width: var(--default-layout-width);
+}

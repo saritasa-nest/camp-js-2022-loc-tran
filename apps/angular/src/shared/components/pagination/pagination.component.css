@@ -8,12 +8,8 @@
   width: 100%;
 }
 
-::ng-deep .cdk-overlay-container {
-  position: fixed;
-  z-index: 1000;
-}
-
 ::ng-deep .cdk-overlay-pane {
+  background-color: var(--background-color-fade);
   position: absolute;
   pointer-events: auto;
   box-sizing: border-box;
