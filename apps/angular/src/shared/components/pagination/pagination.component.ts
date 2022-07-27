@@ -15,6 +15,9 @@ export class PaginationComponent {
   /** Number of pages. */
   @Input() public pageSize = 25;
 
+  /** Page index of paginator. */
+  @Input() public pageIndex = 0;
+
   /** Page event contain current pagination state. */
   @Output() public paginationEvent = new EventEmitter<PageEvent>();
 

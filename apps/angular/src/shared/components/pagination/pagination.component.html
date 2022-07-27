@@ -3,5 +3,6 @@
               [pageSizeOptions]="pageSizeOptions"
               aria-label="Select page"
               (page)="pageEvent = $event; onPaginationChange($event)"
-              showFirstLastButtons="true">
+              showFirstLastButtons="true"
+              [pageIndex]="pageIndex">
 </mat-paginator>
