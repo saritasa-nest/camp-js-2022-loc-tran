@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SharedModule } from './../shared/shared.module';
@@ -16,6 +17,7 @@ import { AnimeTableComponent } from './features/anime-table/anime-table.componen
     SharedModule,
     AppRoutingModule,
     HttpClientModule,
+    MatProgressSpinnerModule,
     BrowserAnimationsModule,
   ],
   providers: [],
