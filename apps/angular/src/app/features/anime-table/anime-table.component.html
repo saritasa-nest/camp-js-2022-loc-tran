@@ -1,6 +1,8 @@
 <table class="table">
   <caption class="table__title">Anime collection</caption>
   <camp-pagination (paginationEvent)="handlePaginationChange($event)" class="table__pagination" [length]="(paginationAnime$ | async)?.count"></camp-pagination>
+  <camp-select></camp-select>
+  <camp-select></camp-select>
   <tr class="table__head">
     <th *ngFor="let title of columnTitles" class="table__head-title">{{ title }}</th>
   </tr>
