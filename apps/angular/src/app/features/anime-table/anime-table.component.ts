@@ -1,8 +1,9 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
+import { Observable } from 'rxjs';
 
 import { AnimeService } from '../../../core/services/anime.service';
 
@@ -12,15 +13,17 @@ import { AnimeService } from '../../../core/services/anime.service';
   templateUrl: './anime-table.component.html',
   styleUrls: ['./anime-table.component.css'],
 })
-export class AnimeTableComponent implements OnInit {
+export class AnimeTableComponent {
 
-  /** Anime Pagination. */
-  public animePagination: Pagination<Anime> = {
-    count: 0,
-    next: null,
-    previous: null,
-    results: [],
-  };
+  /** Column title of anime table. */
+  public readonly columnTitles = ['Image', 'Title English', 'Title Japanese', 'Aired start', 'Type', 'Status'];
+
+  /** Anime data response from BE. */
+  public paginationAnime$: Observable<Pagination<Anime>>;
+
+  public constructor(private readonly animeService: AnimeService) {
+    this.paginationAnime$ = animeService.getAnime();
+  }
 
   /**
    * Handle change for pagination.
@@ -33,17 +36,6 @@ export class AnimeTableComponent implements OnInit {
         limit: event.pageSize,
       },
     });
-    this.animeService.getAnime(params).subscribe(pagination => {
-      this.animePagination = pagination;
-    });
-  }
-
-  public constructor(private animeService: AnimeService) {}
-
-  /** Init function. */
-  public ngOnInit(): void {
-    this.animeService.getAnime().subscribe(pagination => {
-      this.animePagination = pagination;
-    });
+    this.paginationAnime$ = this.animeService.getAnime(params);
   }
 }

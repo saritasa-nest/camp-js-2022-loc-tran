@@ -30,6 +30,7 @@ ul li {
 .default-layout {
   --default-layout-width: 1000px;
 
-  margin: 80px auto 0;
+  display: flex;
+  justify-content: center;
   max-width: var(--default-layout-width);
 }

@@ -1,3 +1,8 @@
+.table {
+  min-width: 100%;
+  margin: 20px;
+}
+
 .table__title {
   color: var(--font-color-heading-1);
   font-size: 4rem;

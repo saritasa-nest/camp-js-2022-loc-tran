@@ -19,7 +19,7 @@ const ANIME_URL = '/api/v1/anime/anime/';
 export class AnimeService {
   private apiUrl = environment.apiUrl + ANIME_URL;
 
-  public constructor(private http: HttpClient) {}
+  public constructor(private readonly http: HttpClient) {}
 
   /**
    * Get anime data.

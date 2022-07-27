@@ -10,10 +10,10 @@ import { PageEvent } from '@angular/material/paginator';
 export class PaginationComponent implements OnInit {
 
   /** Number of items. */
-  @Input() public length = 0;
+  @Input() public length: number | undefined = 0;
 
   /** Number of pages. */
-  @Input() public pageSize = 5;
+  @Input() public pageSize = 25;
 
   /** Page event contain current pagination state. */
   @Output() public paginationEvent = new EventEmitter<PageEvent>();

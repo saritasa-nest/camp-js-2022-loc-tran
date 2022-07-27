@@ -1,16 +1,11 @@
 <table class="table">
   <caption class="table__title">Anime collection</caption>
-  <camp-pagination (paginationEvent)="handlePaginationChange($event)" class="table__pagination" [length]="animePagination.count"></camp-pagination>
+  <camp-pagination (paginationEvent)="handlePaginationChange($event)" class="table__pagination" [length]="(paginationAnime$ | async)?.count"></camp-pagination>
   <tr class="table__head">
-    <th class="table__head-title">Image</th>
-    <th class="table__head-title">Title Eng</th>
-    <th class="table__head-title">Title Jap</th>
-    <th class="table__head-title">Aired start</th>
-    <th class="table__head-title">Type</th>
-    <th class="table__head-title">Status</th>
+    <th *ngFor="let title of columnTitles" class="table__head-title">{{ title }}</th>
   </tr>
-  <tr class="table__row" *ngFor="let anime of animePagination.results">
-    <td><img class="table__row-image" [src]="anime.image"/></td>
+  <tr class="table__row" *ngFor="let anime of (paginationAnime$ | async)?.results">
+    <td><img class="table__row-image" alt="" [src]="anime.image"/></td>
     <td>{{ anime.titleEnglish }}</td>
     <td>{{ anime.titleJapanese }}</td>
     <td>{{ anime.aired.start.toLocaleString() }}</td>
