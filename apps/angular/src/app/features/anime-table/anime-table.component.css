@@ -32,10 +32,10 @@
   border: 1px solid var(--border-color);
   font-size: 1.3rem;
   background-color: var(--primary-color);
-  color: var(--font-color-contrast-primary);
 }
 
 .table__head-title {
+  color: var(--font-color-contrast-primary);
   padding: 20px;
   text-align: start;
 }
