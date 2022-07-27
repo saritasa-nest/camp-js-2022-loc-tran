@@ -45,21 +45,8 @@
   max-height: 200px;
 }
 
-.query {
+.loading__spinner {
+  width: 100%;
   display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.query__label {
-  display: flex;
-  align-items: center;
-}
-
-.sort,
-.order {
-  min-height: 2rem;
-  min-width: 200px;
-  font-size: 1rem;
-  margin: 10px;
+  justify-content: center;
 }
