@@ -1,0 +1,44 @@
+<h1 class="title">Anime collection</h1>
+<camp-pagination (paginationEvent)="handlePaginationChange($event)" class="table__pagination" [length]="(paginationAnime$ | async)?.count"></camp-pagination>
+<camp-select></camp-select>
+<camp-select></camp-select>
+<table class="table" *ngIf="(paginationAnime$ | async)?.results as animeList; else Loading" mat-table [dataSource]="animeList" class="mat-elevation-z8">
+  <ng-container matColumnDef="Image">
+    <th class="table__head-title" mat-header-cell *matHeaderCellDef>Image</th>
+    <td mat-cell *matCellDef="let anime"><img class="table__row-image" src={{anime.image}} alt="" /></td>
+  </ng-container>
+
+  <ng-container matColumnDef="Title English">
+    <th class="table__head-title" mat-header-cell *matHeaderCellDef>Title in English</th>
+    <td mat-cell *matCellDef="let anime">{{anime.titleEnglish}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Title Japanese">
+    <th class="table__head-title" mat-header-cell *matHeaderCellDef>Title in Japanese</th>
+    <td mat-cell *matCellDef="let anime">{{anime.titleJapanese}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Aired start">
+    <th class="table__head-title" mat-header-cell *matHeaderCellDef>Aired day</th>
+    <td mat-cell *matCellDef="let anime">{{anime.aired.start.toLocaleString()}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Type">
+    <th class="table__head-title" mat-header-cell *matHeaderCellDef>Type</th>
+    <td mat-cell *matCellDef="let anime">{{anime.type}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Status">
+    <th class="table__head-title" mat-header-cell *matHeaderCellDef>Status</th>
+    <td mat-cell *matCellDef="let anime">{{anime.status}}</td>
+  </ng-container>
+
+  <tr class="table__head" mat-header-row *matHeaderRowDef="columnTitles"></tr>
+  <tr mat-row *matRowDef="let row; columns: columnTitles;"></tr>
+</table>
+
+<ng-template #Loading class="loading">
+  <div class="loading__spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

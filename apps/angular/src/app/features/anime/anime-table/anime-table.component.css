@@ -2,8 +2,9 @@
   margin: 20px;
 }
 
-.table__title {
+.title {
   color: var(--font-color-heading-1);
+  font-weight: lighter;
   font-size: 4rem;
   font-family: var(--header-font);
   letter-spacing: 0.5rem;
@@ -36,10 +37,10 @@
   border: 1px solid var(--border-color);
   font-size: 1.3rem;
   background-color: var(--primary-color);
-  color: var(--font-color-contrast-primary);
 }
 
 .table__head-title {
+  color: var(--font-color-contrast-primary);
   padding: 20px;
   text-align: start;
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 
 /** Pagination for table. */
@@ -7,7 +7,7 @@ import { PageEvent } from '@angular/material/paginator';
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css'],
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent {
 
   /** Number of items. */
   @Input() public length: number | undefined = 0;
@@ -23,9 +23,6 @@ export class PaginationComponent implements OnInit {
 
   /** Page size options. */
   public pageSizeOptions: number[] = [5, 10, 25, 100];
-
-  /** Init function. */
-  public ngOnInit(): void {}
 
   /**
    * Handle pagination change and emit the status.

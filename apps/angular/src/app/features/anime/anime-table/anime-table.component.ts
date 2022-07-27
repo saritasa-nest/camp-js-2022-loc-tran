@@ -1,11 +1,13 @@
 import { HttpParams } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { Params } from '@js-camp/core/models/params';
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { Observable } from 'rxjs';
+import { ParamsMapper } from '@js-camp/core/mappers/params.mapper';
 
-import { AnimeService } from '../../../core/services/anime.service';
+import { AnimeService } from '../../../../core/services/anime.service';
 
 /** Anime table. */
 @Component({
@@ -30,12 +32,12 @@ export class AnimeTableComponent {
    * @param event Pagination event.
    */
   public handlePaginationChange(event: PageEvent): void {
-    const params = new HttpParams({
-      fromObject: {
-        offset: event.pageIndex * event.pageSize,
-        limit: event.pageSize,
-      },
+    const params = new Params({
+      offset: event.pageIndex * event.pageSize,
+      limit: event.pageSize,
+      ordering: '',
     });
-    this.paginationAnime$ = this.animeService.getAnime(params);
+
+    this.paginationAnime$ = this.animeService.getAnime(new HttpParams({ fromObject: { ...ParamsMapper.toDto(params) } }));
   }
 }
