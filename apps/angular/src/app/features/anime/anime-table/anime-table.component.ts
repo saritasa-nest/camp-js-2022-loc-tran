@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Anime } from '@js-camp/core/models/anime';
 import { Observable } from 'rxjs';
 
-import { AnimeService } from '../../../core/services/anime.service';
+import { AnimeService } from '../../../../core/services/anime.service';
 
 /** Anime table. */
 @Component({
