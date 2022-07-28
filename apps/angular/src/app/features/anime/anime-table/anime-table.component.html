@@ -7,8 +7,11 @@
   (paginationEvent)="handlePaginationChange($event)"
   class="table__pagination"
 ></camp-pagination>
-<camp-select></camp-select>
-<camp-select></camp-select>
+<camp-select
+  *ngFor="let filter of filterFeatures; ngForTrackBy: trackByFilterTitle"
+  [title]="filter.title"
+  [options]="filter.options"
+></camp-select>
 <table
   class="table"
   *ngIf="(paginationAnime$ | async)?.results as animeList; else Loading"

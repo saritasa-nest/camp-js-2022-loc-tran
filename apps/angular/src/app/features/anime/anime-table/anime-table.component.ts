@@ -7,6 +7,7 @@ import { Pagination } from '@js-camp/core/models/pagination';
 import { Observable } from 'rxjs';
 import { ParamsMapper } from '@js-camp/core/mappers/params.mapper';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { FilterOption } from '@js-camp/core/models/filterOption';
 
 import { AnimeService } from '../../../../core/services/anime.service';
 
@@ -17,6 +18,7 @@ import { AnimeService } from '../../../../core/services/anime.service';
   styleUrls: ['./anime-table.component.css'],
 })
 export class AnimeTableComponent implements OnInit {
+
   /** Column title of anime table. */
   public readonly columnTitles = [
     'Image',
@@ -42,6 +44,25 @@ export class AnimeTableComponent implements OnInit {
   /** Anime data response from BE. */
   public paginationAnime$: Observable<Pagination<Anime>>;
 
+  /** Filtering features for anime table. */
+  public filterFeatures: readonly FilterOption[] = [
+    {
+      title: 'Sort by: ',
+      options: [
+        { title: 'Status', value: 'status' },
+        { title: 'Title in English', value: 'title_eng' },
+        { title: 'Aired start', value: 'airead__startswith' },
+      ],
+    },
+    {
+      title: 'Order by: ',
+      options: [
+        { title: 'Ascending', value: '' },
+        { title: 'Descending', value: '-' },
+      ],
+    },
+  ];
+
   public constructor(
     private readonly animeService: AnimeService,
     private readonly route: ActivatedRoute,
@@ -53,7 +74,9 @@ export class AnimeTableComponent implements OnInit {
   /** Init function. */
   public ngOnInit(): void {
     this.route.queryParams.subscribe((params: Params) => {
-      const page = (params['offset'] ?? this.defaultParams.offset) / (params['limit'] ?? this.defaultParams.limit);
+      const page =
+        (params['offset'] ?? this.defaultParams.offset) /
+        (params['limit'] ?? this.defaultParams.limit);
       const pageSize = params['limit'] ?? this.defaultParams.limit;
       this.currentPageIndex = page;
       this.pageSize = pageSize;
@@ -63,7 +86,7 @@ export class AnimeTableComponent implements OnInit {
         ordering: params['ordering'] ?? this.defaultParams.ordering,
       });
       this.paginationAnime$ = this.animeService.getAnime(
-        new HttpParams({ fromObject: { ...ParamsMapper.toDto(query) } }),
+        new HttpParams({ fromObject: { ...ParamsMapper.toDto(query) } })
       );
     });
   }
@@ -79,9 +102,14 @@ export class AnimeTableComponent implements OnInit {
       ordering: '',
     });
     this.router.navigate(['/'], { queryParams: { ...query } });
+  }
 
-    // this.paginationAnime$ = this.animeService.getAnime(
-    //   new HttpParams({ fromObject: { ...ParamsMapper.toDto(query) } }),
-    // );
+  /**
+   * Track filter feature by title.
+   * @param index Index of current filter feature.
+   * @param filter Current filter option Object.
+   */
+  public trackByFilterTitle(index: number, filter: FilterOption): string {
+    return filter.title;
   }
 }
