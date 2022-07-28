@@ -9,7 +9,7 @@ export enum Sorting {
 }
 
 /** Params for query. */
-export class Params extends Immerable {
+export class PaginationParams extends Immerable {
 
   /** Offset of the first anime in list. */
   public readonly offset: number;
@@ -23,7 +23,7 @@ export class Params extends Immerable {
   /** Search for anime list. */
   public readonly search: string;
 
-  public constructor(data: ParamsArgs) {
+  public constructor(data: PaginationParamsArgs) {
     super();
     this.offset = data.offset;
     this.limit = data.limit;
@@ -32,4 +32,4 @@ export class Params extends Immerable {
   }
 }
 
-type ParamsArgs = OmitImmerable<Params>;
+type PaginationParamsArgs = OmitImmerable<PaginationParams>;

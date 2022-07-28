@@ -1,4 +1,4 @@
-import { Params } from '@js-camp/core/models/params';
+import { PaginationParams } from '@js-camp/core/models/paginationParams';
 
 import { updateTable } from '../services/fetchAnime';
 import { assertNonNullish } from '../utils/assertNonNullish';
@@ -16,7 +16,7 @@ export namespace SearchHandler {
     const searchInput = document.querySelector<HTMLInputElement>('.search__input');
     assertNonNullish(searchInput);
     localStorage.setItem(SEARCH_LS, searchInput.value);
-    const params = new Params({
+    const params = new PaginationParams({
       offset: (LIMIT * (FIRST_PAGE - 1)),
       limit: LIMIT,
       ordering: UrlSearch.getValue(SORT_QUERY) ?? DEFAULT_ORDERING,

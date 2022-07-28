@@ -1,5 +1,5 @@
 import { Sorting } from '@js-camp/core/models/anime';
-import { Params } from '@js-camp/core/models/params';
+import { PaginationParams } from '@js-camp/core/models/paginationParams';
 
 import { DECIMAL, FIRST_PAGE, LIMIT, PageHandler } from '../namespaces/PageHandler';
 import { SearchHandler } from '../namespaces/SearchHandler';
@@ -19,11 +19,11 @@ export const DEFAULT_SEARCH_QUERY = '';
 
 /** Init event listener for pagination and render it to DOM. */
 export function initPagination(): void {
-  const firstPageButton = document.querySelector('.first-page-button');
+  const firstPageButton = document.querySelector('.pagination__button-first');
   firstPageButton?.addEventListener('click', PageHandler.goToFirstPage);
-  const lastPageButton = document.querySelector('.last-page-button');
+  const lastPageButton = document.querySelector('.pagination__button-last');
   lastPageButton?.addEventListener('click', PageHandler.goToLastPage);
-  renderPagination(0, 0);
+  renderPagination({ count: 0, currentPage: 0 });
 }
 
 /** Init query option. */
@@ -64,7 +64,7 @@ export function initSearchButton(): void {
 }
 
 /** Default data for queries. */
-export const DEFAULT_QUERIES = new Params({
+export const DEFAULT_QUERIES = new PaginationParams({
   offset: (LIMIT * (Number.parseInt(UrlSearch.getValue(PAGE_QUERY) ?? FIRST_PAGE.toString(), DECIMAL) - 1)),
   limit: LIMIT,
   ordering: UrlSearch.getValue(SORT_QUERY) ?? Sorting.Default,

@@ -1,4 +1,5 @@
-import { Params } from '@js-camp/core/models/params';
+import { PaginationParams } from '@js-camp/core/models/paginationParams';
+
 import { DEFAULT_SEARCH_QUERY } from '../script/init';
 
 import { PAGE_QUERY, SEARCH_LS } from '../script/localStorageName';
@@ -20,7 +21,7 @@ export namespace SortHandler {
     assertNonNullish(orderOption);
     assertNonNullish(searchQuery);
     const newSortOption = `${orderOption}${sortOption}`;
-    const params = new Params({
+    const params = new PaginationParams({
       offset: (LIMIT * (page - 1)),
       limit: LIMIT,
       ordering: newSortOption,
