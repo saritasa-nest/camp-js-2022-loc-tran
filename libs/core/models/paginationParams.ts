@@ -1,7 +1,7 @@
 import { Immerable, OmitImmerable } from './immerable';
 
 /** Params for query. */
-export class Params extends Immerable {
+export class PaginationParams extends Immerable {
 
   /** Offset of the first anime in list. */
   public readonly offset: number;
@@ -12,7 +12,7 @@ export class Params extends Immerable {
   /** Sorting type for anime list. */
   public readonly ordering: string;
 
-  public constructor(data: ParamsArgs) {
+  public constructor(data: PaginationParamsArgs) {
     super();
     this.offset = data.offset;
     this.limit = data.limit;
@@ -20,4 +20,4 @@ export class Params extends Immerable {
   }
 }
 
-type ParamsArgs = OmitImmerable<Params>;
+type PaginationParamsArgs = OmitImmerable<PaginationParams>;

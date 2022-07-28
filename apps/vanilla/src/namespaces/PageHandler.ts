@@ -1,5 +1,5 @@
 import { Sorting } from '@js-camp/core/models/anime';
-import { Params } from '@js-camp/core/models/params';
+import { PaginationParams } from '@js-camp/core/models/paginationParams';
 
 import { COUNT_LS, SORT_QUERY } from '../script/localStorageName';
 
@@ -19,11 +19,11 @@ export const DEFAULT_ORDERING = Sorting.Default;
 export namespace PageHandler {
 
   /**
-   * Get new data for next page.
-   * @param newPage Next page number.
+   * Get data for new page by page number.
+   * @param newPage New page number.
    */
   export function goToPageByNum(newPage: number): void {
-    const params = new Params({
+    const params = new PaginationParams({
       offset: (LIMIT * (newPage - 1)),
       limit: LIMIT,
       ordering: UrlSearch.getValue(SORT_QUERY) ?? DEFAULT_ORDERING,
@@ -44,12 +44,15 @@ export namespace PageHandler {
   export function goToLastPage(): void {
     const count = localStorage.getItem(COUNT_LS);
     assertNonNullish(count);
-    let page = Number.parseInt(count, DECIMAL) / LIMIT;
-    if (isNaN(page) === true) {
-      page = 1;
-    } else {
-      page = Math.ceil(page);
-    }
-    goToPageByNum(page);
+    goToPageByNum(getLastPageNumber(count));
   }
+}
+
+/**
+ * Return last page number was calculated from number of items.
+ * @param count Number of items in list with type string.
+ */
+function getLastPageNumber(count: string): number {
+  const page = Number.parseInt(count, DECIMAL) / LIMIT;
+  return isNaN(page) ? 1 : Math.ceil(page);
 }

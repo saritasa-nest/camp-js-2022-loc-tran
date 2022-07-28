@@ -70,12 +70,22 @@ export function renderAnime(paginationAnime: Pagination<Anime>): void {
   }
 }
 
+/** Data of pagination needed for render pagination. */
+export interface PaginationData {
+
+  /** Number of anime in list. */
+  count: number;
+
+  /** Current page of table. */
+  currentPage: number;
+}
+
 /**
  * Render pagination to DOM.
  * @param count Number of anime in list.
  * @param currentPage Current page of table.
  */
-export function renderPagination(count: number, currentPage: number): void {
+export function renderPagination({ count, currentPage }: PaginationData): void {
   const pagination = document.querySelector('.pagination__numeric');
   if (pagination !== null) {
     pagination.innerHTML = '';
