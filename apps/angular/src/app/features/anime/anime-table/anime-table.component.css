@@ -55,10 +55,3 @@
   display: flex;
   justify-content: center;
 }
-
-.pagination-loading {
-  min-height: 76px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}

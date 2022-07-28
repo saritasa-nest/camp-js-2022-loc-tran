@@ -1,9 +1,8 @@
 <h1 class="title">Anime collection</h1>
 <camp-pagination
-  *ngIf="(paginationAnime$ | async)?.count as pageLength; else PaginatorLoading"
   [pageIndex]="currentPageIndex"
   [pageSize]="pageSize"
-  [length]="pageLength"
+  [length]="length"
   (paginationEvent)="handlePaginationChange($event)"
   class="table__pagination"
 ></camp-pagination>
@@ -66,11 +65,5 @@
 <ng-template #Loading>
   <div class="loading__spinner">
     <mat-spinner></mat-spinner>
-  </div>
-</ng-template>
-
-<ng-template #PaginatorLoading>
-  <div class="pagination-loading">
-    <mat-spinner diameter="25"></mat-spinner>
   </div>
 </ng-template>

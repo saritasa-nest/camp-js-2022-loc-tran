@@ -1,13 +1,13 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { PaginationParams } from '@js-camp/core/models/paginationParams';
-import { Anime } from '@js-camp/core/models/anime';
-import { Pagination } from '@js-camp/core/models/pagination';
-import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ParamsMapper } from '@js-camp/core/mappers/params.mapper';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Anime } from '@js-camp/core/models/anime';
 import { FilterOption } from '@js-camp/core/models/filterOption';
+import { Pagination } from '@js-camp/core/models/pagination';
+import { PaginationParams } from '@js-camp/core/models/paginationParams';
+import { Observable, switchMap, tap } from 'rxjs';
 
 import { AnimeService } from '../../../../core/services/anime.service';
 
@@ -17,8 +17,7 @@ import { AnimeService } from '../../../../core/services/anime.service';
   templateUrl: './anime-table.component.html',
   styleUrls: ['./anime-table.component.css'],
 })
-export class AnimeTableComponent implements OnInit {
-
+export class AnimeTableComponent {
   /** Column title of anime table. */
   public readonly columnTitles = [
     'Image',
@@ -30,7 +29,7 @@ export class AnimeTableComponent implements OnInit {
   ];
 
   private readonly defaultParams = new PaginationParams({
-    offset: 0,
+    page: 0,
     limit: 25,
     ordering: '',
   });
@@ -42,7 +41,10 @@ export class AnimeTableComponent implements OnInit {
   public pageSize = 25;
 
   /** Anime data response from BE. */
-  public paginationAnime$: Observable<Pagination<Anime>>;
+  public readonly paginationAnime$: Observable<Pagination<Anime>>;
+
+  /** Number of anime. */
+  public length = 0;
 
   /** Filtering features for anime table. */
   public filterFeatures: readonly FilterOption[] = [
@@ -68,27 +70,23 @@ export class AnimeTableComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
   ) {
-    this.paginationAnime$ = animeService.getAnime();
-  }
-
-  /** Init function. */
-  public ngOnInit(): void {
-    this.route.queryParams.subscribe((params: Params) => {
-      const page =
-        (params['offset'] ?? this.defaultParams.offset) /
-        (params['limit'] ?? this.defaultParams.limit);
-      const pageSize = params['limit'] ?? this.defaultParams.limit;
-      this.currentPageIndex = page;
-      this.pageSize = pageSize;
-      const query = new PaginationParams({
-        offset: params['offset'] ?? this.defaultParams.offset,
-        limit: params['limit'] ?? this.defaultParams.limit,
-        ordering: params['ordering'] ?? this.defaultParams.ordering,
-      });
-      this.paginationAnime$ = this.animeService.getAnime(
-        new HttpParams({ fromObject: { ...ParamsMapper.toDto(query) } }),
-      );
-    });
+    this.paginationAnime$ = this.route.queryParams.pipe(
+      switchMap(params => {
+        const page = params['page'] ?? this.defaultParams.page;
+        this.currentPageIndex = page;
+        const pageSize = params['limit'] ?? this.defaultParams.limit;
+        this.pageSize = pageSize;
+        const query = new PaginationParams({
+          ...this.defaultParams,
+          ...params,
+        });
+        return this.animeService
+          .getAnime(
+            new HttpParams({ fromObject: { ...ParamsMapper.toDto(query) } }),
+          )
+          .pipe(tap(pagination => (this.length = pagination.count)));
+      }),
+    );
   }
 
   /**
@@ -97,9 +95,9 @@ export class AnimeTableComponent implements OnInit {
    */
   public handlePaginationChange(event: PageEvent): void {
     const query = new PaginationParams({
-      offset: event.pageIndex * event.pageSize,
       limit: event.pageSize,
       ordering: '',
+      page: event.pageIndex,
     });
     this.router.navigate(['/'], { queryParams: { ...query } });
   }

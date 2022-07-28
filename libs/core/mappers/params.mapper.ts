@@ -9,7 +9,7 @@ export namespace ParamsMapper {
    */
   export function toDto(params: PaginationParams): ParamsDto {
     return {
-      offset: params.offset.toString(),
+      offset: (params.page * params.limit).toString(),
       limit: params.limit.toString(),
       ordering: params.ordering,
     };
