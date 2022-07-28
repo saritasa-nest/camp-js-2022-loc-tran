@@ -1,4 +1,4 @@
-import { Detail } from '@js-camp/core/models/detail';
+import { AnimeDetail } from '@js-camp/core/models/animeDetail';
 
 import { showImage } from './effect';
 
@@ -6,7 +6,7 @@ import { showImage } from './effect';
  * Render anime detail to UI.
  * @param data Anime detail data.
  */
-export function renderDetail(data: Detail): void {
+export function renderDetail(data: AnimeDetail): void {
   const media = document.querySelector('.detail__media');
   const image = document.createElement('img');
   image.classList.add('detail__media-image');

@@ -1,5 +1,5 @@
 import { Sorting } from '@js-camp/core/models/anime';
-import { Params } from '@js-camp/core/models/params';
+import { PaginationParams } from '@js-camp/core/models/paginationParams';
 
 import { COUNT_KEY } from '../script/constants/localStorageName';
 import { SORT_QUERY } from '../script/constants/urlParamsKey';
@@ -22,7 +22,7 @@ export namespace PageHandler {
    * @param newPage Next page number.
    */
   export function goToNextPage(newPage: number): void {
-    const params = new Params({
+    const params = new PaginationParams({
       offset: (LIMIT * (newPage - 1)),
       limit: LIMIT,
       ordering: UrlSearch.getValue(SORT_QUERY) ?? DEFAULT_ORDERING,

@@ -1,4 +1,4 @@
-import { Params } from '@js-camp/core/models/params';
+import { PaginationParams } from '@js-camp/core/models/paginationParams';
 
 import { PAGE_QUERY } from '../script/constants/urlParamsKey';
 import { updateTable } from '../services/fetchAnime';
@@ -17,7 +17,7 @@ export namespace SortHandler {
     const page = Number.parseInt(UrlSearch.getValue(PAGE_QUERY) ?? FIRST_PAGE.toString(), 10);
     assertNonNullish(orderOption);
     const newSortOption = `${orderOption}${sortOption}`;
-    const params = new Params({
+    const params = new PaginationParams({
       offset: (LIMIT * (page - 1)),
       limit: LIMIT,
       ordering: newSortOption,

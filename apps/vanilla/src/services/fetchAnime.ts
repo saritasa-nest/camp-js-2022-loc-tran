@@ -8,7 +8,7 @@ import { ParamsMapper } from '@js-camp/core/mappers/params.mapper';
 import { Anime } from '@js-camp/core/models/anime';
 import { AnimeDetail } from '@js-camp/core/models/animeDetail';
 import { Pagination } from '@js-camp/core/models/pagination';
-import { Params } from '@js-camp/core/models/params';
+import { PaginationParams } from '@js-camp/core/models/paginationParams';
 
 import { http } from '../api';
 import { COUNT_KEY } from '../script/constants/localStorageName';
@@ -21,7 +21,7 @@ export const ANIME_URL = '/api/v1/anime/anime/';
  * Fetch anime data from api.
  * @param params Query parameters.
  */
-export async function fetchAnime(params: Params): Promise<Pagination<Anime>> {
+export async function fetchAnime(params: PaginationParams): Promise<Pagination<Anime>> {
   try {
     const paramsDto = ParamsMapper.toDto(params);
     const response = await http.get<PaginationDto<AnimeDto>>(ANIME_URL, { params: paramsDto });
@@ -36,7 +36,7 @@ export async function fetchAnime(params: Params): Promise<Pagination<Anime>> {
  * @param params Query parameters.
  * @param currentPage Page number needs to load anime.
  */
-export async function updateTable(params: Params, currentPage = 0): Promise<void> {
+export async function updateTable(params: PaginationParams, currentPage = 0): Promise<void> {
   const data = await fetchAnime(params);
   localStorage.setItem(COUNT_KEY, data.count.toString());
   renderAnime(data);
