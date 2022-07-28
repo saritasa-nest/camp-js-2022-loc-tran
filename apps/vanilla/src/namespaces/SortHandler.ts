@@ -2,7 +2,7 @@ import { PaginationParams } from '@js-camp/core/models/paginationParams';
 
 import { DEFAULT_SEARCH_QUERY } from '../script/init';
 
-import { PAGE_QUERY, SEARCH_LS } from '../script/localStorageName';
+import { PAGE_QUERY, LOCAL_STORAGE_SEARCH } from '../script/localStorageName';
 import { updateTable } from '../services/fetchAnime';
 import { assertNonNullish } from '../utils/assertNonNullish';
 import { UrlSearch } from '../utils/urlSearchParams';
@@ -15,7 +15,7 @@ export namespace SortHandler {
   export function changeSorting(): void {
     const sortOption = document.querySelector<HTMLSelectElement>('.sort')?.value;
     const orderOption = document.querySelector<HTMLSelectElement>('.order')?.value;
-    const searchQuery = localStorage.getItem(SEARCH_LS) ?? DEFAULT_SEARCH_QUERY;
+    const searchQuery = localStorage.getItem(LOCAL_STORAGE_SEARCH) ?? DEFAULT_SEARCH_QUERY;
     assertNonNullish(sortOption);
     const page = Number.parseInt(UrlSearch.getValue(PAGE_QUERY) ?? FIRST_PAGE.toString(), DECIMAL);
     assertNonNullish(orderOption);

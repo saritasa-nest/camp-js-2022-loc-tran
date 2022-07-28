@@ -4,7 +4,7 @@ import { PaginationParams } from '@js-camp/core/models/paginationParams';
 
 import { DEFAULT_SEARCH_QUERY } from '../script/init';
 
-import { COUNT_LS, SEARCH_LS, SORT_QUERY } from '../script/localStorageName';
+import { LOCAL_STORAGE_COUNT, LOCAL_STORAGE_SEARCH, SORT_QUERY } from '../script/localStorageName';
 
 import { updateTable } from '../services/fetchAnime';
 import { assertNonNullish } from '../utils/assertNonNullish';
@@ -26,7 +26,7 @@ export namespace PageHandler {
    * @param newPage New page number.
    */
   export function goToPageByNum(newPage: number): void {
-    const searchQuery = localStorage.getItem(SEARCH_LS) ?? DEFAULT_SEARCH_QUERY;
+    const searchQuery = localStorage.getItem(LOCAL_STORAGE_SEARCH) ?? DEFAULT_SEARCH_QUERY;
     assertNonNullish(searchQuery);
     const params = new PaginationParams({
       offset: (LIMIT * (newPage - 1)),
@@ -48,7 +48,7 @@ export namespace PageHandler {
 
   /** Get new data for last page. */
   export function goToLastPage(): void {
-    const count = localStorage.getItem(COUNT_LS);
+    const count = localStorage.getItem(LOCAL_STORAGE_COUNT);
     assertNonNullish(count);
     goToPageByNum(getLastPageNumber(count));
   }

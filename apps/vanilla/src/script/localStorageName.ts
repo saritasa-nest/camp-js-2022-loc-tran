@@ -1,5 +1,5 @@
 /** Query search url name. */
-export const COUNT_LS = 'COUNT';
+export const LOCAL_STORAGE_COUNT = 'COUNT';
 export const SORT_QUERY = 'ordering';
 export const PAGE_QUERY = 'page';
-export const SEARCH_LS = 'SEARCH';
+export const LOCAL_STORAGE_SEARCH = 'SEARCH';
