@@ -18,7 +18,7 @@ export class AnimeTableComponent {
   /** Anime data response from BE. */
   public readonly animeList$: Observable<readonly Anime[]>;
 
-  public constructor(private readonly animeService: AnimeService) {
+  public constructor(animeService: AnimeService) {
     this.animeList$ = animeService.getAnime();
   }
 }
