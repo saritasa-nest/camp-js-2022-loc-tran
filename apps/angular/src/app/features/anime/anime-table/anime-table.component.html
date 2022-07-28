@@ -8,7 +8,7 @@
   class="table__pagination"
 ></camp-pagination>
 <camp-select
-  *ngFor="let filter of filterFeatures; ngForTrackBy: trackByFilterTitle"
+  *ngFor="let filter of filterFeatures; trackBy: trackByFilterTitle"
   [title]="filter.title"
   [options]="filter.options"
 ></camp-select>

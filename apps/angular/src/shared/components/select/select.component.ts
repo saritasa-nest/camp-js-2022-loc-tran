@@ -23,7 +23,7 @@ export class SelectComponent {
    * @param index Index of current option.
    * @param value Value of current option.
    */
-  public trackByOptionValue(index: number, value: string): SelectOption['title'] {
-    return value;
+  public trackByOptionValue(index: number, option: SelectOption): string {
+    return option.value;
   }
 }

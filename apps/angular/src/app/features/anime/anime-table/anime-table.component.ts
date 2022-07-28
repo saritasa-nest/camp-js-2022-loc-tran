@@ -29,7 +29,7 @@ export class AnimeTableComponent implements OnInit {
     'Status',
   ];
 
-  private defaultParams: PaginationParams = new PaginationParams({
+  private readonly defaultParams = new PaginationParams({
     offset: 0,
     limit: 25,
     ordering: '',
@@ -86,7 +86,7 @@ export class AnimeTableComponent implements OnInit {
         ordering: params['ordering'] ?? this.defaultParams.ordering,
       });
       this.paginationAnime$ = this.animeService.getAnime(
-        new HttpParams({ fromObject: { ...ParamsMapper.toDto(query) } })
+        new HttpParams({ fromObject: { ...ParamsMapper.toDto(query) } }),
       );
     });
   }

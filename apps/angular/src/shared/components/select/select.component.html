@@ -2,7 +2,7 @@
   <mat-label >{{ title }}</mat-label>
   <mat-select disableRipple>
     <mat-option
-      *ngFor="let option of options;"
+      *ngFor="let option of options; trackBy:trackByOptionValue"
       [value]="option.value"
       >{{ option.title }}</mat-option
     >
