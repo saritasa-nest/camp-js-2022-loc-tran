@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ParamsMapper } from '@js-camp/core/mappers/params.mapper';
+import { PaginationParamsMapper } from '@js-camp/core/mappers/paginationParams.mapper';
 import { Anime } from '@js-camp/core/models/anime';
 import { FilterOption } from '@js-camp/core/models/filterOption';
 import { Pagination } from '@js-camp/core/models/pagination';
@@ -32,6 +32,8 @@ export class AnimeTableComponent {
     page: 0,
     limit: 25,
     ordering: '',
+    sorting: '',
+    type: '',
   });
 
   /** Default page after load. */
@@ -50,6 +52,7 @@ export class AnimeTableComponent {
   public filterFeatures: readonly FilterOption[] = [
     {
       title: 'Sort by: ',
+      header: 'sorting',
       options: [
         { title: 'Status', value: 'status' },
         { title: 'Title in English', value: 'title_eng' },
@@ -58,9 +61,22 @@ export class AnimeTableComponent {
     },
     {
       title: 'Order by: ',
+      header: 'ordering',
       options: [
         { title: 'Ascending', value: '' },
         { title: 'Descending', value: '-' },
+      ],
+    },
+    {
+      title: 'Filter by: ',
+      header: 'type',
+      options: [
+        { title: 'Tv', value: 'TV' },
+        { title: 'Ova', value: 'OVA' },
+        { title: 'Movie', value: 'MOVIE' },
+        { title: 'Special', value: 'SPECIAL' },
+        { title: 'Ona', value: 'ONA' },
+        { title: 'Music', value: 'MUSIC' },
       ],
     },
   ];
@@ -71,20 +87,28 @@ export class AnimeTableComponent {
     private readonly router: Router,
   ) {
     this.paginationAnime$ = this.route.queryParams.pipe(
-      switchMap(params => {
+      tap(params => {
         const page = params['page'] ?? this.defaultParams.page;
         this.currentPageIndex = page;
         const pageSize = params['limit'] ?? this.defaultParams.limit;
         this.pageSize = pageSize;
+      }),
+      switchMap(params => {
         const query = new PaginationParams({
           ...this.defaultParams,
           ...params,
         });
         return this.animeService
           .getAnime(
-            new HttpParams({ fromObject: { ...ParamsMapper.toDto(query) } }),
+            new HttpParams({
+              fromObject: { ...PaginationParamsMapper.toDto(query) },
+            }),
           )
-          .pipe(tap(pagination => (this.length = pagination.count)));
+          .pipe(
+            tap(pagination => {
+              this.length = pagination.count;
+            }),
+          );
       }),
     );
   }
@@ -95,9 +119,24 @@ export class AnimeTableComponent {
    */
   public handlePaginationChange(event: PageEvent): void {
     const query = new PaginationParams({
+      ...this.defaultParams,
+      ...this.route.snapshot.queryParams,
       limit: event.pageSize,
-      ordering: '',
       page: event.pageIndex,
+    });
+    this.router.navigate(['/'], { queryParams: { ...query } });
+  }
+
+  /**
+   * Handle change for selection.
+   * @param value New value of the selection.
+   * @param header Header to put in Pagination Params.
+   */
+  public handleSelectionChange(value: string, header: string): void {
+    const query = new PaginationParams({
+      ...this.defaultParams,
+      ...this.route.snapshot.queryParams,
+      [header]: value,
     });
     this.router.navigate(['/'], { queryParams: { ...query } });
   }

@@ -10,6 +10,7 @@
   *ngFor="let filter of filterFeatures; trackBy: trackByFilterTitle"
   [title]="filter.title"
   [options]="filter.options"
+  (selectedValue)="handleSelectionChange($event, filter.header)"
 ></camp-select>
 <table
   class="table"

@@ -1,5 +1,5 @@
 /** Params for query. */
-export interface ParamsDto {
+export interface PaginationParamsDto {
 
   /** Offset of the first anime in list. */
   readonly offset: string;
@@ -9,4 +9,7 @@ export interface ParamsDto {
 
   /** Sorting type for anime list. */
   readonly ordering: string;
+
+  /** Filter anime list by type. */
+  readonly type: string;
 }
