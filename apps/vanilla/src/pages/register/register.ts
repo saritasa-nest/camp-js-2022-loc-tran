@@ -1,5 +1,5 @@
-import { Middleware } from '../../namespaces/middleware';
+import { AuthorizationChecker } from '../../namespaces/authorizationChecker';
 import { initRegisterForm } from '../../script/init';
 
-Middleware.checkIsNotLoggedIn();
+AuthorizationChecker.checkIsNotLoggedIn();
 initRegisterForm();

@@ -5,6 +5,8 @@ import { getRefreshedToken, storeTokens } from '../services/token';
 
 import { CONFIG } from './config';
 
+const API_KEY_HEADER = 'Api-Key';
+
 /**
  * Interceptor for request.
  * @param config Config variable for axios.
@@ -15,14 +17,14 @@ export function requestInterceptor(config: AxiosRequestConfig): AxiosRequestConf
   if (headers == null) {
     throw new Error('Axios did not pass any header.');
   }
-  if (localStorage.getItem('ACCESS_TOKEN') !== null) {
-    headers.Authorization = `Bearer ${localStorage.getItem('ACCESS_TOKEN') ?? ''}`;
+  if (localStorage.getItem(ACCESS_TOKEN) !== null) {
+    headers.Authorization = `Bearer ${localStorage.getItem(ACCESS_TOKEN) ?? ''}`;
   }
   return {
     ...config,
     headers: {
       ...headers,
-      'Api-Key': CONFIG.apiKey,
+      [API_KEY_HEADER]: CONFIG.apiKey,
     },
   };
 }
@@ -46,5 +48,4 @@ export async function errorInterceptor(error: AxiosError): Promise<void> {
       }
     }
   }
-  throw error;
 }

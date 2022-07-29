@@ -35,7 +35,7 @@
   min-width: 6rem;
 }
 
-.form__buttonGroup {
+.form__button-group {
   justify-self: center;
 }
 
@@ -61,6 +61,6 @@
   margin-bottom: 30px;
 }
 
-.form__buttonGroup-submit:hover {
+.form__button-group-submit:hover {
   background-color: var(--primary-button-color-light);
 }

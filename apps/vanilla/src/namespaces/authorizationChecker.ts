@@ -1,6 +1,6 @@
 import { ACCESS_TOKEN, LOGIN_PAGE, PROFILE_PAGE, REFRESH_TOKEN } from '../script/constants';
 
-export namespace Middleware {
+export namespace AuthorizationChecker {
 
   /** Check if user is logged in or not. If not, redirect to login page. */
   export function checkIsLoggedIn(): void {

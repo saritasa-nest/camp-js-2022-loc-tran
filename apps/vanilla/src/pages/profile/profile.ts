@@ -1,5 +1,5 @@
-import { Middleware } from '../../namespaces/middleware';
+import { AuthorizationChecker } from '../../namespaces/authorizationChecker';
 import { initHomeProfile } from '../../script/init';
 
-Middleware.checkIsLoggedIn();
+AuthorizationChecker.checkIsLoggedIn();
 initHomeProfile();
