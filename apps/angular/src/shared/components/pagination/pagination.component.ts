@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 
 /** Pagination for table. */
@@ -6,6 +6,7 @@ import { PageEvent } from '@angular/material/paginator';
   selector: 'camp-pagination',
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginationComponent {
 

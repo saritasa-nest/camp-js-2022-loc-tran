@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { SelectOption } from '@js-camp/core/models/selectOption';
 
 /** Reuse select option. */
@@ -6,6 +6,7 @@ import { SelectOption } from '@js-camp/core/models/selectOption';
   selector: 'camp-select',
   templateUrl: './select.component.html',
   styleUrls: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectComponent {
   /** Options for select component. */
@@ -13,6 +14,9 @@ export class SelectComponent {
 
   /** Title for select component. */
   @Input() public title = 'Select option';
+
+  /** Initial value for select component. */
+  @Input() public value = '';
 
   /** TODO. */
   @Output() public selectedValue = new EventEmitter<string>();

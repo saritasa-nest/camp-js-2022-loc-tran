@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaginationParamsMapper } from '@js-camp/core/mappers/paginationParams.mapper';
@@ -7,7 +7,7 @@ import { Anime } from '@js-camp/core/models/anime';
 import { FilterOption } from '@js-camp/core/models/filterOption';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { PaginationParams } from '@js-camp/core/models/paginationParams';
-import { Observable, switchMap, tap } from 'rxjs';
+import { map, Observable, shareReplay, switchMap, tap } from 'rxjs';
 
 import { AnimeService } from '../../../../core/services/anime.service';
 
@@ -16,6 +16,7 @@ import { AnimeService } from '../../../../core/services/anime.service';
   selector: 'camp-anime-table',
   templateUrl: './anime-table.component.html',
   styleUrls: ['./anime-table.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeTableComponent {
   /** Column title of anime table. */
@@ -37,10 +38,10 @@ export class AnimeTableComponent {
   });
 
   /** Default page after load. */
-  public currentPageIndex = 0;
+  public readonly currentPageIndex$: Observable<number>;
 
   /** Default page size after load. */
-  public pageSize = 25;
+  public readonly pageSize$: Observable<number>;
 
   /** Anime data response from BE. */
   public readonly paginationAnime$: Observable<Pagination<Anime>>;
@@ -86,13 +87,12 @@ export class AnimeTableComponent {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
   ) {
-    this.paginationAnime$ = this.route.queryParams.pipe(
-      tap(params => {
-        const page = params['page'] ?? this.defaultParams.page;
-        this.currentPageIndex = page;
-        const pageSize = params['limit'] ?? this.defaultParams.limit;
-        this.pageSize = pageSize;
-      }),
+    const params$ = this.route.queryParamMap.pipe(
+      shareReplay({ refCount: true, bufferSize: 1 }),
+    );
+    this.pageSize$ = params$.pipe(map(params => Number(params.get('limit')) ?? this.defaultParams.limit))
+    this.currentPageIndex$ = params$.pipe(map(params => Number(params.get('page')) ?? this.defaultParams.page));
+    this.paginationAnime$ = params$.pipe(
       switchMap(params => {
         const query = new PaginationParams({
           ...this.defaultParams,
@@ -103,12 +103,10 @@ export class AnimeTableComponent {
             new HttpParams({
               fromObject: { ...PaginationParamsMapper.toDto(query) },
             }),
-          )
-          .pipe(
-            tap(pagination => {
-              this.length = pagination.count;
-            }),
           );
+      }),
+      tap(pagination => {
+        this.length = pagination.count;
       }),
     );
   }
