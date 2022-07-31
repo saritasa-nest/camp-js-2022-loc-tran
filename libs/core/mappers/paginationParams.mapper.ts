@@ -11,8 +11,8 @@ export namespace PaginationParamsMapper {
     return {
       offset: (params.page * params.limit).toString(),
       limit: params.limit.toString(),
-      ordering: `${params.ordering}${params.sorting}`,
-      type: params.type,
+      ordering: `${params.ordering === 'desc' ? '-' : ''}${params.sorting}`,
+      type__in: params.type,
     };
   }
 }

@@ -1,15 +1,23 @@
 import { HttpParams } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { Sort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaginationParamsMapper } from '@js-camp/core/mappers/paginationParams.mapper';
 import { Anime } from '@js-camp/core/models/anime';
-import { FilterOption } from '@js-camp/core/models/filterOption';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { PaginationParams } from '@js-camp/core/models/paginationParams';
-import { map, Observable, shareReplay, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 
 import { AnimeService } from '../../../../core/services/anime.service';
+
+const DEFAULT_PARAMS = new PaginationParams({
+  ordering: '',
+  page: 0,
+  limit: 25,
+  sorting: '',
+  type: '',
+});
 
 /** Anime table. */
 @Component({
@@ -19,6 +27,10 @@ import { AnimeService } from '../../../../core/services/anime.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeTableComponent {
+
+  /** Filter options. */
+  public readonly filterTypes = ['TV', 'OVA', 'MOVIE'];
+
   /** Column title of anime table. */
   public readonly columnTitles = [
     'Image',
@@ -29,81 +41,34 @@ export class AnimeTableComponent {
     'Status',
   ];
 
-  private readonly defaultParams = new PaginationParams({
-    page: 0,
-    limit: 25,
-    ordering: '',
-    sorting: '',
-    type: '',
-  });
-
-  /** Default page after load. */
-  public readonly currentPageIndex$: Observable<number>;
-
-  /** Default page size after load. */
-  public readonly pageSize$: Observable<number>;
-
   /** Anime data response from BE. */
   public readonly paginationAnime$: Observable<Pagination<Anime>>;
 
+  /** Query params. */
+  public readonly queryParamsUrl$ = new BehaviorSubject<PaginationParams>(
+    DEFAULT_PARAMS,
+  );
+
   /** Number of anime. */
   public length = 0;
-
-  /** Filtering features for anime table. */
-  public filterFeatures: readonly FilterOption[] = [
-    {
-      title: 'Sort by: ',
-      header: 'sorting',
-      options: [
-        { title: 'Status', value: 'status' },
-        { title: 'Title in English', value: 'title_eng' },
-        { title: 'Aired start', value: 'airead__startswith' },
-      ],
-    },
-    {
-      title: 'Order by: ',
-      header: 'ordering',
-      options: [
-        { title: 'Ascending', value: '' },
-        { title: 'Descending', value: '-' },
-      ],
-    },
-    {
-      title: 'Filter by: ',
-      header: 'type',
-      options: [
-        { title: 'Tv', value: 'TV' },
-        { title: 'Ova', value: 'OVA' },
-        { title: 'Movie', value: 'MOVIE' },
-        { title: 'Special', value: 'SPECIAL' },
-        { title: 'Ona', value: 'ONA' },
-        { title: 'Music', value: 'MUSIC' },
-      ],
-    },
-  ];
 
   public constructor(
     private readonly animeService: AnimeService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
   ) {
-    const params$ = this.route.queryParamMap.pipe(
-      shareReplay({ refCount: true, bufferSize: 1 }),
-    );
-    this.pageSize$ = params$.pipe(map(params => Number(params.get('limit')) ?? this.defaultParams.limit))
-    this.currentPageIndex$ = params$.pipe(map(params => Number(params.get('page')) ?? this.defaultParams.page));
-    this.paginationAnime$ = params$.pipe(
+    this.paginationAnime$ = this.route.queryParams.pipe(
       switchMap(params => {
         const query = new PaginationParams({
-          ...this.defaultParams,
+          ...DEFAULT_PARAMS,
           ...params,
         });
-        return this.animeService
-          .getAnime(
-            new HttpParams({
-              fromObject: { ...PaginationParamsMapper.toDto(query) },
-            }),
-          );
+        this.queryParamsUrl$.next(query);
+        return this.animeService.getAnime(
+          new HttpParams({
+            fromObject: { ...PaginationParamsMapper.toDto(query) },
+          }),
+        );
       }),
       tap(pagination => {
         this.length = pagination.count;
@@ -117,7 +82,7 @@ export class AnimeTableComponent {
    */
   public handlePaginationChange(event: PageEvent): void {
     const query = new PaginationParams({
-      ...this.defaultParams,
+      ...DEFAULT_PARAMS,
       ...this.route.snapshot.queryParams,
       limit: event.pageSize,
       page: event.pageIndex,
@@ -126,25 +91,29 @@ export class AnimeTableComponent {
   }
 
   /**
-   * Handle change for selection.
-   * @param value New value of the selection.
-   * @param header Header to put in Pagination Params.
+   *
+   * @param event Sort event emitted from material select.
    */
-  public handleSelectionChange(value: string, header: string): void {
+  public handleSortChange(event: Sort): void {
     const query = new PaginationParams({
-      ...this.defaultParams,
+      ...DEFAULT_PARAMS,
       ...this.route.snapshot.queryParams,
-      [header]: value,
+      ordering: event.direction,
+      sorting: event.direction !== '' ? event.active : '',
     });
     this.router.navigate(['/'], { queryParams: { ...query } });
   }
 
   /**
-   * Track filter feature by title.
-   * @param index Index of current filter feature.
-   * @param filter Current filter option Object.
+   *
+   * @param event Filter event emitted from material select.
    */
-  public trackByFilterTitle(index: number, filter: FilterOption): string {
-    return filter.title;
+  public handleFilterChange(event: string[]): void {
+    const query = new PaginationParams({
+      ...DEFAULT_PARAMS,
+      ...this.route.snapshot.queryParams,
+      type: event.join(','),
+    });
+    this.router.navigate(['/'], { queryParams: { ...query } });
   }
 }

@@ -6,10 +6,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
-import { SelectComponent } from '../../../shared/components/select/select.component';
 
 import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeTableComponent } from './anime-table/anime-table.component';
@@ -17,7 +17,7 @@ import { AnimeComponent } from './anime.component';
 
 /** Anime module. */
 @NgModule({
-  declarations: [AnimeComponent, AnimeTableComponent, SelectComponent, PaginationComponent],
+  declarations: [AnimeComponent, AnimeTableComponent, PaginationComponent],
   imports: [
     CommonModule,
     MatTableModule,
@@ -28,6 +28,7 @@ import { AnimeComponent } from './anime.component';
     MatPaginatorModule,
     MatSelectModule,
     MatOptionModule,
+    MatSortModule,
   ],
 })
 export class AnimeModule { }

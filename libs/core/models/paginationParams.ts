@@ -26,6 +26,7 @@ export class PaginationParams extends Immerable {
     this.page = data.page;
     this.type = data.type;
   }
+
 }
 
 type PaginationParamsArgs = OmitImmerable<PaginationParams>;

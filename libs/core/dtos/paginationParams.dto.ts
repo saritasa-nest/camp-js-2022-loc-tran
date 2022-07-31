@@ -11,5 +11,5 @@ export interface PaginationParamsDto {
   readonly ordering: string;
 
   /** Filter anime list by type. */
-  readonly type: string;
+  readonly type__in: string;
 }
