@@ -24,10 +24,10 @@ export class AnimeTableComponent {
 
   /**
    * Function track by for anime table.
-   * @param index Index of anime.
+   * @param _index Index of anime.
    * @param anime Data of one anime.
    */
-  public trackAnimeById(index: number, anime: Anime): number {
+  public trackAnimeById(_index: number, anime: Anime): number {
     return anime.id;
   }
 }

@@ -3,8 +3,8 @@
   *ngIf="animeList$ | async as animeList; else Loading"
   mat-table
   [dataSource]="animeList"
-  class="mat-elevation-z8"
   [trackBy]="trackAnimeById"
+  class="mat-elevation-z8"
 >
   <caption class="table__title">
     Anime collection
