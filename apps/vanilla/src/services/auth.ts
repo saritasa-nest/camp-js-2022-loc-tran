@@ -10,6 +10,8 @@ import { http } from '../api';
 import { ApiUrl } from '../namespaces/apiUrl';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../script/constants';
 
+import { LocalStorageService } from './localStorageService';
+
 /**
  * Handle login request.
  * @param data Login data.
@@ -18,8 +20,8 @@ export async function login(data: LoginData): Promise<Array<string> | null> {
   try {
     const response = await http.post<TokenDto>(ApiUrl.login, data);
     const auth = TokenMapper.fromDto(response.data);
-    localStorage.setItem(ACCESS_TOKEN, auth.accessToken);
-    localStorage.setItem(REFRESH_TOKEN, auth.refreshToken);
+    LocalStorageService.set(ACCESS_TOKEN, auth.accessToken);
+    LocalStorageService.set(REFRESH_TOKEN, auth.refreshToken);
     return null;
   } catch (error: unknown) {
     const errorData = HttpErrorMapper.fromDto(error as HttpErrorDto);
@@ -43,8 +45,8 @@ export async function register(data: Account): Promise<Array<string> | null> {
     const accountDataDto = AccountMapper.toDto(data);
     const response = await http.post(ApiUrl.register, accountDataDto);
     const auth = TokenMapper.fromDto(response.data);
-    localStorage.setItem(ACCESS_TOKEN, auth.accessToken);
-    localStorage.setItem(REFRESH_TOKEN, auth.refreshToken);
+    LocalStorageService.set(ACCESS_TOKEN, auth.accessToken);
+    LocalStorageService.set(REFRESH_TOKEN, auth.refreshToken);
     return null;
   } catch (error: unknown) {
     const errorData = HttpErrorMapper.fromDto(error as HttpErrorDto);

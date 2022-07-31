@@ -1,8 +1,7 @@
-import { Account } from '@js-camp/core/models/account';
-
 import { PROFILE_PAGE } from '../script/constants';
 import { showErrorLogin, showErrorRegister } from '../script/renderToUI';
-import { login, register, logout } from '../services/auth';
+import { assertNonNullish } from '../script/utils';
+import { login, logout, register } from '../services/auth';
 
 export namespace SubmitHandler {
 
@@ -25,7 +24,7 @@ export namespace SubmitHandler {
           location.replace(PROFILE_PAGE);
         }
       } else {
-        showErrorLogin(['Email and password is required!']);
+        showErrorLogin(['Email and password are required!']);
       }
     }
   }
@@ -43,26 +42,30 @@ export namespace SubmitHandler {
       const lastName = formData.get('last-name');
       const password = formData.get('password');
       const retypePassword = formData.get('retype-password');
-      if (email !== null && firstName !== null && lastName !== null && password !== null && retypePassword !== null) {
-        if (password.toString() !== retypePassword.toString()) {
-          showErrorRegister(['Retype password does not matched!']);
-          return;
-        }
-        const newAccount = new Account({
-          email: email.toString(),
-          firstName: firstName.toString(),
-          lastName: lastName.toString(),
-          password: password.toString(),
-        });
-        const errorList = await register(newAccount);
-        if (errorList !== null) {
-          showErrorRegister(errorList);
-        } else {
-          location.replace(PROFILE_PAGE);
-        }
-      } else {
-        showErrorRegister(['All fields need to be filled!']);
+
+      assertNonNullish(email);
+      assertNonNullish(firstName);
+      assertNonNullish(lastName);
+      assertNonNullish(password);
+      assertNonNullish(retypePassword);
+
+      if (password.toString() !== retypePassword.toString()) {
+        showErrorRegister(['Retype password does not matched!']);
+        return;
       }
+      const newAccount = {
+        email: email.toString(),
+        firstName: firstName.toString(),
+        lastName: lastName.toString(),
+        password: password.toString(),
+      };
+      const errorList = await register(newAccount);
+      if (errorList !== null) {
+        showErrorRegister(errorList);
+      } else {
+        location.replace(PROFILE_PAGE);
+      }
+
     }
   }
 

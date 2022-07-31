@@ -7,10 +7,12 @@ import { ApiUrl } from '../namespaces/apiUrl';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../script/constants';
 import { renderAuthenticatedLink } from '../script/renderToUI';
 
+import { LocalStorageService } from './localStorageService';
+
 /** Get user data for profile page. */
 export async function getUserData(): Promise<User> {
-  const accessToken = localStorage.getItem(ACCESS_TOKEN);
-  const refreshToken = localStorage.getItem(REFRESH_TOKEN);
+  const accessToken = LocalStorageService.get(ACCESS_TOKEN);
+  const refreshToken = LocalStorageService.get(REFRESH_TOKEN);
   if (accessToken === null || refreshToken === null) {
     renderAuthenticatedLink();
     throw new Error('Token not found');

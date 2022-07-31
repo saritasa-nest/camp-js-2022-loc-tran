@@ -1,5 +1,5 @@
 import { AuthorizationChecker } from '../../namespaces/authorizationChecker';
 import { initLoginForm } from '../../script/init';
 
-AuthorizationChecker.checkIsNotLoggedIn();
+AuthorizationChecker.redirectUserLoggedIn();
 initLoginForm();

@@ -1,6 +1,7 @@
 import { AxiosError, AxiosRequestConfig } from 'axios';
 
 import { ACCESS_TOKEN, LOGIN_PAGE, REFRESH_TOKEN } from '../script/constants';
+import { LocalStorageService } from '../services/localStorageService';
 import { getRefreshedToken, storeTokens } from '../services/token';
 
 import { CONFIG } from './config';
@@ -17,8 +18,8 @@ export function requestInterceptor(config: AxiosRequestConfig): AxiosRequestConf
   if (headers == null) {
     throw new Error('Axios did not pass any header.');
   }
-  if (localStorage.getItem(ACCESS_TOKEN) !== null) {
-    headers.Authorization = `Bearer ${localStorage.getItem(ACCESS_TOKEN) ?? ''}`;
+  if (LocalStorageService.get(ACCESS_TOKEN) !== null) {
+    headers.Authorization = `Bearer ${LocalStorageService.get(ACCESS_TOKEN) ?? ''}`;
   }
   return {
     ...config,
@@ -35,17 +36,19 @@ export function requestInterceptor(config: AxiosRequestConfig): AxiosRequestConf
  */
 export async function errorInterceptor(error: AxiosError): Promise<void> {
   if (error.response?.status === 401) {
-    const accessToken = localStorage.getItem(ACCESS_TOKEN);
-    const refreshToken = localStorage.getItem(REFRESH_TOKEN);
+    const accessToken = LocalStorageService.get(ACCESS_TOKEN);
+    const refreshToken = LocalStorageService.get(REFRESH_TOKEN);
     if (accessToken !== null && refreshToken !== null) {
       try {
         const tokens = await getRefreshedToken(refreshToken);
         storeTokens(tokens);
+        return;
       } catch (errorRefreshToken: unknown) {
         localStorage.clear();
         location.replace(LOGIN_PAGE);
         throw errorRefreshToken;
       }
     }
+    throw (error);
   }
 }
