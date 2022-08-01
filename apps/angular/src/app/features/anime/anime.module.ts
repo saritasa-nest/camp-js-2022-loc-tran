@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -29,6 +30,7 @@ import { AnimeComponent } from './anime.component';
     MatSelectModule,
     MatOptionModule,
     MatSortModule,
+    ReactiveFormsModule,
   ],
 })
 export class AnimeModule { }

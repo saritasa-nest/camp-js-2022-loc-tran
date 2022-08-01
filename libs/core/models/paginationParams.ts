@@ -18,6 +18,9 @@ export class PaginationParams extends Immerable {
   /** Current page of table. */
   public readonly page: number;
 
+  /** Search by anime name. */
+  public readonly search: string;
+
   public constructor(data: PaginationParamsArgs) {
     super();
     this.limit = data.limit;
@@ -25,6 +28,7 @@ export class PaginationParams extends Immerable {
     this.sorting = data.sorting;
     this.page = data.page;
     this.type = data.type;
+    this.search = data.search;
   }
 
 }

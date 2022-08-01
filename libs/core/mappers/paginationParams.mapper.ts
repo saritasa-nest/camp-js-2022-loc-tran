@@ -13,6 +13,7 @@ export namespace PaginationParamsMapper {
       limit: params.limit.toString(),
       ordering: `${params.ordering === 'desc' ? '-' : ''}${params.sorting}`,
       type__in: params.type,
+      search: params.search,
     };
   }
 }

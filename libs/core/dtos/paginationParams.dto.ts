@@ -12,4 +12,7 @@ export interface PaginationParamsDto {
 
   /** Filter anime list by type. */
   readonly type__in: string;
+
+  /** Search anime by name. */
+  readonly search: string;
 }

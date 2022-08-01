@@ -8,6 +8,18 @@
     class="table__pagination"
   ></camp-pagination>
 </ng-container>
+<form class="example-form">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Favorite food</mat-label>
+    <input
+      matInput
+      placeholder="Ex. Pizza"
+      type="search"
+      [formControl]="searchControl"
+    />
+  </mat-form-field>
+</form>
+
 <table
   class="table"
   *ngIf="paginationAnime$ | async as animeList; else Loading"
@@ -17,7 +29,9 @@
   matSort
   (matSortChange)="handleSortChange($event)"
   [matSortActive]="(queryParamsUrl$ | async)?.sorting ?? ''"
-  [matSortDirection]="(queryParamsUrl$ | async)?.ordering === 'desc' ? 'desc' : 'asc'"
+  [matSortDirection]="
+    (queryParamsUrl$ | async)?.ordering === 'desc' ? 'desc' : 'asc'
+  "
 >
   <ng-container matColumnDef="Image">
     <th class="table__head-title" mat-header-cell *matHeaderCellDef>Image</th>

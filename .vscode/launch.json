@@ -1,0 +1,7 @@
+{
+  "type": "node",
+  "request": "launch",
+  "name": "App",
+  "program": "${workspaceRoot}/apps/angular/src/main.ts",
+  "runtimeExecutable": "${env:HOME}/.nvm/versions/node/v16.15.0/bin/node"
+}
