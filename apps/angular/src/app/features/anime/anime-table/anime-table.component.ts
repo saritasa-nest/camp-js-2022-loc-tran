@@ -16,12 +16,11 @@ import { PaginationParams } from '@js-camp/core/models/paginationParams';
 import {
   BehaviorSubject,
   debounceTime,
-  finalize,
   map,
   merge,
   Observable,
-  startWith,
-  Subscription,
+  shareReplay,
+  Subject,
   switchMap,
   takeUntil,
   tap,
@@ -73,7 +72,7 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
   public readonly columnTitles = COLUMN_TITLES;
 
   /** Anime data response from BE. */
-  public readonly paginationAnime$: Observable<Pagination<Anime> | null>;
+  public readonly paginationAnime$: Observable<Pagination<Anime>>;
 
   /** Form control for search form. */
   public readonly searchControl = new FormControl<string>('');
@@ -81,12 +80,14 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
   /** Form control for filter by type. */
   public readonly filterControl = new FormControl<readonly string[]>([]);
 
-  public readonly queryParam$: Observable<PaginationParams>;
+  /** This stream emit latest query params and trigger side effect.*/
+  public readonly queryParams$: Observable<PaginationParams>;
 
+  /** Subject that is used for unsubscribing from streams. */
   private readonly subscriptionManager$ = new Subject<void>();
 
-  /** Query params. */
-  public readonly queryParamsUrl$ = new BehaviorSubject<PaginationParams>(
+  /** A stream for emit new query params. */
+  public readonly queryParamsUpdated$ = new BehaviorSubject<PaginationParams>(
     new PaginationParams({
       ...DEFAULT_PARAMS,
       ...this.route.snapshot.queryParams,
@@ -94,10 +95,7 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
   );
 
   /** Loading feature. */
-  public readonly isLoading$ = new BehaviorSubject<Boolean>(false);
-
-  /** Redirect subscription. */
-  public redirectSubscription = new Subscription();
+  public readonly isAnimeLoading$ = new BehaviorSubject<Boolean>(false);
 
   /** Number of anime. */
   public length = 0;
@@ -114,7 +112,9 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
       this.route.snapshot.queryParamMap.get('search') ?? DEFAULT_PARAMS.search,
     );
     this.paginationAnime$ = this.route.queryParams.pipe(
-      tap(() => this.isLoading$.next(true)),
+      tap(() => {
+        this.isAnimeLoading$.next(true);
+      }),
       switchMap(params => {
         const query = new PaginationParams({
           ...DEFAULT_PARAMS,
@@ -123,23 +123,18 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
         return this.animeService
           .getAnime(
             new HttpParams({
-              fromObject: { ...PaginationParamsMapper.toDto(query) },
+            fromObject: { ...PaginationParamsMapper.toDto(query) },
             }),
-          )
-          .pipe(startWith(null));
+          );
       }),
-      tap(pagination => {
-        if (pagination) {
-          this.length = pagination.count;
-        }
-      }),
-      finalize(() => {
-        this.isLoading$.next(false);
-      }),
+      tap(() => {
+          this.isAnimeLoading$.next(false);
+        }),
+      shareReplay({ bufferSize: 1, refCount: true }),
     );
 
-    this.queryParam$ = merge(
-      this.queryParamsUrl$,
+    this.queryParams$ = merge(
+      this.queryParamsUpdated$,
       this.filterControl.valueChanges.pipe(
         debounceTime(400),
         map(
@@ -166,7 +161,7 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
 
   /** Initialize data. */
   public ngOnInit(): void {
-    const navigateSideEffect$ = this.queryParam$.pipe(
+    const navigateSideEffect$ = this.queryParams$.pipe(
       tap(query => {
         this.router.navigate(['/'], { queryParams: { ...query } });
       }),
@@ -188,7 +183,7 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
    * @param event Pagination event.
    */
   public handlePaginationChange(event: PageEvent): void {
-    this.queryParamsUrl$.next(
+    this.queryParamsUpdated$.next(
       new PaginationParams({
         ...DEFAULT_PARAMS,
         ...this.route.snapshot.queryParams,
@@ -203,7 +198,7 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
    * @param event Sort event emitted from material select.
    */
   public handleSortChange(event: Sort): void {
-    this.queryParamsUrl$.next(
+    this.queryParamsUpdated$.next(
       new PaginationParams({
         ...DEFAULT_PARAMS,
         ...this.route.snapshot.queryParams,
