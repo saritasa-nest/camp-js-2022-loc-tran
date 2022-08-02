@@ -1,8 +1,9 @@
 .table {
-  margin: 20px;
+  width: 100%;
 }
 
 .title {
+  text-align: center;
   color: var(--font-color-heading-1);
   font-weight: lighter;
   font-size: 4rem;
@@ -11,26 +12,21 @@
   margin-bottom: 40px;
 }
 
-.select {
-  margin: 20px 0;
+.search {
+  width: 100%;
 }
 
-.table__row-content {
-  padding: 10px;
+.search__form {
+  width: 100%;
 }
 
 .table__row {
-  background-color: var(--background-color);
+  background-color: var(--background-color-light);
   cursor: pointer;
 }
 
-.table__row:nth-child(even) {
-  background-color: var(--background-color-dark);
-  color: var(--font-color-primary);
-}
-
 .table__row:hover {
-  background-color: var(--background-color-dark-2);
+  background-color: var(--background-color);
 }
 
 .table__head {
@@ -45,12 +41,17 @@
   text-align: start;
 }
 
+.table__head-filter {
+  padding: 0;
+  color: white;
+}
+
 .table__row-image {
   max-width: 200px;
   max-height: 200px;
 }
 
-.loading__spinner {
+.loading {
   margin-top: 20px;
   display: flex;
   justify-content: center;

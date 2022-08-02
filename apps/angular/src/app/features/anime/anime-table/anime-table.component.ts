@@ -1,5 +1,10 @@
 import { HttpParams } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
@@ -9,9 +14,16 @@ import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { PaginationParams } from '@js-camp/core/models/paginationParams';
 import {
-  BehaviorSubject, debounceTime, map,
+  BehaviorSubject,
+  debounceTime,
+  finalize,
+  map,
   merge,
-  Observable, switchMap,
+  Observable,
+  startWith,
+  Subscription,
+  switchMap,
+  takeUntil,
   tap,
 } from 'rxjs';
 
@@ -25,6 +37,12 @@ const DEFAULT_PARAMS = new PaginationParams({
   type: '',
   search: '',
 });
+
+/** Specify order type for sort option. */
+enum SortDirection {
+  Ascending = 'asc',
+  Descending = 'desc',
+}
 
 const COLUMN_TITLES = [
   'Image',
@@ -44,7 +62,10 @@ const FILTER_TYPES = ['TV', 'OVA', 'MOVIE', 'SPECIAL', 'ONA', 'MUSIC'];
   styleUrls: ['./anime-table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnimeTableComponent implements OnDestroy {
+export class AnimeTableComponent implements OnDestroy, OnInit {
+  /** */
+  public readonly sortDirection = SortDirection;
+
   /** Filter options. */
   public readonly filterTypes = FILTER_TYPES;
 
@@ -52,10 +73,17 @@ export class AnimeTableComponent implements OnDestroy {
   public readonly columnTitles = COLUMN_TITLES;
 
   /** Anime data response from BE. */
-  public readonly paginationAnime$: Observable<Pagination<Anime>>;
+  public readonly paginationAnime$: Observable<Pagination<Anime> | null>;
 
-  /**  */
-  public readonly searchControl = new FormControl();
+  /** Form control for search form. */
+  public readonly searchControl = new FormControl<string>('');
+
+  /** Form control for filter by type. */
+  public readonly filterControl = new FormControl<readonly string[]>([]);
+
+  public readonly queryParam$: Observable<PaginationParams>;
+
+  private readonly subscriptionManager$ = new Subject<void>();
 
   /** Query params. */
   public readonly queryParamsUrl$ = new BehaviorSubject<PaginationParams>(
@@ -65,8 +93,11 @@ export class AnimeTableComponent implements OnDestroy {
     }),
   );
 
+  /** Loading feature. */
+  public readonly isLoading$ = new BehaviorSubject<Boolean>(false);
+
   /** Redirect subscription. */
-  public readonly redirectSubscription;
+  public redirectSubscription = new Subscription();
 
   /** Number of anime. */
   public length = 0;
@@ -76,40 +107,80 @@ export class AnimeTableComponent implements OnDestroy {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
   ) {
-
-    this.redirectSubscription = merge(
-      this.queryParamsUrl$,
-      this.searchControl.valueChanges.pipe(map(value => new PaginationParams({
-        ...DEFAULT_PARAMS,
-        ...this.route.snapshot.queryParams,
-        search: value,
-        page: 0,
-      })),
-      debounceTime(500)),
-    ).subscribe(query => this.router.navigate(['/'], { queryParams: { ...query } }));
-
+    this.filterControl.setValue(
+      this.route.snapshot.queryParamMap.get('type')?.split(',') ?? [],
+    );
+    this.searchControl.setValue(
+      this.route.snapshot.queryParamMap.get('search') ?? DEFAULT_PARAMS.search,
+    );
     this.paginationAnime$ = this.route.queryParams.pipe(
+      tap(() => this.isLoading$.next(true)),
       switchMap(params => {
         const query = new PaginationParams({
           ...DEFAULT_PARAMS,
           ...params,
         });
-        this.queryParamsUrl$.next(query);
-        return this.animeService.getAnime(
-          new HttpParams({
-            fromObject: { ...PaginationParamsMapper.toDto(query) },
-          }),
-        );
+        return this.animeService
+          .getAnime(
+            new HttpParams({
+              fromObject: { ...PaginationParamsMapper.toDto(query) },
+            }),
+          )
+          .pipe(startWith(null));
       }),
       tap(pagination => {
-        this.length = pagination.count;
+        if (pagination) {
+          this.length = pagination.count;
+        }
       }),
+      finalize(() => {
+        this.isLoading$.next(false);
+      }),
+    );
+
+    this.queryParam$ = merge(
+      this.queryParamsUrl$,
+      this.filterControl.valueChanges.pipe(
+        debounceTime(400),
+        map(
+          value =>
+            new PaginationParams({
+              ...DEFAULT_PARAMS,
+              ...this.route.snapshot.queryParams,
+              type: value?.join(',') ?? DEFAULT_PARAMS.type,
+            }),
+        ),
+      ),
+      this.searchControl.valueChanges.pipe(
+        debounceTime(500),
+        map(
+          value =>
+            new PaginationParams({
+              ...DEFAULT_PARAMS,
+              search: value ?? DEFAULT_PARAMS.search,
+            }),
+        ),
+      ),
     );
   }
 
-  /** */
+  /** Initialize data. */
+  public ngOnInit(): void {
+    const navigateSideEffect$ = this.queryParam$.pipe(
+      tap(query => {
+        this.router.navigate(['/'], { queryParams: { ...query } });
+      }),
+    );
+
+    merge(navigateSideEffect$)
+      .pipe(takeUntil(this.subscriptionManager$))
+      .subscribe();
+  }
+
+  /** Clean data. */
   public ngOnDestroy(): void {
-    this.redirectSubscription.unsubscribe();
+    this.subscriptionManager$.next();
+    this.subscriptionManager$.complete();
   }
 
   /**
@@ -117,36 +188,36 @@ export class AnimeTableComponent implements OnDestroy {
    * @param event Pagination event.
    */
   public handlePaginationChange(event: PageEvent): void {
-    this.queryParamsUrl$.next(new PaginationParams({
-      ...DEFAULT_PARAMS,
-      ...this.route.snapshot.queryParams,
-      limit: event.pageSize,
-      page: event.pageIndex,
-    }));
+    this.queryParamsUrl$.next(
+      new PaginationParams({
+        ...DEFAULT_PARAMS,
+        ...this.route.snapshot.queryParams,
+        limit: event.pageSize,
+        page: event.pageIndex,
+      }),
+    );
   }
 
   /**
-   *
+   * Send new Params when sort option is changed.
    * @param event Sort event emitted from material select.
    */
   public handleSortChange(event: Sort): void {
-    this.queryParamsUrl$.next(new PaginationParams({
-      ...DEFAULT_PARAMS,
-      ...this.route.snapshot.queryParams,
-      ordering: event.direction,
-      sorting: event.direction !== '' ? event.active : '',
-    }));
+    this.queryParamsUrl$.next(
+      new PaginationParams({
+        ...DEFAULT_PARAMS,
+        ...this.route.snapshot.queryParams,
+        ordering: event.direction,
+        sorting: event.direction ? event.active : DEFAULT_PARAMS.sorting,
+      }),
+    );
   }
 
   /**
-   * Get filter option and apply new anime data.
-   * @param event Filter event emitted from material select.
+   * Function track by for filter by type.
+   * @param type Type of filter.
    */
-  public handleFilterChange(event: string[]): void {
-    this.queryParamsUrl$.next(new PaginationParams({
-      ...DEFAULT_PARAMS,
-      ...this.route.snapshot.queryParams,
-      type: event.join(','),
-    }));
+  public trackByTypeName(type: string): string {
+    return type;
   }
 }
