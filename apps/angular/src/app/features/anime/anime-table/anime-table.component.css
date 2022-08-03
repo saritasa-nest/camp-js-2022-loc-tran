@@ -12,12 +12,9 @@
   margin-bottom: 40px;
 }
 
-.search {
-  width: 100%;
-}
-
-.search__form {
-  width: 100%;
+.search__form,
+.type {
+  min-width: 40%;
 }
 
 .table__row {

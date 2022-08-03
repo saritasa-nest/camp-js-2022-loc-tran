@@ -10,8 +10,8 @@
   ></camp-pagination>
 </ng-container>
 
-<mat-form-field appearance="fill">
-  <mat-label>Type</mat-label>
+<mat-form-field appearance="fill" class="type">
+  <mat-label class="type__label">Type</mat-label>
   <mat-select [formControl]="filterControl" disableRipple multiple>
     <mat-option
       *ngFor="let option of filterTypes"
@@ -35,9 +35,9 @@
   </mat-form-field>
 </form>
 
-<ng-container *ngIf="(isAnimeLoading$ | async) === false; else loading;">
+<ng-container *ngIf="paginationAnime$ | async as animeList; else loading;">
   <table
-    *ngIf="paginationAnime$ | async as animeList;"
+    *ngIf="(isAnimeLoading$ | async) === false; else loading;"
     mat-table
     fixedLayout
     [dataSource]="animeList.results"
@@ -127,5 +127,3 @@
     <mat-spinner></mat-spinner>
   </div>
 </ng-template>
-
-<ng-template #skeleton> </ng-template>

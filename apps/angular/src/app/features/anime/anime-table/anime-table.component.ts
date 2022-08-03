@@ -43,6 +43,7 @@ enum SortDirection {
   Descending = 'desc',
 }
 
+/** Column titles of anime table.*/
 const COLUMN_TITLES = [
   'Image',
   'Title English',
@@ -62,7 +63,7 @@ const FILTER_TYPES = ['TV', 'OVA', 'MOVIE', 'SPECIAL', 'ONA', 'MUSIC'];
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeTableComponent implements OnDestroy, OnInit {
-  /** */
+  /** Sort direction enum for anime table. */
   public readonly sortDirection = SortDirection;
 
   /** Filter options. */
@@ -97,39 +98,23 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
   /** Loading feature. */
   public readonly isAnimeLoading$ = new BehaviorSubject<Boolean>(false);
 
-  /** Number of anime. */
-  public length = 0;
-
   public constructor(
     private readonly animeService: AnimeService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
   ) {
-    this.filterControl.setValue(
-      this.route.snapshot.queryParamMap.get('type')?.split(',') ?? [],
-    );
-    this.searchControl.setValue(
-      this.route.snapshot.queryParamMap.get('search') ?? DEFAULT_PARAMS.search,
-    );
+    this.setInitialValues();
+
     this.paginationAnime$ = this.route.queryParams.pipe(
-      tap(() => {
-        this.isAnimeLoading$.next(true);
-      }),
       switchMap(params => {
         const query = new PaginationParams({
           ...DEFAULT_PARAMS,
           ...params,
         });
-        return this.animeService
-          .getAnime(
-            new HttpParams({
-            fromObject: { ...PaginationParamsMapper.toDto(query) },
-            }),
-          );
+        return this.animeService.getAnime(new HttpParams({
+          fromObject: { ...PaginationParamsMapper.toDto(query) },
+        }));
       }),
-      tap(() => {
-          this.isAnimeLoading$.next(false);
-        }),
       shareReplay({ bufferSize: 1, refCount: true }),
     );
 
@@ -137,24 +122,18 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
       this.queryParamsUpdated$,
       this.filterControl.valueChanges.pipe(
         debounceTime(400),
-        map(
-          value =>
-            new PaginationParams({
-              ...DEFAULT_PARAMS,
-              ...this.route.snapshot.queryParams,
-              type: value?.join(',') ?? DEFAULT_PARAMS.type,
-            }),
-        ),
+        map(value => new PaginationParams({
+          ...DEFAULT_PARAMS,
+          ...this.route.snapshot.queryParams,
+          type: value?.join(',') ?? DEFAULT_PARAMS.type,
+        })),
       ),
       this.searchControl.valueChanges.pipe(
         debounceTime(500),
-        map(
-          value =>
-            new PaginationParams({
-              ...DEFAULT_PARAMS,
-              search: value ?? DEFAULT_PARAMS.search,
-            }),
-        ),
+        map(value => new PaginationParams({
+          ...DEFAULT_PARAMS,
+          search: value ?? DEFAULT_PARAMS.search,
+        })),
       ),
     );
   }
@@ -164,15 +143,18 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
     const navigateSideEffect$ = this.queryParams$.pipe(
       tap(query => {
         this.router.navigate(['/'], { queryParams: { ...query } });
+        this.isAnimeLoading$.next(true);
       }),
     );
 
-    merge(navigateSideEffect$)
+    const loadingAnimeSideEffect$ = this.paginationAnime$.pipe(tap(() => this.isAnimeLoading$.next(false)));
+
+    merge(navigateSideEffect$, loadingAnimeSideEffect$)
       .pipe(takeUntil(this.subscriptionManager$))
       .subscribe();
   }
 
-  /** Clean data. */
+  /** Clean side effect streams. */
   public ngOnDestroy(): void {
     this.subscriptionManager$.next();
     this.subscriptionManager$.complete();
@@ -214,5 +196,15 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
    */
   public trackByTypeName(type: string): string {
     return type;
+  }
+
+  /** Init value for options. */
+  public setInitialValues(): void {
+    this.filterControl.setValue(
+      this.route.snapshot.queryParamMap.get('type')?.split(',') ?? [],
+    );
+    this.searchControl.setValue(
+      this.route.snapshot.queryParamMap.get('search') ?? DEFAULT_PARAMS.search,
+    );
   }
 }
