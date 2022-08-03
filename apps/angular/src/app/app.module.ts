@@ -8,11 +8,10 @@ import { ApiInterceptor } from '../core/interceptors/interceptor.interceptor';
 import { SharedModule } from './../shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './features/auth/login/login.component';
 
 /** App module. */
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     SharedModule,

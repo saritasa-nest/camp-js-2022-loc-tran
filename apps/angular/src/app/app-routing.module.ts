@@ -7,6 +7,10 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./features/anime/anime.module').then(m => m.AnimeModule),
   },
+  {
+    path: '',
+    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule),
+  },
 ];
 
 /** App routing module. */
