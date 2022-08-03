@@ -96,7 +96,7 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
   );
 
   /** Loading feature. */
-  public readonly isAnimeLoading$ = new BehaviorSubject<Boolean>(false);
+  public readonly isAnimeLoading$ = new BehaviorSubject<boolean>(false);
 
   public constructor(
     private readonly animeService: AnimeService,

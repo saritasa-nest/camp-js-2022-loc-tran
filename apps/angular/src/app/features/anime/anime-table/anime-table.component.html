@@ -37,6 +37,8 @@
 
 <ng-container *ngIf="paginationAnime$ | async as animeList; else loading;">
   <table
+    aria-label="anime"
+    aria-describedby="anime-table"
     *ngIf="(isAnimeLoading$ | async) === false; else loading;"
     mat-table
     fixedLayout
