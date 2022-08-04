@@ -63,9 +63,6 @@ const FILTER_TYPES = ['TV', 'OVA', 'MOVIE', 'SPECIAL', 'ONA', 'MUSIC'];
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeTableComponent implements OnDestroy, OnInit {
-  /** Sort direction enum for anime table. */
-  public readonly sortDirection = SortDirection;
-
   /** Filter options. */
   public readonly filterTypes = FILTER_TYPES;
 
@@ -86,6 +83,9 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
 
   /** Subject that is used for unsubscribing from streams. */
   private readonly subscriptionManager$ = new Subject<void>();
+
+  /** Stream for sort direction. */
+  public readonly sortDirection$: Observable<SortDirection>;
 
   /** A stream for emit new query params. */
   public readonly queryParamsUpdated$ = new BehaviorSubject<PaginationParams>(
@@ -136,6 +136,11 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
         })),
       ),
     );
+
+    this.sortDirection$ = this.queryParamsUpdated$
+      .pipe(map(
+        params => params.ordering === SortDirection.Descending ? SortDirection.Descending : SortDirection.Ascending,
+      ));
   }
 
   /** Initialize data. */
@@ -185,7 +190,7 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
         ...DEFAULT_PARAMS,
         ...this.route.snapshot.queryParams,
         ordering: event.direction,
-        sorting: event.direction ? event.active : DEFAULT_PARAMS.sorting,
+        sorting: event.direction !== '' ? event.active : DEFAULT_PARAMS.sorting,
       }),
     );
   }

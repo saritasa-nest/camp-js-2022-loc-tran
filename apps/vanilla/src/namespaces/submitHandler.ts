@@ -12,21 +12,22 @@ export namespace SubmitHandler {
    */
   export async function submitLoginForm(event: SubmitEvent): Promise<void> {
     event.preventDefault();
-    if (event.target !== null) {
-      const formData = new FormData(event.target as HTMLFormElement);
-      const email = formData.get('email');
-      const password = formData.get('password');
+    if (event.target === null) {
+      return;
+    }
+    const formData = new FormData(event.target as HTMLFormElement);
+    const email = formData.get('email');
+    const password = formData.get('password');
 
-      if (email !== null && password !== null) {
-        const errorList = await Auth.login({ email: email.toString(), password: password.toString() });
-        if (errorList !== null) {
-          showErrorLogin(errorList.messages);
-        } else {
-          location.replace(PROFILE_PAGE);
-        }
+    if (email !== null && password !== null) {
+      const errorList = await Auth.login({ email: email.toString(), password: password.toString() });
+      if (errorList !== null) {
+        showErrorLogin(errorList.messages);
       } else {
-        showErrorLogin(['Email and password is required!']);
+        location.replace(PROFILE_PAGE);
       }
+    } else {
+      showErrorLogin(['Email and password is required!']);
     }
   }
 
