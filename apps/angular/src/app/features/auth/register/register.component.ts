@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
   public readonly token$: Observable<Token>;
 
   /** Form group to manage register information. */
-  public readonly registerForm = this.fb.group({
+  public readonly registerForm = this.formBuilder.group({
     email: ['', Validators.required],
     password: ['', Validators.required],
     firstName: [''],
@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
   });
 
   public constructor(
-    private readonly fb: FormBuilder,
+    private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
   ) {
     this.token$ = this.register$.pipe(
@@ -50,11 +50,6 @@ export class RegisterComponent implements OnInit {
           catchError((error: unknown) => {
             if (error instanceof HttpError) {
               this.errorList$.next(error.data);
-              for (const key of Object.keys(error.data)) {
-                if (this.registerForm.contains(key)) {
-                  this.registerForm.get(key)?.setErrors({ invalidData: true });
-                }
-              }
             }
             return of(new Token({ accessToken: '', refreshToken: '' }));
           }),
@@ -62,7 +57,7 @@ export class RegisterComponent implements OnInit {
     );
   }
 
-  /**  */
+  /** @inheritdoc */
   public ngOnInit(): void {
     this.token$.subscribe(token => {
       console.log(token);

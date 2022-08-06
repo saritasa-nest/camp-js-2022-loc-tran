@@ -13,12 +13,12 @@ import { catchError, of } from 'rxjs';
 })
 export class LoginComponent {
   /** Form group to manage login information. */
-  public readonly loginForm = this.fb.group({
+  public readonly loginForm = this.formBuilder.group({
     email: ['', Validators.required],
     password: ['', Validators.required],
   });
 
-  public constructor(private readonly fb: FormBuilder, private authService: AuthService) {
+  public constructor(private readonly formBuilder: FormBuilder, private authService: AuthService) {
   }
 
   /** Handle submit for login form. */

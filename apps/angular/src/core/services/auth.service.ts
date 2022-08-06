@@ -52,7 +52,6 @@ export class AuthService {
     return this.http.post<TokenDto>(this.registerUrl, {
       ...data,
     }).pipe(
-
       catchError((error: unknown) => {
         if (error instanceof HttpErrorResponse) {
           // Because pass error to throwError rxjs is deprecated.
