@@ -7,9 +7,6 @@
       placeholder="Ex. pat@example.com"
       formControlName="email"
       />
-      <!-- [errorStateMatcher]="matcher" -->
-
-    <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
     <mat-error *ngIf="
     loginForm.controls.email.hasError('email') &&
     !loginForm.controls.email.hasError('required')"
@@ -30,10 +27,6 @@
       placeholder="Type your password."
       formControlName="password"
       />
-      <!-- [errorStateMatcher]="matcher" -->
-
-
-    <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
     <mat-error
     *ngIf="loginForm.controls.password.hasError('email') &&
     !loginForm.controls.password.hasError('required')">

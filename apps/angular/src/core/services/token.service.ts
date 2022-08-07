@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Token } from '@js-camp/core/models/token';
-import { defer, merge, Observable, ReplaySubject, takeUntil } from 'rxjs';
+import { defer, map, merge, Observable, ReplaySubject, takeUntil } from 'rxjs';
 
 import { LocalStorageService } from './local-storage.service';
 
-const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
-const REFRESH_TOKEN_KEY = 'REFRESH_TOKEN';
+const TOKEN_KEY = 'TOKEN_KEY';
 
 /** Token service. */
 @Injectable({
@@ -17,14 +16,30 @@ export class TokenService {
   private token$: Observable<Token | null>;
 
   public constructor(private readonly localStorageService: LocalStorageService) {
-    const tokenFromStorage$ = defer(() => localStorageService.getItem<Token | null>(ACCESS_TOKEN_KEY));
+    const tokenFromStorage$ = defer(() => localStorageService.getItem<Token | null>(TOKEN_KEY));
     this.token$ = merge(
       tokenFromStorage$.pipe(takeUntil(this._token$)),
       this._token$,
     );
   }
 
+  /** Return token stream. */
   public getToken(): Observable<Token | null> {
     return this.token$;
+  }
+
+  /**
+   * Emit new token to token stream.
+   * @param token New token to save.
+   */
+  public setToken(token: Token): Observable<Token> {
+    this._token$.next(token);
+    return defer(() => this.localStorageService.setItem(TOKEN_KEY, token)).pipe(map(() => token));
+  }
+
+  /** Remove tokens from local storage. */
+  public removeToken(): Observable<void> {
+    this._token$.next(null);
+    return defer(() => this.localStorageService.removeItem(TOKEN_KEY));
   }
 }

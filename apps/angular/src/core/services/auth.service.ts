@@ -67,17 +67,13 @@ export class AuthService {
   }
 
   /** Check is user logged in or not. */
-  public async isLoggedIn(): Promise<boolean> {
-    const accessToken = await this.tokenService.getAccessToken();
-    const refreshToken = await this.tokenService.getRefreshToken();
-    if (accessToken !== null && refreshToken !== null) {
-      return true;
-    }
-    return false;
+  public isLoggedIn(): Observable<boolean> {
+    const token$ = this.tokenService.getToken();
+    return token$.pipe(map(token => token !== null));
   }
 
   /** Log the user out. */
-  public async logout(): Promise<void> {
-    await this.tokenService.deleteTokens();
+  public logout(): Observable<void> {
+    return this.tokenService.removeToken();
   }
 }

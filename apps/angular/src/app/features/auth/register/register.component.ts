@@ -58,7 +58,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
       firstName: [''],
       lastName: [''],
       password: ['', Validators.required],
-      confirmPassword: ['', [Validators.required, this.checkPasswords.bind(this)]],
+      confirmPassword: ['', [Validators.required]],
+    }, {
+      validators: this.checkPasswords,
     },
   );
 
@@ -71,15 +73,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.register$ = this.account$.pipe(
       switchMap(registerData =>
         authService.register(registerData).pipe(
-          catchError((error: unknown) => {
-            if (error instanceof HttpError) {
-              this.errorList$.next(error.data);
-              for (const key of Object.keys(error.data)) {
-                this.registerForm.get(key)?.setErrors({ invalidData: true });
-              }
-            }
-            return of(null);
-          }),
+          switchMap(token => this.tokenService.setToken(token)),
+          catchError(this.handleRegisterError.bind(this)),
         )),
     );
   }
@@ -128,9 +123,26 @@ export class RegisterComponent implements OnInit, OnDestroy {
    * @param control Form control confirm password.
    */
   public checkPasswords(control: AbstractControl): ValidationErrors | null {
-    console.log(this)
-    const password = this.registerForm.get('password')?.value;
-    const confirmPassword = control.value;
-    return password === confirmPassword ? null : { notSame: true };
+    const password = control.get('password')?.value;
+    const confirmPassword = control.get('confirmPassword')?.value;
+    if (password !== confirmPassword) {
+      control.get('confirmPassword')?.setErrors({ notSame: true });
+      return { notSame: true };
+    }
+    return null;
+  }
+
+  /**
+   * Handle register error.
+   * @param error Error thrown.
+   */
+  public handleRegisterError(error: unknown): Observable<Token | null> {
+    if (error instanceof HttpError) {
+      this.errorList$.next(error.data);
+      for (const key of Object.keys(error.data)) {
+        this.registerForm.get(key)?.setErrors({ invalidData: true });
+      }
+    }
+    return of(null);
   }
 }
