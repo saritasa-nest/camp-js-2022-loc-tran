@@ -1,0 +1,15 @@
+<div class="header">
+
+  <ul class="header__nav">
+    <li><a class="header__nav--link" routerLink="/">Home</a></li>
+  </ul>
+  <ul class="header__nav">
+    <ng-container *ngIf="(isLoggedIn$ | async) === false">
+      <li><a class="header__nav--link" routerLink="/login">Login</a></li>
+      <li><a class="header__nav--link" routerLink="/register">Register</a></li>
+    </ng-container>
+    <ng-container *ngIf="(isLoggedIn$ | async) === true">
+      <li><a (click)="handleLogout($event)" class="header__nav--link header__nav--link__logout" routerLink="/">Logout</a></li>
+    </ng-container>
+  </ul>
+</div>

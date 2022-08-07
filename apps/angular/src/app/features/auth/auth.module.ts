@@ -6,22 +6,28 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+import { SharedModule } from '../../../shared/shared.module';
+
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 
 /** Auth module. */
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent],
+  declarations: [
+    LoginComponent,
+    RegisterComponent,
+  ],
   imports: [
     CommonModule,
-    AuthRoutingModule,
     MatProgressSpinnerModule,
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     FormsModule,
     MatButtonModule,
+    SharedModule,
+    AuthRoutingModule,
   ],
 })
 export class AuthModule {}

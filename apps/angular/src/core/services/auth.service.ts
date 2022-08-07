@@ -10,6 +10,8 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
+import { TokenService } from './token.service';
+
 const LOGIN_URL = '/api/v1/auth/login/';
 const REGISTER_URL = '/api/v1/auth/register/';
 
@@ -22,7 +24,7 @@ export class AuthService {
 
   private readonly registerUrl = environment.apiUrl + REGISTER_URL;
 
-  public constructor(private readonly http: HttpClient) {}
+  public constructor(private readonly http: HttpClient, private readonly tokenService: TokenService) {}
 
   /**
    * Handle login.
@@ -62,5 +64,20 @@ export class AuthService {
       }),
       map(tokenDto => TokenMapper.fromDto(tokenDto)),
     );
+  }
+
+  /** Check is user logged in or not. */
+  public async isLoggedIn(): Promise<boolean> {
+    const accessToken = await this.tokenService.getAccessToken();
+    const refreshToken = await this.tokenService.getRefreshToken();
+    if (accessToken !== null && refreshToken !== null) {
+      return true;
+    }
+    return false;
+  }
+
+  /** Log the user out. */
+  public async logout(): Promise<void> {
+    await this.tokenService.deleteTokens();
   }
 }

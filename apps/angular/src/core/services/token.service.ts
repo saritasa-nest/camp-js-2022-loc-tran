@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Token } from '@js-camp/core/models/token';
+import { defer, merge, Observable, ReplaySubject, takeUntil } from 'rxjs';
 
 import { LocalStorageService } from './local-storage.service';
 
@@ -11,27 +12,19 @@ const REFRESH_TOKEN_KEY = 'REFRESH_TOKEN';
   providedIn: 'root',
 })
 export class TokenService {
+  private _token$ = new ReplaySubject<Token | null>(1);
 
-  public constructor(private readonly localStorageService: LocalStorageService) { }
+  private token$: Observable<Token | null>;
 
-  /**
-   * Store token into local storage.
-   * @param token Token to store.
-   */
-  public async store(token: Token): Promise<void> {
-    await this.localStorageService.setItem(ACCESS_TOKEN_KEY, token.accessToken);
-    await this.localStorageService.setItem(REFRESH_TOKEN_KEY, token.refreshToken);
+  public constructor(private readonly localStorageService: LocalStorageService) {
+    const tokenFromStorage$ = defer(() => localStorageService.getItem<Token | null>(ACCESS_TOKEN_KEY));
+    this.token$ = merge(
+      tokenFromStorage$.pipe(takeUntil(this._token$)),
+      this._token$,
+    );
   }
 
-  /** Get access token from local storage. */
-  public async getAccessToken(): Promise<string | null> {
-    const token = await this.localStorageService.getItem<string>(ACCESS_TOKEN_KEY);
-    return token;
-  }
-
-  /** Get refresh token from local storage. */
-  public async getRefreshToken(): Promise<string | null> {
-    const token = await this.localStorageService.getItem<string>(REFRESH_TOKEN_KEY);
-    return token;
+  public getToken(): Observable<Token | null> {
+    return this.token$;
   }
 }

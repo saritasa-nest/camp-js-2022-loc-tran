@@ -10,15 +10,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 
-import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
+import { SharedModule } from '../../../shared/shared.module';
 
 import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeTableComponent } from './anime-table/anime-table.component';
-import { AnimeComponent } from './anime.component';
 
 /** Anime module. */
 @NgModule({
-  declarations: [AnimeComponent, AnimeTableComponent, PaginationComponent],
+  declarations: [AnimeTableComponent],
   imports: [
     CommonModule,
     MatTableModule,
@@ -31,6 +30,7 @@ import { AnimeComponent } from './anime.component';
     MatOptionModule,
     MatSortModule,
     ReactiveFormsModule,
+    SharedModule,
   ],
 })
-export class AnimeModule { }
+export class AnimeModule {}
