@@ -1,6 +1,14 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Token } from '@js-camp/core/models/token';
-import { defer, map, merge, Observable, ReplaySubject, takeUntil } from 'rxjs';
+import {
+  defer,
+  map,
+  merge,
+  Observable,
+  ReplaySubject,
+  shareReplay, takeUntil,
+} from 'rxjs';
 
 import { LocalStorageService } from './local-storage.service';
 
@@ -15,16 +23,20 @@ export class TokenService {
 
   private token$: Observable<Token | null>;
 
-  public constructor(private readonly localStorageService: LocalStorageService) {
-    const tokenFromStorage$ = defer(() => localStorageService.getItem<Token | null>(TOKEN_KEY));
+  public constructor(
+    private readonly localStorageService: LocalStorageService,
+    private readonly http: HttpClient,
+  ) {
+    const tokenFromStorage$ = defer(() =>
+      localStorageService.getItem<Token | null>(TOKEN_KEY));
     this.token$ = merge(
       tokenFromStorage$.pipe(takeUntil(this._token$)),
       this._token$,
-    );
+    ).pipe(shareReplay({ refCount: true, bufferSize: 1 }));
   }
 
   /** Return token stream. */
-  public getToken(): Observable<Token | null> {
+  public get(): Observable<Token | null> {
     return this.token$;
   }
 
@@ -32,13 +44,15 @@ export class TokenService {
    * Emit new token to token stream.
    * @param token New token to save.
    */
-  public setToken(token: Token): Observable<Token> {
+  public set(token: Token): Observable<Token> {
     this._token$.next(token);
-    return defer(() => this.localStorageService.setItem(TOKEN_KEY, token)).pipe(map(() => token));
+    return defer(() => this.localStorageService.setItem(TOKEN_KEY, token)).pipe(
+      map(() => token),
+    );
   }
 
   /** Remove tokens from local storage. */
-  public removeToken(): Observable<void> {
+  public remove(): Observable<void> {
     this._token$.next(null);
     return defer(() => this.localStorageService.removeItem(TOKEN_KEY));
   }

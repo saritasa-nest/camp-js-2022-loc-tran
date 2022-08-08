@@ -1,17 +1,1 @@
-.title {
-  font-family: var(--header-font);
-  text-align: center;
-  margin: 20px;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  min-width: 500px;
-  margin-bottom: 50px;
-}
-
-.form__field {
-  margin: 15px 0;
-}
+@import "../../../../theme/authorization.css";

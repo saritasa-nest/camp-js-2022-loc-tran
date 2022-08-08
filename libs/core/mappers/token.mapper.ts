@@ -13,4 +13,15 @@ export namespace TokenMapper {
       refreshToken: tokenDto.refresh,
     });
   }
+
+  /**
+   * Maps token from model to dto.
+   * @param token Token data.
+   */
+  export function toDto(token: Token): TokenDto {
+    return {
+      access: token.accessToken,
+      refresh: token.refreshToken,
+    };
+  }
 }

@@ -1,3 +1,5 @@
+<h1 class="title">Register</h1>
+
 <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <mat-form-field appearance="fill">
     <mat-label>Email</mat-label>
@@ -7,12 +9,6 @@
       placeholder="Ex. pat@example.com"
       formControlName="email"
       />
-    <mat-error *ngIf="
-    loginForm.controls.email.hasError('email') &&
-    !loginForm.controls.email.hasError('required')"
-    >
-      Please enter a valid email address
-    </mat-error>
     <mat-error
     *ngIf="loginForm.controls.email.hasError('required')"
     >
@@ -28,15 +24,13 @@
       formControlName="password"
       />
     <mat-error
-    *ngIf="loginForm.controls.password.hasError('email') &&
-    !loginForm.controls.password.hasError('required')">
-      Please enter a valid email address
-    </mat-error>
-    <mat-error
     *ngIf="loginForm.controls.password.hasError('required')"
     >
       Password is <strong>required</strong>
     </mat-error>
   </mat-form-field>
-  <button type="submit" mat-flat-button color="primary">Primary</button>
+  <mat-error>
+    {{ loginError$ | async }}
+  </mat-error>
+  <button class="form__submit" type="submit" mat-flat-button color="primary" [disabled]="loginForm.invalid">Log in</button>
 </form>

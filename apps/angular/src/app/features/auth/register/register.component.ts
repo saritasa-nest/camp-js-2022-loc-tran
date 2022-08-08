@@ -73,7 +73,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.register$ = this.account$.pipe(
       switchMap(registerData =>
         authService.register(registerData).pipe(
-          switchMap(token => this.tokenService.setToken(token)),
+          switchMap(token => this.tokenService.set(token)),
           catchError(this.handleRegisterError.bind(this)),
         )),
     );
