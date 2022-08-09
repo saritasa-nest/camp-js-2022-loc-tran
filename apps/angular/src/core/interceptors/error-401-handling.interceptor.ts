@@ -8,11 +8,10 @@ import {
 import { Injectable } from '@angular/core';
 import { catchError, Observable, switchMap, throwError } from 'rxjs';
 
-import { environment } from '../../environments/environment';
-
 import { AuthService } from '../services/auth.service';
 
 import { TokenService } from '../services/token.service';
+import { isProhibitedRoute } from '../utils/isProhibitedRoute';
 
 /** Add jwt to api request. */
 @Injectable()
@@ -39,7 +38,7 @@ export class Error401Interceptor implements HttpInterceptor {
       switchMap(token =>
         next.handle(httpRequest).pipe(
           catchError((error: unknown) => {
-            if (this.isRefreshRoute(httpRequest.url)) {
+            if (isProhibitedRoute(httpRequest.url, this.refreshRoute)) {
               return this.tokenService.remove().pipe(switchMap(() => next.handle(httpRequest)));
             }
             if (error instanceof HttpErrorResponse && token !== null && error.status === 401) {
@@ -51,9 +50,5 @@ export class Error401Interceptor implements HttpInterceptor {
           }),
         )),
     );
-  }
-
-  private isRefreshRoute(url: string): boolean {
-    return url.includes(environment.apiUrl + this.refreshRoute);
   }
 }

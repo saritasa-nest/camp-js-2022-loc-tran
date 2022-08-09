@@ -7,9 +7,8 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, switchMap } from 'rxjs';
 
-import { environment } from '../../environments/environment';
-
 import { TokenService } from '../services/token.service';
+import { isProhibitedRoute } from '../utils/isProhibitedRoute';
 
 /** Add jwt to api request. */
 @Injectable()
@@ -29,7 +28,7 @@ export class AuthInterceptor implements HttpInterceptor {
     httpRequest: HttpRequest<unknown>,
     next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {
-    if (this.isAuthRoute(httpRequest.url)) {
+    if (isProhibitedRoute(httpRequest.url, this.authRoute)) {
       return next.handle(httpRequest);
     }
     return this.tokenService.get().pipe(
@@ -44,9 +43,5 @@ export class AuthInterceptor implements HttpInterceptor {
         return next.handle(httpRequest);
       }),
     );
-  }
-
-  private isAuthRoute(url: string): boolean {
-    return url.includes(environment.apiUrl + this.authRoute);
   }
 }
