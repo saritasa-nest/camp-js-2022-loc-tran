@@ -8,6 +8,8 @@ import {
 import { Injectable } from '@angular/core';
 import { catchError, Observable, switchMap, throwError } from 'rxjs';
 
+import { environment } from '../../environments/environment';
+
 import { AuthService } from '../services/auth.service';
 
 import { TokenService } from '../services/token.service';
@@ -16,6 +18,8 @@ import { TokenService } from '../services/token.service';
 @Injectable()
 export class Error401Interceptor implements HttpInterceptor {
   private authHeader = 'Authorization';
+
+  private refreshRoute = '/api/v1/auth/token/refresh';
 
   public constructor(
     private readonly tokenService: TokenService,
@@ -31,14 +35,25 @@ export class Error401Interceptor implements HttpInterceptor {
     httpRequest: HttpRequest<unknown>,
     next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {
-    return next.handle(httpRequest)
-      .pipe(catchError((error: unknown) => {
-        if (error instanceof HttpErrorResponse) {
-          if (error.status === 401) {
-            return this.authService.refreshToken().pipe(switchMap(() => next.handle(httpRequest)));
-          }
-        }
-        return throwError(() => error);
-      }));
+    return this.tokenService.get().pipe(
+      switchMap(token =>
+        next.handle(httpRequest).pipe(
+          catchError((error: unknown) => {
+            if (this.isRefreshRoute(httpRequest.url)) {
+              return this.tokenService.remove().pipe(switchMap(() => next.handle(httpRequest)));
+            }
+            if (error instanceof HttpErrorResponse && token !== null && error.status === 401) {
+              return this.authService
+                .refreshToken()
+                .pipe(switchMap(() => next.handle(httpRequest)));
+            }
+            return throwError(() => error);
+          }),
+        )),
+    );
+  }
+
+  private isRefreshRoute(url: string): boolean {
+    return url.includes(environment.apiUrl + this.refreshRoute);
   }
 }

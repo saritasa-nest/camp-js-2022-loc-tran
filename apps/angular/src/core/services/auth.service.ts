@@ -77,22 +77,24 @@ export class AuthService {
     return token$.pipe(map(token => token !== null));
   }
 
+  /** Check is user not logged in. */
+  public isNotLoggedIn(): Observable<boolean> {
+    const token$ = this.tokenService.get();
+    return token$.pipe(map(token => token === null));
+  }
+
   /** Log the user out. */
   public logout(): Observable<void> {
     return this.tokenService.remove();
   }
 
   /** Get new token. */
-  public refreshToken(): Observable<Token | null> {
+  public refreshToken(): Observable<Token | void> {
     const token$ = this.tokenService.get();
     return token$.pipe(filter((token): token is Token => token !== null),
-      switchMap(token => this.http.post<TokenDto>(this.refreshUrl, {
-        ...TokenMapper.toDto(token),
-      }).pipe(catchError((error: unknown) => {
-        console.log('error refresh')
-        return throwError(() => error)
-      }),
+      switchMap(token => this.http.post<TokenDto>(this.refreshUrl, { refresh: TokenMapper.toDto(token).refresh })),
       map(tokenDto => TokenMapper.fromDto(tokenDto)),
-      tap(newToken => this.tokenService.set(newToken)))));
+      tap(newToken => this.tokenService.set(newToken)),
+      catchError(() => this.tokenService.remove()));
   }
 }

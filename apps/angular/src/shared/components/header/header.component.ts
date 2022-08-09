@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { from, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { AuthService } from '../../../core/services/auth.service';
 
@@ -15,15 +15,16 @@ export class HeaderComponent {
   public readonly isLoggedIn$: Observable<boolean>;
 
   public constructor(private readonly authService: AuthService) {
-    this.isLoggedIn$ = from(authService.isLoggedIn());
+    this.isLoggedIn$ = authService.isLoggedIn();
   }
 
   /**
    * Log the user out.
    * @param event Event of logout.
    */
-  public async handleLogout(event: Event): Promise<void> {
+  public handleLogout(event: Event): void {
     event.preventDefault();
-    await this.authService.logout();
+    this.authService.logout().subscribe()
+      .unsubscribe();
   }
 }
