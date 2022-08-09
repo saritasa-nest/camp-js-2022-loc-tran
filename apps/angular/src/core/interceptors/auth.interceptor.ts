@@ -13,9 +13,9 @@ import { isProhibitedRoute } from '../utils/isProhibitedRoute';
 /** Add jwt to api request. */
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  private authHeader = 'Authorization';
+  private readonly authHeader = 'Authorization';
 
-  private authRoute = '/api/v1/auth';
+  private readonly authRoute = '/api/v1/auth';
 
   public constructor(private readonly tokenService: TokenService) {}
 

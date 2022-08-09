@@ -40,10 +40,10 @@ import { AuthService } from '../../../../core/services/auth.service';
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   /** Store error data response from BE. */
-  public errorList$ = new BehaviorSubject<DataError>({});
+  public readonly errorList$ = new BehaviorSubject<DataError>({});
 
   /** Emit account data from register form. */
-  public account$ = new Subject<Account>();
+  public readonly account$ = new Subject<Account>();
 
   /** Sign up new account. If sign up failed then emit null else emit token received. */
   public readonly register$: Observable<Token | null>;
