@@ -14,10 +14,11 @@ import { SharedModule } from '../../../shared/shared.module';
 
 import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeTableComponent } from './anime-table/anime-table.component';
+import { DetailComponent } from './detail/detail.component';
 
 /** Anime module. */
 @NgModule({
-  declarations: [AnimeTableComponent],
+  declarations: [AnimeTableComponent, DetailComponent],
   imports: [
     CommonModule,
     MatTableModule,
