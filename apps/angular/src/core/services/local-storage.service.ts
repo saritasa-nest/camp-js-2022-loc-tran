@@ -8,8 +8,6 @@ import { Injectable } from '@angular/core';
 })
 export class LocalStorageService {
 
-  public constructor() {}
-
   /**
    * Store item to local storage.
    * @param key Key of value in local storage.
