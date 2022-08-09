@@ -39,14 +39,7 @@ export class AuthService {
     return this.http.post<TokenDto>(this.loginUrl, {
       ...LoginDataMapper.toDto(data),
     }).pipe(
-      catchError((error: unknown) => {
-        if (error instanceof HttpErrorResponse) {
-          // Because pass error to throwError rxjs is deprecated.
-          // eslint-disable-next-line rxjs/throw-error
-          return throwError(() => HttpErrorMapper.fromDto(error.error));
-        }
-        return throwError(() => error);
-      }),
+      catchError(this.handleErrorAuthorization.bind(this)),
       map(tokenDto => TokenMapper.fromDto(tokenDto)),
     );
   }
@@ -59,14 +52,7 @@ export class AuthService {
     return this.http.post<TokenDto>(this.registerUrl, {
       ...AccountMapper.toDto(data),
     }).pipe(
-      catchError((error: unknown) => {
-        if (error instanceof HttpErrorResponse) {
-          // Because pass error to throwError rxjs is deprecated.
-          // eslint-disable-next-line rxjs/throw-error
-          return throwError(() => HttpErrorMapper.fromDto(error.error));
-        }
-        return throwError(() => error);
-      }),
+      catchError(this.handleErrorAuthorization.bind(this)),
       map(tokenDto => TokenMapper.fromDto(tokenDto)),
     );
   }
@@ -96,5 +82,18 @@ export class AuthService {
       map(tokenDto => TokenMapper.fromDto(tokenDto)),
       tap(newToken => this.tokenService.set(newToken)),
       catchError(() => this.tokenService.remove()));
+  }
+
+  /**
+   * Handle error return from BE.
+   * @param error Error returned.
+   */
+  private handleErrorAuthorization(error: unknown): Observable<TokenDto> {
+    if (error instanceof HttpErrorResponse) {
+      // Because pass error to throwError rxjs is deprecated.
+      // eslint-disable-next-line rxjs/throw-error
+      return throwError(() => HttpErrorMapper.fromDto(error.error));
+    }
+    return throwError(() => error);
   }
 }

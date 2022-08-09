@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 })
 export class LocalStorageService {
 
-  public constructor() { }
+  public constructor() {}
 
   /**
    * Store item to local storage.
