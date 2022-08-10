@@ -3,25 +3,12 @@
   font-size: 4rem;
   font-family: var(--header-font);
   letter-spacing: 0.5rem;
-  margin-bottom: 40px;
-}
-
-.backdrop {
-  width: 100vw;
-  height: 100vh;
-  left: 0;
-  top: 0;
-  position: fixed;
-  display: none;
-  background-color: var(--background-color-dark);
-}
-
-.show {
-  display: block;
+  margin-top: 30px;
+  text-align: center;
 }
 
 .detail {
-  margin-top: 150px;
+  margin-top: 50px;
   display: flex;
 }
 
@@ -33,6 +20,7 @@
 .detail__media--image {
   width: 100%;
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .detail__media--video {
@@ -53,13 +41,4 @@
 
 .detail__information--title {
   font-weight: bold;
-}
-
-.zoom-in {
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: auto;
-  height: 60vh;
 }

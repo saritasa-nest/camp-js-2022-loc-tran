@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -33,8 +35,10 @@ import { DetailComponent } from './detail/detail.component';
     MatSelectModule,
     MatOptionModule,
     MatSortModule,
+    MatButtonModule,
     ReactiveFormsModule,
     SharedModule,
+    MatDialogModule,
   ],
   providers: [CheckIsLoggedInGuard, CheckIsNotLoggedInGuard],
 })

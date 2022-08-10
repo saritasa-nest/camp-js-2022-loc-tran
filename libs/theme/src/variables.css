@@ -31,6 +31,7 @@
   /* Button color */
   --primary-button-color: #748da6;
   --primary-button-color-light: #8d9fb1;
+  --error-button-color: #f00;
 
   /* Font size. */
   --primary-button-font-size: 1.2rem;

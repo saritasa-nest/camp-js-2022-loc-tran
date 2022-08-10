@@ -8,11 +8,25 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { SafePipe } from './pipe/safe.pipe';
 import { LocaleDateStringPipe } from './pipe/locale-date-string.pipe';
 import { PluckPipe } from './pipe/pluck.pipe';
+import { ImageModalComponent } from './components/image-modal/image-modal.component';
 
 /** Shared module. */
 @NgModule({
-  declarations: [HeaderComponent, PaginationComponent, SafePipe, LocaleDateStringPipe, PluckPipe],
+  declarations: [
+    HeaderComponent,
+    PaginationComponent,
+    SafePipe,
+    LocaleDateStringPipe,
+    PluckPipe,
+    ImageModalComponent,
+  ],
   imports: [CommonModule, MatPaginatorModule, RouterModule],
-  exports: [HeaderComponent, PaginationComponent, SafePipe, LocaleDateStringPipe, PluckPipe],
+  exports: [
+    HeaderComponent,
+    PaginationComponent,
+    SafePipe,
+    LocaleDateStringPipe,
+    PluckPipe,
+  ],
 })
 export class SharedModule {}
