@@ -12,7 +12,7 @@ import { environment } from '../../environments/environment';
 /** Interceptor for api request. */
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
-  private apiKey = 'Api-Key';
+  private readonly apiKey = 'Api-Key';
 
   /**
    * Add api key to request.

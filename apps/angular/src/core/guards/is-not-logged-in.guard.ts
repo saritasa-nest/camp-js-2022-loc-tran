@@ -11,9 +11,7 @@ export class CheckIsNotLoggedInGuard implements CanActivate {
   public constructor(private readonly authService: AuthService) {}
 
   /**
-   * A.
-   * @param next A.
-   * @param state A.
+   * @inheritdoc
    */
   public canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     return this.authService.isNotLoggedIn();

@@ -24,10 +24,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   });
 
   /** Store error data response from BE. */
-  public loginError$ = new BehaviorSubject<string>('');
+  public readonly loginError$ = new BehaviorSubject<string>('');
 
   /** Emit login data from login form. */
-  public loginData$ = new Subject<LoginData>();
+  public readonly loginData$ = new Subject<LoginData>();
 
   /** Sign up new account. If sign up failed then emit null else emit token received. */
   public readonly login$: Observable<Token | null>;

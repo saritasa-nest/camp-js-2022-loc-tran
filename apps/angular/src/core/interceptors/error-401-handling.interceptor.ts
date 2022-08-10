@@ -16,9 +16,7 @@ import { isProhibitedRoute } from '../utils/isProhibitedRoute';
 /** Add jwt to api request. */
 @Injectable()
 export class Error401Interceptor implements HttpInterceptor {
-  private authHeader = 'Authorization';
-
-  private refreshRoute = '/api/v1/auth/token/refresh';
+  private readonly refreshRoute = '/api/v1/auth/token/refresh';
 
   public constructor(
     private readonly tokenService: TokenService,
