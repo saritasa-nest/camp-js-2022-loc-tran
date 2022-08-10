@@ -10,6 +10,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 
+import { CheckIsLoggedInGuard } from '../../../core/guards/is-logged-in.guard';
+import { CheckIsNotLoggedInGuard } from '../../../core/guards/is-not-logged-in.guard';
+
 import { SharedModule } from '../../../shared/shared.module';
 
 import { AnimeRoutingModule } from './anime-routing.module';
@@ -33,5 +36,6 @@ import { DetailComponent } from './detail/detail.component';
     ReactiveFormsModule,
     SharedModule,
   ],
+  providers: [CheckIsLoggedInGuard, CheckIsNotLoggedInGuard],
 })
 export class AnimeModule {}

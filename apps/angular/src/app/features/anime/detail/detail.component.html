@@ -1,1 +1,47 @@
-<p>detail works!</p>
+<div class="backdrop"></div>
+<a (click)="backClicked()">Back</a>
+
+<div class="detail" *ngIf="detail$ | async as detail">
+  <div class="detail__media">
+    <img class="detail__media--image" [src]="detail.image" />
+    <iframe *ngIf="detail.trailerYoutube" class="detail__media--video" [src]="'https://www.youtube.com/embed/' + detail.trailerYoutube | safe"></iframe>
+  </div>
+  <div class="detail__information">
+    <label class="detail__information--label">
+      <span class="detail__information--title">English title: </span>
+      <span class="detail__information--text">{{detail.titleEnglish}}</span>
+    </label>
+    <label class="detail__information--label">
+      <span class="detail__information--title">Japanese title: </span>
+      <span class="detail__information--text">{{detail.titleJapanese}}</span>
+    </label>
+    <label class="detail__information--label">
+      <span class="detail__information--title">Type: </span>
+      <span class="detail__information--text">{{detail.type}}</span>
+    </label>
+    <label class="detail__information--label">
+      <span class="detail__information--title">Status: </span>
+      <span class="detail__information--text">{{detail.status}}</span>
+    </label>
+    <label class="detail__information--label">
+      <span class="detail__information--title">Airing: </span>
+      <span class="detail__information--text">{{detail.airing ? 'Yes' : 'No'}}</span>
+    </label>
+    <label class="detail__information--label">
+      <span class="detail__information--title">Aired start date: </span>
+      <span class="detail__information--text">{{detail.aired.start | localeDateString}}</span>
+    </label>
+    <label class="detail__information--label">
+      <span class="detail__information--title">Aired end date: </span>
+      <span class="detail__information--text">{{detail.aired.end | localeDateString}}</span>
+    </label>
+    <label class="detail__information--label">
+      <span class="detail__information--title">Synopsis: </span>
+      <span class="detail__information--text">{{detail.synopsis}}</span>
+    </label>
+    <label class="detail__information--label">
+      <span class="detail__information--title">Genres: </span>
+      <span class="detail__information--text">{{detail.genresData | pluck: 'name'}}</span>
+    </label>
+  </div>
+</div>
