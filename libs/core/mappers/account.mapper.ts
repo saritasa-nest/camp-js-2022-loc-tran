@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { AccountDto } from '../dtos/account.dto';
 import { Account } from '../models/account';
 

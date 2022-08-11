@@ -12,9 +12,9 @@ import { MatTableModule } from '@angular/material/table';
 
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 
+import { AnimeComponent } from './anime.component';
 import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeTableComponent } from './anime-table/anime-table.component';
-import { AnimeComponent } from './anime.component';
 
 /** Anime module. */
 @NgModule({

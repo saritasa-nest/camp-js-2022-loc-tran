@@ -212,4 +212,13 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
       this.route.snapshot.queryParamMap.get('search') ?? DEFAULT_PARAMS.search,
     );
   }
+
+  /**
+   * Function track by for anime table.
+   * @param _index Index of anime.
+   * @param anime Data of one anime.
+   */
+  public trackAnimeById(_index: number, anime: Anime): number {
+    return anime.id;
+  }
 }

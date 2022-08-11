@@ -6,7 +6,6 @@ import { getUserData } from '../services/getUserData';
 import { SubmitHandler } from '../namespaces/submitHandler';
 import { SortHandler } from '../namespaces/SortHandler';
 import { DEFAULT_ORDERING, LIMIT, OFFSET, PageHandler } from '../namespaces/PageHandler';
-import { Middleware } from '../namespaces/middleware';
 
 import { ANIME_KEY, SORT_KEY, ORDER_KEY } from './constants/localStorageName';
 import { DETAIL_PAGE } from './constants/redirectUrl';
@@ -234,20 +233,15 @@ export function renderOrderOptions(): void {
 }
 
 /** Render header at top of page. */
-export async function renderHeader(): Promise<void> {
+export function renderHeader(): void {
   // Navigation link for anime table and profile.
   const navPage = document.querySelector('.header__page');
 
   // Navigation link for authorization.
   const navAuth = document.querySelector('.header__authenticate');
-  if (await Middleware.isAuthorized() === true) {
-    navPage?.append(createLink('/', ['header__link', 'header__link-table'], 'Anime table'));
-    navPage?.append(createLink('/profile/', ['header__link', 'header__link-profile'], 'Profile'));
-    navAuth?.append(createLink('/logout/', ['header__link', 'header__link-logout'], 'Log out'));
-  } else {
-    navAuth?.append(createLink('/login/', ['header__link', 'header__link-login'], 'Log in'));
-    navAuth?.append(createLink('/register/', ['header__link', 'header__link-register'], 'Sign up'));
-  }
+  navPage?.append(createLink('/', ['header__link', 'header__link-table'], 'Anime table'));
+  navPage?.append(createLink('/profile/', ['header__link', 'header__link-profile'], 'Profile'));
+  navAuth?.append(createLink('/logout/', ['header__link', 'header__link-logout'], 'Log out'));
 }
 
 /**

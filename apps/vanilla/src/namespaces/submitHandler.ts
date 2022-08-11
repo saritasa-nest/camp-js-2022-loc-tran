@@ -1,5 +1,3 @@
-import { Account } from '@js-camp/core/models/account';
-
 import { PROFILE_PAGE } from '../script/constants/redirectUrl';
 import { showErrorLogin, showErrorRegister } from '../script/renderToUI';
 import { Auth } from '../services/auth';
@@ -24,7 +22,7 @@ export namespace SubmitHandler {
       if (errorList !== null) {
         showErrorLogin(errorList.messages);
       } else {
-        location.replace(PROFILE_PAGE);
+        showErrorLogin(['Email and password are required!']);
       }
     } else {
       showErrorLogin(['Email and password is required!']);
@@ -49,12 +47,12 @@ export namespace SubmitHandler {
           showErrorRegister(['Retype password does not matched!']);
           return;
         }
-        const newAccount = new Account({
+        const newAccount = {
           email: email.toString(),
           firstName: firstName.toString(),
           lastName: lastName.toString(),
           password: password.toString(),
-        });
+        };
         const errorList = await Auth.register(newAccount);
         if (errorList !== null) {
           showErrorRegister(errorList.messages);
@@ -62,8 +60,9 @@ export namespace SubmitHandler {
           location.replace(PROFILE_PAGE);
         }
       } else {
-        showErrorRegister(['All fields need to be filled!']);
+        location.replace(PROFILE_PAGE);
       }
+
     }
   }
 
