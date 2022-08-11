@@ -1,16 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./index.css" />
     <title>Vite App</title>
   </head>
   <body class="default-layout">
-    <h1 class="title">Main page ⚡</h1>
-    <div class="links">
-      <a href="/example/">Go to example page</a>
+    <h1 class="title">Anime table</h1>
+    <div class="query">
+      <label class="query__label">
+        <span class="query__label-text">Sort by:</span>
+        <div class="query__label-sort"></div>
+      </label>
+      <label class="query__label">
+        <span class="query__label-text">Order by:</span>
+        <div class="query__label-order"></div>
+      </label>
     </div>
+    <div class="pagination">
+      <button type="button" class="pagination__button pagination__button-first">first</button>
+      <div class="pagination__numeric"></div>
+      <button type="button" class="pagination__button pagination__button-last">last</button>
+    </div>
+    <table class="table">
+      <caption>Anime collection</caption>
+      <tr class="table__head">
+        <th class="table__head-title">Image</th>
+        <th class="table__head-title">Title Eng</th>
+        <th class="table__head-title">Title Jap</th>
+        <th class="table__head-title">Aired start</th>
+        <th class="table__head-title">Type</th>
+        <th class="table__head-title">Status</th>
+      </tr>
+      <tr class="table__row">
+      </tr>
+    </table>
+
     <script type="module" src="./index.ts"></script>
   </body>
 </html>
