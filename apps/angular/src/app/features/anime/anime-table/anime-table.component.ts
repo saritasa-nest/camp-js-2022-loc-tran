@@ -99,7 +99,7 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
   public readonly isAnimeLoading$ = new BehaviorSubject<boolean>(false);
 
   public constructor(
-    private readonly animeService: AnimeService,
+    private animeService: AnimeService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
   ) {
