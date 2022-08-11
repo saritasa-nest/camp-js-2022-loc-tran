@@ -1,4 +1,8 @@
 @import url("@js-camp/theme/src/index.css");
 @import url("./base.css");
 @import url("./components.css");
+<<<<<<< HEAD
+@import url("./variables.css");
+=======
 @import url("./variables.css")
+>>>>>>> develop
