@@ -20,12 +20,16 @@ export namespace SubmitHandler {
       if (email !== null && password !== null) {
         const errorList = await Auth.login({ email: email.toString(), password: password.toString() });
         if (errorList !== null) {
+<<<<<<< HEAD
           showErrorLogin(errorList.messages);
+=======
+          showErrorLogin(errorList);
+>>>>>>> develop
         } else {
           location.replace(PROFILE_PAGE);
         }
       } else {
-        showErrorLogin(['Email and password is required!']);
+        showErrorLogin(['Email and password are required!']);
       }
     }
   }
@@ -43,6 +47,7 @@ export namespace SubmitHandler {
       const lastName = formData.get('last-name');
       const password = formData.get('password');
       const retypePassword = formData.get('retype-password');
+<<<<<<< HEAD
       if (email !== null && firstName !== null && lastName !== null && password !== null && retypePassword !== null) {
         if (password.toString() !== retypePassword.toString()) {
           showErrorRegister(['Retype password does not matched!']);
@@ -60,15 +65,42 @@ export namespace SubmitHandler {
         } else {
           location.replace(PROFILE_PAGE);
         }
-      } else {
-        showErrorRegister(['All fields need to be filled!']);
+=======
+
+      assertNonNullish(email);
+      assertNonNullish(firstName);
+      assertNonNullish(lastName);
+      assertNonNullish(password);
+      assertNonNullish(retypePassword);
+
+      if (password.toString() !== retypePassword.toString()) {
+        showErrorRegister(['Retype password does not matched!']);
+        return;
       }
+      const newAccount = {
+        email: email.toString(),
+        firstName: firstName.toString(),
+        lastName: lastName.toString(),
+        password: password.toString(),
+      };
+      const errorList = await register(newAccount);
+      if (errorList !== null) {
+        showErrorRegister(errorList);
+>>>>>>> develop
+      } else {
+        location.replace(PROFILE_PAGE);
+      }
+
     }
   }
 
   /** Handle logout request. */
   export async function handleLogout(): Promise<void> {
+<<<<<<< HEAD
     await Auth.logout();
+=======
+    await logout();
+>>>>>>> develop
     location.replace(PROFILE_PAGE);
   }
 }

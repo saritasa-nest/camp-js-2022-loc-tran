@@ -1,5 +1,5 @@
 import { Sorting } from '@js-camp/core/models/anime';
-import { Params } from '@js-camp/core/models/params';
+import { PaginationParams } from '@js-camp/core/models/paginationParams';
 
 import { FIRST_PAGE, LIMIT, PageHandler } from '../namespaces/PageHandler';
 import { getAnimeById, updateTable } from '../services/fetchAnime';
@@ -18,9 +18,9 @@ export const NUMBER_OF_COLUMNS = 6;
 
 /** Init event listener for pagination and render it to DOM. */
 export function initPagination(): void {
-  const firstPageButton = document.querySelector('.first-page-button');
+  const firstPageButton = document.querySelector('.pagination__button-first');
   firstPageButton?.addEventListener('click', PageHandler.goToFirstPage);
-  const lastPageButton = document.querySelector('.last-page-button');
+  const lastPageButton = document.querySelector('.pagination__button-last');
   lastPageButton?.addEventListener('click', PageHandler.goToLastPage);
   renderPagination(1);
 }
@@ -89,8 +89,13 @@ export async function initDetailPage(): Promise<void> {
 }
 
 /** Default data for queries. */
+<<<<<<< HEAD
 export const DEFAULT_QUERIES = new Params({
   offset: (LIMIT * (Number.parseInt(UrlSearch.getValue(PAGE_QUERY) ?? FIRST_PAGE.toString(), 10) - 1)),
+=======
+export const DEFAULT_QUERIES = new PaginationParams({
+  offset: (LIMIT * (Number.parseInt(UrlSearch.getValue(PAGE_QUERY) ?? FIRST_PAGE.toString(), DECIMAL) - 1)),
+>>>>>>> develop
   limit: LIMIT,
   ordering: UrlSearch.getValue(SORT_QUERY) ?? Sorting.Default,
 });

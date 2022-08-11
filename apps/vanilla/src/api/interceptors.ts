@@ -1,6 +1,7 @@
 import { AxiosError, AxiosRequestConfig } from 'axios';
 
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../script/constants/localStorageName';
+import { LocalStorageService } from '../services/localStorageService';
 
 import { getRefreshedToken, storeTokens } from '../services/token';
 
@@ -36,12 +37,12 @@ export function requestInterceptor(config: AxiosRequestConfig): AxiosRequestConf
  */
 export async function errorInterceptor(error: AxiosError): Promise<void> {
   if (error.response?.status === 401) {
-    const accessToken = localStorage.getItem(ACCESS_TOKEN);
-    const refreshToken = localStorage.getItem(REFRESH_TOKEN);
+    const accessToken = LocalStorageService.get(ACCESS_TOKEN);
+    const refreshToken = LocalStorageService.get(REFRESH_TOKEN);
     if (accessToken !== null && refreshToken !== null) {
       const tokens = await getRefreshedToken(refreshToken);
       storeTokens(tokens);
     }
+    throw (error);
   }
-  throw error;
 }

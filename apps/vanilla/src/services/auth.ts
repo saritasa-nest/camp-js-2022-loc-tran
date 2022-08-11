@@ -68,7 +68,42 @@ function handleErrorMessages(error: unknown): ErrorList {
       }
     }
     errorList.push(errorData.detail);
+<<<<<<< HEAD
     return { messages: errorList };
   }
   return { messages: [] };
+=======
+    return errorList;
+  }
+}
+
+/**
+ * Handle register request.
+ * @param data Account data of user.
+ */
+export async function register(data: Account): Promise<Array<string> | null> {
+  try {
+    const accountDataDto = AccountMapper.toDto(data);
+    const response = await http.post(ApiUrl.register, accountDataDto);
+    const auth = TokenMapper.fromDto(response.data);
+    LocalStorageService.set(ACCESS_TOKEN, auth.accessToken);
+    LocalStorageService.set(REFRESH_TOKEN, auth.refreshToken);
+    return null;
+  } catch (error: unknown) {
+    const errorData = HttpErrorMapper.fromDto(error as HttpErrorDto);
+    const errorList = [];
+    for (const i of Object.keys(errorData.data)) {
+      errorList.push(...errorData.data[i]);
+    }
+    errorList.push(errorData.detail);
+    return errorList;
+  }
+}
+
+/** Remove Access token and Refresh token from local storage. */
+// eslint-disable-next-line require-await
+export async function logout(): Promise<void> {
+  localStorage.removeItem(ACCESS_TOKEN);
+  localStorage.removeItem(REFRESH_TOKEN);
+>>>>>>> develop
 }
