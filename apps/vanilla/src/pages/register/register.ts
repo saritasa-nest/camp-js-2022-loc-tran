@@ -3,5 +3,5 @@ import { initRegisterForm } from '../../script/init';
 import { renderHeader } from '../../script/renderToUI';
 
 renderHeader();
-Middleware.checkIsNotLoggedIn();
+AuthorizationChecker.redirectUserLoggedIn();
 initRegisterForm();

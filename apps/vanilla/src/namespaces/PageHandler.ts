@@ -22,7 +22,7 @@ export namespace PageHandler {
    * @param newPage New page number.
    */
   export function goToNextPage(newPage: number): void {
-    const params = new Params({
+    const params = new PaginationParams({
       offset: (LIMIT * (newPage - 1)),
       limit: LIMIT,
       ordering: UrlSearch.getValue(SORT_QUERY) ?? DEFAULT_ORDERING,
@@ -47,13 +47,4 @@ export namespace PageHandler {
     const page = isNaN(totalPage) ? FIRST_PAGE : Math.ceil(totalPage);
     goToNextPage(page);
   }
-}
-
-/**
- * Return last page number was calculated from number of items.
- * @param count Number of items in list with type string.
- */
-function getLastPageNumber(count: string): number {
-  const page = Number.parseInt(count, DECIMAL) / LIMIT;
-  return isNaN(page) ? 1 : Math.ceil(page);
 }

@@ -8,7 +8,7 @@ import { ParamsMapper } from '@js-camp/core/mappers/params.mapper';
 import { Anime } from '@js-camp/core/models/anime';
 import { AnimeDetail } from '@js-camp/core/models/animeDetail';
 import { Pagination } from '@js-camp/core/models/pagination';
-import { Params } from '@js-camp/core/models/params';
+import { PaginationParams } from '@js-camp/core/models/paginationParams';
 
 import { http } from '../api';
 import { COUNT_KEY } from '../script/constants/localStorageName';

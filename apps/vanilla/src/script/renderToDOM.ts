@@ -57,12 +57,7 @@ export function renderAnime(paginationAnime: Pagination<Anime>): void {
   </tr>`;
     table.innerHTML = htmlString;
     paginationAnime.results.forEach((anime: Anime) => {
-      const row = document.
-
-export function goToPageByNum(page: number): any {
-        throw new Error('Function not implemented.');
-      }
-createElement('tr');
+      const row = document.createElement('tr');
       row.classList.add('table__row');
       row.innerHTML = `<td><img class="table__row-image" src="${anime.image}"/></td>
       <td>${anime.titleEnglish ?? ''}</td>
@@ -116,7 +111,7 @@ function createButtonPagination(page: number, isActive: boolean): HTMLElement {
   button.classList.add('pagination__button');
   button.innerHTML = `${page}`;
   button.type = 'button';
-  button.addEventListener('click', () => PageHandler.goToPageByNum(page));
+  button.addEventListener('click', () => PageHandler.goToNextPage(page));
   return button;
 }
 

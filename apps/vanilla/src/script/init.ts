@@ -89,13 +89,8 @@ export async function initDetailPage(): Promise<void> {
 }
 
 /** Default data for queries. */
-<<<<<<< HEAD
-export const DEFAULT_QUERIES = new Params({
-  offset: (LIMIT * (Number.parseInt(UrlSearch.getValue(PAGE_QUERY) ?? FIRST_PAGE.toString(), 10) - 1)),
-=======
 export const DEFAULT_QUERIES = new PaginationParams({
-  offset: (LIMIT * (Number.parseInt(UrlSearch.getValue(PAGE_QUERY) ?? FIRST_PAGE.toString(), DECIMAL) - 1)),
->>>>>>> develop
+  offset: (LIMIT * (Number.parseInt(UrlSearch.getValue(PAGE_QUERY) ?? FIRST_PAGE.toString(), 10) - 1)),
   limit: LIMIT,
   ordering: UrlSearch.getValue(SORT_QUERY) ?? Sorting.Default,
 });
