@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Anime } from '@js-camp/core/models/anime';
 import { Observable } from 'rxjs';
 
@@ -9,6 +9,7 @@ import { AnimeService } from '../../../../core/services/anime.service';
   selector: 'camp-anime-table',
   templateUrl: './anime-table.component.html',
   styleUrls: ['./anime-table.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeTableComponent {
 

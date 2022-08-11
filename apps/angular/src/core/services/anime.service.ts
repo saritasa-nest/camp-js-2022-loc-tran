@@ -7,7 +7,7 @@ import { paginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
 import { Anime } from '@js-camp/core/models/anime';
 
-import { environment } from '../../environments/environment';
+import { AppConfigService } from './app-config.service';
 
 const ANIME_URL = '/api/v1/anime/anime/';
 
@@ -16,13 +16,22 @@ const ANIME_URL = '/api/v1/anime/anime/';
   providedIn: 'root',
 })
 export class AnimeService {
-  private apiUrl = environment.apiUrl + ANIME_URL;
+  private apiUrl = this.appConfig.apiUrl + ANIME_URL;
 
-  public constructor(private readonly http: HttpClient) {}
+  public constructor(
+    private readonly http: HttpClient,
+    private readonly appConfig: AppConfigService,
+  ) {}
 
   /** Get Anime data. */
   public getAnime(): Observable<readonly Anime[]> {
-    return this.http.get<PaginationDto<AnimeDto>>(this.apiUrl)
-      .pipe(map(pagination => paginationMapper.fromDto(pagination, AnimeMapper.fromDto).results));
+    return this.http
+      .get<PaginationDto<AnimeDto>>(this.apiUrl)
+      .pipe(
+        map(
+          pagination =>
+            paginationMapper.fromDto(pagination, AnimeMapper.fromDto).results,
+        ),
+      );
   }
 }

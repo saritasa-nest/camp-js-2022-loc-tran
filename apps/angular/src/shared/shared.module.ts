@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { DateToLocalePipe } from './pipe/date-to-locale.pipe';
+
 /** Shared module. */
 @NgModule({
-  declarations: [],
+  declarations: [DateToLocalePipe],
   imports: [CommonModule],
-  exports: [],
+  exports: [DateToLocalePipe],
 })
 export class SharedModule { }
