@@ -2,23 +2,15 @@
   /* Font family */
   --header-font: arial, helvetica, sans-serif;
 
-  /* Primary colors. */
+  /* Primary color. */
   --primary-color: #2458a2;
   --primary-light-color: #5584c5;
   --primary-dark-color: #032656;
   --primary-contrast-color: #fff;
 
-  /* Font color. */
-  --font-color-error: #f00;
-  --font-color-light-error: #f66d6d;
-  --font-color-secondary: #bbb;
-  --font-color-contrast-primary: #fff;
-  --font-color-primary: #000;
-
   /* Background color. */
-  --background-color-dark: #ccc;
-  --background-color-dark-2: #bbb;
-  --background-color-light: #fff;
+  --dark-background-color: #ccc;
+  --light-background-color: #fff;
   --background-color: #ddd;
 
   /* Border color. */
@@ -30,7 +22,4 @@
   /* Button color */
   --primary-button-color: #748da6;
   --primary-button-color-light: #8d9fb1;
-
-  /* Font size. */
-  --primary-button-font-size: 1.2rem;
 }

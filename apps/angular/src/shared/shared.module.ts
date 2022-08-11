@@ -6,9 +6,9 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { SafePipe } from './pipe/safe.pipe';
-import { LocaleDateStringPipe } from './pipe/locale-date-string.pipe';
 import { PluckPipe } from './pipe/pluck.pipe';
 import { ImageModalComponent } from './components/image-modal/image-modal.component';
+import { DateToLocalePipe } from './pipe/date-to-locale.pipe';
 
 /** Shared module. */
 @NgModule({
@@ -16,7 +16,7 @@ import { ImageModalComponent } from './components/image-modal/image-modal.compon
     HeaderComponent,
     PaginationComponent,
     SafePipe,
-    LocaleDateStringPipe,
+    DateToLocalePipe,
     PluckPipe,
     ImageModalComponent,
   ],
@@ -25,7 +25,7 @@ import { ImageModalComponent } from './components/image-modal/image-modal.compon
     HeaderComponent,
     PaginationComponent,
     SafePipe,
-    LocaleDateStringPipe,
+    DateToLocalePipe,
     PluckPipe,
   ],
 })

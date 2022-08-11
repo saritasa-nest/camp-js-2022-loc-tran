@@ -1,8 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
-  OnInit,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -10,43 +8,34 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Account } from '@js-camp/core/models/account';
 import { DataError, HttpError } from '@js-camp/core/models/httpError';
 import { Token } from '@js-camp/core/models/token';
 
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   BehaviorSubject,
-  catchError,
-  merge,
-  Observable,
+  catchError, Observable,
   of,
   Subject,
-  switchMap,
-  takeUntil,
-  tap,
+  switchMap, tap,
 } from 'rxjs';
 
-import { TokenService } from '../../../../core/services/token.service';
-
 import { AuthService } from '../../../../core/services/auth.service';
+import { TokenService } from '../../../../core/services/token.service';
+import { HOME_ROUTE } from '../login/login.component';
+import { NavigateService } from '../../../../../src/core/services/navigate.service';
 
 /** Register component. */
+@UntilDestroy()
 @Component({
   selector: 'camp-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegisterComponent implements OnInit, OnDestroy {
+export class RegisterComponent {
   /** Store error data response from BE. */
-  public readonly errorList$ = new BehaviorSubject<DataError>({});
-
-  /** Emit account data from register form. */
-  public readonly account$ = new Subject<Account>();
-
-  /** Sign up new account. If sign up failed then emit null else emit token received. */
-  public readonly register$: Observable<Token | null>;
+  protected readonly errorList$ = new BehaviorSubject<DataError>({});
 
   /** Subject that is used for unsubscribing from streams. */
   private readonly subscriptionManager$ = new Subject<void>();
@@ -59,7 +48,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
       lastName: [''],
       password: ['', Validators.required],
       confirmPassword: ['', [Validators.required]],
-    }, {
+    },
+    {
       validators: this.checkPasswords,
     },
   );
@@ -68,39 +58,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private readonly formBuilder: FormBuilder,
     private readonly tokenService: TokenService,
     private readonly authService: AuthService,
-    private readonly router: Router,
-  ) {
-    this.register$ = this.account$.pipe(
-      switchMap(registerData =>
-        authService.register(registerData).pipe(
-          switchMap(token => this.tokenService.set(token)),
-          catchError(this.handleRegisterError.bind(this)),
-        )),
-    );
-  }
-
-  /** Initialize data. */
-  public ngOnInit(): void {
-    const registerSideEffect$ = this.register$.pipe(
-      tap(registerResult => {
-        if (registerResult === null) {
-          this.registerForm.markAllAsTouched();
-          return;
-        }
-        this.router.navigate(['/']);
-      }),
-    );
-
-    merge(registerSideEffect$)
-      .pipe(takeUntil(this.subscriptionManager$))
-      .subscribe();
-  }
-
-  /** Clean side effect streams. */
-  public ngOnDestroy(): void {
-    this.subscriptionManager$.next();
-    this.subscriptionManager$.complete();
-  }
+    private readonly navigateService: NavigateService,
+  ) {}
 
   /** Handle submit register form. */
   public onSubmit(): void {
@@ -108,14 +67,20 @@ export class RegisterComponent implements OnInit, OnDestroy {
     if (this.registerForm.invalid) {
       return;
     }
-    this.account$.next(
-      new Account({
+    this.authService
+      .register({
         email: this.registerForm.value.email ?? '',
         firstName: this.registerForm.value.firstName ?? '',
         lastName: this.registerForm.value.lastName ?? '',
         password: this.registerForm.value.password ?? '',
-      }),
-    );
+      })
+      .pipe(
+        switchMap(token => this.tokenService.set(token)),
+        tap(() => this.navigateService.navigate(HOME_ROUTE)),
+        untilDestroyed(this),
+        catchError((error: unknown) => this.handleRegisterError(error)),
+      )
+      .subscribe();
   }
 
   /**

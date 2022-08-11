@@ -8,9 +8,17 @@ import { TokenMapper } from '@js-camp/core/mappers/token.mapper';
 import { Account } from '@js-camp/core/models/account';
 import { LoginData } from '@js-camp/core/models/loginData';
 import { Token } from '@js-camp/core/models/token';
-import { catchError, filter, map, Observable, switchMap, tap, throwError } from 'rxjs';
+import {
+  catchError,
+  filter,
+  map,
+  Observable,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
 
-import { environment } from '../../environments/environment';
+import { AppConfigService } from './app-config.service';
 
 import { TokenService } from './token.service';
 
@@ -23,25 +31,31 @@ const REFRESH_URL = '/api/v1/auth/token/refresh/';
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly refreshUrl = environment.apiUrl + REFRESH_URL;
+  private readonly refreshUrl = this.appConfig.apiUrl + REFRESH_URL;
 
-  private readonly loginUrl = environment.apiUrl + LOGIN_URL;
+  private readonly loginUrl = this.appConfig.apiUrl + LOGIN_URL;
 
-  private readonly registerUrl = environment.apiUrl + REGISTER_URL;
+  private readonly registerUrl = this.appConfig.apiUrl + REGISTER_URL;
 
-  public constructor(private readonly http: HttpClient, private readonly tokenService: TokenService) {}
+  public constructor(
+    private readonly http: HttpClient,
+    private readonly tokenService: TokenService,
+    private readonly appConfig: AppConfigService,
+  ) {}
 
   /**
    * Handle login.
    * @param data Login data of user.
    */
   public login(data: LoginData): Observable<Token> {
-    return this.http.post<TokenDto>(this.loginUrl, {
+    return this.http
+      .post<TokenDto>(this.loginUrl, {
       ...LoginDataMapper.toDto(data),
-    }).pipe(
-      catchError(this.handleErrorAuthorization.bind(this)),
-      map(tokenDto => TokenMapper.fromDto(tokenDto)),
-    );
+    })
+      .pipe(
+        catchError(this.handleErrorAuthorization.bind(this)),
+        map(tokenDto => TokenMapper.fromDto(tokenDto)),
+      );
   }
 
   /**
@@ -49,12 +63,14 @@ export class AuthService {
    * @param data Register data of user.
    */
   public register(data: Account): Observable<Token> {
-    return this.http.post<TokenDto>(this.registerUrl, {
+    return this.http
+      .post<TokenDto>(this.registerUrl, {
       ...AccountMapper.toDto(data),
-    }).pipe(
-      catchError(this.handleErrorAuthorization.bind(this)),
-      map(tokenDto => TokenMapper.fromDto(tokenDto)),
-    );
+    })
+      .pipe(
+        catchError(this.handleErrorAuthorization.bind(this)),
+        map(tokenDto => TokenMapper.fromDto(tokenDto)),
+      );
   }
 
   /** Check is user logged in or not. */
@@ -77,11 +93,16 @@ export class AuthService {
   /** Get new token. */
   public refreshToken(): Observable<Token | void> {
     const token$ = this.tokenService.get();
-    return token$.pipe(filter((token): token is Token => token !== null),
-      switchMap(token => this.http.post<TokenDto>(this.refreshUrl, { refresh: TokenMapper.toDto(token).refresh })),
+    return token$.pipe(
+      filter((token): token is Token => token !== null),
+      switchMap(token =>
+        this.http.post<TokenDto>(this.refreshUrl, {
+          refresh: TokenMapper.toDto(token).refresh,
+        })),
       map(tokenDto => TokenMapper.fromDto(tokenDto)),
       tap(newToken => this.tokenService.set(newToken)),
-      catchError(() => this.tokenService.remove()));
+      catchError(() => this.tokenService.remove()),
+    );
   }
 
   /**

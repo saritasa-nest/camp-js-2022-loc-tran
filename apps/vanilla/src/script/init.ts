@@ -18,9 +18,9 @@ export const NUMBER_OF_COLUMNS = 6;
 
 /** Init event listener for pagination and render it to DOM. */
 export function initPagination(): void {
-  const firstPageButton = document.querySelector('.first-page-button');
+  const firstPageButton = document.querySelector('.pagination__button-first');
   firstPageButton?.addEventListener('click', PageHandler.goToFirstPage);
-  const lastPageButton = document.querySelector('.last-page-button');
+  const lastPageButton = document.querySelector('.pagination__button-last');
   lastPageButton?.addEventListener('click', PageHandler.goToLastPage);
   renderPagination(1);
 }

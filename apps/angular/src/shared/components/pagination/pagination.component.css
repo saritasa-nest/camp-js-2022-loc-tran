@@ -1,5 +1,7 @@
 /* stylelint-disable selector-pseudo-element-no-unknown */
 ::ng-deep .mat-paginator-container {
+  /* I used important here to overwrite the css of material angular.
+  Because this class doesn't display in HTML so I must use important here. */
   justify-content: flex-start !important;
   margin-bottom: 20px;
 }

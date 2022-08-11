@@ -11,7 +11,7 @@ import { AnimeDetail } from '@js-camp/core/models/animeDetail';
 import { AnimeDetailDto } from '@js-camp/core/dtos/animeDetail.dto';
 import { DetailMapper } from '@js-camp/core/mappers/detail.mapper';
 
-import { environment } from '../../environments/environment';
+import { AppConfigService } from './app-config.service';
 
 const ANIME_URL = '/api/v1/anime/anime/';
 
@@ -20,9 +20,12 @@ const ANIME_URL = '/api/v1/anime/anime/';
   providedIn: 'root',
 })
 export class AnimeService {
-  private apiUrl = environment.apiUrl + ANIME_URL;
+  private apiUrl = this.appConfig.apiUrl + ANIME_URL;
 
-  public constructor(private readonly http: HttpClient) {}
+  public constructor(
+    private readonly http: HttpClient,
+    private readonly appConfig: AppConfigService,
+  ) {}
 
   /**
    * Get anime data.

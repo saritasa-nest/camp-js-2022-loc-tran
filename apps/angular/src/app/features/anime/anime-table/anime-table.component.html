@@ -47,11 +47,7 @@
     matSort
     (matSortChange)="handleSortChange($event)"
     [matSortActive]="(queryParamsUpdated$ | async)?.sorting ?? ''"
-    [matSortDirection]="
-      (queryParamsUpdated$ | async)?.ordering === sortDirection.Descending
-        ? sortDirection.Descending
-        : sortDirection.Ascending
-    "
+    [matSortDirection]="(sortDirection$ | async) ?? ''"
   >
     <ng-container matColumnDef="Image">
       <th class="table__head-title" mat-header-cell *matHeaderCellDef>Image</th>

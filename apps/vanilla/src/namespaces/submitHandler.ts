@@ -1,5 +1,3 @@
-import { Account } from '@js-camp/core/models/account';
-
 import { PROFILE_PAGE } from '../script/constants/redirectUrl';
 import { showErrorLogin, showErrorRegister } from '../script/renderToUI';
 import { Auth } from '../services/auth';
@@ -12,21 +10,22 @@ export namespace SubmitHandler {
    */
   export async function submitLoginForm(event: SubmitEvent): Promise<void> {
     event.preventDefault();
-    if (event.target !== null) {
-      const formData = new FormData(event.target as HTMLFormElement);
-      const email = formData.get('email');
-      const password = formData.get('password');
+    if (event.target === null) {
+      return;
+    }
+    const formData = new FormData(event.target as HTMLFormElement);
+    const email = formData.get('email');
+    const password = formData.get('password');
 
-      if (email !== null && password !== null) {
-        const errorList = await Auth.login({ email: email.toString(), password: password.toString() });
-        if (errorList !== null) {
-          showErrorLogin(errorList.messages);
-        } else {
-          location.replace(PROFILE_PAGE);
-        }
+    if (email !== null && password !== null) {
+      const errorList = await Auth.login({ email: email.toString(), password: password.toString() });
+      if (errorList !== null) {
+        showErrorLogin(errorList.messages);
       } else {
-        showErrorLogin(['Email and password is required!']);
+        showErrorLogin(['Email and password are required!']);
       }
+    } else {
+      showErrorLogin(['Email and password is required!']);
     }
   }
 
@@ -48,12 +47,12 @@ export namespace SubmitHandler {
           showErrorRegister(['Retype password does not matched!']);
           return;
         }
-        const newAccount = new Account({
+        const newAccount = {
           email: email.toString(),
           firstName: firstName.toString(),
           lastName: lastName.toString(),
           password: password.toString(),
-        });
+        };
         const errorList = await Auth.register(newAccount);
         if (errorList !== null) {
           showErrorRegister(errorList.messages);
@@ -61,8 +60,9 @@ export namespace SubmitHandler {
           location.replace(PROFILE_PAGE);
         }
       } else {
-        showErrorRegister(['All fields need to be filled!']);
+        location.replace(PROFILE_PAGE);
       }
+
     }
   }
 
