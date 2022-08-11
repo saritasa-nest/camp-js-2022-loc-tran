@@ -20,14 +20,14 @@
     <th class="table__head-title" mat-header-cell *matHeaderCellDef>
       Title in English
     </th>
-    <td mat-cell *matCellDef="let anime" align="center">{{ anime.titleEnglish || 'Not found'}}</td>
+    <td mat-cell *matCellDef="let anime">{{ anime.titleEnglish || 'Not found'}}</td>
   </ng-container>
 
   <ng-container matColumnDef="Title Japanese">
     <th class="table__head-title" mat-header-cell *matHeaderCellDef>
       Title in Japanese
     </th>
-    <td mat-cell *matCellDef="let anime" align="center">{{ anime.titleJapanese || 'Not found'}}</td>
+    <td mat-cell *matCellDef="let anime">{{ anime.titleJapanese || 'Not found'}}</td>
   </ng-container>
 
   <ng-container matColumnDef="Aired start">
