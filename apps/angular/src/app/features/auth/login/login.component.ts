@@ -37,7 +37,7 @@ export class LoginComponent {
   });
 
   /** Store error data response from back end. */
-  private readonly loginError$ = new BehaviorSubject<string>('');
+  protected readonly loginError$ = new BehaviorSubject<string>('');
 
   /** Subject that is used for unsubscribing from streams. */
   private readonly subscriptionManager$ = new Subject<void>();

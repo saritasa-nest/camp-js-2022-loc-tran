@@ -36,7 +36,7 @@ import { HOME_ROUTE } from '../login/login.component';
 })
 export class RegisterComponent {
   /** Store error data response from BE. */
-  private readonly errorList$ = new BehaviorSubject<DataError>({});
+  protected readonly errorList$ = new BehaviorSubject<DataError>({});
 
   /** Subject that is used for unsubscribing from streams. */
   private readonly subscriptionManager$ = new Subject<void>();
