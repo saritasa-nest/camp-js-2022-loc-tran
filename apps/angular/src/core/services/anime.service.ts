@@ -28,8 +28,14 @@ export class AnimeService {
    * Get anime data.
    * @param params Query params.
    */
-  public getAnime(params: HttpParams = new HttpParams()): Observable<Pagination<Anime>> {
-    return this.http.get<PaginationDto<AnimeDto>>(this.apiUrl, { params })
-      .pipe(map(pagination => paginationMapper.fromDto(pagination, AnimeMapper.fromDto)));
+  public getAnime(
+    params: HttpParams = new HttpParams(),
+  ): Observable<Pagination<Anime>> {
+    return this.http
+      .get<PaginationDto<AnimeDto>>(this.apiUrl, { params })
+      .pipe(
+        map(pagination =>
+          paginationMapper.fromDto(pagination, AnimeMapper.fromDto)),
+      );
   }
 }
