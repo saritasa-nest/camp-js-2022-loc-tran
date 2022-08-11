@@ -3,7 +3,6 @@ import {
   Component,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { HttpError } from '@js-camp/core/models/httpError';
 import { Token } from '@js-camp/core/models/token';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -16,6 +15,7 @@ import {
   tap,
 } from 'rxjs';
 
+import { NavigateService } from '../../../../../src/core/services/navigate.service';
 import { AuthService } from '../../../../core/services/auth.service';
 import { TokenService } from '../../../../core/services/token.service';
 
@@ -46,7 +46,7 @@ export class LoginComponent {
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
     private readonly tokenService: TokenService,
-    private readonly router: Router,
+    private readonly navigateService: NavigateService,
   ) {}
 
   /** Handle submit for login form. */
@@ -62,7 +62,7 @@ export class LoginComponent {
       })
       .pipe(
         switchMap(token => this.tokenService.set(token)),
-        tap(() => this.router.navigate([HOME_ROUTE])),
+        tap(() => this.navigateService.navigate(HOME_ROUTE)),
         untilDestroyed(this),
         catchError((error: unknown) => this.handleLoginError(error)),
       )

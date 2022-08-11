@@ -8,8 +8,6 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Account } from '@js-camp/core/models/account';
 import { DataError, HttpError } from '@js-camp/core/models/httpError';
 import { Token } from '@js-camp/core/models/token';
 
@@ -25,6 +23,7 @@ import {
 import { AuthService } from '../../../../core/services/auth.service';
 import { TokenService } from '../../../../core/services/token.service';
 import { HOME_ROUTE } from '../login/login.component';
+import { NavigateService } from '../../../../../src/core/services/navigate.service';
 
 /** Register component. */
 @UntilDestroy()
@@ -59,7 +58,7 @@ export class RegisterComponent {
     private readonly formBuilder: FormBuilder,
     private readonly tokenService: TokenService,
     private readonly authService: AuthService,
-    private readonly router: Router,
+    private readonly navigateService: NavigateService,
   ) {}
 
   /** Handle submit register form. */
@@ -77,7 +76,7 @@ export class RegisterComponent {
       })
       .pipe(
         switchMap(token => this.tokenService.set(token)),
-        tap(() => this.router.navigate([HOME_ROUTE])),
+        tap(() => this.navigateService.navigate(HOME_ROUTE)),
         untilDestroyed(this),
         catchError((error: unknown) => this.handleRegisterError(error)),
       )

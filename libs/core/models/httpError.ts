@@ -1,8 +1,9 @@
+import { Immerable, OmitImmerable } from './immerable';
+
 /** Interface for error datalist. */
 export interface DataError {
   readonly [key: string]: string[];
 }
-import { Immerable, OmitImmerable } from './immerable';
 
 /** Class for HTTP error data. */
 export class HttpError extends Immerable {
