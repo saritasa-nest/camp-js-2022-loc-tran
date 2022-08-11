@@ -18,8 +18,8 @@ export const DEFAULT_ORDERING = Sorting.Default;
 export namespace PageHandler {
 
   /**
-   * Get new data for next page.
-   * @param newPage Next page number.
+   * Get data for new page by page number.
+   * @param newPage New page number.
    */
   export function goToNextPage(newPage: number): void {
     const params = new PaginationParams({

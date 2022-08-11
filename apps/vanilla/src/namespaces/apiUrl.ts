@@ -1,17 +1,17 @@
 export namespace ApiUrl {
 
   /** Login api address. */
-  export const login = '/api/v1/auth/login/';
+  export const login = '/auth/login/';
 
   /** Register api address. */
-  export const register = '/api/v1/auth/register/';
+  export const register = '/auth/register/';
 
   /** Profile api address. */
-  export const profile = '/api/v1/users/profile/';
+  export const profile = '/users/profile/';
 
   /** Verify token api address. */
-  export const verify = '/api/v1/auth/token/verify/';
+  export const verify = '/auth/token/verify/';
 
   /** Refresh token api address. */
-  export const refresh = '/api/v1/auth/token/refresh/';
+  export const refresh = '/auth/token/refresh/';
 }

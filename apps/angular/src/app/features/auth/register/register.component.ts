@@ -69,14 +69,12 @@ export class RegisterComponent {
       return;
     }
     this.authService
-      .register(
-        new Account({
-          email: this.registerForm.value.email ?? '',
-          firstName: this.registerForm.value.firstName ?? '',
-          lastName: this.registerForm.value.lastName ?? '',
-          password: this.registerForm.value.password ?? '',
-        }),
-      )
+      .register({
+        email: this.registerForm.value.email ?? '',
+        firstName: this.registerForm.value.firstName ?? '',
+        lastName: this.registerForm.value.lastName ?? '',
+        password: this.registerForm.value.password ?? '',
+      })
       .pipe(
         switchMap(token => this.tokenService.set(token)),
         tap(() => this.router.navigate([HOME_ROUTE])),

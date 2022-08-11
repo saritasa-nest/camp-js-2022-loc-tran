@@ -7,6 +7,8 @@ import { ApiUrl } from '../namespaces/apiUrl';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../script/constants/localStorageName';
 import { LOGIN_PAGE } from '../script/constants/redirectUrl';
 
+import { LocalStorageService } from './localStorageService';
+
 /**
  * Verify if a token is valid.
  * @param token Access token.
@@ -44,6 +46,6 @@ export async function getRefreshedToken(refreshToken: string): Promise<Token> {
  * @param tokens Store Access token and Refresh token received.
  */
 export function storeTokens(tokens: Token): void {
-  localStorage.setItem(ACCESS_TOKEN, tokens.accessToken);
-  localStorage.setItem(REFRESH_TOKEN, tokens.refreshToken);
+  LocalStorageService.set(ACCESS_TOKEN, tokens.accessToken);
+  LocalStorageService.set(REFRESH_TOKEN, tokens.refreshToken);
 }

@@ -46,29 +46,29 @@ export namespace Auth {
     }
   }
 
+  /**
+   * Return error messages from http error.
+   * @param error Http error.
+   */
+  function handleErrorMessages(error: unknown): ErrorList | null {
+    if (error instanceof AxiosError) {
+      const errorData = HttpErrorMapper.fromDto(error.response?.data);
+      const errorList: ErrorList = { messages: [] };
+      if (errorData.data !== undefined) {
+        for (const i of Object.keys(errorData.data)) {
+          errorList.messages.push(...errorData.data[i]);
+        }
+      }
+      errorList.messages.push(errorData.detail);
+      return errorList;
+    }
+    return null;
+  }
+
   /** Remove Access token and Refresh token from local storage. */
   // eslint-disable-next-line require-await
   export async function logout(): Promise<void> {
     localStorage.removeItem(ACCESS_TOKEN);
     localStorage.removeItem(REFRESH_TOKEN);
   }
-}
-
-/**
- * Return error messages from http error.
- * @param error Http error.
- */
-function handleErrorMessages(error: unknown): ErrorList {
-  if (error instanceof AxiosError) {
-    const errorData = HttpErrorMapper.fromDto(error.response?.data);
-    const errorList = [];
-    if (errorData.data !== undefined) {
-      for (const i of Object.keys(errorData.data)) {
-        errorList.push(...errorData.data[i]);
-      }
-    }
-    errorList.push(errorData.detail);
-    return { messages: errorList };
-  }
-  return { messages: [] };
 }
