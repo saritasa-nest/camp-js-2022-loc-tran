@@ -22,7 +22,6 @@ import {
 
 import { AuthService } from '../../../../core/services/auth.service';
 import { TokenService } from '../../../../core/services/token.service';
-import { HOME_ROUTE } from '../login/login.component';
 import { NavigateService } from '../../../../../src/core/services/navigate.service';
 
 /** Register component. */
@@ -76,7 +75,7 @@ export class RegisterComponent {
       })
       .pipe(
         switchMap(token => this.tokenService.set(token)),
-        tap(() => this.navigateService.navigate(HOME_ROUTE)),
+        tap(() => this.navigateService.navigateToHome()),
         untilDestroyed(this),
         catchError((error: unknown) => this.handleRegisterError(error)),
       )
