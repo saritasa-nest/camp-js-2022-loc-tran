@@ -7,7 +7,6 @@ export interface DataError {
 }
 
 /** Interface for HTTP error dto. */
-<<<<<<< HEAD
 export class HttpErrorDto extends Immerable {
 
   /** Detail of error. */
@@ -21,15 +20,6 @@ export class HttpErrorDto extends Immerable {
     this.detail = data.detail;
     this.data = data.data;
   }
-=======
-export interface HttpErrorDto extends Error {
-  readonly response: {
-    readonly data: {
-      readonly detail: string;
-      readonly data: DataError;
-    };
-  };
->>>>>>> develop
 }
 
 type HttpErrorDtoAgrs = OmitImmerable<HttpError>;
