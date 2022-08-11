@@ -19,8 +19,6 @@ import { NavigateService } from '../../../../../src/core/services/navigate.servi
 import { AuthService } from '../../../../core/services/auth.service';
 import { TokenService } from '../../../../core/services/token.service';
 
-export const HOME_ROUTE = '/';
-
 /** Login component. */
 @UntilDestroy()
 @Component({
@@ -62,7 +60,7 @@ export class LoginComponent {
       })
       .pipe(
         switchMap(token => this.tokenService.set(token)),
-        tap(() => this.navigateService.navigate(HOME_ROUTE)),
+        tap(() => this.navigateService.navigateToHome()),
         untilDestroyed(this),
         catchError((error: unknown) => this.handleLoginError(error)),
       )
