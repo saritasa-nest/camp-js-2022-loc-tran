@@ -1,5 +1,5 @@
-/** Interface for error datalist. */
-export interface DataError {
+/** Interface for error datalist dto. */
+interface DataErrorDto {
   readonly [key: string]: string[];
 }
 
@@ -10,5 +10,5 @@ export interface HttpErrorDto {
   readonly detail: string;
 
   /** Data response from BE. */
-  readonly data: DataError;
+  readonly data: DataErrorDto;
 }
