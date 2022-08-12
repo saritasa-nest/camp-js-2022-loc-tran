@@ -7,7 +7,7 @@ import { getRefreshedToken, storeTokens } from '../services/token';
 
 import { CONFIG } from './config';
 
-export const API_HEADER = 'Api-Key';
+const API_HEADER = 'Api-Key';
 
 /**
  * Interceptor for request.
