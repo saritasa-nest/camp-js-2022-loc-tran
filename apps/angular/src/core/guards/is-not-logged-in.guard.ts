@@ -18,7 +18,7 @@ export class CheckIsNotLoggedInGuard implements CanActivate {
    */
   public canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     return this.authService.isNotLoggedIn().pipe(tap(isNotLoggedIn => {
-      if (isNotLoggedIn === false) {
+      if (!isNotLoggedIn) {
         this.navigateService.navigate(HOME_ROUTE);
       }
     }));
