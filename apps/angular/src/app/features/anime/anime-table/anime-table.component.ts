@@ -64,31 +64,31 @@ const FILTER_TYPES = ['TV', 'OVA', 'MOVIE', 'SPECIAL', 'ONA', 'MUSIC'];
 })
 export class AnimeTableComponent implements OnDestroy, OnInit {
   /** Filter options. */
-  public readonly filterTypes = FILTER_TYPES;
+  protected readonly filterTypes = FILTER_TYPES;
 
   /** Column title of anime table. */
-  public readonly columnTitles = COLUMN_TITLES;
+  protected readonly columnTitles = COLUMN_TITLES;
 
   /** Anime data response from BE. */
-  public readonly paginationAnime$: Observable<Pagination<Anime>>;
+  protected readonly paginationAnime$: Observable<Pagination<Anime>>;
 
   /** Form control for search form. */
-  public readonly searchControl = new FormControl<string>('');
+  protected readonly searchControl = new FormControl<string>('');
 
   /** Form control for filter by type. */
-  public readonly filterControl = new FormControl<readonly string[]>([]);
+  protected readonly filterControl = new FormControl<readonly string[]>([]);
 
   /** This stream emit latest query params and trigger side effect.*/
-  public readonly queryParams$: Observable<PaginationParams>;
+  protected readonly queryParams$: Observable<PaginationParams>;
 
   /** Subject that is used for unsubscribing from streams. */
   private readonly subscriptionManager$ = new Subject<void>();
 
   /** Stream for sort direction. */
-  public readonly sortDirection$: Observable<SortDirection>;
+  protected readonly sortDirection$: Observable<SortDirection>;
 
   /** A stream for emit new query params. */
-  public readonly queryParamsUpdated$ = new BehaviorSubject<PaginationParams>(
+  protected readonly queryParamsUpdated$ = new BehaviorSubject<PaginationParams>(
     new PaginationParams({
       ...DEFAULT_PARAMS,
       ...this.route.snapshot.queryParams,
@@ -96,7 +96,7 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
   );
 
   /** Loading feature. */
-  public readonly isAnimeLoading$ = new BehaviorSubject<boolean>(false);
+  protected readonly isAnimeLoading$ = new BehaviorSubject<boolean>(false);
 
   public constructor(
     private animeService: AnimeService,

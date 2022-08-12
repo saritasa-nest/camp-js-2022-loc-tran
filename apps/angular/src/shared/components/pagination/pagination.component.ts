@@ -23,10 +23,10 @@ export class PaginationComponent {
   @Output() public paginationEvent = new EventEmitter<PageEvent>();
 
   /** Page event for pagination. */
-  public pageEvent: PageEvent = new PageEvent();
+  protected pageEvent: PageEvent = new PageEvent();
 
   /** Page size options. */
-  public pageSizeOptions: number[] = [5, 10, 25, 100];
+  protected pageSizeOptions: number[] = [5, 10, 25, 100];
 
   /**
    * Handle pagination change and emit the status.
