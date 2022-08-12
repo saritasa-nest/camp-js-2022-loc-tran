@@ -69,7 +69,7 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
   /** Column title of anime table. */
   protected readonly columnTitles = COLUMN_TITLES;
 
-  /** Anime data response from BE. */
+  /** Anime data. */
   protected readonly paginationAnime$: Observable<Pagination<Anime>>;
 
   /** Form control for search form. */
