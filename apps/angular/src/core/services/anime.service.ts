@@ -16,7 +16,7 @@ const ANIME_URL = '/api/v1/anime/anime/';
   providedIn: 'root',
 })
 export class AnimeService {
-  private apiUrl = this.appConfig.apiUrl + ANIME_URL;
+  private animeApiAddress = new URL(ANIME_URL, this.appConfig.apiUrl);
 
   public constructor(
     private readonly http: HttpClient,
@@ -26,7 +26,7 @@ export class AnimeService {
   /** Get Anime data. */
   public getAnime(): Observable<readonly Anime[]> {
     return this.http
-      .get<PaginationDto<AnimeDto>>(this.apiUrl)
+      .get<PaginationDto<AnimeDto>>(this.animeApiAddress.href)
       .pipe(
         map(
           pagination =>

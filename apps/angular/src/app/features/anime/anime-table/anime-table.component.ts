@@ -16,7 +16,7 @@ export class AnimeTableComponent {
   /** Column title of anime table. */
   public readonly columnTitles = ['Image', 'Title English', 'Title Japanese', 'Aired start', 'Type', 'Status'];
 
-  /** Anime data response from BE. */
+  /** Anime data. */
   public readonly animeList$: Observable<readonly Anime[]>;
 
   public constructor(animeService: AnimeService) {
