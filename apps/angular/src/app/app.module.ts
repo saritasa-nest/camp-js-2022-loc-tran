@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { ApiInterceptor } from '../core/interceptors/interceptor.interceptor';
+import { ApiInterceptor } from '../core/interceptors/api-key.interceptor';
 
 import { SharedModule } from './../shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';

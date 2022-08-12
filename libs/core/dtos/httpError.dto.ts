@@ -1,25 +1,14 @@
-import { HttpError } from '../models/httpError';
-import { Immerable, OmitImmerable } from '../models/immerable';
-
 /** Interface for error datalist. */
 export interface DataError {
   readonly [key: string]: string[];
 }
 
 /** Interface for HTTP error dto. */
-export class HttpErrorDto extends Immerable {
+export interface HttpErrorDto {
 
   /** Detail of error. */
-  public readonly detail: string;
+  readonly detail: string;
 
   /** Data response from BE. */
-  public readonly data: DataError;
-
-  public constructor(data: HttpErrorDtoAgrs) {
-    super();
-    this.detail = data.detail;
-    this.data = data.data;
-  }
+  readonly data: DataError;
 }
-
-type HttpErrorDtoAgrs = OmitImmerable<HttpError>;
