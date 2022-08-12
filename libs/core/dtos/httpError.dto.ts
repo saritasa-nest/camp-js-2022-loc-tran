@@ -9,6 +9,6 @@ export interface HttpErrorDto {
   /** Detail of error. */
   readonly detail: string;
 
-  /** Data response from BE. */
+  /** Data response from back end. */
   readonly data: DataErrorDto;
 }
