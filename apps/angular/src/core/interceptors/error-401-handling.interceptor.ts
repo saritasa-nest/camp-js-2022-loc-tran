@@ -36,7 +36,7 @@ export class Error401Interceptor implements HttpInterceptor {
       switchMap(token =>
         next.handle(httpRequest).pipe(
           catchError((error: unknown) => {
-            if (isProhibitedRoute(httpRequest.url, this.refreshRoute)) {
+            if (isProhibitedRoute(new URL(httpRequest.url), this.refreshRoute)) {
               return this.tokenService.remove().pipe(switchMap(() => next.handle(httpRequest)));
             }
             if (error instanceof HttpErrorResponse && token !== null && error.status === 401) {

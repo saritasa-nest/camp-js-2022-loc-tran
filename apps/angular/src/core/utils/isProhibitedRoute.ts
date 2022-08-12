@@ -5,6 +5,6 @@ import { environment } from '../../environments/environment';
  * @param url Url request.
  * @param prohibitedUrl Prohibited Url.
  */
-export function isProhibitedRoute(url: string, prohibitedUrl: string): boolean {
-  return url.includes(environment.apiUrl + prohibitedUrl);
+export function isProhibitedRoute(url: URL, prohibitedUrl: string): boolean {
+  return url.href.includes(environment.apiUrl + prohibitedUrl);
 }
