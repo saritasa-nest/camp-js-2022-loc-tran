@@ -12,7 +12,7 @@ import { AppConfigService } from '../services/app-config.service';
 /** Interceptor for api request. */
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
-  private apiKey = 'Api-Key';
+  private apiKeyHeader = 'Api-Key';
 
   public constructor(private readonly appConfig: AppConfigService) {}
 
@@ -26,7 +26,7 @@ export class ApiInterceptor implements HttpInterceptor {
     next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {
     return next.handle(
-      httpRequest.clone({ setHeaders: { [this.apiKey]: this.appConfig.apiKey } }),
+      httpRequest.clone({ setHeaders: { [this.apiKeyHeader]: this.appConfig.apiKey } }),
     );
   }
 }
