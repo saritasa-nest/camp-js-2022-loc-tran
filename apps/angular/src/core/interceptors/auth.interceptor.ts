@@ -28,7 +28,7 @@ export class AuthInterceptor implements HttpInterceptor {
     httpRequest: HttpRequest<unknown>,
     next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {
-    if (isProhibitedRoute(httpRequest.url, this.authRoute)) {
+    if (isProhibitedRoute(new URL(httpRequest.url), this.authRoute)) {
       return next.handle(httpRequest);
     }
     return this.tokenService.get().pipe(

@@ -18,7 +18,7 @@ import {
   throwError,
 } from 'rxjs';
 
-import { environment } from '../../environments/environment';
+import { AppConfigService } from './app-config.service';
 
 import { TokenService } from './token.service';
 
@@ -31,15 +31,16 @@ const REFRESH_URL = '/api/v1/auth/token/refresh/';
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly refreshUrl = environment.apiUrl + REFRESH_URL;
+  private readonly refreshApiAddress = new URL(REFRESH_URL, this.appConfig.apiUrl);
 
-  private readonly loginUrl = environment.apiUrl + LOGIN_URL;
+  private readonly loginApiAddress = new URL(LOGIN_URL, this.appConfig.apiUrl);
 
-  private readonly registerUrl = environment.apiUrl + REGISTER_URL;
+  private readonly registerApiAddress = new URL(REGISTER_URL, this.appConfig.apiUrl);
 
   public constructor(
     private readonly http: HttpClient,
     private readonly tokenService: TokenService,
+    private readonly appConfig: AppConfigService,
   ) {}
 
   /**
@@ -48,11 +49,11 @@ export class AuthService {
    */
   public login(data: LoginData): Observable<Token> {
     return this.http
-      .post<TokenDto>(this.loginUrl, {
+      .post<TokenDto>(this.loginApiAddress.href, {
       ...LoginDataMapper.toDto(data),
     })
       .pipe(
-        catchError(this.handleErrorAuthorization.bind(this)),
+        catchError((error: unknown) => this.handleErrorAuthorization(error)),
         map(tokenDto => TokenMapper.fromDto(tokenDto)),
       );
   }
@@ -63,11 +64,11 @@ export class AuthService {
    */
   public register(data: Account): Observable<Token> {
     return this.http
-      .post<TokenDto>(this.registerUrl, {
+      .post<TokenDto>(this.registerApiAddress.href, {
       ...AccountMapper.toDto(data),
     })
       .pipe(
-        catchError(this.handleErrorAuthorization.bind(this)),
+        catchError((error: unknown) => this.handleErrorAuthorization(error)),
         map(tokenDto => TokenMapper.fromDto(tokenDto)),
       );
   }
@@ -95,7 +96,7 @@ export class AuthService {
     return token$.pipe(
       filter((token): token is Token => token !== null),
       switchMap(token =>
-        this.http.post<TokenDto>(this.refreshUrl, {
+        this.http.post<TokenDto>(this.refreshApiAddress.href, {
           refresh: TokenMapper.toDto(token).refresh,
         })),
       map(tokenDto => TokenMapper.fromDto(tokenDto)),
