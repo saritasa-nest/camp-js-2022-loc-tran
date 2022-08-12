@@ -29,11 +29,11 @@
     </label>
     <label class="detail__information--label">
       <span class="detail__information--title">Aired start date: </span>
-      <span class="detail__information--text">{{detail.aired.start | dateToLocale}}</span>
+      <span class="detail__information--text">{{detail.aired.start | date:'short'}}</span>
     </label>
     <label class="detail__information--label">
       <span class="detail__information--title">Aired end date: </span>
-      <span class="detail__information--text">{{detail.aired.end | dateToLocale}}</span>
+      <span class="detail__information--text">{{detail.aired.end | date:'short'}}</span>
     </label>
     <label class="detail__information--label">
       <span class="detail__information--title">Synopsis: </span>

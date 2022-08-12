@@ -20,7 +20,7 @@ const ANIME_URL = '/api/v1/anime/anime/';
   providedIn: 'root',
 })
 export class AnimeService {
-  private apiUrl = this.appConfig.apiUrl + ANIME_URL;
+  private animeApiAddress = new URL(ANIME_URL, this.appConfig.apiUrl);
 
   public constructor(
     private readonly http: HttpClient,
@@ -35,7 +35,7 @@ export class AnimeService {
     params: HttpParams = new HttpParams(),
   ): Observable<Pagination<Anime>> {
     return this.http
-      .get<PaginationDto<AnimeDto>>(this.apiUrl, { params })
+      .get<PaginationDto<AnimeDto>>(this.animeApiAddress.href, { params })
       .pipe(
         map(pagination =>
           paginationMapper.fromDto(pagination, AnimeMapper.fromDto)),
@@ -48,7 +48,7 @@ export class AnimeService {
    */
   public getAnimeById(id: string): Observable<AnimeDetail> {
     return this.http
-      .get<AnimeDetailDto>(`${this.apiUrl}${id}/`)
+      .get<AnimeDetailDto>(`${this.animeApiAddress}${id}/`)
       .pipe(map(animeDetailDto => DetailMapper.fromDto(animeDetailDto)));
   }
 }
