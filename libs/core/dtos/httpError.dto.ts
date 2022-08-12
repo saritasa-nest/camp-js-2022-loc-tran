@@ -1,10 +1,14 @@
 /** Interface for error datalist dto. */
-export interface DataErrorDto {
+interface DataErrorDto {
   readonly [key: string]: string[];
 }
 
 /** Interface for HTTP error dto. */
-export interface HttpErrorDto extends Error {
+export interface HttpErrorDto {
+
+  /** Detail of error. */
   readonly detail: string;
+
+  /** Data response from back end. */
   readonly data: DataErrorDto;
 }
