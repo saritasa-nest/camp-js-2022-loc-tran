@@ -5,7 +5,6 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
   selector: 'camp-image-modal',
   templateUrl: './image-modal.component.html',
-  styleUrls: ['./image-modal.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ImageModalComponent {
