@@ -4,13 +4,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { RouterModule } from '@angular/router';
 
 import { HeaderComponent } from './components/header/header.component';
+import { PlaceholderPipe } from './pipe/placeholder.pipe';
 import { PaginationComponent } from './components/pagination/pagination.component';
-import { DateToLocalePipe } from './pipe/date-to-locale.pipe';
 
 /** Shared module. */
 @NgModule({
-  declarations: [HeaderComponent, PaginationComponent, DateToLocalePipe],
+  declarations: [HeaderComponent, PaginationComponent, PlaceholderPipe],
   imports: [CommonModule, MatPaginatorModule, RouterModule],
-  exports: [HeaderComponent, PaginationComponent, DateToLocalePipe],
+  exports: [HeaderComponent, PaginationComponent, PlaceholderPipe],
 })
 export class SharedModule {}
