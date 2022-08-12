@@ -10,17 +10,21 @@ const HOME_ROUTE = '/';
 /** Check is user logged in or not. */
 @Injectable()
 export class CheckIsNotLoggedInGuard implements CanActivate {
-
-  public constructor(private readonly authService: AuthService, private navigateService: NavigateService) {}
+  public constructor(
+    private readonly authService: AuthService,
+    private navigateService: NavigateService,
+  ) {}
 
   /**
    * @inheritdoc
    */
   public canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    return this.authService.isNotLoggedIn().pipe(tap(isNotLoggedIn => {
-      if (!isNotLoggedIn) {
-        this.navigateService.navigate(HOME_ROUTE);
-      }
-    }));
+    return this.authService.isNotLoggedIn().pipe(
+      tap(isNotLoggedIn => {
+        if (!isNotLoggedIn) {
+          this.navigateService.navigate(HOME_ROUTE);
+        }
+      }),
+    );
   }
 }
