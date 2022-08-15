@@ -12,7 +12,7 @@ import { AppConfigService } from '../services/app-config.service';
 /** Interceptor for api request. */
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
-  private apiKeyHeader = 'Api-Key';
+  private readonly apiKeyHeader = 'Api-Key';
 
   public constructor(private readonly appConfig: AppConfigService) {}
 
