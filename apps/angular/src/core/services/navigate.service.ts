@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 const HOME_ROUTE = '/';
 
@@ -8,8 +8,10 @@ const HOME_ROUTE = '/';
   providedIn: 'root',
 })
 export class NavigateService {
-
-  public constructor(private readonly router: Router) {}
+  public constructor(
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+  ) {}
 
   /**
    * Navigate to new route.
@@ -26,6 +28,11 @@ export class NavigateService {
 
   /** Reload page by navigate to current page. */
   public reloadPage(): Promise<boolean> {
-    return this.router.navigate([this.router.url]);
+    return this.router.navigate([HOME_ROUTE], {
+      queryParams: {
+        ...this.route.snapshot.queryParams,
+        time: Number(new Date()),
+      },
+    });
   }
 }

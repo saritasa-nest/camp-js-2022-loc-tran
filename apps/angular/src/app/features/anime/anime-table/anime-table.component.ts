@@ -13,12 +13,15 @@ import { PaginationParamsMapper } from '@js-camp/core/mappers/paginationParams.m
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { PaginationParams } from '@js-camp/core/models/paginationParams';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import {
   BehaviorSubject,
-  debounceTime, map,
+  debounceTime,
+  map,
   merge,
-  Observable, shareReplay,
+  Observable,
+  shareReplay,
   Subject,
   switchMap,
   takeUntil,
@@ -27,9 +30,7 @@ import {
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { NavigateService } from 'apps/angular/src/core/services/navigate.service';
-
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { NavigateService } from '../../../../core/services/navigate.service';
 
 import { ConfirmModalComponent } from '../../../../shared/components/confirm-modal/confirm-modal.component';
 
@@ -112,7 +113,7 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
   protected readonly isAnimeLoading$ = new BehaviorSubject<boolean>(false);
 
   public constructor(
-    private animeService: AnimeService,
+    private readonly animeService: AnimeService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly dialog: MatDialog,
@@ -166,6 +167,16 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
           SortDirection.Descending :
           SortDirection.Ascending),
     );
+
+    this.deleteAnime$
+      .pipe(
+        switchMap(animeId =>
+          animeService
+            .deleteAnimeById(animeId)
+            .pipe(tap(() => this.navigate.reloadPage()))),
+        untilDestroyed(this),
+      )
+      .subscribe();
   }
 
   /** Initialize data. */
@@ -249,15 +260,17 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
     return anime.id;
   }
 
+  /**
+   * Delete an anime.
+   * @param event Click event of delete button.
+   * @param animeId Id of anime.
+   */
   public onDelete(event: Event, animeId: number): void {
     event.stopPropagation();
     this.dialog.open(ConfirmModalComponent, {
       data: () => {
-        this.animeService.deleteAnimeById(animeId).pipe(
-          tap(() => this.navigate.reloadPage()),
-          untilDestroyed(this),
-        )
-          .subscribe();
+        this.deleteAnime$.next(animeId);
+        this.navigate.reloadPage();
       },
     });
   }
