@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 const HOME_ROUTE = '/';
 
@@ -16,9 +16,10 @@ export class NavigateService {
   /**
    * Navigate to new route.
    * @param url New route.
+   * @param params Query params.
    */
-  public navigate(url: string): Promise<boolean> {
-    return this.router.navigate([url]);
+  public navigate(url: string, params: Params = {}): Promise<boolean> {
+    return this.router.navigate([url], { queryParams: { ...params } });
   }
 
   /** Navigate user to home. */

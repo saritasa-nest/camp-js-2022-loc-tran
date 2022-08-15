@@ -117,7 +117,7 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly dialog: MatDialog,
-    private readonly navigate: NavigateService,
+    private readonly navigateService: NavigateService,
   ) {
     this.setInitialValues();
 
@@ -173,7 +173,7 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
         switchMap(animeId =>
           animeService
             .deleteAnimeById(animeId)
-            .pipe(tap(() => this.navigate.reloadPage()))),
+            .pipe(tap(() => this.navigateService.reloadPage()))),
         untilDestroyed(this),
       )
       .subscribe();
@@ -183,7 +183,7 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
   public ngOnInit(): void {
     const navigateSideEffect$ = this.queryParams$.pipe(
       tap(query => {
-        this.router.navigate(['/'], { queryParams: { ...query } });
+        this.navigateService.navigate('/', { ...query });
         this.isAnimeLoading$.next(true);
       }),
     );
@@ -270,8 +270,12 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
     this.dialog.open(ConfirmModalComponent, {
       data: () => {
         this.deleteAnime$.next(animeId);
-        this.navigate.reloadPage();
+        this.navigateService.reloadPage();
       },
     });
+  }
+
+  public onEdit(event: Event): void {
+    event.stopPropagation();
   }
 }

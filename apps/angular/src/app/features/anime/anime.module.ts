@@ -20,10 +20,11 @@ import { SharedModule } from '../../../shared/shared.module';
 import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeTableComponent } from './anime-table/anime-table.component';
 import { DetailComponent } from './detail/detail.component';
+import { EditComponent } from './edit/edit.component';
 
 /** Anime module. */
 @NgModule({
-  declarations: [AnimeTableComponent, DetailComponent],
+  declarations: [AnimeTableComponent, DetailComponent, EditComponent],
   imports: [
     CommonModule,
     MatTableModule,

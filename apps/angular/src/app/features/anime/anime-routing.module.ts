@@ -5,6 +5,7 @@ import { CheckIsLoggedInGuard } from '../../../core/guards/is-logged-in.guard';
 
 import { AnimeTableComponent } from './anime-table/anime-table.component';
 import { DetailComponent } from './detail/detail.component';
+import { EditComponent } from './edit/edit.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,11 @@ const routes: Routes = [
   {
     path: 'detail/:animeId',
     component: DetailComponent,
+    canActivate: [CheckIsLoggedInGuard],
+  },
+  {
+    path: 'edit/:animeId',
+    component: EditComponent,
     canActivate: [CheckIsLoggedInGuard],
   },
 ];
