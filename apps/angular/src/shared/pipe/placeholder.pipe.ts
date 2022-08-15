@@ -7,11 +7,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class PlaceholderPipe implements PipeTransform {
 
   /**
-   * Return placeholder if value is falsy.
+   * Return placeholder if value is null or empty.
    * @param value Value of target.
-   * @param placeholder Placeholder string.
    */
-  public transform(value: string, placeholder: string): string {
-    return value || placeholder;
+  public transform(value: string | null): string {
+    return value !== null && value !== '' ? value : 'Empty';
   }
 }
