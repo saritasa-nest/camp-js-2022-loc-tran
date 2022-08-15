@@ -9,6 +9,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { SafePipe } from './pipe/safe.pipe';
 import { PluckPipe } from './pipe/pluck.pipe';
 import { ImageModalComponent } from './components/image-modal/image-modal.component';
+import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 
 /** Shared module. */
 @NgModule({
@@ -19,6 +20,7 @@ import { ImageModalComponent } from './components/image-modal/image-modal.compon
     PluckPipe,
     ImageModalComponent,
     PlaceholderPipe,
+    ConfirmModalComponent,
   ],
   imports: [CommonModule, MatPaginatorModule, RouterModule],
   exports: [
