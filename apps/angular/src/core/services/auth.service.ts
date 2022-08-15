@@ -14,7 +14,6 @@ import {
   map,
   Observable,
   switchMap,
-  tap,
   throwError,
 } from 'rxjs';
 
@@ -100,7 +99,7 @@ export class AuthService {
           refresh: TokenMapper.toDto(token).refresh,
         })),
       map(tokenDto => TokenMapper.fromDto(tokenDto)),
-      tap(newToken => this.tokenService.set(newToken)),
+      switchMap(newToken => this.tokenService.set(newToken)),
       catchError(() => this.tokenService.remove()),
     );
   }
