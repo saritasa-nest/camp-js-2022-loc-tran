@@ -7,7 +7,7 @@ import { getRefreshedToken, storeTokens } from '../services/token';
 
 import { CONFIG } from './config';
 
-const API_HEADER = 'Api-Key';
+const API_KEY_HEADER = 'Api-Key';
 
 /**
  * Interceptor for request.
@@ -26,7 +26,7 @@ export function requestInterceptor(config: AxiosRequestConfig): AxiosRequestConf
     ...config,
     headers: {
       ...headers,
-      [API_HEADER]: CONFIG.apiKey,
+      [API_KEY_HEADER]: CONFIG.apiKey,
     },
   };
 }
