@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /** Pop up for confirmation. */
 @Component({
@@ -8,5 +8,14 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmModalComponent {
-  public constructor(@Inject(MAT_DIALOG_DATA) protected onSubmit: Function) {}
+  public constructor(@Inject(MAT_DIALOG_DATA) protected handleAction: Function, private readonly dialog: MatDialog) {}
+
+  public onSubmitClick(): void {
+    this.closeModal();
+    this.handleAction();
+  }
+
+  public closeModal(): void {
+    this.dialog.closeAll();
+  }
 }

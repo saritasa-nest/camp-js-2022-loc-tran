@@ -23,4 +23,9 @@ export class NavigateService {
   public navigateToHome(): Promise<boolean> {
     return this.router.navigate([HOME_ROUTE]);
   }
+
+  /** Reload page by navigate to current page. */
+  public reloadPage(): Promise<boolean> {
+    return this.router.navigate([this.router.url]);
+  }
 }

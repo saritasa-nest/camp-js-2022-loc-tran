@@ -35,11 +35,11 @@
   </mat-form-field>
 </form>
 
-<ng-container *ngIf="paginationAnime$ | async as animeList; else loading;">
+<ng-container *ngIf="paginationAnime$ | async as animeList; else loading">
   <table
     aria-label="anime"
     aria-describedby="anime-table"
-    *ngIf="(isAnimeLoading$ | async) === false; else loading;"
+    *ngIf="(isAnimeLoading$ | async) === false; else loading"
     mat-table
     fixedLayout
     [dataSource]="animeList.results"
@@ -65,7 +65,9 @@
       >
         Title in English
       </th>
-      <td mat-cell *matCellDef="let anime">{{ anime.titleEnglish | placeholder}}</td>
+      <td mat-cell *matCellDef="let anime">
+        {{ anime.titleEnglish | placeholder }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="Title Japanese">
@@ -77,7 +79,9 @@
       >
         Title in Japanese
       </th>
-      <td mat-cell *matCellDef="let anime">{{ anime.titleJapanese | placeholder}}</td>
+      <td mat-cell *matCellDef="let anime">
+        {{ anime.titleJapanese | placeholder }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="Aired start">
@@ -90,7 +94,7 @@
         Aired day
       </th>
       <td mat-cell *matCellDef="let anime">
-        {{ anime.aired.start | date:'short' | placeholder}}
+        {{ anime.aired.start | date: "short" | placeholder }}
       </td>
     </ng-container>
 
@@ -109,6 +113,14 @@
         Status
       </th>
       <td mat-cell *matCellDef="let anime">{{ anime.status | placeholder }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Option">
+      <th class="table__head-option" mat-header-cell *matHeaderCellDef>Option</th>
+      <td mat-cell *matCellDef="let anime">
+        <button type="button" mat-raised-button color="primary">Edit</button>
+        <button type="button" mat-raised-button color="warn" (click)="onDelete($event, anime.id)">Delete</button>
+      </td>
     </ng-container>
 
     <tr class="table__head" mat-header-row *matHeaderRowDef="columnTitles"></tr>

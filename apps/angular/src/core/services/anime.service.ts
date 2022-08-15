@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { map, Observable, of, switchMap } from 'rxjs';
 import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 import { paginationMapper } from '@js-camp/core/mappers/pagination.mapper';
@@ -50,5 +50,14 @@ export class AnimeService {
     return this.http
       .get<AnimeDetailDto>(`${this.animeApiAddress}${id}/`)
       .pipe(map(animeDetailDto => DetailMapper.fromDto(animeDetailDto)));
+  }
+
+  /**
+   * Delete anime by id.
+   * @param id Id of anime.
+   */
+  public deleteAnimeById(id: number): Observable<null> {
+    return this.http
+      .delete(`${this.animeApiAddress.href}${id}/`).pipe(map(() => null));
   }
 }

@@ -10,6 +10,7 @@ import { SafePipe } from './pipe/safe.pipe';
 import { PluckPipe } from './pipe/pluck.pipe';
 import { ImageModalComponent } from './components/image-modal/image-modal.component';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
+import { MatButtonModule } from '@angular/material/button';
 
 /** Shared module. */
 @NgModule({
@@ -22,7 +23,7 @@ import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.
     PlaceholderPipe,
     ConfirmModalComponent,
   ],
-  imports: [CommonModule, MatPaginatorModule, RouterModule],
+  imports: [CommonModule, MatPaginatorModule, MatButtonModule, RouterModule],
   exports: [
     HeaderComponent,
     PaginationComponent,

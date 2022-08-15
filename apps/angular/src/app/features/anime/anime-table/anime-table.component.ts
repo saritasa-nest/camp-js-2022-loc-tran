@@ -13,18 +13,25 @@ import { PaginationParamsMapper } from '@js-camp/core/mappers/paginationParams.m
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { PaginationParams } from '@js-camp/core/models/paginationParams';
+
 import {
   BehaviorSubject,
-  debounceTime,
-  map,
+  debounceTime, map,
   merge,
-  Observable,
-  shareReplay,
+  Observable, shareReplay,
   Subject,
   switchMap,
   takeUntil,
   tap,
 } from 'rxjs';
+
+import { MatDialog } from '@angular/material/dialog';
+
+import { NavigateService } from 'apps/angular/src/core/services/navigate.service';
+
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+
+import { ConfirmModalComponent } from '../../../../shared/components/confirm-modal/confirm-modal.component';
 
 import { AnimeService } from '../../../../core/services/anime.service';
 
@@ -51,11 +58,13 @@ const COLUMN_TITLES = [
   'Aired start',
   'Type',
   'Status',
+  'Option',
 ];
 
 const FILTER_TYPES = ['TV', 'OVA', 'MOVIE', 'SPECIAL', 'ONA', 'MUSIC'];
 
 /** Anime table. */
+@UntilDestroy()
 @Component({
   selector: 'camp-anime-table',
   templateUrl: './anime-table.component.html',
@@ -88,12 +97,16 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
   protected readonly sortDirection$: Observable<SortDirection>;
 
   /** A stream for emit new query params. */
-  protected readonly queryParamsUpdated$ = new BehaviorSubject<PaginationParams>(
-    new PaginationParams({
-      ...DEFAULT_PARAMS,
-      ...this.route.snapshot.queryParams,
-    }),
-  );
+  protected readonly queryParamsUpdated$ =
+    new BehaviorSubject<PaginationParams>(
+      new PaginationParams({
+        ...DEFAULT_PARAMS,
+        ...this.route.snapshot.queryParams,
+      }),
+    );
+
+  /** Delete anime by id. */
+  private readonly deleteAnime$ = new Subject<number>();
 
   /** Loading feature. */
   protected readonly isAnimeLoading$ = new BehaviorSubject<boolean>(false);
@@ -102,6 +115,8 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
     private animeService: AnimeService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
+    private readonly dialog: MatDialog,
+    private readonly navigate: NavigateService,
   ) {
     this.setInitialValues();
 
@@ -111,9 +126,11 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
           ...DEFAULT_PARAMS,
           ...params,
         });
-        return this.animeService.getAnime(new HttpParams({
-          fromObject: { ...PaginationParamsMapper.toDto(query) },
-        }));
+        return this.animeService.getAnime(
+          new HttpParams({
+            fromObject: { ...PaginationParamsMapper.toDto(query) },
+          }),
+        );
       }),
       shareReplay({ bufferSize: 1, refCount: true }),
     );
@@ -122,25 +139,33 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
       this.queryParamsUpdated$,
       this.filterControl.valueChanges.pipe(
         debounceTime(400),
-        map(value => new PaginationParams({
-          ...DEFAULT_PARAMS,
-          ...this.route.snapshot.queryParams,
-          type: value?.join(',') ?? DEFAULT_PARAMS.type,
-        })),
+        map(
+          value =>
+            new PaginationParams({
+              ...DEFAULT_PARAMS,
+              ...this.route.snapshot.queryParams,
+              type: value?.join(',') ?? DEFAULT_PARAMS.type,
+            }),
+        ),
       ),
       this.searchControl.valueChanges.pipe(
         debounceTime(500),
-        map(value => new PaginationParams({
-          ...DEFAULT_PARAMS,
-          search: value ?? DEFAULT_PARAMS.search,
-        })),
+        map(
+          value =>
+            new PaginationParams({
+              ...DEFAULT_PARAMS,
+              search: value ?? DEFAULT_PARAMS.search,
+            }),
+        ),
       ),
     );
 
-    this.sortDirection$ = this.queryParamsUpdated$
-      .pipe(map(
-        params => params.ordering === SortDirection.Descending ? SortDirection.Descending : SortDirection.Ascending,
-      ));
+    this.sortDirection$ = this.queryParamsUpdated$.pipe(
+      map(params =>
+        params.ordering === SortDirection.Descending ?
+          SortDirection.Descending :
+          SortDirection.Ascending),
+    );
   }
 
   /** Initialize data. */
@@ -152,7 +177,9 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
       }),
     );
 
-    const loadingAnimeSideEffect$ = this.paginationAnime$.pipe(tap(() => this.isAnimeLoading$.next(false)));
+    const loadingAnimeSideEffect$ = this.paginationAnime$.pipe(
+      tap(() => this.isAnimeLoading$.next(false)),
+    );
 
     merge(navigateSideEffect$, loadingAnimeSideEffect$)
       .pipe(takeUntil(this.subscriptionManager$))
@@ -220,5 +247,18 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
    */
   public trackAnimeById(_index: number, anime: Anime): number {
     return anime.id;
+  }
+
+  public onDelete(event: Event, animeId: number): void {
+    event.stopPropagation();
+    this.dialog.open(ConfirmModalComponent, {
+      data: () => {
+        this.animeService.deleteAnimeById(animeId).pipe(
+          tap(() => this.navigate.reloadPage()),
+          untilDestroyed(this),
+        )
+          .subscribe();
+      },
+    });
   }
 }
