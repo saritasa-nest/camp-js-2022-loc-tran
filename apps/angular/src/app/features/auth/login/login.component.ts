@@ -10,7 +10,6 @@ import {
   BehaviorSubject,
   catchError, Observable,
   of,
-  Subject,
   switchMap,
   tap,
 } from 'rxjs';
@@ -36,9 +35,6 @@ export class LoginComponent {
 
   /** Store error data response from back end. */
   protected readonly loginError$ = new BehaviorSubject<string>('');
-
-  /** Subject that is used for unsubscribing from streams. */
-  private readonly subscriptionManager$ = new Subject<void>();
 
   public constructor(
     private readonly formBuilder: FormBuilder,

@@ -15,14 +15,12 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   BehaviorSubject,
   catchError, Observable,
-  of,
-  Subject,
-  switchMap, tap,
+  of, switchMap, tap,
 } from 'rxjs';
 
+import { NavigateService } from '../../../../../src/core/services/navigate.service';
 import { AuthService } from '../../../../core/services/auth.service';
 import { TokenService } from '../../../../core/services/token.service';
-import { NavigateService } from '../../../../../src/core/services/navigate.service';
 
 /** Register component. */
 @UntilDestroy()
@@ -35,9 +33,6 @@ import { NavigateService } from '../../../../../src/core/services/navigate.servi
 export class RegisterComponent {
   /** Store error data response from BE. */
   protected readonly errorList$ = new BehaviorSubject<DataError>({});
-
-  /** Subject that is used for unsubscribing from streams. */
-  private readonly subscriptionManager$ = new Subject<void>();
 
   /** Form group to manage register information. */
   public readonly registerForm = this.formBuilder.group(
