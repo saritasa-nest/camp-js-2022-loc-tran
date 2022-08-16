@@ -21,10 +21,16 @@ import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeTableComponent } from './anime-table/anime-table.component';
 import { DetailComponent } from './detail/detail.component';
 import { EditComponent } from './edit/edit.component';
+import { AddComponent } from './add/add.component';
 
 /** Anime module. */
 @NgModule({
-  declarations: [AnimeTableComponent, DetailComponent, EditComponent],
+  declarations: [
+    AnimeTableComponent,
+    DetailComponent,
+    EditComponent,
+    AddComponent,
+  ],
   imports: [
     CommonModule,
     MatTableModule,

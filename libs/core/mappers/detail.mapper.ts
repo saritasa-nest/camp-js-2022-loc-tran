@@ -1,10 +1,9 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { AnimeDetailDto } from '../dtos/animeDetail.dto';
-import { AnimeStatus, AnimeType } from '../models/anime';
 import { AnimeDetail } from '../models/animeDetail';
 
-import { animeStatusDtoToModel, animeTypeDtoToModel } from './anime.mapper';
-import { DateRangeMapper } from './dateRange.mapper';
-import { GenreDataMapper } from './genreData.mapper.dto';
+import { AnimeMapper } from './anime.mapper';
+import { GenreMapper } from './genre.mapper';
 import { StudioMapper } from './studio.mapper';
 
 export namespace DetailMapper {
@@ -14,22 +13,30 @@ export namespace DetailMapper {
    * @param dto Detail dto data.
    */
   export function fromDto(dto: AnimeDetailDto): AnimeDetail {
-    const status = animeStatusDtoToModel[dto.status] !== undefined ? animeStatusDtoToModel[dto.status] : AnimeStatus.Airing;
-    const type = animeTypeDtoToModel[dto.type] !== undefined ? animeTypeDtoToModel[dto.type] : AnimeType.Tv;
     return new AnimeDetail({
-      id: dto.id,
-      image: dto.image,
+      ...AnimeMapper.fromDto(dto),
       trailerYoutube: dto.trailer_youtube_id,
-      titleEnglish: dto.title_eng,
-      titleJapanese: dto.title_jpn,
-      type,
-      status,
       airing: dto.airing,
-      aired: DateRangeMapper.fromDto(dto.aired),
       synopsis: dto.synopsis,
       background: dto.background,
       studiosData: dto.studios_data.map(studioDataDto => StudioMapper.fromDto(studioDataDto)),
-      genresData: dto.genres_data.map(genreDataDto => GenreDataMapper.fromDto(genreDataDto)),
+      genresData: dto.genres_data.map(genreDataDto => GenreMapper.fromDto(genreDataDto)),
     });
+  }
+
+  /**
+   * Maps model to dto.
+   * @param model Anime detail model.
+   */
+  export function toDto(model: AnimeDetail): AnimeDetailDto {
+    return {
+      ...AnimeMapper.toDto(model),
+      trailer_youtube_id: model.trailerYoutube,
+      airing: model.airing,
+      synopsis: model.synopsis,
+      background: model.background,
+      studios_data: model.studiosData.map(studioData => StudioMapper.toDto(studioData)),
+      genres_data: model.genresData.map(genreData => GenreMapper.toDto(genreData)),
+    };
   }
 }

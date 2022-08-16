@@ -1,18 +1,26 @@
-/** Genre DTO. */
+/** Genre dto data. */
 export interface GenreDto {
 
-  /** Id. */
+  /** Id of the Genre. */
   readonly id: number;
 
-  /** Name. */
-  readonly name: string;
-
-  /** Creation time, for example, "2014-12-20T17:30:50.416Z". */
+  /** Created date of the Genre. */
   readonly created: string;
 
-  /** Time of the last modification, for example, "2014-12-20T17:30:50.416Z". */
+  /** Modified date of the Genre. */
   readonly modified: string;
 
-  /** DTO type. */
-  readonly type: 'GENRES';
+  /** Name of the Genre. */
+  readonly name: string;
+
+  /** Type of the Genre. */
+  readonly type: GenreTypeDto;
+}
+
+/** Genre dto types. */
+export enum GenreTypeDto {
+  Genres = 'GENRES',
+  ExplicitGenres = 'EXPLICIT_GENRES',
+  Themes = 'THEMES',
+  Demographics = 'DEMOGRAPHICS',
 }

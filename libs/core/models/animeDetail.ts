@@ -1,4 +1,5 @@
 import { Anime } from './anime';
+import { Genre } from './genre';
 import { OmitImmerable } from './immerable';
 
 /** Anime detail data. */
@@ -20,7 +21,7 @@ export class AnimeDetail extends Anime {
   public readonly studiosData: readonly Studio[];
 
   /** Genre data of the anime. */
-  public readonly genresData: readonly GenreData[];
+  public readonly genresData: readonly Genre[];
 
   public constructor(data: DetailArgs) {
     super(data);
@@ -35,14 +36,6 @@ export class AnimeDetail extends Anime {
 
 type DetailArgs = OmitImmerable<AnimeDetail>;
 
-/** Genre types. */
-export enum GenreType {
-  Genres = 'Genres',
-  ExplicitGenres = 'Explicit genres',
-  Themes = 'Themes',
-  Demographics = 'Demographics',
-}
-
 /** Studio data. */
 export interface Studio {
 
@@ -50,30 +43,11 @@ export interface Studio {
   readonly id: number;
 
   /** Created date of the studio. */
-  readonly created: string;
+  readonly created: Date;
 
   /** Modified date of the studio. */
-  readonly modified: string;
+  readonly modified: Date;
 
   /** Name of the studio. */
   readonly name: string;
-}
-
-/** Genre data. */
-export interface GenreData {
-
-  /** Id of the Genre. */
-  readonly id: number;
-
-  /** Created date of the Genre. */
-  readonly created: string;
-
-  /** Modified date of the Genre. */
-  readonly modified: string;
-
-  /** Name of the Genre. */
-  readonly name: string;
-
-  /** Type of the Genre. */
-  readonly type: GenreType;
 }

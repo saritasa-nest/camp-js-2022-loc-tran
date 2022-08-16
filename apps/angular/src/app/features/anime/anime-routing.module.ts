@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { CheckIsLoggedInGuard } from '../../../core/guards/is-logged-in.guard';
 
+import { AddComponent } from './add/add.component';
 import { AnimeTableComponent } from './anime-table/anime-table.component';
 import { DetailComponent } from './detail/detail.component';
 import { EditComponent } from './edit/edit.component';
@@ -20,6 +21,11 @@ const routes: Routes = [
   {
     path: 'edit/:animeId',
     component: EditComponent,
+    canActivate: [CheckIsLoggedInGuard],
+  },
+  {
+    path: 'add',
+    component: AddComponent,
     canActivate: [CheckIsLoggedInGuard],
   },
 ];
