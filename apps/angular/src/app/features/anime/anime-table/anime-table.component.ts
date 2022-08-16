@@ -1,9 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
+  Component, OnInit,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
@@ -13,17 +11,14 @@ import { PaginationParamsMapper } from '@js-camp/core/mappers/paginationParams.m
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { PaginationParams } from '@js-camp/core/models/paginationParams';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   BehaviorSubject,
   debounceTime,
   map,
   merge,
   Observable,
-  shareReplay,
-  Subject,
-  switchMap,
-  takeUntil,
-  tap,
+  shareReplay, switchMap, tap,
 } from 'rxjs';
 
 import { AnimeService } from '../../../../core/services/anime.service';
@@ -56,13 +51,14 @@ const COLUMN_TITLES = [
 const FILTER_TYPES = ['TV', 'OVA', 'MOVIE', 'SPECIAL', 'ONA', 'MUSIC'];
 
 /** Anime table. */
+@UntilDestroy()
 @Component({
   selector: 'camp-anime-table',
   templateUrl: './anime-table.component.html',
   styleUrls: ['./anime-table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnimeTableComponent implements OnDestroy, OnInit {
+export class AnimeTableComponent implements OnInit {
   /** Filter options. */
   protected readonly filterTypes = FILTER_TYPES;
 
@@ -80,9 +76,6 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
 
   /** This stream emit latest query params and trigger side effect.*/
   protected readonly queryParams$: Observable<PaginationParams>;
-
-  /** Subject that is used for unsubscribing from streams. */
-  private readonly subscriptionManager$ = new Subject<void>();
 
   /** Stream for sort direction. */
   protected readonly sortDirection$: Observable<SortDirection>;
@@ -155,14 +148,8 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
     const loadingAnimeSideEffect$ = this.paginationAnime$.pipe(tap(() => this.isAnimeLoading$.next(false)));
 
     merge(navigateSideEffect$, loadingAnimeSideEffect$)
-      .pipe(takeUntil(this.subscriptionManager$))
+      .pipe(untilDestroyed(this))
       .subscribe();
-  }
-
-  /** Clean side effect streams. */
-  public ngOnDestroy(): void {
-    this.subscriptionManager$.next();
-    this.subscriptionManager$.complete();
   }
 
   /**
