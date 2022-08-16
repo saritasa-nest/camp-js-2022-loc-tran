@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 /** Add a new anime. */
 @Component({
@@ -9,11 +9,7 @@ import { FormBuilder } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddComponent {
-  private readonly addForm = this.formBuilder.group({
 
-  })
 
-  public constructor(
-    private readonly formBuilder: FormBuilder,
-  ) {}
+  public constructor() {}
 }

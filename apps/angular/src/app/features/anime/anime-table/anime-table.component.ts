@@ -1,9 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
+  Component, OnInit,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
@@ -14,18 +12,13 @@ import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { PaginationParams } from '@js-camp/core/models/paginationParams';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-
 import {
   BehaviorSubject,
   debounceTime,
   map,
   merge,
   Observable,
-  shareReplay,
-  Subject,
-  switchMap,
-  takeUntil,
-  tap,
+  shareReplay, switchMap, tap, Subject,
 } from 'rxjs';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -72,7 +65,7 @@ const FILTER_TYPES = ['TV', 'OVA', 'MOVIE', 'SPECIAL', 'ONA', 'MUSIC'];
   styleUrls: ['./anime-table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnimeTableComponent implements OnDestroy, OnInit {
+export class AnimeTableComponent implements OnInit {
   /** Filter options. */
   protected readonly filterTypes = FILTER_TYPES;
 
@@ -90,9 +83,6 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
 
   /** This stream emit latest query params and trigger side effect.*/
   protected readonly queryParams$: Observable<PaginationParams>;
-
-  /** Subject that is used for unsubscribing from streams. */
-  private readonly subscriptionManager$ = new Subject<void>();
 
   /** Stream for sort direction. */
   protected readonly sortDirection$: Observable<SortDirection>;
@@ -193,14 +183,8 @@ export class AnimeTableComponent implements OnDestroy, OnInit {
     );
 
     merge(navigateSideEffect$, loadingAnimeSideEffect$)
-      .pipe(takeUntil(this.subscriptionManager$))
+      .pipe(untilDestroyed(this))
       .subscribe();
-  }
-
-  /** Clean side effect streams. */
-  public ngOnDestroy(): void {
-    this.subscriptionManager$.next();
-    this.subscriptionManager$.complete();
   }
 
   /**

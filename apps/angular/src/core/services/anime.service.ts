@@ -11,9 +11,18 @@ import { AnimeDetail } from '@js-camp/core/models/animeDetail';
 import { AnimeDetailDto } from '@js-camp/core/dtos/animeDetail.dto';
 import { DetailMapper } from '@js-camp/core/mappers/detail.mapper';
 
+import { AnimeManagement } from '@js-camp/core/models/animeManagement';
+import { AnimeManagementDto } from '@js-camp/core/dtos/animeManagement.dto';
+import { AnimeManagementMapper } from '@js-camp/core/mappers/animeManagement.mapper';
+
+import { Genre } from '@js-camp/core/models/genre';
+import { GenreMapper } from '@js-camp/core/mappers/genre.mapper';
+import { GenreDto } from '@js-camp/core/dtos/genre.dto';
+
 import { AppConfigService } from './app-config.service';
 
 const ANIME_URL = '/api/v1/anime/anime/';
+const GENRE_URL = '/api/v1/anime/genres/';
 
 /** Anime service. */
 @Injectable({
@@ -21,6 +30,8 @@ const ANIME_URL = '/api/v1/anime/anime/';
 })
 export class AnimeService {
   private animeApiAddress = new URL(ANIME_URL, this.appConfig.apiUrl);
+
+  private genreApiAddress = new URL(GENRE_URL, this.appConfig.apiUrl);
 
   public constructor(
     private readonly http: HttpClient,
@@ -48,8 +59,21 @@ export class AnimeService {
    */
   public getAnimeById(id: string): Observable<AnimeDetail> {
     return this.http
-      .get<AnimeDetailDto>(`${this.animeApiAddress}${id}/`)
+      .get<AnimeDetailDto>(`${this.animeApiAddress.href}${id}/`)
       .pipe(map(animeDetailDto => DetailMapper.fromDto(animeDetailDto)));
+  }
+
+  /**
+   * Get anime management detail for editor.
+   * @param id Id of anime.
+   */
+  public getManageInformationAnime(id: string): Observable<AnimeManagement> {
+    return this.http
+      .get<AnimeManagementDto>(`${this.animeApiAddress.href}${id}/`)
+      .pipe(
+        map(animeManagementDto =>
+          AnimeManagementMapper.fromDto(animeManagementDto)),
+      );
   }
 
   /**
@@ -58,6 +82,14 @@ export class AnimeService {
    */
   public deleteAnimeById(id: number): Observable<null> {
     return this.http
-      .delete(`${this.animeApiAddress.href}${id}/`).pipe(map(() => null));
+      .delete(`${this.animeApiAddress.href}${id}/`)
+      .pipe(map(() => null));
+  }
+
+  /** Get add genres. */
+  public getGenres(): Observable<readonly Genre[]> {
+    return this.http
+      .get<Pagination<GenreDto>>(this.genreApiAddress.href)
+      .pipe(map(paginationGenre => paginationGenre.results.map(genreDto => GenreMapper.fromDto(genreDto))));
   }
 }

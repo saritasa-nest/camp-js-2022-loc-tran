@@ -1,0 +1,119 @@
+<form class="form" [formGroup]="managementForm">
+
+  <mat-form-field class="form__field" appearance="fill">
+    <mat-label>Title English</mat-label>
+    <input
+      type="text"
+      matInput
+      placeholder="Title English"
+      formControlName="titleEnglish"
+      />
+  </mat-form-field>
+
+  <mat-form-field class="form__field" appearance="fill">
+    <mat-label>Title Japan</mat-label>
+    <input
+      type="text"
+      matInput
+      placeholder="Title Japanese"
+      formControlName="titleJapanese"
+      />
+  </mat-form-field>
+
+  <!-- <mat-form-field class="form__field" appearance="fill">
+    <mat-label>Image</mat-label>
+    <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+    <input hidden #fileInput type="file" id="file">
+  </mat-form-field> -->
+
+  <mat-form-field class="form__field" appearance="fill">
+    <mat-label>Trailer Youtube</mat-label>
+    <input
+      type="text"
+      matInput
+      placeholder="Trailer Youtube id"
+      formControlName="trailerYoutube"
+      />
+  </mat-form-field>
+
+  <mat-form-field class="form__field" appearance="fill">
+    <mat-label class="type__label">Type</mat-label>
+    <mat-select disableRipple>
+      <mat-option
+        *ngFor="let option of animeType"
+        [value]="option"
+        trackBy="trackByOptionName"
+        >{{ option }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="form__field" appearance="fill">
+    <mat-label class="type__label">Status</mat-label>
+    <mat-select disableRipple formControlName="status">
+      <mat-option
+        *ngFor="let option of animeStatus"
+        [value]="option"
+        trackBy="trackByOptionName"
+        >{{ option }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <div class="form__field" appearance="fill">
+    <mat-slide-toggle formControlName="airing">Airing</mat-slide-toggle>
+  </div>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Enter a date range</mat-label>
+    <mat-date-range-input [rangePicker]="picker">
+      <ng-container formGroupName="aired">
+        <input matStartDate formControlName="start" placeholder="Start date">
+        <input matEndDate formControlName="end" placeholder="End date">
+      </ng-container>
+    </mat-date-range-input>
+    <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+
+    <!-- <mat-error *ngIf="addForm.controls.aired.value.start.hasError('matStartDateInvalid')">Invalid start date</mat-error> -->
+    <!-- <mat-error *ngIf="addForm.controls.aired.value.end.hasError('matEndDateInvalid')">Invalid end date</mat-error> -->
+  </mat-form-field>
+
+  <mat-form-field class="form__field" appearance="fill">
+    <mat-label>Status</mat-label>
+    <input
+      type="text"
+      matInput
+      placeholder="Status"
+      formControlName="status"
+      />
+  </mat-form-field>
+
+  <mat-form-field class="example-chip-list" appearance="fill">
+    <mat-label>Favorite Fruits</mat-label>
+    <mat-chip-list #chipList aria-label="Fruit selection">
+      <mat-chip
+        *ngFor="let genre of animeData?.genresData"
+        (removed)="removeGenre(genre)"
+        >
+        {{genre.name}}
+        <button type="button" matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+      <input
+        placeholder="New fruit..."
+        #fruitInput
+        [formControl]="genreInput"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="chipList"
+        (matChipInputTokenEnd)="addGenre($event)">
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedGenre($event)">
+      <mat-option *ngFor="let genre of genres$ | async" [value]="genre">
+        {{genre.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
