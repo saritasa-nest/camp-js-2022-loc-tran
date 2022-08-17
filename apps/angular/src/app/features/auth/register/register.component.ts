@@ -1,7 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -9,18 +6,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { DataError, HttpError } from '@js-camp/core/models/httpError';
-import { Token } from '@js-camp/core/models/token';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {
-  BehaviorSubject,
-  catchError, Observable,
-  of, switchMap, tap,
-} from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { NavigateService } from '../../../../../src/core/services/navigate.service';
 import { AuthService } from '../../../../core/services/auth.service';
-import { TokenService } from '../../../../core/services/token.service';
 
 /** Register component. */
 @UntilDestroy()
@@ -50,7 +41,6 @@ export class RegisterComponent {
 
   public constructor(
     private readonly formBuilder: FormBuilder,
-    private readonly tokenService: TokenService,
     private readonly authService: AuthService,
     private readonly navigateService: NavigateService,
   ) {}
@@ -68,13 +58,11 @@ export class RegisterComponent {
         lastName: this.registerForm.value.lastName ?? '',
         password: this.registerForm.value.password ?? '',
       })
-      .pipe(
-        switchMap(token => this.tokenService.set(token)),
-        tap(() => this.navigateService.navigateToHome()),
-        untilDestroyed(this),
-        catchError((error: unknown) => this.handleRegisterError(error)),
-      )
-      .subscribe();
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: () => this.navigateService.navigateToHome(),
+        error: (error: unknown) => this.handleRegisterError(error),
+      });
   }
 
   /**
@@ -95,13 +83,12 @@ export class RegisterComponent {
    * Handle register error.
    * @param error Error thrown.
    */
-  public handleRegisterError(error: unknown): Observable<Token | null> {
+  public handleRegisterError(error: unknown): void {
     if (error instanceof HttpError) {
       this.errorList$.next(error.data);
       for (const key of Object.keys(error.data)) {
         this.registerForm.get(key)?.setErrors({ invalidData: true });
       }
     }
-    return of(null);
   }
 }

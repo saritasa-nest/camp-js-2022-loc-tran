@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 
 import { AuthService } from '../../../core/services/auth.service';
 
 /** Reused header. */
+@UntilDestroy()
 @Component({
   selector: 'camp-header',
   templateUrl: './header.component.html',
@@ -24,7 +26,7 @@ export class HeaderComponent {
    */
   public handleLogout(event: Event): void {
     event.preventDefault();
-    this.authService.logout().subscribe()
-      .unsubscribe();
+    this.authService.logout().pipe(untilDestroyed(this))
+      .subscribe();
   }
 }

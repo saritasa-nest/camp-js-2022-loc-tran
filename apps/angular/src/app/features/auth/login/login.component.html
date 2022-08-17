@@ -8,29 +8,33 @@
       matInput
       placeholder="Ex. pat@example.com"
       formControlName="email"
-      />
-    <mat-error
-    *ngIf="loginForm.controls.email.hasError('required')"
-    >
+    />
+    <mat-error *ngIf="loginForm.controls.email.hasError('required')">
       Email is <strong>required</strong>
     </mat-error>
   </mat-form-field>
-    <mat-form-field class="form__field" appearance="fill">
+  <mat-form-field class="form__field" appearance="fill">
     <mat-label>Password</mat-label>
     <input
       type="password"
       matInput
       placeholder="Type your password."
       formControlName="password"
-      />
-    <mat-error
-    *ngIf="loginForm.controls.password.hasError('required')"
-    >
+    />
+    <mat-error *ngIf="loginForm.controls.password.hasError('required')">
       Password is <strong>required</strong>
     </mat-error>
   </mat-form-field>
-  <mat-error>
-    {{ loginError$ | async }}
+  <mat-error *ngIf="loginError$ | async as error">
+    {{ error }}
   </mat-error>
-  <button class="form__submit" type="submit" mat-flat-button color="primary" [disabled]="loginForm.invalid">Log in</button>
+  <button
+    class="form__submit"
+    type="submit"
+    mat-flat-button
+    color="primary"
+    [disabled]="loginForm.invalid"
+  >
+    Log in
+  </button>
 </form>
