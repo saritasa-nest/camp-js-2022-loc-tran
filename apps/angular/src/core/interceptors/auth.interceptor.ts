@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 import { Observable, switchMap } from 'rxjs';
 
 import { TokenService } from '../services/token.service';
-import { isProhibitedRoute } from '../utils/isProhibitedRoute';
+import { isProhibitedRoute } from '../guards/isProhibitedRoute';
 
 /** Add jwt to api request. */
 @Injectable()

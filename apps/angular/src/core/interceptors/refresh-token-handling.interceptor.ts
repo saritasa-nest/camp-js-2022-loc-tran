@@ -11,11 +11,11 @@ import { catchError, Observable, switchMap, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 import { TokenService } from '../services/token.service';
-import { isProhibitedRoute } from '../utils/isProhibitedRoute';
+import { isProhibitedRoute } from '../guards/isProhibitedRoute';
 
-/** Add jwt to api request. */
+/** Handle error 401. */
 @Injectable()
-export class Error401Interceptor implements HttpInterceptor {
+export class RefreshTokenInterceptor implements HttpInterceptor {
   private readonly refreshRoute = '/api/v1/auth/token/refresh';
 
   public constructor(
@@ -24,7 +24,7 @@ export class Error401Interceptor implements HttpInterceptor {
   ) {}
 
   /**
-   * Add jwt to request.
+   * If the error is 401, check condition then refresh token.
    * @param httpRequest Object to create clone method to attach the api key.
    * @param next Update request into the application.
    */
