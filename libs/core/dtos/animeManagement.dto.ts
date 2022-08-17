@@ -41,6 +41,8 @@ export enum SourceTypeDto {
   Unknown = 'UNKNOWN',
 }
 
+export type AnimeManagementPostDto = Omit<AnimeManagementDto, 'id' | 'studios_data' | 'genres_data'>;
+
 export interface AnimeManagementDto extends AnimeDetailDto {
 
   /** Source of the anime. */

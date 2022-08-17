@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { AnimeDetailDto } from '../dtos/animeDetail.dto';
+import { AnimeDetailDto, AnimeDetailPostDto } from '../dtos/animeDetail.dto';
 import { AnimeDetail } from '../models/animeDetail';
 
 import { AnimeMapper } from './anime.mapper';
@@ -28,15 +28,15 @@ export namespace DetailMapper {
    * Maps model to dto.
    * @param model Anime detail model.
    */
-  export function toDto(model: AnimeDetail): AnimeDetailDto {
+  export function toPostDto(model: AnimeDetail): AnimeDetailPostDto {
     return {
       ...AnimeMapper.toDto(model),
       trailer_youtube_id: model.trailerYoutube,
       airing: model.airing,
       synopsis: model.synopsis,
       background: model.background,
-      studios_data: model.studiosData.map(studioData => StudioMapper.toDto(studioData)),
-      genres_data: model.genresData.map(genreData => GenreMapper.toDto(genreData)),
+      studios: model.studiosData.map(studioData => studioData.id),
+      genres: model.genresData.map(genreData => genreData.id),
     };
   }
 }

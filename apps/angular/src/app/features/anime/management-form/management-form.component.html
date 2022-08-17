@@ -64,7 +64,7 @@
     <mat-slide-toggle formControlName="airing">Airing</mat-slide-toggle>
   </div>
 
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" class="form__field">
     <mat-label>Enter a date range</mat-label>
     <mat-date-range-input [rangePicker]="picker">
       <ng-container formGroupName="aired">
@@ -90,11 +90,11 @@
       />
   </mat-form-field>
 
-  <mat-form-field class="example-chip-list" appearance="fill">
-    <mat-label>Favorite Fruits</mat-label>
+  <mat-form-field class="form__field" appearance="fill">
+    <mat-label>Genre</mat-label>
     <mat-chip-list #chipList aria-label="Fruit selection">
       <mat-chip
-        *ngFor="let genre of animeData?.genresData"
+        *ngFor="let genre of managementForm.controls.genresData.value"
         (removed)="removeGenre(genre)"
         >
         {{genre.name}}
@@ -103,15 +103,16 @@
         </button>
       </mat-chip>
       <input
-        placeholder="New fruit..."
-        #fruitInput
-        [formControl]="genreInput"
+        placeholder="New genre..."
+        #genreInput
+        [formControl]="genreControl"
         [matAutocomplete]="auto"
         [matChipInputFor]="chipList"
-        (matChipInputTokenEnd)="addGenre($event)">
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="inputGenre($event)">
     </mat-chip-list>
-    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedGenre($event)">
-      <mat-option *ngFor="let genre of genres$ | async" [value]="genre">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectGenre($event)">
+      <mat-option (blur)="optionFocused()" *ngFor="let genre of filteredGenre$ | async" [value]="genre.name">
         {{genre.name}}
       </mat-option>
     </mat-autocomplete>

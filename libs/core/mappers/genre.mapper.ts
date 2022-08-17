@@ -1,19 +1,5 @@
-import { GenreDto, GenreTypeDto } from '../dtos/genre.dto';
-import { Genre, GenreType } from '../models/genre';
-
-const genreTypeDtoToModel: Readonly<Record<GenreTypeDto, GenreType>> = {
-  [GenreTypeDto.Demographics]: GenreType.Demographics,
-  [GenreTypeDto.ExplicitGenres]: GenreType.ExplicitGenres,
-  [GenreTypeDto.Genres]: GenreType.Genres,
-  [GenreTypeDto.Themes]: GenreType.Themes,
-};
-
-const genreTypeModelToDto: Readonly<Record<GenreType, GenreTypeDto>> = {
-  [GenreType.Demographics]: GenreTypeDto.Demographics,
-  [GenreType.ExplicitGenres]: GenreTypeDto.ExplicitGenres,
-  [GenreType.Genres]: GenreTypeDto.Genres,
-  [GenreType.Themes]: GenreTypeDto.Themes,
-};
+import { GenreDto, GenrePostDto } from '../dtos/genre.dto';
+import { Genre, GenrePost } from '../models/genre';
 
 export namespace GenreMapper {
 
@@ -25,23 +11,20 @@ export namespace GenreMapper {
     return new Genre({
       id: dto.id,
       name: dto.name,
-      type: genreTypeDtoToModel[dto.type],
-      created: new Date(dto.created),
-      modified: new Date(dto.modified),
     });
   }
 
   /**
-   * Maps model to dto.
+   * Maps model to post dto.
    * @param model Genre model.
    */
-  export function toDto(model: Genre): GenreDto {
+  export function toPostDto(model: GenrePost): GenrePostDto {
     return {
-      id: model.id,
       name: model.name,
-      type: genreTypeModelToDto[model.type],
-      created: model.created.toString(),
-      modified: model.created.toString(),
+
+      // I used concrete value here because type of genre is
+      // not use in application but required in api.
+      type: 'GENRES',
     };
   }
 }

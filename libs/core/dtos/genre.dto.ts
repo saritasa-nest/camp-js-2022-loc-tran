@@ -1,26 +1,16 @@
+export type GenrePostDto = Omit<GenreDto, 'id' | 'created' | 'modified'>;
+
 /** Genre dto data. */
 export interface GenreDto {
 
   /** Id of the Genre. */
   readonly id: number;
 
-  /** Created date of the Genre. */
-  readonly created: string;
-
-  /** Modified date of the Genre. */
-  readonly modified: string;
-
   /** Name of the Genre. */
   readonly name: string;
 
   /** Type of the Genre. */
-  readonly type: GenreTypeDto;
-}
-
-/** Genre dto types. */
-export enum GenreTypeDto {
-  Genres = 'GENRES',
-  ExplicitGenres = 'EXPLICIT_GENRES',
-  Themes = 'THEMES',
-  Demographics = 'DEMOGRAPHICS',
+  // I used concrete value here because type of genre is
+  // not use in application but required in api.
+  readonly type: 'GENRES';
 }

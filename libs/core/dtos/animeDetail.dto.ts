@@ -2,6 +2,8 @@ import { AnimeDto } from './anime.dto';
 import { GenreDto } from './genre.dto';
 import { StudioDto } from './studio.dto';
 
+export type AnimeDetailPostDto = Omit<AnimeDetailDto, 'studios_data' | 'genres_data'>;
+
 /** Detail Dto data of the anime. */
 export interface AnimeDetailDto extends AnimeDto {
 
@@ -16,6 +18,12 @@ export interface AnimeDetailDto extends AnimeDto {
 
   /** Background of the anime. */
   readonly background: string;
+
+  /** Studios id of the anime. */
+  readonly studios: readonly number[];
+
+  /** Genre id of the anime. */
+  readonly genres: readonly number[];
 
   /** Studios data of the anime. */
   readonly studios_data: readonly StudioDto[];
