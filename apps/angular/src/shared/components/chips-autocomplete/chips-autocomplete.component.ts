@@ -1,4 +1,3 @@
-/* eslint-disable jsdoc/require-jsdoc */
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import {
   ChangeDetectionStrategy,
@@ -22,34 +21,45 @@ import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component'
 @Component({
   selector: 'camp-chips-autocomplete',
   templateUrl: './chips-autocomplete.component.html',
-  styleUrls: ['./chips-autocomplete.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChipsAutocompleteComponent<T> implements OnInit {
+  /** Title of chips autocomplete. */
+  @Input() public title = '';
+
+  /** Placeholder of chips autocomplete. */
+  @Input() public placeholder = '';
+
   /** Current items. One item is one chip. */
   @Input() public currentItems = new FormControl<readonly T[] | null>([]);
 
-  /** Form control for input item. */
-  @Input() public itemControl = new FormControl<string>('');
-
+  /** Get item data. */
   @Input() public getItem: (key: string) => Observable<readonly T[]> = () => of();
 
+  /** Post item data. */
   @Input() public postItem: (itemName: string) => Observable<T> = () => of();
 
+  /** Specify 1 item. */
   @Input() public trackItemBy: (item: T) => string | number = () => '';
 
+  /** Get display name of item. */
   @Input() public getItemName: (item: T) => string = () => '';
 
   @ViewChild('itemInput')
   private itemInput = {} as ElementRef;
 
+  /** Separator keys codes of input. */
   protected readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
+  /** Filtered items to display in autocomplete. */
   protected readonly filteredItem$: Observable<readonly T[]>;
 
   private readonly addItemToCurrentItems$ = new Subject<string>();
 
   private readonly postItem$ = new Subject<string>();
+
+  /** Control for item searching. */
+  protected readonly itemControl = new FormControl<string>('');
 
   public constructor(
     private readonly dialog: MatDialog,

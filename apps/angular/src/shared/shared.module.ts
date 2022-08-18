@@ -1,22 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { RouterModule } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 import { ChipsAutocompleteComponent } from './components/chips-autocomplete/chips-autocomplete.component';
-import { HeaderComponent } from './components/header/header.component';
-import { PlaceholderPipe } from './pipe/placeholder.pipe';
-import { PaginationComponent } from './components/pagination/pagination.component';
-import { SafePipe } from './pipe/safe.pipe';
-import { PluckPipe } from './pipe/pluck.pipe';
-import { ImageModalComponent } from './components/image-modal/image-modal.component';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { ReactiveFormsModule } from '@angular/forms';
+import { HeaderComponent } from './components/header/header.component';
+import { ImageModalComponent } from './components/image-modal/image-modal.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { PlaceholderPipe } from './pipe/placeholder.pipe';
+import { PluckPipe } from './pipe/pluck.pipe';
+import { SafePipe } from './pipe/safe.pipe';
 
 /** Shared module. */
 @NgModule({
@@ -40,6 +41,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
     MatFormFieldModule,
     ReactiveFormsModule,
+    MatInputModule,
   ],
   exports: [
     HeaderComponent,

@@ -1,25 +1,27 @@
-<mat-label>Studio</mat-label>
-<mat-chip-list #chipListStudio aria-label="Studio selection">
-  <mat-chip
-    *ngFor="let item of currentItems.value"
-    (removed)="removeItem(item)"
-    >
-    {{item}}
-    <button type="button" matChipRemove>
-      <mat-icon>cancel</mat-icon>
-    </button>
-  </mat-chip>
-  <input
-    placeholder="New item..."
-    #itemInput
-    [formControl]="itemControl"
-    [matAutocomplete]="autoStudio"
-    [matChipInputFor]="chipListStudio"
-    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-    (matChipInputTokenEnd)="inputItem($event)">
-</mat-chip-list>
-<mat-autocomplete #autoStudio="matAutocomplete" (optionSelected)="selectItem($event)">
-  <mat-option *ngFor="let item of filteredItem$ | async" [value]="item">
-    {{item}}
-  </mat-option>
-</mat-autocomplete>
+<mat-form-field class="form__field" appearance="fill">
+  <mat-label>{{title}}</mat-label>
+  <mat-chip-list #chipListItem aria-label="Item selection">
+    <mat-chip
+      *ngFor="let item of currentItems.value"
+      (removed)="removeItem(item)"
+      >
+      {{getItemName(item)}}
+      <button type="button" matChipRemove>
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-chip>
+    <input
+      placeholder="{{placeholder}}"
+      #itemInput
+      [formControl]="itemControl"
+      [matAutocomplete]="autoItem"
+      [matChipInputFor]="chipListItem"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      (matChipInputTokenEnd)="inputItem($event)">
+  </mat-chip-list>
+  <mat-autocomplete #autoItem="matAutocomplete" (optionSelected)="selectItem($event)">
+    <mat-option *ngFor="let item of filteredItem$ | async" [value]="getItemName(item)">
+      {{getItemName(item)}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

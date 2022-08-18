@@ -1,5 +1,4 @@
 <form class="form" [formGroup]="managementForm">
-
   <mat-form-field class="form__field" appearance="fill">
     <mat-label>Title English</mat-label>
     <input
@@ -7,7 +6,7 @@
       matInput
       placeholder="Title English"
       formControlName="titleEnglish"
-      />
+    />
   </mat-form-field>
 
   <mat-form-field class="form__field" appearance="fill">
@@ -17,7 +16,7 @@
       matInput
       placeholder="Title Japanese"
       formControlName="titleJapanese"
-      />
+    />
   </mat-form-field>
 
   <!-- <mat-form-field class="form__field" appearance="fill">
@@ -33,7 +32,7 @@
       matInput
       placeholder="Trailer Youtube id"
       formControlName="trailerYoutube"
-      />
+    />
   </mat-form-field>
 
   <mat-form-field class="form__field" appearance="fill">
@@ -104,8 +103,8 @@
     <mat-label>Enter a date range</mat-label>
     <mat-date-range-input [rangePicker]="picker">
       <ng-container formGroupName="aired">
-        <input matStartDate formControlName="start" placeholder="Start date">
-        <input matEndDate formControlName="end" placeholder="End date">
+        <input matStartDate formControlName="start" placeholder="Start date" />
+        <input matEndDate formControlName="end" placeholder="End date" />
       </ng-container>
     </mat-date-range-input>
     <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
@@ -123,72 +122,26 @@
       matInput
       placeholder="Synopsis"
       formControlName="synopsis"
-      ></textarea>
+    ></textarea>
   </mat-form-field>
-
-  <mat-form-field class="form__field" appearance="fill">
-    <mat-label>Genre</mat-label>
-    <mat-chip-list #chipListGenre aria-label="Genre selection">
-      <mat-chip
-        *ngFor="let genre of managementForm.controls.genresData.value"
-        (removed)="removeGenre(genre)"
-        >
-        {{genre.name}}
-        <button type="button" matChipRemove>
-          <mat-icon>cancel</mat-icon>
-        </button>
-      </mat-chip>
-      <input
-        placeholder="New genre..."
-        #genreInput
-        [formControl]="genreControl"
-        [matAutocomplete]="autoGenre"
-        [matChipInputFor]="chipListGenre"
-        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-        (matChipInputTokenEnd)="inputGenre($event)">
-    </mat-chip-list>
-    <mat-autocomplete #autoGenre="matAutocomplete" (optionSelected)="selectGenre($event)">
-      <mat-option *ngFor="let genre of filteredGenre$ | async" [value]="genre.name">
-        {{genre.name}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-
-  <!-- <mat-form-field class="form__field" appearance="fill">
-    <mat-label>Studio</mat-label>
-    <mat-chip-list #chipListStudio aria-label="Studio selection">
-      <mat-chip
-        *ngFor="let studio of managementForm.controls.studiosData.value"
-        (removed)="removeStudio(studio)"
-        >
-        {{studio.name}}
-        <button type="button" matChipRemove>
-          <mat-icon>cancel</mat-icon>
-        </button>
-      </mat-chip>
-      <input
-        placeholder="New studio..."
-        #studioInput
-        [formControl]="studioControl"
-        [matAutocomplete]="autoStudio"
-        [matChipInputFor]="chipListStudio"
-        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-        (matChipInputTokenEnd)="inputStudio($event)">
-    </mat-chip-list>
-    <mat-autocomplete #autoStudio="matAutocomplete" (optionSelected)="selectStudio($event)">
-      <mat-option *ngFor="let studio of filteredStudio$ | async" [value]="studio.name">
-        {{studio.name}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field> -->
 
   <camp-chips-autocomplete
+    [title]="'Genre'"
+    [placeholder]="'New genre...'"
+    [currentItems]="this.managementForm.controls.genresData"
+    [trackItemBy]="trackItemById"
+    [getItemName]="getItemName"
+    [getItem]="getGenre.bind(this)"
+    [postItem]="postGenre.bind(this)"
+  ></camp-chips-autocomplete>
+
+  <camp-chips-autocomplete
+    [title]="'Studio'"
+    [placeholder]="'New studio...'"
     [currentItems]="this.managementForm.controls.studiosData"
-    [itemControl]="this.studioControl"
     [trackItemBy]="trackItemById"
     [getItemName]="getItemName"
     [getItem]="getStudio.bind(this)"
     [postItem]="postStudio.bind(this)"
   ></camp-chips-autocomplete>
-
 </form>
