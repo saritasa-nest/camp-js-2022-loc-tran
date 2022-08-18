@@ -1,6 +1,19 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+/** Dialog data pass into dialog. */
+export interface DialogData {
+
+  /** Handle action when click ok. */
+  handleAction: Function;
+
+  /** Title of dialog. */
+  title: string;
+
+  /** Message in dialog. */
+  message: string;
+}
+
 /** Pop up for confirmation. */
 @Component({
   selector: 'camp-confirm-modal',
@@ -8,11 +21,11 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmModalComponent {
-  public constructor(@Inject(MAT_DIALOG_DATA) protected handleAction: Function, private readonly dialog: MatDialog) {}
+  public constructor(@Inject(MAT_DIALOG_DATA) protected data: DialogData, private readonly dialog: MatDialog) {}
 
   public onSubmitClick(): void {
     this.closeModal();
-    this.handleAction();
+    this.data.handleAction();
   }
 
   public closeModal(): void {

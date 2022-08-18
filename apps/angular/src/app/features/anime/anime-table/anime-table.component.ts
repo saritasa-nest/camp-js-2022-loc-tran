@@ -252,9 +252,13 @@ export class AnimeTableComponent implements OnInit {
   public onDelete(event: Event, animeId: number): void {
     event.stopPropagation();
     this.dialog.open(ConfirmModalComponent, {
-      data: () => {
-        this.deleteAnime$.next(animeId);
-        this.navigateService.reloadPage();
+      data: {
+        handleAction: () => {
+          this.deleteAnime$.next(animeId);
+          this.navigateService.reloadPage();
+        },
+        title: 'Delete anime',
+        message: 'This anime will be removed. Are you sure?',
       },
     });
   }
