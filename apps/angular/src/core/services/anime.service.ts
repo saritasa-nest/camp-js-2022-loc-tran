@@ -46,7 +46,7 @@ export class AnimeService {
    * Get anime detail by Id.
    * @param id Id of anime.
    */
-  public getAnimeById(id: string): Observable<AnimeDetail> {
+  public getAnimeById(id: AnimeDetail['id']): Observable<AnimeDetail> {
     return this.http
       .get<AnimeDetailDto>(`${this.animeApiAddress}${id}/`)
       .pipe(map(animeDetailDto => DetailMapper.fromDto(animeDetailDto)));

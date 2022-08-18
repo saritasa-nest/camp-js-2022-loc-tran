@@ -116,7 +116,7 @@
       class="table__row"
       mat-row
       *matRowDef="let row; columns: columnTitles"
-      [routerLink]="'detail/' + row.id"
+      [routerLink]="['detail', row.id]"
     ></tr>
   </table>
 </ng-container>

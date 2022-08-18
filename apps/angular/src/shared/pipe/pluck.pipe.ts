@@ -10,7 +10,7 @@ export class PluckPipe implements PipeTransform {
    * @param input Input array.
    * @param key Key value.
    */
-  public transform<T>(input: readonly T[], key: string): string {
-    return input.map(value => value[key as keyof T]).join(', ');
+  public transform<T extends object>(input: readonly T[], key: keyof T): string {
+    return input.map(value => value[key]).join(', ');
   }
 }
