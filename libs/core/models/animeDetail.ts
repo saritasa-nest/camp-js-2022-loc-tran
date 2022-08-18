@@ -1,6 +1,7 @@
 import { Anime } from './anime';
 import { Genre } from './genre';
 import { OmitImmerable } from './immerable';
+import { Studio } from './studio';
 
 /** Anime detail data. */
 export class AnimeDetail extends Anime {
@@ -35,19 +36,3 @@ export class AnimeDetail extends Anime {
 }
 
 type DetailArgs = OmitImmerable<AnimeDetail>;
-
-/** Studio data. */
-export interface Studio {
-
-  /** Id of the studio. */
-  readonly id: number;
-
-  /** Created date of the studio. */
-  readonly created: Date;
-
-  /** Modified date of the studio. */
-  readonly modified: Date;
-
-  /** Name of the studio. */
-  readonly name: string;
-}

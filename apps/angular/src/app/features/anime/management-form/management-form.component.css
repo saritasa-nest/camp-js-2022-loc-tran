@@ -3,8 +3,13 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  padding: 0 10px;
 }
 
 .form__field {
   width: 30%;
+}
+
+.form__field--synopsis {
+  width: 100%;
 }

@@ -10,7 +10,7 @@ import { AppConfigService } from './app-config.service';
 
 const GENRE_URL = '/api/v1/anime/genres/';
 
-/** Service for genres.. */
+/** Handle genres data. */
 @Injectable({
   providedIn: 'root',
 })

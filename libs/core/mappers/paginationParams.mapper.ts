@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { PaginationParamsDto } from '../dtos/paginationParams.dto';
 import { PaginationParams } from '../models/paginationParams';
 

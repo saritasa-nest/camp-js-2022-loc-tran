@@ -1,3 +1,4 @@
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -9,30 +10,30 @@ import {
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { MatDialog } from '@angular/material/dialog';
 import { AnimeStatus, AnimeType } from '@js-camp/core/models/anime';
-import { Studio } from '@js-camp/core/models/animeDetail';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import {
   AnimeManagement,
   RatingType,
+  SeasonType,
+  SourceType,
 } from '@js-camp/core/models/animeManagement';
-import { Genre } from '@js-camp/core/models/genre';
-import { AnimeService } from 'apps/angular/src/core/services/anime.service';
 import {
-  debounceTime,
-  filter,
-  map,
-  Observable,
-  ReplaySubject,
-  startWith,
+  combineLatestWith,
+  debounceTime, map,
+  Observable, of, startWith,
   Subject,
   switchMap,
   tap,
 } from 'rxjs';
+import { Genre } from '@js-camp/core/models/genre';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmModalComponent } from 'apps/angular/src/shared/components/confirm-modal/confirm-modal.component';
-import { GenreService } from 'apps/angular/src/core/services/genre.service';
+
+import { AnimeService } from '../../../../core/services/anime.service';
+import { GenreService } from '../../../../core/services/genre.service';
+import { ConfirmModalComponent } from '../../../../shared/components/confirm-modal/confirm-modal.component';
+import { Studio } from '@js-camp/core/models/studio';
+import { StudioService } from 'apps/angular/src/core/services/studio.service';
 
 /** Anime management form. */
 @UntilDestroy()
@@ -52,18 +53,33 @@ export class ManagementFormComponent implements OnInit {
 
   protected animeType = Object.values(AnimeType);
 
+  protected animeSource = Object.values(SourceType);
+
   protected animeRating = Object.values(RatingType);
 
-  protected genreControl = new FormControl('');
+  protected animeSeason = Object.values(SeasonType);
 
   protected readonly filteredGenre$: Observable<readonly Genre[]>;
 
-  private readonly genresSnapshot$ = new ReplaySubject<Genre>(1);
+  protected genreControl = new FormControl('');
 
   private readonly postGenre$ = new Subject<string>();
 
+  private readonly addGenreToAnime$ = new Subject<string>();
+
+  protected readonly filteredStudio$: Observable<readonly Studio[]>;
+
+  protected studioControl = new FormControl('');
+
+  private readonly postStudio$ = new Subject<string>();
+
+  private readonly addStudioToAnime$ = new Subject<string>();
+
   @ViewChild('genreInput')
   private genreInput = {} as ElementRef;
+
+  @ViewChild('studioInput')
+  private studioInput = {} as ElementRef;
 
   /** Anime management form. */
   public managementForm = new FormGroup({
@@ -82,34 +98,32 @@ export class ManagementFormComponent implements OnInit {
     rating: new FormControl<string>(''),
     season: new FormControl<string>(''),
     synopsis: new FormControl<string>(''),
-    studios: new FormControl<readonly Studio[]>([]),
+    studiosData: new FormControl<readonly Studio[]>([]),
     genresData: new FormControl<readonly Genre[]>([]),
   });
 
   public constructor(
-    private readonly animeService: AnimeService,
     private readonly dialog: MatDialog,
     private readonly genreService: GenreService,
+    private readonly studioService: StudioService,
   ) {
     this.filteredGenre$ = this.genreControl.valueChanges.pipe(
       debounceTime(500),
+      startWith(''),
       switchMap(searchKey => genreService.getGenres(searchKey ?? '')),
       map(genres => (genres ? this.filterGenre(genres) : [])),
+    );
+
+    this.filteredStudio$ = this.studioControl.valueChanges.pipe(
+      debounceTime(500),
+      startWith(''),
+      switchMap(searchKey => studioService.getStudios(searchKey ?? '')),
+      map(studios => (studios ? this.filterStudio(studios) : [])),
     );
   }
 
   /** @inheritdoc */
   public ngOnInit(): void {
-    // this.genreService
-    //   .getGenres()
-    //   .pipe(
-    //     tap(genres => {
-    //       this.genres = [...genres];
-    //     }),
-    //     untilDestroyed(this),
-    //   )
-    //   .subscribe();
-
     this.postGenre$
       .pipe(
         switchMap(genreName =>
@@ -117,13 +131,78 @@ export class ManagementFormComponent implements OnInit {
             name: genreName,
           })),
         tap(newGenre => {
-          this.addGenreToAnime(newGenre.name);
+          this.addGenreToAnime$.next(newGenre.name);
         }),
         untilDestroyed(this),
       )
       .subscribe();
 
     this.managementForm.patchValue({ ...this.animeData });
+
+    this.addGenreToAnime$
+      .pipe(
+        switchMap(genreName =>
+          this.genreService
+            .getGenres(genreName)
+            .pipe(combineLatestWith(of(genreName)))),
+        tap(([genres, genreName]) => {
+          const newGenre = genres.find(
+            genre => genre.name.toLowerCase() === genreName.toLowerCase(),
+          );
+          if (newGenre === undefined) {
+            this.addNewGenre(genreName);
+          } else {
+            this.managementForm.controls.genresData.setValue([
+              ...(this.managementForm.controls.genresData.value ?? []),
+              newGenre,
+            ]);
+            this.genreControl.setValue('');
+            this.genreInput.nativeElement.value = '';
+          }
+        }),
+        untilDestroyed(this),
+      )
+      .subscribe();
+
+    this.postStudio$
+      .pipe(
+        switchMap(studioName =>
+          this.studioService.postStudio({
+            name: studioName,
+          })),
+        tap(newStudio => {
+          this.addStudioToAnime$.next(newStudio.name);
+        }),
+        untilDestroyed(this),
+      )
+      .subscribe();
+
+    this.managementForm.patchValue({ ...this.animeData });
+
+    this.addStudioToAnime$
+      .pipe(
+        switchMap(studioName =>
+          this.studioService
+            .getStudios(studioName)
+            .pipe(combineLatestWith(of(studioName)))),
+        tap(([studios, studioName]) => {
+          const newStudio = studios.find(
+            studio => studio.name.toLowerCase() === studioName.toLowerCase(),
+          );
+          if (newStudio === undefined) {
+            this.addNewStudio(studioName);
+          } else {
+            this.managementForm.controls.studiosData.setValue([
+              ...(this.managementForm.controls.studiosData.value ?? []),
+              newStudio,
+            ]);
+            this.studioControl.setValue('');
+            this.studioInput.nativeElement.value = '';
+          }
+        }),
+        untilDestroyed(this),
+      )
+      .subscribe();
   }
 
   /**
@@ -154,10 +233,7 @@ export class ManagementFormComponent implements OnInit {
    * @param event Event of adding genre.
    */
   public inputGenre(event: MatChipInputEvent): void {
-    console.log('input')
-    this.addGenreToAnime(event.value);
-    this.genreControl.setValue('');
-    this.genreInput.nativeElement.value = '';
+    this.addGenreToAnime$.next(event.value);
   }
 
   /**
@@ -165,38 +241,52 @@ export class ManagementFormComponent implements OnInit {
    * @param event Event of select genre.
    */
   public selectGenre(event: MatAutocompleteSelectedEvent): void {
-    console.log('select')
-    this.addGenreToAnime(event.option.value)
-    this.genreControl.setValue('');
-    this.genreInput.nativeElement.value = '';
+    this.addGenreToAnime$.next(event.option.value);
   }
 
-  private addGenreToAnime(genreName: string): void {
-    this.genreService
-      .getGenres(genreName)
-      .pipe(
-        tap(genres => {
-          const newGenre = genres.find(
-            genre => genre.name.toLowerCase() === genreName.toLowerCase(),
-          );
-          if (newGenre === undefined) {
-            this.addNewGenre(genreName);
-          } else {
-            this.managementForm.controls.genresData.setValue([
-              ...(this.managementForm.controls.genresData.value ?? []),
-              newGenre,
-            ]);
-          }
-        }),
-        untilDestroyed(this),
-      )
-      .subscribe();
+  /**
+ * Remove studio from anime.
+ * @param studio Studio object to remove.
+ */
+  public removeStudio(studio: Studio): void {
+    if (this.managementForm.controls.studiosData.value === null) {
+      return;
+    }
+    this.managementForm.controls.studiosData.setValue(
+      this.managementForm.controls.studiosData.value.filter(
+        animeStudio => animeStudio.id !== studio.id,
+      ),
+    );
+  }
+
+  /**
+ * Add new studio to anime.
+ * @param event Event of adding studio.
+ */
+  public inputStudio(event: MatChipInputEvent): void {
+    this.addStudioToAnime$.next(event.value);
+  }
+
+  /**
+   * Add selected studio to anime.
+   * @param event Event of select studio.
+   */
+  public selectStudio(event: MatAutocompleteSelectedEvent): void {
+    this.addStudioToAnime$.next(event.option.value);
   }
 
   private addNewGenre(genreName: string): void {
     this.dialog.open(ConfirmModalComponent, {
       data: () => {
         this.postGenre$.next(genreName);
+      },
+    });
+  }
+
+  private addNewStudio(studioName: string): void {
+    this.dialog.open(ConfirmModalComponent, {
+      data: () => {
+        this.postStudio$.next(studioName);
       },
     });
   }
@@ -211,7 +301,13 @@ export class ManagementFormComponent implements OnInit {
     return genres.filter(genre => !existedGenres.includes(genre.name));
   }
 
-  public optionFocused() {
-    console.log('focused');
+  private filterStudio(studios: readonly Studio[]): readonly Studio[] {
+    const existedStudios = this.managementForm.controls.studiosData.value?.map(
+      studio => studio.name,
+    );
+    if (existedStudios === undefined) {
+      return studios;
+    }
+    return studios.filter(studio => !existedStudios.includes(studio.name));
   }
 }

@@ -1,0 +1,25 @@
+<mat-label>Studio</mat-label>
+<mat-chip-list #chipListStudio aria-label="Studio selection">
+  <mat-chip
+    *ngFor="let item of currentItems.value"
+    (removed)="removeItem(item)"
+    >
+    {{item}}
+    <button type="button" matChipRemove>
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </mat-chip>
+  <input
+    placeholder="New item..."
+    #itemInput
+    [formControl]="itemControl"
+    [matAutocomplete]="autoStudio"
+    [matChipInputFor]="chipListStudio"
+    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+    (matChipInputTokenEnd)="inputItem($event)">
+</mat-chip-list>
+<mat-autocomplete #autoStudio="matAutocomplete" (optionSelected)="selectItem($event)">
+  <mat-option *ngFor="let item of filteredItem$ | async" [value]="item">
+    {{item}}
+  </mat-option>
+</mat-autocomplete>

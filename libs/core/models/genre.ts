@@ -2,7 +2,7 @@ import { Immerable, OmitImmerable } from './immerable';
 
 export type GenrePost = Omit<Genre, 'id' | 'type'>;
 
-/** Genre. */
+/** Genre data. */
 export class Genre extends Immerable {
 
   /** Id of the Genre. */
@@ -11,11 +11,11 @@ export class Genre extends Immerable {
   /** Name of the Genre. */
   public readonly name: string;
 
-  public constructor(data: PostInitArgs) {
+  public constructor(data: GenreArgs) {
     super();
     this.id = data.id;
     this.name = data.name;
   }
 }
 
-type PostInitArgs = OmitImmerable<Genre>;
+type GenreArgs = OmitImmerable<Genre>;

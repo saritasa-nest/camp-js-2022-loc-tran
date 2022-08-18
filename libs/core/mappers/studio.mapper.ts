@@ -1,5 +1,5 @@
-import { StudioDto } from '../dtos/studio.dto';
-import { Studio } from '../models/animeDetail';
+import { PostStudioDto, StudioDto } from '../dtos/studio.dto';
+import { Studio, StudioPost } from '../models/studio';
 
 export namespace StudioMapper {
 
@@ -8,12 +8,10 @@ export namespace StudioMapper {
    * @param dto Studio dto data.
    */
   export function fromDto(dto: StudioDto): Studio {
-    return {
+    return new Studio({
       id: dto.id,
-      created: new Date(dto.created),
-      modified: new Date(dto.modified),
       name: dto.name,
-    };
+    });
   }
 
   /**
@@ -23,8 +21,16 @@ export namespace StudioMapper {
   export function toDto(model: Studio): StudioDto {
     return {
       id: model.id,
-      created: model.created.toString(),
-      modified: model.created.toString(),
+      name: model.name,
+    };
+  }
+
+  /**
+   * Maps model to post dto.
+   * @param model Studio model.
+   */
+  export function toPostDto(model: StudioPost): PostStudioDto {
+    return {
       name: model.name,
     };
   }

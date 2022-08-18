@@ -60,6 +60,42 @@
     </mat-select>
   </mat-form-field>
 
+  <mat-form-field class="form__field" appearance="fill">
+    <mat-label class="type__label">Source</mat-label>
+    <mat-select disableRipple formControlName="status">
+      <mat-option
+        *ngFor="let option of animeSource"
+        [value]="option"
+        trackBy="trackByOptionName"
+        >{{ option }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="form__field" appearance="fill">
+    <mat-label class="type__label">Rating</mat-label>
+    <mat-select disableRipple formControlName="status">
+      <mat-option
+        *ngFor="let option of animeRating"
+        [value]="option"
+        trackBy="trackByOptionName"
+        >{{ option }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="form__field" appearance="fill">
+    <mat-label class="type__label">Season</mat-label>
+    <mat-select disableRipple formControlName="status">
+      <mat-option
+        *ngFor="let option of animeSeason"
+        [value]="option"
+        trackBy="trackByOptionName"
+        >{{ option }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
   <div class="form__field" appearance="fill">
     <mat-slide-toggle formControlName="airing">Airing</mat-slide-toggle>
   </div>
@@ -80,19 +116,19 @@
     <!-- <mat-error *ngIf="addForm.controls.aired.value.end.hasError('matEndDateInvalid')">Invalid end date</mat-error> -->
   </mat-form-field>
 
-  <mat-form-field class="form__field" appearance="fill">
-    <mat-label>Status</mat-label>
-    <input
+  <mat-form-field class="form__field form__field--synopsis" appearance="fill">
+    <mat-label>Synopsis</mat-label>
+    <textarea
       type="text"
       matInput
-      placeholder="Status"
-      formControlName="status"
-      />
+      placeholder="Synopsis"
+      formControlName="synopsis"
+      ></textarea>
   </mat-form-field>
 
   <mat-form-field class="form__field" appearance="fill">
     <mat-label>Genre</mat-label>
-    <mat-chip-list #chipList aria-label="Fruit selection">
+    <mat-chip-list #chipListGenre aria-label="Genre selection">
       <mat-chip
         *ngFor="let genre of managementForm.controls.genresData.value"
         (removed)="removeGenre(genre)"
@@ -106,15 +142,44 @@
         placeholder="New genre..."
         #genreInput
         [formControl]="genreControl"
-        [matAutocomplete]="auto"
-        [matChipInputFor]="chipList"
+        [matAutocomplete]="autoGenre"
+        [matChipInputFor]="chipListGenre"
         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
         (matChipInputTokenEnd)="inputGenre($event)">
     </mat-chip-list>
-    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectGenre($event)">
-      <mat-option (blur)="optionFocused()" *ngFor="let genre of filteredGenre$ | async" [value]="genre.name">
+    <mat-autocomplete #autoGenre="matAutocomplete" (optionSelected)="selectGenre($event)">
+      <mat-option *ngFor="let genre of filteredGenre$ | async" [value]="genre.name">
         {{genre.name}}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
+
+  <mat-form-field class="form__field" appearance="fill">
+    <mat-label>Studio</mat-label>
+    <mat-chip-list #chipListStudio aria-label="Studio selection">
+      <mat-chip
+        *ngFor="let studio of managementForm.controls.studiosData.value"
+        (removed)="removeStudio(studio)"
+        >
+        {{studio.name}}
+        <button type="button" matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+      <input
+        placeholder="New studio..."
+        #studioInput
+        [formControl]="studioControl"
+        [matAutocomplete]="autoStudio"
+        [matChipInputFor]="chipListStudio"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="inputStudio($event)">
+    </mat-chip-list>
+    <mat-autocomplete #autoStudio="matAutocomplete" (optionSelected)="selectStudio($event)">
+      <mat-option *ngFor="let studio of filteredStudio$ | async" [value]="studio.name">
+        {{studio.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
 </form>
