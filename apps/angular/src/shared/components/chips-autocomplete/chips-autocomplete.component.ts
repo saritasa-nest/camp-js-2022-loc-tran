@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import {
   ChangeDetectionStrategy,
@@ -26,18 +27,18 @@ import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component'
 })
 export class ChipsAutocompleteComponent<T> implements OnInit {
   /** Current items. One item is one chip. */
-  @Input() protected currentItems = new FormControl<readonly T[] | null>([]);
+  @Input() public currentItems = new FormControl<readonly T[] | null>([]);
 
   /** Form control for input item. */
-  @Input() protected itemControl = new FormControl<string>('');
+  @Input() public itemControl = new FormControl<string>('');
 
-  @Input() private getItem: (key: string) => Observable<readonly T[]> = () => of();
+  @Input() public getItem: (key: string) => Observable<readonly T[]> = () => of();
 
-  @Input() private postItem: (itemName: string) => Observable<T> = () => of();
+  @Input() public postItem: (itemName: string) => Observable<T> = () => of();
 
-  @Input() private trackItemBy: (item: T) => string = () => '';
+  @Input() public trackItemBy: (item: T) => string | number = () => '';
 
-  @Input() private getItemName: (item: T) => string = () => '';
+  @Input() public getItemName: (item: T) => string = () => '';
 
   @ViewChild('itemInput')
   private itemInput = {} as ElementRef;

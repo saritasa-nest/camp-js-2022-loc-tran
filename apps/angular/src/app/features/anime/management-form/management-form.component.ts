@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import {
   ChangeDetectionStrategy,
@@ -20,8 +21,11 @@ import {
 } from '@js-camp/core/models/animeManagement';
 import {
   combineLatestWith,
-  debounceTime, map,
-  Observable, of, startWith,
+  debounceTime,
+  map,
+  Observable,
+  of,
+  startWith,
   Subject,
   switchMap,
   tap,
@@ -29,11 +33,12 @@ import {
 import { Genre } from '@js-camp/core/models/genre';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
-import { AnimeService } from '../../../../core/services/anime.service';
+import { Studio } from '@js-camp/core/models/studio';
+
+import { StudioService } from '../../../../core/services/studio.service';
+
 import { GenreService } from '../../../../core/services/genre.service';
 import { ConfirmModalComponent } from '../../../../shared/components/confirm-modal/confirm-modal.component';
-import { Studio } from '@js-camp/core/models/studio';
-import { StudioService } from 'apps/angular/src/core/services/studio.service';
 
 /** Anime management form. */
 @UntilDestroy()
@@ -245,9 +250,9 @@ export class ManagementFormComponent implements OnInit {
   }
 
   /**
- * Remove studio from anime.
- * @param studio Studio object to remove.
- */
+   * Remove studio from anime.
+   * @param studio Studio object to remove.
+   */
   public removeStudio(studio: Studio): void {
     if (this.managementForm.controls.studiosData.value === null) {
       return;
@@ -260,9 +265,9 @@ export class ManagementFormComponent implements OnInit {
   }
 
   /**
- * Add new studio to anime.
- * @param event Event of adding studio.
- */
+   * Add new studio to anime.
+   * @param event Event of adding studio.
+   */
   public inputStudio(event: MatChipInputEvent): void {
     this.addStudioToAnime$.next(event.value);
   }
@@ -309,5 +314,23 @@ export class ManagementFormComponent implements OnInit {
       return studios;
     }
     return studios.filter(studio => !existedStudios.includes(studio.name));
+  }
+
+  public trackItemById(item: Genre | Studio): number {
+    return item.id;
+  }
+
+  public getItemName(item: Genre | Studio): string {
+    return item.name;
+  }
+
+  public getStudio(key: string): Observable<readonly Studio[]> {
+    console.log(this)
+    console.log(this.studioService)
+    return this.studioService.getStudios(key);
+  }
+
+  public postStudio(studioName: string): Observable<Studio> {
+    return this.studioService.postStudio({ name: studioName });
   }
 }

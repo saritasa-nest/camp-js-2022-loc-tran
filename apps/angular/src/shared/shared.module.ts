@@ -47,6 +47,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     SafePipe,
     PluckPipe,
     PlaceholderPipe,
+    ChipsAutocompleteComponent,
   ],
 })
 export class SharedModule {}

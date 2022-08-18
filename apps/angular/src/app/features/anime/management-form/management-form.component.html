@@ -154,7 +154,7 @@
     </mat-autocomplete>
   </mat-form-field>
 
-  <mat-form-field class="form__field" appearance="fill">
+  <!-- <mat-form-field class="form__field" appearance="fill">
     <mat-label>Studio</mat-label>
     <mat-chip-list #chipListStudio aria-label="Studio selection">
       <mat-chip
@@ -180,6 +180,15 @@
         {{studio.name}}
       </mat-option>
     </mat-autocomplete>
-  </mat-form-field>
+  </mat-form-field> -->
+
+  <camp-chips-autocomplete
+    [currentItems]="this.managementForm.controls.studiosData"
+    [itemControl]="this.studioControl"
+    [trackItemBy]="trackItemById"
+    [getItemName]="getItemName"
+    [getItem]="getStudio.bind(this)"
+    [postItem]="postStudio.bind(this)"
+  ></camp-chips-autocomplete>
 
 </form>
