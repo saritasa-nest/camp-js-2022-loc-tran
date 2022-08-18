@@ -22,11 +22,11 @@ import { AuthService } from '../../../../core/services/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent {
-  /** Store error data response from BE. */
+  /** Store error data. */
   protected readonly errorList$ = new BehaviorSubject<DataError>({});
 
   /** Form group to manage register information. */
-  public readonly registerForm = this.formBuilder.group(
+  protected readonly registerForm = this.formBuilder.group(
     {
       email: ['', Validators.required],
       firstName: [''],
