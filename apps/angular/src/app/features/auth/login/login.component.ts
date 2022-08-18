@@ -17,12 +17,12 @@ import { AuthService } from '../../../../core/services/auth.service';
 })
 export class LoginComponent {
   /** Form group to manage login information. */
-  public readonly loginForm = this.formBuilder.group({
+  protected readonly loginForm = this.formBuilder.group({
     email: ['', Validators.required],
     password: ['', Validators.required],
   });
 
-  /** Store error data response from back end. */
+  /** Store error data. */
   protected readonly loginError$ = new BehaviorSubject<string>('');
 
   public constructor(

@@ -13,11 +13,11 @@
   display: flex;
 }
 
-.header__nav--link {
+.header__link {
   color: var(--font-color-contrast-primary);
   margin: 0 10px;
 }
 
-.header__nav--link__logout {
+.header__link--logout {
   color: var(--font-color-error);
 }
