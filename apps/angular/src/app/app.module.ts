@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AuthInterceptor } from '../core/interceptors/auth.interceptor';
-import { Error401Interceptor } from '../core/interceptors/error-401-handling.interceptor';
+import { RefreshTokenInterceptor } from '../core/interceptors/refresh-token-handling.interceptor';
 import { ApiInterceptor } from '../core/interceptors/api-key.interceptor';
 
 import { SharedModule } from './../shared/shared.module';
@@ -30,7 +30,7 @@ import { AppComponent } from './app.component';
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: Error401Interceptor,
+      useClass: RefreshTokenInterceptor,
       multi: true,
     },
   ],

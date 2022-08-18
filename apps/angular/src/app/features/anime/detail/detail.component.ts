@@ -1,9 +1,8 @@
-import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { AnimeDetail } from '@js-camp/core/models/animeDetail';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, switchMap, tap } from 'rxjs';
 
 import { ImageModalComponent } from '../../../../shared/components/image-modal/image-modal.component';
 
@@ -17,23 +16,22 @@ import { AnimeService } from '../../../../core/services/anime.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DetailComponent {
-  /** Stream for anime detail. */
+  /** Anime detail data. */
   public readonly detail$: Observable<AnimeDetail>;
 
   public constructor(
-    private readonly route: ActivatedRoute,
-    private readonly animeService: AnimeService,
-    private readonly location: Location,
+    route: ActivatedRoute,
+    animeService: AnimeService,
     private readonly dialog: MatDialog,
   ) {
     this.detail$ = route.params.pipe(
+      tap(params => {
+        if (params['animeId'] === undefined) {
+          throw (new Error('Invalid anime id'));
+        }
+      }),
       switchMap(params => animeService.getAnimeById(params['animeId'])),
     );
-  }
-
-  /** Go to previous page. */
-  public backClicked(): void {
-    this.location.back();
   }
 
   /**

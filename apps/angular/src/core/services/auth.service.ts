@@ -54,6 +54,7 @@ export class AuthService {
       .pipe(
         catchError((error: unknown) => this.handleErrorAuthorization(error)),
         map(tokenDto => TokenMapper.fromDto(tokenDto)),
+        switchMap(token => this.tokenService.set(token)),
       );
   }
 
@@ -69,6 +70,7 @@ export class AuthService {
       .pipe(
         catchError((error: unknown) => this.handleErrorAuthorization(error)),
         map(tokenDto => TokenMapper.fromDto(tokenDto)),
+        switchMap(token => this.tokenService.set(token)),
       );
   }
 

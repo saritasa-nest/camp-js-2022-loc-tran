@@ -1,7 +1,7 @@
-<button  mat-raised-button color="warn" type="button" class="back" (click)="backClicked()">Back</button>
+<a [routerLink]="['../..']" routerLinkActive="router-link-active"  mat-raised-button color="warn" type="button" class="back">Back</a>
 <h1 class="title">Anime detail</h1>
 
-<div class="detail" *ngIf="detail$ | async as detail">
+<section class="detail" *ngIf="detail$ | async as detail">
   <div class="detail__media">
     <img (click)="showFullSizeImage(detail.image)" alt="" class="detail__media--image" [src]="detail.image" />
     <iframe title="Trailer youtube" *ngIf="detail.trailerYoutube" class="detail__media--video" [src]="'https://www.youtube.com/embed/' + detail.trailerYoutube | safe"></iframe>
@@ -44,4 +44,4 @@
       <span class="detail__information--text">{{detail.genresData | pluck:'name'}}</span>
     </label>
   </div>
-</div>
+</section>

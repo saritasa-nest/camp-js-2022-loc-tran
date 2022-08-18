@@ -1,22 +1,11 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { HttpError } from '@js-camp/core/models/httpError';
-import { Token } from '@js-camp/core/models/token';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {
-  BehaviorSubject,
-  catchError, Observable,
-  of,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { NavigateService } from '../../../../../src/core/services/navigate.service';
 import { AuthService } from '../../../../core/services/auth.service';
-import { TokenService } from '../../../../core/services/token.service';
 
 /** Login component. */
 @UntilDestroy()
@@ -39,7 +28,6 @@ export class LoginComponent {
   public constructor(
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
-    private readonly tokenService: TokenService,
     private readonly navigateService: NavigateService,
   ) {}
 
@@ -54,23 +42,20 @@ export class LoginComponent {
         email: this.loginForm.value.email ?? '',
         password: this.loginForm.value.password ?? '',
       })
-      .pipe(
-        switchMap(token => this.tokenService.set(token)),
-        tap(() => this.navigateService.navigateToHome()),
-        untilDestroyed(this),
-        catchError((error: unknown) => this.handleLoginError(error)),
-      )
-      .subscribe();
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: () => this.navigateService.navigateToHome(),
+        error: (error: unknown) => this.handleLoginError(error),
+      });
   }
 
   /**
    * Handle login error.
    * @param error Error thrown.
    */
-  public handleLoginError(error: unknown): Observable<Token | null> {
+  public handleLoginError(error: unknown): void {
     if (error instanceof HttpError) {
       this.loginError$.next(error.detail);
     }
-    return of(null);
   }
 }
