@@ -6,8 +6,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { CheckIsNotLoggedInGuard } from '../../../core/guards/is-not-logged-in.guard';
-import { CheckIsLoggedInGuard } from '../../../core/guards/is-logged-in.guard';
 import { SharedModule } from '../../../shared/shared.module';
 
 import { AuthRoutingModule } from './auth-routing.module';
@@ -31,6 +29,5 @@ import { RegisterComponent } from './register/register.component';
     SharedModule,
     AuthRoutingModule,
   ],
-  providers: [CheckIsLoggedInGuard, CheckIsNotLoggedInGuard],
 })
 export class AuthModule {}

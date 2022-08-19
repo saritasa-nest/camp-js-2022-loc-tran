@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { HttpError } from '@js-camp/core/models/httpError';
+import { FormError } from '@js-camp/core/models/httpError';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject } from 'rxjs';
 
@@ -54,7 +54,7 @@ export class LoginComponent {
    * @param error Error thrown.
    */
   public handleLoginError(error: unknown): void {
-    if (error instanceof HttpError) {
+    if (error instanceof FormError) {
       this.loginError$.next(error.detail);
     }
   }

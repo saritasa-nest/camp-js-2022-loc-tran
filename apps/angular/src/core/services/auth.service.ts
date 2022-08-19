@@ -21,20 +21,20 @@ import { AppConfigService } from './app-config.service';
 
 import { TokenService } from './token.service';
 
-const LOGIN_URL = '/api/v1/auth/login/';
-const REGISTER_URL = '/api/v1/auth/register/';
-const REFRESH_URL = '/api/v1/auth/token/refresh/';
+const LOGIN_URL = '/auth/login/';
+const REGISTER_URL = '/auth/register/';
+const REFRESH_URL = '/auth/token/refresh/';
 
 /** Auth service. */
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly refreshApiAddress = new URL(REFRESH_URL, this.appConfig.apiUrl);
+  private readonly refreshApiAddress = new URL(this.appConfig.apiUrl + REFRESH_URL);
 
-  private readonly loginApiAddress = new URL(LOGIN_URL, this.appConfig.apiUrl);
+  private readonly loginApiAddress = new URL(this.appConfig.apiUrl + LOGIN_URL);
 
-  private readonly registerApiAddress = new URL(REGISTER_URL, this.appConfig.apiUrl);
+  private readonly registerApiAddress = new URL(this.appConfig.apiUrl + REGISTER_URL);
 
   public constructor(
     private readonly http: HttpClient,

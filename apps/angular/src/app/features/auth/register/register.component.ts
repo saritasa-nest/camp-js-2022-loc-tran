@@ -5,7 +5,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { DataError, HttpError } from '@js-camp/core/models/httpError';
+import { DataError, FormError } from '@js-camp/core/models/httpError';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject } from 'rxjs';
@@ -84,7 +84,7 @@ export class RegisterComponent {
    * @param error Error thrown.
    */
   public handleRegisterError(error: unknown): void {
-    if (error instanceof HttpError) {
+    if (error instanceof FormError) {
       this.errorList$.next(error.data);
       for (const key of Object.keys(error.data)) {
         this.registerForm.get(key)?.setErrors({ invalidData: true });

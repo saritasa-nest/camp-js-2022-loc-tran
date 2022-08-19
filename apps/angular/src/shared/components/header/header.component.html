@@ -9,7 +9,7 @@
       <li><a class="header__link" routerLink="/register">Register</a></li>
     </ng-container>
     <ng-template #logoutLink>
-      <li><a (click)="handleLogout($event)" class="header__link header__link--logout" routerLink="/">Logout</a></li>
+      <li><button mat-raised-button type="button" (click)="handleLogout($event)" class="header__link header__link--logout" routerLink="/">Logout</button></li>
     </ng-template>
   </ul>
 </header>

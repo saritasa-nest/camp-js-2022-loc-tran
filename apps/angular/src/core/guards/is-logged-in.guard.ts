@@ -5,14 +5,16 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 /** Check is user logged in or not. */
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class CheckIsLoggedInGuard implements CanActivate {
   public constructor(private readonly authService: AuthService) {}
 
   /**
    * @inheritdoc
    */
-  public canActivate(): Observable<boolean> | Promise<boolean> | boolean {
+  public canActivate(): Observable<boolean> {
     return this.authService.isLoggedIn();
   }
 }

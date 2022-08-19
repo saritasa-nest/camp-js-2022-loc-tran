@@ -8,14 +8,18 @@ import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   {
-    path: 'login',
+    path: '',
     canActivate: [CheckIsNotLoggedInGuard],
-    component: LoginComponent,
-  },
-  {
-    path: 'register',
-    canActivate: [CheckIsNotLoggedInGuard],
-    component: RegisterComponent,
+    children: [
+      {
+        path: 'login',
+        component: LoginComponent,
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
+      },
+    ],
   },
 ];
 
