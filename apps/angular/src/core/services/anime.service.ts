@@ -11,9 +11,14 @@ import { AnimeDetail } from '@js-camp/core/models/animeDetail';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { map, Observable } from 'rxjs';
 
-import { AnimeManagementDto } from '@js-camp/core/dtos/animeManagement.dto';
+import {
+  AnimeManagementDto,
+} from '@js-camp/core/dtos/animeManagement.dto';
 import { AnimeManagementMapper } from '@js-camp/core/mappers/animeManagement.mapper';
-import { AnimeManagement } from '@js-camp/core/models/animeManagement';
+import {
+  AnimeManagement,
+  AnimeManagementPost,
+} from '@js-camp/core/models/animeManagement';
 
 import { AppConfigService } from './app-config.service';
 
@@ -77,5 +82,21 @@ export class AnimeService {
     return this.http
       .delete(`${this.animeApiAddress.href}${id}/`)
       .pipe(map(() => null));
+  }
+
+  /**
+   * Put edited anime.
+   * @param id Id of anime.
+   * @param animeData Data of edited anime.
+   */
+  public putAnimeById(
+    id: Anime['id'],
+    animeData: AnimeManagementPost,
+  ): Observable<AnimeManagement> {
+    return this.http
+      .put<AnimeManagementDto>(`${this.animeApiAddress.href}${id}/`, {
+      ...AnimeManagementMapper.toPostDto(animeData),
+    })
+      .pipe(map(animeDataDto => AnimeManagementMapper.fromDto(animeDataDto)));
   }
 }

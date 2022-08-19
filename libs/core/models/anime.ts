@@ -26,6 +26,8 @@ export enum Sorting {
   Status = 'status',
 }
 
+export type AnimePost = Omit<Anime, 'id'>;
+
 /** Define data in class Anime. */
 export class Anime extends Immerable {
 

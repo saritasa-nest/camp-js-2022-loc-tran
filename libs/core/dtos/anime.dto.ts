@@ -17,6 +17,8 @@ export enum AnimeStatusDto {
   Airing = 'AIRING',
 }
 
+export type AnimePostDto = Omit<AnimeDto, 'id'>;
+
 /** Define data in Anime dto. */
 export interface AnimeDto {
 

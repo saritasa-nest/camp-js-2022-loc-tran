@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { AnimeDto, AnimeStatusDto, AnimeTypeDto } from '../dtos/anime.dto';
-import { Anime, AnimeStatus, AnimeType } from '../models/anime';
+import { AnimeDto, AnimePostDto, AnimeStatusDto, AnimeTypeDto } from '../dtos/anime.dto';
+import { Anime, AnimePost, AnimeStatus, AnimeType } from '../models/anime';
 
 import { DateRangeMapper } from './dateRange.mapper';
 
@@ -66,6 +66,23 @@ export namespace AnimeMapper {
 
     return {
       id: model.id,
+      title_eng: model.titleEnglish,
+      title_jpn: model.titleJapanese,
+      image: model.image,
+      aired: DateRangeMapper.toDto(model.aired),
+      type,
+      status,
+    };
+  }
+
+  /**
+   * Maps model to post dto.
+   * @param model Anime model.
+   */
+  export function toPostDto(model: AnimePost): AnimePostDto {
+    const status = animeStatusModelToDto[model.status];
+    const type = animeTypeModelToDto[model.type];
+    return {
       title_eng: model.titleEnglish,
       title_jpn: model.titleJapanese,
       image: model.image,

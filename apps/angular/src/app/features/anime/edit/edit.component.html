@@ -1,1 +1,6 @@
-<camp-management-form *ngIf="animeData$ | async as anime" [animeData]="anime"></camp-management-form>
+<h1 class="title">Edit anime</h1>
+<camp-management-form
+  *ngIf="animeData$ | async as anime"
+  [animeData]="anime"
+  (handleSubmit)="onFormSubmit($event)"
+></camp-management-form>

@@ -3,6 +3,8 @@ import { Genre } from './genre';
 import { OmitImmerable } from './immerable';
 import { Studio } from './studio';
 
+export type AnimeDetailPost = Omit<AnimeDetail, 'id'>;
+
 /** Anime detail data. */
 export class AnimeDetail extends Anime {
 
@@ -15,9 +17,6 @@ export class AnimeDetail extends Anime {
   /** Synopsis of the anime. */
   public readonly synopsis: string;
 
-  /** Background of the anime. */
-  public readonly background: string;
-
   /** Studios data of the anime. */
   public readonly studiosData: readonly Studio[];
 
@@ -29,7 +28,6 @@ export class AnimeDetail extends Anime {
     this.trailerYoutube = data.trailerYoutube;
     this.airing = data.airing;
     this.synopsis = data.synopsis;
-    this.background = data.background;
     this.studiosData = data.studiosData;
     this.genresData = data.genresData;
   }

@@ -18,10 +18,11 @@
       [matChipInputFor]="chipListItem"
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
       (matChipInputTokenEnd)="inputItem($event)">
-  </mat-chip-list>
-  <mat-autocomplete #autoItem="matAutocomplete" (optionSelected)="selectItem($event)">
-    <mat-option *ngFor="let item of filteredItem$ | async" [value]="getItemName(item)">
-      {{getItemName(item)}}
-    </mat-option>
-  </mat-autocomplete>
+    </mat-chip-list>
+    <mat-hint>Press enter for to add new.</mat-hint>
+    <mat-autocomplete #autoItem="matAutocomplete" (optionSelected)="selectItem($event)">
+      <mat-option *ngFor="let item of filteredItem$ | async" [value]="getItemName(item)">
+        {{getItemName(item)}}
+      </mat-option>
+    </mat-autocomplete>
 </mat-form-field>

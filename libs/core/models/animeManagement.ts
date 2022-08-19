@@ -42,6 +42,8 @@ export enum SourceType {
   Unknown = 'Unknown',
 }
 
+export type AnimeManagementPost = Omit<AnimeManagement, 'id'>;
+
 /** Anime for editor or creator. */
 export class AnimeManagement extends AnimeDetail {
 

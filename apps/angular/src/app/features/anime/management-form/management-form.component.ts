@@ -1,22 +1,23 @@
 import {
   ChangeDetectionStrategy,
-  Component, Input,
+  Component,
+  EventEmitter,
+  Input,
   OnInit,
+  Output,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AnimeStatus, AnimeType } from '@js-camp/core/models/anime';
 import {
   AnimeManagement,
+  AnimeManagementPost,
   RatingType,
   SeasonType,
   SourceType,
 } from '@js-camp/core/models/animeManagement';
 import { Genre } from '@js-camp/core/models/genre';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import {
-  Observable,
-} from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { Studio } from '@js-camp/core/models/studio';
 
@@ -36,6 +37,9 @@ export class ManagementFormComponent implements OnInit {
   /** Anime data for initial form data. */
   @Input() public animeData: AnimeManagement | null = null;
 
+  /** Event emitter for form submit. */
+  @Output() public handleSubmit = new EventEmitter<AnimeManagementPost>();
+
   /** Anime statuses. */
   protected animeStatus = Object.values(AnimeStatus);
 
@@ -53,30 +57,38 @@ export class ManagementFormComponent implements OnInit {
 
   /** Anime management form. */
   public managementForm = new FormGroup({
-    titleEnglish: new FormControl<string>(''),
-    titleJapanese: new FormControl<string>(''),
-    image: new FormControl<string>(''),
-    trailerYoutube: new FormControl<string>(''),
-    type: new FormControl<string>(''),
-    status: new FormControl<string>(''),
-    source: new FormControl<string>(''),
-    airing: new FormControl<boolean>(false),
-    aired: new FormGroup({
-      start: new FormControl<Date | null>(null),
-      end: new FormControl<Date | null>(null),
+    titleEnglish: new FormControl<string>('', { nonNullable: true }),
+    titleJapanese: new FormControl<string>('', { nonNullable: true }),
+    image: new FormControl<string>('', { nonNullable: true }),
+    trailerYoutube: new FormControl<string>('', { nonNullable: true }),
+    type: new FormControl<AnimeType>(AnimeType.Movie, { validators: Validators.required, nonNullable: true }),
+    status: new FormControl<AnimeStatus>(AnimeStatus.Airing, {
+      validators: Validators.required,
+      nonNullable: true,
     }),
-    rating: new FormControl<string>(''),
-    season: new FormControl<string>(''),
-    synopsis: new FormControl<string>(''),
-    studiosData: new FormControl<readonly Studio[]>([]),
-    genresData: new FormControl<readonly Genre[]>([]),
+    source: new FormControl<SourceType>(SourceType.Unknown, {
+      validators: Validators.required,
+      nonNullable: true,
+    }),
+    airing: new FormControl<boolean>(false, { validators: Validators.required, nonNullable: true }),
+    aired: new FormGroup({
+      start: new FormControl<Date>(new Date(), { validators: Validators.required, nonNullable: true }),
+      end: new FormControl<Date>(new Date(), { validators: Validators.required, nonNullable: true }),
+    }),
+    rating: new FormControl<RatingType>(RatingType.Unknown, {
+      validators: Validators.required,
+      nonNullable: true,
+    }),
+    season: new FormControl<SeasonType>(SeasonType.Fall, { validators: Validators.required, nonNullable: true }),
+    synopsis: new FormControl<string>('', { validators: Validators.required, nonNullable: true }),
+    studiosData: new FormControl<readonly Studio[]>([], { validators: Validators.required, nonNullable: true }),
+    genresData: new FormControl<readonly Genre[]>([], { validators: Validators.required, nonNullable: true }),
   });
 
   public constructor(
-    private readonly dialog: MatDialog,
     private readonly genreService: GenreService,
     private readonly studioService: StudioService,
-  ) { }
+  ) {}
 
   /** @inheritdoc */
   public ngOnInit(): void {
@@ -97,6 +109,14 @@ export class ManagementFormComponent implements OnInit {
    */
   public trackItemById(item: Genre | Studio): number {
     return item.id;
+  }
+
+  /** Handle form submit. */
+  public onFormSubmit(): void {
+    if (this.managementForm.invalid) {
+      return;
+    }
+    this.handleSubmit.emit(this.managementForm.getRawValue());
   }
 
   /**

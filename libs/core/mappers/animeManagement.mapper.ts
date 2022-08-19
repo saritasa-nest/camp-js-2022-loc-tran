@@ -1,5 +1,5 @@
 import { AnimeManagementDto, AnimeManagementPostDto, RatingTypeDto, SeasonTypeDto, SourceTypeDto } from '../dtos/animeManagement.dto';
-import { AnimeManagement, RatingType, SeasonType, SourceType } from '../models/animeManagement';
+import { AnimeManagement, AnimeManagementPost, RatingType, SeasonType, SourceType } from '../models/animeManagement';
 
 import { DetailMapper } from './detail.mapper';
 
@@ -99,7 +99,7 @@ export namespace AnimeManagementMapper {
    * Maps model to dto.
    * @param model Anime model.
    */
-  export function toPostDto(model: AnimeManagement): AnimeManagementPostDto {
+  export function toPostDto(model: AnimeManagementPost): AnimeManagementPostDto {
     return {
       ...DetailMapper.toPostDto(model),
       source: animeSourceModelToDto[model.source],

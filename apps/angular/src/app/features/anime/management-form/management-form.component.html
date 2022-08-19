@@ -1,4 +1,4 @@
-<form class="form" [formGroup]="managementForm">
+<form class="form" [formGroup]="managementForm" (ngSubmit)="onFormSubmit()">
   <mat-form-field class="form__field" appearance="fill">
     <mat-label>Title English</mat-label>
     <input
@@ -37,7 +37,7 @@
 
   <mat-form-field class="form__field" appearance="fill">
     <mat-label class="type__label">Type</mat-label>
-    <mat-select disableRipple>
+    <mat-select disableRipple formControlName="type">
       <mat-option
         *ngFor="let option of animeType"
         [value]="option"
@@ -61,7 +61,7 @@
 
   <mat-form-field class="form__field" appearance="fill">
     <mat-label class="type__label">Source</mat-label>
-    <mat-select disableRipple formControlName="status">
+    <mat-select disableRipple formControlName="source">
       <mat-option
         *ngFor="let option of animeSource"
         [value]="option"
@@ -73,7 +73,7 @@
 
   <mat-form-field class="form__field" appearance="fill">
     <mat-label class="type__label">Rating</mat-label>
-    <mat-select disableRipple formControlName="status">
+    <mat-select disableRipple formControlName="rating">
       <mat-option
         *ngFor="let option of animeRating"
         [value]="option"
@@ -85,7 +85,7 @@
 
   <mat-form-field class="form__field" appearance="fill">
     <mat-label class="type__label">Season</mat-label>
-    <mat-select disableRipple formControlName="status">
+    <mat-select disableRipple formControlName="season">
       <mat-option
         *ngFor="let option of animeSeason"
         [value]="option"
@@ -101,13 +101,10 @@
 
   <mat-form-field appearance="fill" class="form__field">
     <mat-label>Enter a date range</mat-label>
-    <mat-date-range-input [rangePicker]="picker">
-      <ng-container formGroupName="aired">
-        <input matStartDate formControlName="start" placeholder="Start date" />
-        <input matEndDate formControlName="end" placeholder="End date" />
-      </ng-container>
+    <mat-date-range-input [rangePicker]="picker" [formGroup]="managementForm.controls.aired">
+      <input matStartDate formControlName="start" placeholder="Start date" />
+      <input matEndDate formControlName="end" placeholder="End date" />
     </mat-date-range-input>
-    <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-date-range-picker #picker></mat-date-range-picker>
 
@@ -144,4 +141,6 @@
     [getItem]="getStudio.bind(this)"
     [postItem]="postStudio.bind(this)"
   ></camp-chips-autocomplete>
+
+  <button type="submit" mat-raised-button>Submit</button>
 </form>
