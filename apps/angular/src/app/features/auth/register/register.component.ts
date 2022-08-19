@@ -28,7 +28,7 @@ export class RegisterComponent {
   /** Form group to manage register information. */
   protected readonly registerForm = this.formBuilder.group(
     {
-      email: ['', Validators.required],
+      email: ['', Validators.required, Validators.email],
       firstName: [''],
       lastName: [''],
       password: ['', Validators.required],

@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ErrorTailorModule } from '@ngneat/error-tailor';
 
 import { SharedModule } from '../../../shared/shared.module';
 
@@ -28,6 +29,15 @@ import { RegisterComponent } from './register/register.component';
     MatButtonModule,
     SharedModule,
     AuthRoutingModule,
+    ErrorTailorModule.forRoot({
+      errors: {
+        useValue: {
+          required: 'This field is required',
+          notSame: 'Confirm password must matched',
+          email: 'Invalid email.',
+        },
+      },
+    }),
   ],
 })
 export class AuthModule {}
