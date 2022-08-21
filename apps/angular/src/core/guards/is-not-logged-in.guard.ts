@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
+import { CanLoad } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { AuthService } from '../services/auth.service';
@@ -8,14 +8,14 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class CheckIsNotLoggedInGuard implements CanActivate {
+export class CheckIsNotLoggedInGuard implements CanLoad {
 
   public constructor(private readonly authService: AuthService) {}
 
   /**
    * @inheritdoc
    */
-  public canActivate(): Observable<boolean> | Promise<boolean> | boolean {
+  public canLoad(): Observable<boolean> {
     return this.authService.isNotLoggedIn();
   }
 }

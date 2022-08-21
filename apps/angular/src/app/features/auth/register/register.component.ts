@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
-  ValidationErrors,
+  FormBuilder, ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { DataError, FormError } from '@js-camp/core/models/httpError';
@@ -26,9 +25,9 @@ export class RegisterComponent {
   protected readonly errorList$ = new BehaviorSubject<DataError>({});
 
   /** Form group to manage register information. */
-  protected readonly registerForm = this.formBuilder.group(
+  protected readonly registerForm = this.formBuilder.nonNullable.group(
     {
-      email: ['', Validators.required, Validators.email],
+      email: ['', Validators.required],
       firstName: [''],
       lastName: [''],
       password: ['', Validators.required],
@@ -53,10 +52,10 @@ export class RegisterComponent {
     }
     this.authService
       .register({
-        email: this.registerForm.value.email ?? '',
-        firstName: this.registerForm.value.firstName ?? '',
-        lastName: this.registerForm.value.lastName ?? '',
-        password: this.registerForm.value.password ?? '',
+        email: this.registerForm.getRawValue().email,
+        firstName: this.registerForm.getRawValue().firstName,
+        lastName: this.registerForm.getRawValue().lastName,
+        password: this.registerForm.getRawValue().password,
       })
       .pipe(untilDestroyed(this))
       .subscribe({

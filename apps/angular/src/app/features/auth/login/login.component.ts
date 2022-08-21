@@ -17,8 +17,8 @@ import { AuthService } from '../../../../core/services/auth.service';
 })
 export class LoginComponent {
   /** Form group to manage login information. */
-  protected readonly loginForm = this.formBuilder.group({
-    email: ['', Validators.required, Validators.email],
+  protected readonly loginForm = this.formBuilder.nonNullable.group({
+    email: ['', Validators.required],
     password: ['', Validators.required],
   });
 
@@ -39,8 +39,8 @@ export class LoginComponent {
     }
     this.authService
       .login({
-        email: this.loginForm.value.email ?? '',
-        password: this.loginForm.value.password ?? '',
+        email: this.loginForm.getRawValue().email,
+        password: this.loginForm.getRawValue().password,
       })
       .pipe(untilDestroyed(this))
       .subscribe({

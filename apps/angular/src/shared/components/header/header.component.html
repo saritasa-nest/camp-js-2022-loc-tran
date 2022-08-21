@@ -4,8 +4,8 @@
   </ul>
   <ul class="header__nav">
     <ng-container *ngIf="(isLoggedIn$ | async) === false; else logoutLink">
-      <li><a class="header__link" routerLink="/login">Login</a></li>
-      <li><a class="header__link" routerLink="/register">Register</a></li>
+      <li><a class="header__link" routerLink="auth/login">Login</a></li>
+      <li><a class="header__link" routerLink="auth/register">Register</a></li>
     </ng-container>
     <ng-template #logoutLink>
       <li>

@@ -29,15 +29,7 @@ import { RegisterComponent } from './register/register.component';
     MatButtonModule,
     SharedModule,
     AuthRoutingModule,
-    ErrorTailorModule.forRoot({
-      errors: {
-        useValue: {
-          required: 'This field is required',
-          notSame: 'Confirm password must matched',
-          email: 'Invalid email.',
-        },
-      },
-    }),
+    ErrorTailorModule,
   ],
 })
 export class AuthModule {}
