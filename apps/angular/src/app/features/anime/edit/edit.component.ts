@@ -17,7 +17,7 @@ import { AnimeService } from '../../../../core/services/anime.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditComponent {
-  /** Stream for anime detail. */
+  /** Anime management data. */
   public readonly animeData$: Observable<AnimeManagement>;
 
   private readonly animeId: Anime['id'] = Number(this.route.snapshot.paramMap.get('animeId'));

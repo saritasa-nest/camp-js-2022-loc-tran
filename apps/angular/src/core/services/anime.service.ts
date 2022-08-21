@@ -11,9 +11,7 @@ import { AnimeDetail } from '@js-camp/core/models/animeDetail';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { map, Observable } from 'rxjs';
 
-import {
-  AnimeManagementDto,
-} from '@js-camp/core/dtos/animeManagement.dto';
+import { AnimeManagementDto } from '@js-camp/core/dtos/animeManagement.dto';
 import { AnimeManagementMapper } from '@js-camp/core/mappers/animeManagement.mapper';
 import {
   AnimeManagement,
@@ -82,6 +80,18 @@ export class AnimeService {
     return this.http
       .delete(`${this.animeApiAddress.href}${id}/`)
       .pipe(map(() => null));
+  }
+
+  /**
+   * Post new anime.
+   * @param animeData Data of new anime.
+   */
+  public postAnime(animeData: AnimeManagementPost): Observable<AnimeManagement> {
+    return this.http
+      .post<AnimeManagementDto>(`${this.animeApiAddress.href}`, {
+      ...AnimeManagementMapper.toPostDto(animeData),
+    })
+      .pipe(map(animeDataDto => AnimeManagementMapper.fromDto(animeDataDto)));
   }
 
   /**
