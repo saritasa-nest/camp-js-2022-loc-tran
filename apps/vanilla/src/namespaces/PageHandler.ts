@@ -1,7 +1,10 @@
 import { Sorting } from '@js-camp/core/models/anime';
+
 import { PaginationParams } from '@js-camp/core/models/paginationParams';
 
-import { COUNT_LS, SORT_QUERY } from '../script/localStorageName';
+import { DEFAULT_SEARCH_QUERY } from '../script/init';
+
+import { LOCAL_STORAGE_COUNT, LOCAL_STORAGE_SEARCH, SORT_QUERY } from '../script/localStorageName';
 
 import { updateTable } from '../services/fetchAnime';
 import { assertNonNullish } from '../utils/assertNonNullish';
@@ -23,10 +26,13 @@ export namespace PageHandler {
    * @param newPage New page number.
    */
   export function goToPageByNum(newPage: number): void {
+    const searchQuery = localStorage.getItem(LOCAL_STORAGE_SEARCH) ?? DEFAULT_SEARCH_QUERY;
+    assertNonNullish(searchQuery);
     const params = new PaginationParams({
       offset: (LIMIT * (newPage - 1)),
       limit: LIMIT,
       ordering: UrlSearch.getValue(SORT_QUERY) ?? DEFAULT_ORDERING,
+      search: searchQuery,
     });
     UrlSearch.setUrlSearch(new URLSearchParams({
       page: newPage.toString(),
@@ -42,7 +48,7 @@ export namespace PageHandler {
 
   /** Get new data for last page. */
   export function goToLastPage(): void {
-    const count = localStorage.getItem(COUNT_LS);
+    const count = localStorage.getItem(LOCAL_STORAGE_COUNT);
     assertNonNullish(count);
     goToPageByNum(getLastPageNumber(count));
   }

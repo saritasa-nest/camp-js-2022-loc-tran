@@ -9,4 +9,7 @@ export interface ParamsDto {
 
   /** Sorting type for anime list. */
   readonly ordering: string;
+
+  /** Search for anime list. */
+  readonly search: string;
 }

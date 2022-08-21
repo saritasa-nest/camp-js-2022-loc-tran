@@ -8,7 +8,7 @@ import { ParamsMapper } from '@js-camp/core/mappers/params.mapper';
 import { PaginationParams } from '@js-camp/core/models/paginationParams';
 
 import { http } from '../api';
-import { COUNT_LS } from '../script/localStorageName';
+import { LOCAL_STORAGE_COUNT } from '../script/localStorageName';
 import { renderAnime, renderPagination } from '../script/renderToDOM';
 
 /** Request address. */
@@ -35,7 +35,7 @@ export async function fetchAnime(params: PaginationParams): Promise<Pagination<A
  */
 export async function updateTable(params: PaginationParams, currentPage = 0): Promise<void> {
   const data = await fetchAnime(params);
-  localStorage.setItem(COUNT_LS, data.count.toString());
+  localStorage.setItem(LOCAL_STORAGE_COUNT, data.count.toString());
   renderAnime(data);
   if (currentPage !== 0) {
     renderPagination({ count: data.count, currentPage });
