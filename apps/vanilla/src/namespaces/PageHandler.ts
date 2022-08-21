@@ -1,23 +1,44 @@
-import { ANIME_ROUTE, COUNT_LS, DECIMAL, LIMIT, SORT_LS } from '../script/constants';
-import { generateUrl } from '../script/generateUrl';
+import { Sorting } from '@js-camp/core/models/anime';
+
+import { PaginationParams } from '@js-camp/core/models/paginationParams';
+
+import { DEFAULT_SEARCH_QUERY } from '../script/init';
+
+import { LOCAL_STORAGE_COUNT, LOCAL_STORAGE_SEARCH, SORT_QUERY } from '../script/localStorageName';
+
 import { updateTable } from '../services/fetchAnime';
 import { assertNonNullish } from '../utils/assertNonNullish';
+import { UrlSearch } from '../utils/urlSearchParams';
+
+/** Value for page. */
+export const FIRST_PAGE = 1;
+export const LIMIT = 25;
+export const OFFSET = 0;
+export const DECIMAL = 10;
+
+/** Default values of query if user don't pass any value. */
+export const DEFAULT_ORDERING = Sorting.Default;
 
 export namespace PageHandler {
 
   /**
-   * Get new data for next page.
-   * @param newPage Next page number.
+   * Get data for new page by page number.
+   * @param newPage New page number.
    */
   export function goToPageByNum(newPage: number): void {
-    const params = new URLSearchParams({
-      offset: (LIMIT * (newPage - 1)).toString(),
-      limit: LIMIT.toString(),
+    const searchQuery = localStorage.getItem(LOCAL_STORAGE_SEARCH) ?? DEFAULT_SEARCH_QUERY;
+    assertNonNullish(searchQuery);
+    const params = new PaginationParams({
+      offset: (LIMIT * (newPage - 1)),
+      limit: LIMIT,
+      ordering: UrlSearch.getValue(SORT_QUERY) ?? DEFAULT_ORDERING,
+      search: searchQuery,
     });
-    const sortOption = localStorage.getItem(SORT_LS);
-    assertNonNullish(sortOption);
-    params.append('ordering', sortOption);
-    updateTable(generateUrl(ANIME_ROUTE, params), newPage);
+    UrlSearch.setUrlSearch(new URLSearchParams({
+      page: newPage.toString(),
+      ordering: UrlSearch.getValue(SORT_QUERY) ?? DEFAULT_ORDERING,
+    }));
+    updateTable(params, newPage);
   }
 
   /** Get new data for first page. */
@@ -27,14 +48,17 @@ export namespace PageHandler {
 
   /** Get new data for last page. */
   export function goToLastPage(): void {
-    const count = localStorage.getItem(COUNT_LS);
+    const count = localStorage.getItem(LOCAL_STORAGE_COUNT);
     assertNonNullish(count);
-    let page = Number.parseInt(count, DECIMAL) / LIMIT;
-    if (isNaN(page) === true) {
-      page = 1;
-    } else {
-      page = Math.ceil(page);
-    }
-    goToPageByNum(page);
+    goToPageByNum(getLastPageNumber(count));
   }
+}
+
+/**
+ * Return last page number was calculated from number of items.
+ * @param count Number of items in list with type string.
+ */
+function getLastPageNumber(count: string): number {
+  const page = Number.parseInt(count, DECIMAL) / LIMIT;
+  return isNaN(page) ? 1 : Math.ceil(page);
 }

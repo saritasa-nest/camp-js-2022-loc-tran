@@ -1,7 +1,7 @@
 import { DateRangeDto } from './dateRange.dto';
 
-/** Specify anime types in anime table. */
-export enum AnimeType {
+/** Specify anime types dto in anime table. */
+export enum AnimeTypeDto {
   Tv = 'TV',
   Ova = 'OVA',
   Movie = 'MOVIE',
@@ -11,10 +11,10 @@ export enum AnimeType {
 }
 
 /** Specify anime status in anime table. */
-export enum AnimeStatus {
-  finished = 'FINISHED',
-  notYetAired = 'NOT_YET_AIRED',
-  airing = 'AIRING',
+export enum AnimeStatusDto {
+  Finished = 'FINISHED',
+  NotYetAired = 'NOT_YET_AIRED',
+  Airing = 'AIRING',
 }
 
 /** Define data in Anime dto. */
@@ -36,8 +36,8 @@ export interface AnimeDto {
   readonly aired: DateRangeDto;
 
   /** Type of the anime. */
-  readonly type: AnimeType;
+  readonly type: AnimeTypeDto;
 
   /** Status of the anime. */
-  readonly status: AnimeStatus;
+  readonly status: AnimeStatusDto;
 }

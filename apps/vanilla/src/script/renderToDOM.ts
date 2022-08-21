@@ -1,22 +1,54 @@
-import { Anime } from '@js-camp/core/models/anime';
+import { Anime, Sorting } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
+import { SelectOption } from '@js-camp/core/models/selectOption';
 
-import { FilterHandler } from '../namespaces/FilterHandler';
-
-import { PageHandler } from '../namespaces/PageHandler';
+import { LIMIT, PageHandler } from '../namespaces/PageHandler';
 import { SortHandler } from '../namespaces/SortHandler';
 import { assertNonNullish } from '../utils/assertNonNullish';
 
-import { FILTER_OPTIONS, LIMIT, ORDER_OPTIONS, PAGE_STEP, SORT_OPTIONS } from './constants';
+/** Pagination config constants. */
+export const PAGE_STEP = 3;
+
+/** Options for sorting. */
+export const SORT_OPTIONS: readonly SelectOption[] = [
+  {
+    title: 'Default',
+    value: Sorting.Default,
+  },
+  {
+    title: 'Title in English',
+    value: Sorting.EnglishTitle,
+  },
+  {
+    title: 'Aired day',
+    value: Sorting.AiredStart,
+  },
+  {
+    title: 'Status',
+    value: Sorting.Status,
+  },
+];
+
+/** Options for ordering. */
+export const ORDER_OPTIONS: readonly SelectOption[] = [
+  {
+    title: 'Ascending',
+    value: '',
+  },
+  {
+    title: 'Descending',
+    value: '-',
+  },
+];
 
 /**
  * Print anime list to DOM.
  * @param paginationAnime Store anime data response from api.
  */
 export function renderAnime(paginationAnime: Pagination<Anime>): void {
-  const tableRow = document.querySelector('.table');
-  if (tableRow != null) {
-    let htmlString = `<tr class="table__head">
+  const table = document.querySelector('.table');
+  if (table != null) {
+    const htmlString = `<tr class="table__head">
     <th class="table__head-title">Image</th>
     <th class="table__head-title">Title Eng</th>
     <th class="table__head-title">Title Jap</th>
@@ -24,18 +56,29 @@ export function renderAnime(paginationAnime: Pagination<Anime>): void {
     <th class="table__head-title">Type</th>
     <th class="table__head-title">Status</th>
   </tr>`;
+    table.innerHTML = htmlString;
     paginationAnime.results.forEach((anime: Anime) => {
-      htmlString += `<tr class="table__row">
-      <td><img class="table__row-image" src="${anime.image}"/></td>
+      const row = document.createElement('tr');
+      row.classList.add('table__row');
+      row.innerHTML = `<td><img class="table__row-image" src="${anime.image}"/></td>
       <td>${anime.titleEnglish ?? ''}</td>
       <td>${anime.titleJapanese ?? ''}</td>
       <td>${anime.aired.start.toLocaleString()}</td>
       <td>${anime.type}</td>
-      <td>${anime.status}</td>
-    </tr>`;
+      <td>${anime.status}</td>`;
+      table.append(row);
     });
-    tableRow.innerHTML = htmlString;
   }
+}
+
+/** Data of pagination needed for render pagination. */
+export interface PaginationData {
+
+  /** Number of anime in list. */
+  count: number;
+
+  /** Current page of table. */
+  currentPage: number;
 }
 
 /**
@@ -43,7 +86,7 @@ export function renderAnime(paginationAnime: Pagination<Anime>): void {
  * @param count Number of anime in list.
  * @param currentPage Current page of table.
  */
-export function renderPagination(count: number, currentPage: number): void {
+export function renderPagination({ count, currentPage }: PaginationData): void {
   const pagination = document.querySelector('.pagination__numeric');
   if (pagination !== null) {
     pagination.innerHTML = '';
@@ -78,10 +121,10 @@ export function renderSortOptions(): void {
   const sortNode = document.querySelector('.query__label-sort');
   if (sortNode !== null) {
     const select = document.createElement('select');
-    SORT_OPTIONS.forEach(selectOption => {
+    SORT_OPTIONS.forEach(sortOption => {
       const optionElement = document.createElement('option');
-      optionElement.value = selectOption.value;
-      optionElement.innerHTML = selectOption.title;
+      optionElement.value = sortOption.value;
+      optionElement.innerHTML = sortOption.title;
       select.append(optionElement);
     });
     select.addEventListener('change', SortHandler.changeSorting);

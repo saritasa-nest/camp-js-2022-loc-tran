@@ -4,10 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./index.css" />
-    <title>Vite App</title>
+    <title>Home page</title>
   </head>
   <body class="default-layout">
     <h1 class="title">Anime table</h1>
+    <form class="search">
+      <label>Search
+        <input type="text" class="search__input">
+      </label>
+      <button type="submit" class="search__button">Search</button>
+    </form>
     <div class="query">
       <label class="query__label">
         <span class="query__label-text">Sort by:</span>
@@ -23,9 +29,9 @@
       </label>
     </div>
     <div class="pagination">
-      <button type="button" class="pagination__button first-page-button">first</button>
+      <button type="button" class="pagination__button pagination__button-first">first</button>
       <div class="pagination__numeric"></div>
-      <button type="button" class="pagination__button last-page-button">last</button>
+      <button type="button" class="pagination__button pagination__button-last">last</button>
     </div>
     <table class="table">
       <caption>Anime collection</caption>
