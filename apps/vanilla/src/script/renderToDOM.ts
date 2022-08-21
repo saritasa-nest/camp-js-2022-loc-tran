@@ -4,6 +4,7 @@ import { SelectOption } from '@js-camp/core/models/selectOption';
 
 import { LIMIT, PageHandler } from '../namespaces/PageHandler';
 import { SortHandler } from '../namespaces/SortHandler';
+import { assertNonNullish } from '../utils/assertNonNullish';
 
 /** Pagination config constants. */
 export const PAGE_STEP = 3;
@@ -151,4 +152,20 @@ export function renderOrderOptions(): void {
   } else {
     throw new Error('Cannot get order element in DOM');
   }
+}
+
+/** Create filter element for filtering. */
+export function renderFilterOptions(): void {
+  const filterNode = document.querySelector('.query__label-filter');
+  assertNonNullish(filterNode);
+  const select = document.createElement('select');
+  FILTER_OPTIONS.forEach(filterOption => {
+    const optionElement = document.createElement('option');
+    optionElement.value = filterOption.value;
+    optionElement.innerHTML = filterOption.title;
+    select.append(optionElement);
+  });
+  select.classList.add('filter');
+  select.addEventListener('change', FilterHandler.changeFiltering);
+  filterNode.append(select);
 }
