@@ -2,15 +2,25 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { CheckIsNotLoggedInGuard } from '../core/guards/is-not-logged-in.guard';
+import { PageNotFoundComponent } from '../shared/components/page-not-found/page-not-found.component';
+
 const routes: Routes = [
   {
-    path: '',
+    path: 'anime',
     loadChildren: () => import('./features/anime/anime.module').then(m => m.AnimeModule),
   },
   {
-    path: '',
+    path: 'auth',
+    canLoad: [CheckIsNotLoggedInGuard],
     loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule),
   },
+  {
+    path: '',
+    redirectTo: '/anime',
+    pathMatch: 'full',
+  },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 /** App routing module. */

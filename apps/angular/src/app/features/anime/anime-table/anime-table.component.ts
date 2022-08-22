@@ -28,6 +28,7 @@ import { NavigateService } from '../../../../core/services/navigate.service';
 import { ConfirmModalComponent } from '../../../../shared/components/confirm-modal/confirm-modal.component';
 
 import { AnimeService } from '../../../../core/services/anime.service';
+import { HOME_ROUTE } from '../../auth/register/register.component';
 
 const DEFAULT_PARAMS = new PaginationParams({
   ordering: '',
@@ -107,7 +108,6 @@ export class AnimeTableComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly dialog: MatDialog,
-    private readonly navigateService: NavigateService,
   ) {
     this.setInitialValues();
 
@@ -163,7 +163,7 @@ export class AnimeTableComponent implements OnInit {
         switchMap(animeId =>
           animeService
             .deleteAnimeById(animeId)
-            .pipe(tap(() => this.navigateService.reloadPage()))),
+            .pipe(tap(() => this.reloadPage()))),
         untilDestroyed(this),
       )
       .subscribe();
@@ -173,7 +173,7 @@ export class AnimeTableComponent implements OnInit {
   public ngOnInit(): void {
     const navigateSideEffect$ = this.queryParams$.pipe(
       tap(query => {
-        this.navigateService.navigate('/', { ...query });
+        this.router.navigate([HOME_ROUTE], { queryParams: { ...query } });
         this.isAnimeLoading$.next(true);
       }),
     );
@@ -255,7 +255,7 @@ export class AnimeTableComponent implements OnInit {
       data: {
         handleAction: () => {
           this.deleteAnime$.next(animeId);
-          this.navigateService.reloadPage();
+          this.reloadPage();
         },
         title: 'Delete anime',
         message: 'This anime will be removed. Are you sure?',
@@ -265,5 +265,15 @@ export class AnimeTableComponent implements OnInit {
 
   public onEdit(event: Event): void {
     event.stopPropagation();
+  }
+
+  /** Reload page by navigate to current page. */
+  public reloadPage(): Promise<boolean> {
+    return this.router.navigate([HOME_ROUTE], {
+      queryParams: {
+        ...this.route.snapshot.queryParams,
+        time: Number(new Date()),
+      },
+    });
   }
 }

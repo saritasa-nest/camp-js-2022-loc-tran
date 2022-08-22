@@ -8,7 +8,9 @@ import { NavigateService } from '../services/navigate.service';
 const LOGIN_ROUTE = '/login/';
 
 /** Check is user logged in or not. */
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class CheckIsLoggedInGuard implements CanActivate {
   public constructor(
     private readonly authService: AuthService,
@@ -18,6 +20,7 @@ export class CheckIsLoggedInGuard implements CanActivate {
   /**
    * @inheritdoc
    */
+<<<<<<< HEAD
   public canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     return this.authService.isLoggedIn().pipe(
       tap(isLoggedIn => {
@@ -26,5 +29,9 @@ export class CheckIsLoggedInGuard implements CanActivate {
         }
       }),
     );
+=======
+  public canActivate(): Observable<boolean> {
+    return this.authService.isLoggedIn();
+>>>>>>> feature/JC19-432-authorization-angular
   }
 }

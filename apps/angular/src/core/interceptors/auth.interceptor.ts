@@ -8,14 +8,15 @@ import { Injectable } from '@angular/core';
 import { Observable, switchMap } from 'rxjs';
 
 import { TokenService } from '../services/token.service';
-import { isProhibitedRoute } from '../guards/isProhibitedRoute';
+
+import { isProtectedRoute } from './isProtectedRoute';
 
 /** Add jwt to api request. */
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   private readonly authHeader = 'Authorization';
 
-  private readonly authRoute = '/api/v1/auth';
+  private readonly authRoute = '/auth';
 
   public constructor(private readonly tokenService: TokenService) {}
 
@@ -28,7 +29,7 @@ export class AuthInterceptor implements HttpInterceptor {
     httpRequest: HttpRequest<unknown>,
     next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {
-    if (isProhibitedRoute(new URL(httpRequest.url), this.authRoute)) {
+    if (isProtectedRoute(new URL(httpRequest.url), this.authRoute)) {
       return next.handle(httpRequest);
     }
     return this.tokenService.get().pipe(
@@ -36,7 +37,7 @@ export class AuthInterceptor implements HttpInterceptor {
         if (token?.accessToken !== undefined) {
           return next.handle(
             httpRequest.clone({
-              setHeaders: { [this.authHeader]: `Bearer ${token?.accessToken}` },
+              setHeaders: { [this.authHeader]: `Bearer ${token.accessToken}` },
             }),
           );
         }

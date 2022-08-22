@@ -1,12 +1,11 @@
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: sticky;
   display: flex;
   justify-content: space-between;
+  width: 100%;
   background-color: var(--primary-color);
-  padding: 0 30px;
+  box-sizing: border-box;
+  padding: 0 50px;
 }
 
 .header__nav {

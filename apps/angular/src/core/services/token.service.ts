@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Token } from '@js-camp/core/models/token';
 import {
@@ -7,7 +6,8 @@ import {
   merge,
   Observable,
   ReplaySubject,
-  shareReplay, takeUntil,
+  shareReplay,
+  takeUntil,
 } from 'rxjs';
 
 import { LocalStorageService } from './local-storage.service';
@@ -25,7 +25,6 @@ export class TokenService {
 
   public constructor(
     private readonly localStorageService: LocalStorageService,
-    private readonly http: HttpClient,
   ) {
     const tokenFromStorage$ = defer(() =>
       localStorageService.getItem<Token | null>(TOKEN_KEY));

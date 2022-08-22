@@ -18,6 +18,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { PlaceholderPipe } from './pipe/placeholder.pipe';
 import { PluckPipe } from './pipe/pluck.pipe';
 import { SafePipe } from './pipe/safe.pipe';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 /** Shared module. */
 @NgModule({
@@ -30,6 +31,7 @@ import { SafePipe } from './pipe/safe.pipe';
     PlaceholderPipe,
     ConfirmModalComponent,
     ChipsAutocompleteComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     CommonModule,

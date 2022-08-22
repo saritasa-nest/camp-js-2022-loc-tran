@@ -1,30 +1,21 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { CanLoad } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { AuthService } from '../services/auth.service';
-import { NavigateService } from '../services/navigate.service';
-
-const HOME_ROUTE = '/';
 
 /** Check is user logged in or not. */
-@Injectable()
-export class CheckIsNotLoggedInGuard implements CanActivate {
-  public constructor(
-    private readonly authService: AuthService,
-    private navigateService: NavigateService,
-  ) {}
+@Injectable({
+  providedIn: 'root',
+})
+export class CheckIsNotLoggedInGuard implements CanLoad {
+
+  public constructor(private readonly authService: AuthService) {}
 
   /**
    * @inheritdoc
    */
-  public canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    return this.authService.isNotLoggedIn().pipe(
-      tap(isNotLoggedIn => {
-        if (!isNotLoggedIn) {
-          this.navigateService.navigate(HOME_ROUTE);
-        }
-      }),
-    );
+  public canLoad(): Observable<boolean> {
+    return this.authService.isNotLoggedIn();
   }
 }
