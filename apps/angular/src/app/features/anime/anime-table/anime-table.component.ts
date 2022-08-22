@@ -23,8 +23,6 @@ import {
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { NavigateService } from '../../../../core/services/navigate.service';
-
 import { ConfirmModalComponent } from '../../../../shared/components/confirm-modal/confirm-modal.component';
 
 import { AnimeService } from '../../../../core/services/anime.service';
