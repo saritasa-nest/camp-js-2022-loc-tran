@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { FormError } from '@js-camp/core/models/httpError';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject } from 'rxjs';
 
-import { NavigateService } from '../../../../../src/core/services/navigate.service';
 import { AuthService } from '../../../../core/services/auth.service';
+import { HOME_ROUTE } from '../register/register.component';
 
 /** Login component. */
 @UntilDestroy()
@@ -28,7 +29,7 @@ export class LoginComponent {
   public constructor(
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
-    private readonly navigateService: NavigateService,
+    private readonly router: Router,
   ) {}
 
   /** Handle submit for login form. */
@@ -44,7 +45,7 @@ export class LoginComponent {
       })
       .pipe(untilDestroyed(this))
       .subscribe({
-        next: () => this.navigateService.navigateToHome(),
+        next: () => this.router.navigate([HOME_ROUTE]),
         error: (error: unknown) => this.handleLoginError(error),
       });
   }

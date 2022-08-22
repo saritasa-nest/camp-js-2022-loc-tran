@@ -4,13 +4,15 @@ import {
   FormBuilder, ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { DataError, FormError } from '@js-camp/core/models/httpError';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject } from 'rxjs';
 
-import { NavigateService } from '../../../../../src/core/services/navigate.service';
 import { AuthService } from '../../../../core/services/auth.service';
+
+export const HOME_ROUTE = '/';
 
 /** Register component. */
 @UntilDestroy()
@@ -41,7 +43,7 @@ export class RegisterComponent {
   public constructor(
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
-    private readonly navigateService: NavigateService,
+    private readonly router: Router,
   ) {}
 
   /** Handle submit register form. */
@@ -59,7 +61,7 @@ export class RegisterComponent {
       })
       .pipe(untilDestroyed(this))
       .subscribe({
-        next: () => this.navigateService.navigateToHome(),
+        next: () => this.router.navigate([HOME_ROUTE]),
         error: (error: unknown) => this.handleRegisterError(error),
       });
   }
