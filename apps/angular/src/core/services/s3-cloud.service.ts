@@ -20,6 +20,9 @@ export class S3CloudService {
   public upLoadImage(formData: S3UploadDto, image: File): Observable<string> {
     const uploadData = new FormData();
     for (const s3Key of Object.keys(formData)) {
+      if (s3Key === 'form_action') {
+        continue;
+      }
       uploadData.append(s3Key, formData[s3Key as keyof S3UploadDto]);
     }
     uploadData.append('file', image);
@@ -29,7 +32,7 @@ export class S3CloudService {
         map(
           s3Response => xml2js(s3Response, { compact: true }) as S3ResponseDto,
         ),
-        map(s3ResponseDto => s3ResponseDto.PostResponse.Location),
+        map(s3ResponseDto => s3ResponseDto.PostResponse.Location._text),
       );
   }
 }

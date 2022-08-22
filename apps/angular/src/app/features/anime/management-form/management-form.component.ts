@@ -20,13 +20,11 @@ import {
 import { Genre } from '@js-camp/core/models/genre';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
-
 import { Studio } from '@js-camp/core/models/studio';
 
 import { StudioService } from '../../../../core/services/studio.service';
-
 import { GenreService } from '../../../../core/services/genre.service';
-import { AnimeService } from 'apps/angular/src/core/services/anime.service';
+import { AnimeService } from '../../../../core/services/anime.service';
 
 /** Anime management form. */
 @UntilDestroy()
@@ -149,9 +147,8 @@ export class ManagementFormComponent implements OnInit {
     if (this.managementForm.invalid) {
       return;
     }
-    console.log(this.imageInput.nativeElement.value)
-    if (this.imageInput.nativeElement.value !== null) {
-      this.animeService.postAnimePoster(this.imageInput.nativeElement.value).pipe(untilDestroyed(this))
+    if (this.imageInput.nativeElement.files[0] !== null) {
+      this.animeService.postAnimePoster(this.imageInput.nativeElement.files[0]).pipe(untilDestroyed(this))
         .subscribe(posterUrl => {
         const { rating, type, status, source, season, aired } = this.managementForm.getRawValue();
         this.handleSubmit.emit({

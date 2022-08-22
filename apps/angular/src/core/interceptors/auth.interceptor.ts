@@ -18,6 +18,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private readonly authRoute = '/auth';
 
+  private readonly s3UploadRoute = 'https://s3.us-west-2.amazonaws.com/camp-js-backend-files-dev';
+
   public constructor(private readonly tokenService: TokenService) {}
 
   /**
@@ -29,7 +31,7 @@ export class AuthInterceptor implements HttpInterceptor {
     httpRequest: HttpRequest<unknown>,
     next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {
-    if (isProtectedRoute(new URL(httpRequest.url), this.authRoute)) {
+    if (isProtectedRoute(new URL(httpRequest.url), this.authRoute) || httpRequest.url === this.s3UploadRoute) {
       return next.handle(httpRequest);
     }
     return this.tokenService.get().pipe(

@@ -4,6 +4,10 @@ export interface S3ResponseDto {
   readonly PostResponse: {
 
     /** Image URL location object. */
-    readonly Location: string;
+    readonly Location: {
+
+      /** Image URL. */
+      readonly _text: string;
+    };
   };
 }
