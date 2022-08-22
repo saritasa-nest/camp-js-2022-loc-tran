@@ -12,7 +12,7 @@ import { BehaviorSubject } from 'rxjs';
 
 import { AuthService } from '../../../../core/services/auth.service';
 
-export const HOME_ROUTE = '/';
+export const HOME_ROUTE = '/anime/';
 
 /** Register component. */
 @UntilDestroy()
