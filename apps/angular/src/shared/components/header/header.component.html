@@ -1,15 +1,23 @@
 <header class="header">
-
   <ul class="header__nav">
-    <li><a class="header__nav--link" routerLink="/">Home</a></li>
+    <li><a class="header__link" routerLink="/">Home</a></li>
   </ul>
   <ul class="header__nav">
     <ng-container *ngIf="(isLoggedIn$ | async) === false; else logoutLink">
-      <li><a class="header__nav--link" routerLink="/login">Login</a></li>
-      <li><a class="header__nav--link" routerLink="/register">Register</a></li>
+      <li><a class="header__link" routerLink="auth/login">Login</a></li>
+      <li><a class="header__link" routerLink="auth/register">Register</a></li>
     </ng-container>
     <ng-template #logoutLink>
-      <li><a (click)="handleLogout($event)" class="header__nav--link header__nav--link__logout" routerLink="/">Logout</a></li>
+      <li>
+        <button
+          mat-raised-button
+          type="button"
+          (click)="handleLogout($event)"
+          color="warn"
+        >
+          Logout
+        </button>
+      </li>
     </ng-template>
   </ul>
 </header>

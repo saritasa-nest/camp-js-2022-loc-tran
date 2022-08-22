@@ -9,14 +9,14 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, switchMap, throwError } from 'rxjs';
 
 import { AuthService } from '../services/auth.service';
-
 import { TokenService } from '../services/token.service';
-import { isProhibitedRoute } from '../guards/isProhibitedRoute';
+
+import { isProtectedRoute } from './isProtectedRoute';
 
 /** Handle error 401. */
 @Injectable()
 export class RefreshTokenInterceptor implements HttpInterceptor {
-  private readonly refreshRoute = '/api/v1/auth/token/refresh';
+  private readonly refreshRoute = '/auth/token/refresh';
 
   public constructor(
     private readonly tokenService: TokenService,
@@ -36,10 +36,16 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
       switchMap(token =>
         next.handle(httpRequest).pipe(
           catchError((error: unknown) => {
-            if (isProhibitedRoute(new URL(httpRequest.url), this.refreshRoute)) {
-              return this.tokenService.remove().pipe(switchMap(() => next.handle(httpRequest)));
+            if (isProtectedRoute(new URL(httpRequest.url), this.refreshRoute)) {
+              return this.tokenService
+                .remove()
+                .pipe(switchMap(() => next.handle(httpRequest)));
             }
-            if (error instanceof HttpErrorResponse && token !== null && error.status === 401) {
+            if (
+              error instanceof HttpErrorResponse &&
+              token !== null &&
+              error.status === 401
+            ) {
               return this.authService
                 .refreshToken()
                 .pipe(switchMap(() => next.handle(httpRequest)));

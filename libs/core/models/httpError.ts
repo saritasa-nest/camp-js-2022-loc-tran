@@ -5,8 +5,8 @@ export interface DataError {
   readonly [key: string]: string[];
 }
 
-/** Class for HTTP error data. */
-export class HttpError extends Immerable {
+/** Error data. */
+export class FormError extends Immerable {
 
   /** Detail of the error. */
   public readonly detail: string;
@@ -22,4 +22,4 @@ export class HttpError extends Immerable {
 
 }
 
-type HttpErrorArgs = OmitImmerable<HttpError>;
+type HttpErrorArgs = OmitImmerable<FormError>;

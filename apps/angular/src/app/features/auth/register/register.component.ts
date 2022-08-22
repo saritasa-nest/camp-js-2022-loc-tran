@@ -1,17 +1,18 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
-  ValidationErrors,
+  FormBuilder, ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { DataError, HttpError } from '@js-camp/core/models/httpError';
+import { Router } from '@angular/router';
+import { DataError, FormError } from '@js-camp/core/models/httpError';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject } from 'rxjs';
 
-import { NavigateService } from '../../../../../src/core/services/navigate.service';
 import { AuthService } from '../../../../core/services/auth.service';
+
+export const HOME_ROUTE = '/';
 
 /** Register component. */
 @UntilDestroy()
@@ -22,11 +23,11 @@ import { AuthService } from '../../../../core/services/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent {
-  /** Store error data response from BE. */
+  /** Store error data. */
   protected readonly errorList$ = new BehaviorSubject<DataError>({});
 
   /** Form group to manage register information. */
-  public readonly registerForm = this.formBuilder.group(
+  protected readonly registerForm = this.formBuilder.nonNullable.group(
     {
       email: ['', Validators.required],
       firstName: [''],
@@ -42,7 +43,7 @@ export class RegisterComponent {
   public constructor(
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
-    private readonly navigateService: NavigateService,
+    private readonly router: Router,
   ) {}
 
   /** Handle submit register form. */
@@ -53,14 +54,14 @@ export class RegisterComponent {
     }
     this.authService
       .register({
-        email: this.registerForm.value.email ?? '',
-        firstName: this.registerForm.value.firstName ?? '',
-        lastName: this.registerForm.value.lastName ?? '',
-        password: this.registerForm.value.password ?? '',
+        email: this.registerForm.getRawValue().email,
+        firstName: this.registerForm.getRawValue().firstName,
+        lastName: this.registerForm.getRawValue().lastName,
+        password: this.registerForm.getRawValue().password,
       })
       .pipe(untilDestroyed(this))
       .subscribe({
-        next: () => this.navigateService.navigateToHome(),
+        next: () => this.router.navigate([HOME_ROUTE]),
         error: (error: unknown) => this.handleRegisterError(error),
       });
   }
@@ -84,7 +85,7 @@ export class RegisterComponent {
    * @param error Error thrown.
    */
   public handleRegisterError(error: unknown): void {
-    if (error instanceof HttpError) {
+    if (error instanceof FormError) {
       this.errorList$.next(error.data);
       for (const key of Object.keys(error.data)) {
         this.registerForm.get(key)?.setErrors({ invalidData: true });

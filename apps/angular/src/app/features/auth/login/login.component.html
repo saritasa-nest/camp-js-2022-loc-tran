@@ -1,6 +1,10 @@
 <h1 class="title">Log in</h1>
 
-<form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()" errorTailor>
+  <ng-template let-error let-text="text" #tpl>
+    <span class="control-error">{{ text }}</span>
+  </ng-template>
+
   <mat-form-field class="form__field" appearance="fill">
     <mat-label>Email</mat-label>
     <input
@@ -8,10 +12,8 @@
       matInput
       placeholder="Ex. pat@example.com"
       formControlName="email"
+      [controlErrorsTpl]="tpl"
     />
-    <mat-error *ngIf="loginForm.controls.email.hasError('required')">
-      Email is <strong>required</strong>
-    </mat-error>
   </mat-form-field>
   <mat-form-field class="form__field" appearance="fill">
     <mat-label>Password</mat-label>
@@ -20,10 +22,8 @@
       matInput
       placeholder="Type your password."
       formControlName="password"
+      [controlErrorsTpl]="tpl"
     />
-    <mat-error *ngIf="loginForm.controls.password.hasError('required')">
-      Password is <strong>required</strong>
-    </mat-error>
   </mat-form-field>
   <mat-error *ngIf="loginError$ | async as error">
     {{ error }}

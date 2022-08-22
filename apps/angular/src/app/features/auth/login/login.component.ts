@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { HttpError } from '@js-camp/core/models/httpError';
+import { Router } from '@angular/router';
+import { FormError } from '@js-camp/core/models/httpError';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject } from 'rxjs';
 
-import { NavigateService } from '../../../../../src/core/services/navigate.service';
 import { AuthService } from '../../../../core/services/auth.service';
+import { HOME_ROUTE } from '../register/register.component';
 
 /** Login component. */
 @UntilDestroy()
@@ -17,18 +18,18 @@ import { AuthService } from '../../../../core/services/auth.service';
 })
 export class LoginComponent {
   /** Form group to manage login information. */
-  public readonly loginForm = this.formBuilder.group({
+  protected readonly loginForm = this.formBuilder.nonNullable.group({
     email: ['', Validators.required],
     password: ['', Validators.required],
   });
 
-  /** Store error data response from back end. */
+  /** Store error data. */
   protected readonly loginError$ = new BehaviorSubject<string>('');
 
   public constructor(
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
-    private readonly navigateService: NavigateService,
+    private readonly router: Router,
   ) {}
 
   /** Handle submit for login form. */
@@ -39,12 +40,12 @@ export class LoginComponent {
     }
     this.authService
       .login({
-        email: this.loginForm.value.email ?? '',
-        password: this.loginForm.value.password ?? '',
+        email: this.loginForm.getRawValue().email,
+        password: this.loginForm.getRawValue().password,
       })
       .pipe(untilDestroyed(this))
       .subscribe({
-        next: () => this.navigateService.navigateToHome(),
+        next: () => this.router.navigate([HOME_ROUTE]),
         error: (error: unknown) => this.handleLoginError(error),
       });
   }
@@ -54,7 +55,7 @@ export class LoginComponent {
    * @param error Error thrown.
    */
   public handleLoginError(error: unknown): void {
-    if (error instanceof HttpError) {
+    if (error instanceof FormError) {
       this.loginError$.next(error.detail);
     }
   }

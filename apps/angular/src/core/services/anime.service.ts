@@ -13,14 +13,14 @@ import { DetailMapper } from '@js-camp/core/mappers/detail.mapper';
 
 import { AppConfigService } from './app-config.service';
 
-const ANIME_URL = '/api/v1/anime/anime/';
+const ANIME_URL = '/anime/anime/';
 
 /** Anime service. */
 @Injectable({
   providedIn: 'root',
 })
 export class AnimeService {
-  private animeApiAddress = new URL(ANIME_URL, this.appConfig.apiUrl);
+  private readonly animeApiAddress = new URL(this.appConfig.apiUrl + ANIME_URL);
 
   public constructor(
     private readonly http: HttpClient,
