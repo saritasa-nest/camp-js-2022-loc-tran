@@ -9,7 +9,7 @@ import { paginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 import { Anime } from '@js-camp/core/models/anime';
 import { AnimeDetail } from '@js-camp/core/models/animeDetail';
 import { Pagination } from '@js-camp/core/models/pagination';
-import { map, Observable } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 
 import { AnimeManagementDto } from '@js-camp/core/dtos/animeManagement.dto';
 import { AnimeManagementMapper } from '@js-camp/core/mappers/animeManagement.mapper';
@@ -18,9 +18,13 @@ import {
   AnimeManagementPost,
 } from '@js-camp/core/models/animeManagement';
 
+import { S3UploadDto } from '@js-camp/core/dtos/S3Upload.dto';
+
 import { AppConfigService } from './app-config.service';
+import { S3CloudService } from './s3-cloud.service';
 
 const ANIME_URL = '/anime/anime/';
+const S3_URL = '/s3direct/get_params/';
 
 /** Anime service. */
 @Injectable({
@@ -28,10 +32,12 @@ const ANIME_URL = '/anime/anime/';
 })
 export class AnimeService {
   private readonly animeApiAddress = new URL(this.appConfig.apiUrl + ANIME_URL);
+  private readonly s3ApiAddress = new URL(this.appConfig.apiUrl + S3_URL);
 
   public constructor(
     private readonly http: HttpClient,
     private readonly appConfig: AppConfigService,
+    private readonly s3CloudService: S3CloudService,
   ) {}
 
   /**
@@ -86,7 +92,9 @@ export class AnimeService {
    * Post new anime.
    * @param animeData Data of new anime.
    */
-  public postAnime(animeData: AnimeManagementPost): Observable<AnimeManagement> {
+  public postAnime(
+    animeData: AnimeManagementPost,
+  ): Observable<AnimeManagement> {
     return this.http
       .post<AnimeManagementDto>(`${this.animeApiAddress.href}`, {
       ...AnimeManagementMapper.toPostDto(animeData),
@@ -108,5 +116,21 @@ export class AnimeService {
       ...AnimeManagementMapper.toPostDto(animeData),
     })
       .pipe(map(animeDataDto => AnimeManagementMapper.fromDto(animeDataDto)));
+  }
+
+  /**
+   * Post anime poster to s3 cloud.
+   * @param image Image file.
+   */
+  public postAnimePoster(image: File): Observable<string> {
+    return this.http
+      .post<S3UploadDto>(`${this.s3ApiAddress}`, {
+      dest: 'anime_images',
+      filename: image.name,
+    })
+      .pipe(
+        switchMap(s3UploadData =>
+          this.s3CloudService.upLoadImage(s3UploadData, image)),
+      );
   }
 }

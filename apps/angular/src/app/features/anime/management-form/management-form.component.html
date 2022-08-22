@@ -18,20 +18,19 @@
         formControlName="titleJapanese"
       />
     </mat-form-field>
-    <!-- <mat-form-field class="form__field" appearance="fill">
-      <mat-label>Image</mat-label>
-      <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
-      <input hidden #fileInput type="file" id="file">
-    </mat-form-field> -->
     <mat-form-field class="form__field" appearance="fill">
       <mat-label>Trailer Youtube</mat-label>
       <input
-        type="text"
-        matInput
-        placeholder="Trailer Youtube id"
-        formControlName="trailerYoutube"
+      type="text"
+      matInput
+      placeholder="Trailer Youtube id"
+      formControlName="trailerYoutube"
       />
     </mat-form-field>
+
+    <mat-label>Image</mat-label>
+    <input #imageInput type="file" id="file">
+
     <mat-form-field class="form__field" appearance="fill">
       <mat-label>Image</mat-label>
       <input

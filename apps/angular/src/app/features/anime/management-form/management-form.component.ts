@@ -1,10 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AnimeStatus, AnimeType } from '@js-camp/core/models/anime';
@@ -16,7 +18,7 @@ import {
   SourceType,
 } from '@js-camp/core/models/animeManagement';
 import { Genre } from '@js-camp/core/models/genre';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 
 import { Studio } from '@js-camp/core/models/studio';
@@ -24,6 +26,7 @@ import { Studio } from '@js-camp/core/models/studio';
 import { StudioService } from '../../../../core/services/studio.service';
 
 import { GenreService } from '../../../../core/services/genre.service';
+import { AnimeService } from 'apps/angular/src/core/services/anime.service';
 
 /** Anime management form. */
 @UntilDestroy()
@@ -54,6 +57,9 @@ export class ManagementFormComponent implements OnInit {
 
   /** Anime seasons. */
   protected animeSeason = Object.values(SeasonType);
+
+  @ViewChild('imageInput')
+  private imageInput = {} as ElementRef;
 
   /** Anime management form. */
   public managementForm = new FormGroup({
@@ -112,13 +118,14 @@ export class ManagementFormComponent implements OnInit {
   public constructor(
     private readonly genreService: GenreService,
     private readonly studioService: StudioService,
+    private readonly animeService: AnimeService,
   ) {}
 
   /** @inheritdoc */
   public ngOnInit(): void {
-    this.managementForm.patchValue({
-      ...this.animeData,
-    });
+    if (this.animeData) {
+      this.managementForm.patchValue(this.animeData);
+    }
   }
 
   /**
@@ -142,19 +149,26 @@ export class ManagementFormComponent implements OnInit {
     if (this.managementForm.invalid) {
       return;
     }
-    const { rating, type, status, source, season, aired } = this.managementForm.getRawValue();
-    this.handleSubmit.emit({
-      ...this.managementForm.getRawValue(),
-      rating: rating ?? RatingType.Unknown,
-      source: source ?? SourceType.Unknown,
-      type: type ?? AnimeType.Tv,
-      status: status ?? AnimeStatus.Airing,
-      season: season ?? SeasonType.Fall,
-      aired: {
-        start: aired.start ?? new Date(),
-        end: aired.end ?? new Date(),
-      },
-    });
+    console.log(this.imageInput.nativeElement.value)
+    if (this.imageInput.nativeElement.value !== null) {
+      this.animeService.postAnimePoster(this.imageInput.nativeElement.value).pipe(untilDestroyed(this))
+        .subscribe(posterUrl => {
+        const { rating, type, status, source, season, aired } = this.managementForm.getRawValue();
+        this.handleSubmit.emit({
+          ...this.managementForm.getRawValue(),
+          image: posterUrl,
+          rating: rating ?? RatingType.Unknown,
+          source: source ?? SourceType.Unknown,
+          type: type ?? AnimeType.Tv,
+          status: status ?? AnimeStatus.Airing,
+          season: season ?? SeasonType.Fall,
+          aired: {
+            start: aired.start ?? new Date(),
+            end: aired.end ?? new Date(),
+          },
+        });
+      });
+    }
   }
 
   /**
