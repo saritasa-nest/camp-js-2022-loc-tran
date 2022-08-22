@@ -1,156 +1,145 @@
-<form class="form" [formGroup]="managementForm" (ngSubmit)="onFormSubmit()">
-  <mat-form-field class="form__field" appearance="fill">
-    <mat-label>Title English</mat-label>
-    <input
-      type="text"
-      matInput
-      placeholder="Title English"
-      formControlName="titleEnglish"
-    />
-  </mat-form-field>
-
-  <mat-form-field class="form__field" appearance="fill">
-    <mat-label>Title Japan</mat-label>
-    <input
-      type="text"
-      matInput
-      placeholder="Title Japanese"
-      formControlName="titleJapanese"
-    />
-  </mat-form-field>
-
-  <!-- <mat-form-field class="form__field" appearance="fill">
-    <mat-label>Image</mat-label>
-    <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
-    <input hidden #fileInput type="file" id="file">
-  </mat-form-field> -->
-
-  <mat-form-field class="form__field" appearance="fill">
-    <mat-label>Trailer Youtube</mat-label>
-    <input
-      type="text"
-      matInput
-      placeholder="Trailer Youtube id"
-      formControlName="trailerYoutube"
-    />
-  </mat-form-field>
-
-  <mat-form-field class="form__field" appearance="fill">
-    <mat-label>Image</mat-label>
-    <input
-      type="text"
-      matInput
-      placeholder="Image id"
-      formControlName="image"
-    />
-  </mat-form-field>
-
-  <mat-form-field class="form__field" appearance="fill">
-    <mat-label class="type__label">Type</mat-label>
-    <mat-select disableRipple formControlName="type">
-      <mat-option
-        *ngFor="let option of animeType"
-        [value]="option"
-        trackBy="trackByOptionName"
-        >{{ option }}</mat-option
-      >
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field class="form__field" appearance="fill">
-    <mat-label class="type__label">Status</mat-label>
-    <mat-select disableRipple formControlName="status">
-      <mat-option
-        *ngFor="let option of animeStatus"
-        [value]="option"
-        trackBy="trackByOptionName"
-        >{{ option }}</mat-option
-      >
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field class="form__field" appearance="fill">
-    <mat-label class="type__label">Source</mat-label>
-    <mat-select disableRipple formControlName="source">
-      <mat-option
-        *ngFor="let option of animeSource"
-        [value]="option"
-        trackBy="trackByOptionName"
-        >{{ option }}</mat-option
-      >
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field class="form__field" appearance="fill">
-    <mat-label class="type__label">Rating</mat-label>
-    <mat-select disableRipple formControlName="rating">
-      <mat-option
-        *ngFor="let option of animeRating"
-        [value]="option"
-        trackBy="trackByOptionName"
-        >{{ option }}</mat-option
-      >
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field class="form__field" appearance="fill">
-    <mat-label class="type__label">Season</mat-label>
-    <mat-select disableRipple formControlName="season">
-      <mat-option
-        *ngFor="let option of animeSeason"
-        [value]="option"
-        trackBy="trackByOptionName"
-        >{{ option }}</mat-option
-      >
-    </mat-select>
-  </mat-form-field>
-
-  <div class="form__field" appearance="fill">
-    <mat-slide-toggle formControlName="airing">Airing</mat-slide-toggle>
+<form [formGroup]="managementForm" (ngSubmit)="onFormSubmit()">
+  <div class="form">
+    <mat-form-field class="form__field" appearance="fill">
+      <mat-label>Title English</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Title English"
+        formControlName="titleEnglish"
+      />
+    </mat-form-field>
+    <mat-form-field class="form__field" appearance="fill">
+      <mat-label>Title Japan</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Title Japanese"
+        formControlName="titleJapanese"
+      />
+    </mat-form-field>
+    <!-- <mat-form-field class="form__field" appearance="fill">
+      <mat-label>Image</mat-label>
+      <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+      <input hidden #fileInput type="file" id="file">
+    </mat-form-field> -->
+    <mat-form-field class="form__field" appearance="fill">
+      <mat-label>Trailer Youtube</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Trailer Youtube id"
+        formControlName="trailerYoutube"
+      />
+    </mat-form-field>
+    <mat-form-field class="form__field" appearance="fill">
+      <mat-label>Image</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Image id"
+        formControlName="image"
+      />
+    </mat-form-field>
+    <mat-form-field class="form__field" appearance="fill">
+      <mat-label class="type__label">Type</mat-label>
+      <mat-select disableRipple formControlName="type">
+        <mat-option
+          *ngFor="let option of animeType"
+          [value]="option"
+          trackBy="trackByOptionName"
+          >{{ option }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="form__field" appearance="fill">
+      <mat-label class="type__label">Status</mat-label>
+      <mat-select disableRipple formControlName="status">
+        <mat-option
+          *ngFor="let option of animeStatus"
+          [value]="option"
+          trackBy="trackByOptionName"
+          >{{ option }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="form__field" appearance="fill">
+      <mat-label class="type__label">Source</mat-label>
+      <mat-select disableRipple formControlName="source">
+        <mat-option
+          *ngFor="let option of animeSource"
+          [value]="option"
+          trackBy="trackByOptionName"
+          >{{ option }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="form__field" appearance="fill">
+      <mat-label class="type__label">Rating</mat-label>
+      <mat-select disableRipple formControlName="rating">
+        <mat-option
+          *ngFor="let option of animeRating"
+          [value]="option"
+          trackBy="trackByOptionName"
+          >{{ option }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="form__field" appearance="fill">
+      <mat-label class="type__label">Season</mat-label>
+      <mat-select disableRipple formControlName="season">
+        <mat-option
+          *ngFor="let option of animeSeason"
+          [value]="option"
+          trackBy="trackByOptionName"
+          >{{ option }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+      <mat-form-field appearance="fill" class="form__field">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker" [formGroup]="managementForm.controls.aired">
+          <input matStartDate formControlName="start" placeholder="Start date" />
+          <input matEndDate formControlName="end" placeholder="End date" />
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+        <!-- <mat-error *ngIf="addForm.controls.aired.value.start.hasError('matStartDateInvalid')">Invalid start date</mat-error> -->
+        <!-- <mat-error *ngIf="addForm.controls.aired.value.end.hasError('matEndDateInvalid')">Invalid end date</mat-error> -->
+      </mat-form-field>
+    <div class="form__field" appearance="fill">
+      <mat-slide-toggle formControlName="airing">Airing</mat-slide-toggle>
+    </div>
+    <mat-form-field class="form__field form__field--synopsis" appearance="fill">
+      <mat-label>Synopsis</mat-label>
+      <textarea
+        type="text"
+        matInput
+        placeholder="Synopsis"
+        formControlName="synopsis"
+      ></textarea>
+    </mat-form-field>
+    <camp-chips-autocomplete
+      class="form__field"
+      [title]="'Genre'"
+      [placeholder]="'New genre...'"
+      [currentItems]="this.managementForm.controls.genresData"
+      [trackItemBy]="trackItemById"
+      [getItemName]="getItemName"
+      [getItem]="getGenre.bind(this)"
+      [postItem]="postGenre.bind(this)"
+    ></camp-chips-autocomplete>
+    <camp-chips-autocomplete
+      class="form__field"
+      [title]="'Studio'"
+      [placeholder]="'New studio...'"
+      [currentItems]="this.managementForm.controls.studiosData"
+      [trackItemBy]="trackItemById"
+      [getItemName]="getItemName"
+      [getItem]="getStudio.bind(this)"
+      [postItem]="postStudio.bind(this)"
+    ></camp-chips-autocomplete>
   </div>
 
-  <mat-form-field appearance="fill" class="form__field">
-    <mat-label>Enter a date range</mat-label>
-    <mat-date-range-input [rangePicker]="picker" [formGroup]="managementForm.controls.aired">
-      <input matStartDate formControlName="start" placeholder="Start date" />
-      <input matEndDate formControlName="end" placeholder="End date" />
-    </mat-date-range-input>
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-date-range-picker #picker></mat-date-range-picker>
-
-    <!-- <mat-error *ngIf="addForm.controls.aired.value.start.hasError('matStartDateInvalid')">Invalid start date</mat-error> -->
-    <!-- <mat-error *ngIf="addForm.controls.aired.value.end.hasError('matEndDateInvalid')">Invalid end date</mat-error> -->
-  </mat-form-field>
-
-  <mat-form-field class="form__field form__field--synopsis" appearance="fill">
-    <mat-label>Synopsis</mat-label>
-    <textarea
-      type="text"
-      matInput
-      placeholder="Synopsis"
-      formControlName="synopsis"
-    ></textarea>
-  </mat-form-field>
-
-  <camp-chips-autocomplete
-    [title]="'Genre'"
-    [placeholder]="'New genre...'"
-    [currentItems]="this.managementForm.controls.genresData"
-    [trackItemBy]="trackItemById"
-    [getItemName]="getItemName"
-    [getItem]="getGenre.bind(this)"
-    [postItem]="postGenre.bind(this)"
-  ></camp-chips-autocomplete>
-
-  <camp-chips-autocomplete
-    [title]="'Studio'"
-    [placeholder]="'New studio...'"
-    [currentItems]="this.managementForm.controls.studiosData"
-    [trackItemBy]="trackItemById"
-    [getItemName]="getItemName"
-    [getItem]="getStudio.bind(this)"
-    [postItem]="postStudio.bind(this)"
-  ></camp-chips-autocomplete>
-
-  <button type="submit" mat-raised-button>Submit</button>
+  <button color="primary" class="submit" type="submit" mat-raised-button>Submit</button>
 </form>

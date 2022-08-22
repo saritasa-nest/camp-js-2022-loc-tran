@@ -35,10 +35,22 @@
   padding: 20px 30px;
 }
 
-.detail__information--label {
+.detail__label {
   margin-top: 10px;
 }
 
-.detail__information--title {
+.detail__title {
   font-weight: bold;
+}
+
+.action {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.action__option {
+  margin: 0 5px;
+  padding: 10px 30px;
+  font-size: 1.2rem;
 }

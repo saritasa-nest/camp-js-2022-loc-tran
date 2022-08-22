@@ -18,12 +18,10 @@ import {
   map,
   merge,
   Observable,
-  shareReplay, switchMap, tap, Subject,
+  shareReplay, switchMap, tap,
 } from 'rxjs';
 
 import { MatDialog } from '@angular/material/dialog';
-
-import { ConfirmModalComponent } from '../../../../shared/components/confirm-modal/confirm-modal.component';
 
 import { AnimeService } from '../../../../core/services/anime.service';
 import { HOME_ROUTE } from '../../auth/register/register.component';
@@ -51,7 +49,6 @@ const COLUMN_TITLES = [
   'Aired start',
   'Type',
   'Status',
-  'Option',
 ];
 
 const FILTER_TYPES = ['TV', 'OVA', 'MOVIE', 'SPECIAL', 'ONA', 'MUSIC'];
@@ -94,9 +91,6 @@ export class AnimeTableComponent implements OnInit {
         ...this.route.snapshot.queryParams,
       }),
     );
-
-  /** Delete anime by id. */
-  private readonly deleteAnime$ = new Subject<number>();
 
   /** Loading feature. */
   protected readonly isAnimeLoading$ = new BehaviorSubject<boolean>(false);
@@ -155,16 +149,6 @@ export class AnimeTableComponent implements OnInit {
           SortDirection.Descending :
           SortDirection.Ascending),
     );
-
-    this.deleteAnime$
-      .pipe(
-        switchMap(animeId =>
-          animeService
-            .deleteAnimeById(animeId)
-            .pipe(tap(() => this.reloadPage()))),
-        untilDestroyed(this),
-      )
-      .subscribe();
   }
 
   /** Initialize data. */
@@ -240,29 +224,6 @@ export class AnimeTableComponent implements OnInit {
    */
   public trackAnimeById(_index: number, anime: Anime): number {
     return anime.id;
-  }
-
-  /**
-   * Delete an anime.
-   * @param event Click event of delete button.
-   * @param animeId Id of anime.
-   */
-  public onDelete(event: Event, animeId: number): void {
-    event.stopPropagation();
-    this.dialog.open(ConfirmModalComponent, {
-      data: {
-        handleAction: () => {
-          this.deleteAnime$.next(animeId);
-          this.reloadPage();
-        },
-        title: 'Delete anime',
-        message: 'This anime will be removed. Are you sure?',
-      },
-    });
-  }
-
-  public onEdit(event: Event): void {
-    event.stopPropagation();
   }
 
   /** Reload page by navigate to current page. */

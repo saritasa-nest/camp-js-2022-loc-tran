@@ -20,6 +20,7 @@ import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component'
 @UntilDestroy()
 @Component({
   selector: 'camp-chips-autocomplete',
+  styleUrls: ['./chips-autocomplete.css'],
   templateUrl: './chips-autocomplete.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -1,6 +1,6 @@
 .form {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
   padding: 0 10px;
@@ -8,8 +8,15 @@
 
 .form__field {
   width: 30%;
+  margin: 20px;
 }
 
 .form__field--synopsis {
   width: 100%;
+}
+
+.submit {
+  margin: 20px;
+  padding: 10px 30px;
+  font-size: 1.2rem;
 }

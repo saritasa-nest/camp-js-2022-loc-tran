@@ -61,28 +61,52 @@ export class ManagementFormComponent implements OnInit {
     titleJapanese: new FormControl<string>('', { nonNullable: true }),
     image: new FormControl<string>('', { nonNullable: true }),
     trailerYoutube: new FormControl<string>('', { nonNullable: true }),
-    type: new FormControl<AnimeType>(AnimeType.Movie, { validators: Validators.required, nonNullable: true }),
-    status: new FormControl<AnimeStatus>(AnimeStatus.Airing, {
+    type: new FormControl<AnimeType | null>(null, {
       validators: Validators.required,
       nonNullable: true,
     }),
-    source: new FormControl<SourceType>(SourceType.Unknown, {
+    status: new FormControl<AnimeStatus | null>(null, {
       validators: Validators.required,
       nonNullable: true,
     }),
-    airing: new FormControl<boolean>(false, { validators: Validators.required, nonNullable: true }),
+    source: new FormControl<SourceType | null>(null, {
+      validators: Validators.required,
+      nonNullable: true,
+    }),
+    airing: new FormControl<boolean>(false, {
+      validators: Validators.required,
+      nonNullable: true,
+    }),
     aired: new FormGroup({
-      start: new FormControl<Date>(new Date(), { validators: Validators.required, nonNullable: true }),
-      end: new FormControl<Date>(new Date(), { validators: Validators.required, nonNullable: true }),
+      start: new FormControl<Date | null>(null, {
+        validators: Validators.required,
+        nonNullable: true,
+      }),
+      end: new FormControl<Date | null>(null, {
+        validators: Validators.required,
+        nonNullable: true,
+      }),
     }),
-    rating: new FormControl<RatingType>(RatingType.Unknown, {
+    rating: new FormControl<RatingType | null>(null, {
       validators: Validators.required,
       nonNullable: true,
     }),
-    season: new FormControl<SeasonType>(SeasonType.Fall, { validators: Validators.required, nonNullable: true }),
-    synopsis: new FormControl<string>('', { validators: Validators.required, nonNullable: true }),
-    studiosData: new FormControl<readonly Studio[]>([], { validators: Validators.required, nonNullable: true }),
-    genresData: new FormControl<readonly Genre[]>([], { validators: Validators.required, nonNullable: true }),
+    season: new FormControl<SeasonType | null>(null, {
+      validators: Validators.required,
+      nonNullable: true,
+    }),
+    synopsis: new FormControl<string>('', {
+      validators: Validators.required,
+      nonNullable: true,
+    }),
+    studiosData: new FormControl<readonly Studio[]>([], {
+      validators: Validators.required,
+      nonNullable: true,
+    }),
+    genresData: new FormControl<readonly Genre[]>([], {
+      validators: Validators.required,
+      nonNullable: true,
+    }),
   });
 
   public constructor(
@@ -92,7 +116,9 @@ export class ManagementFormComponent implements OnInit {
 
   /** @inheritdoc */
   public ngOnInit(): void {
-    this.managementForm.patchValue({ ...this.animeData });
+    this.managementForm.patchValue({
+      ...this.animeData,
+    });
   }
 
   /**
@@ -116,7 +142,19 @@ export class ManagementFormComponent implements OnInit {
     if (this.managementForm.invalid) {
       return;
     }
-    this.handleSubmit.emit(this.managementForm.getRawValue());
+    const { rating, type, status, source, season, aired } = this.managementForm.getRawValue();
+    this.handleSubmit.emit({
+      ...this.managementForm.getRawValue(),
+      rating: rating ?? RatingType.Unknown,
+      source: source ?? SourceType.Unknown,
+      type: type ?? AnimeType.Tv,
+      status: status ?? AnimeStatus.Airing,
+      season: season ?? SeasonType.Fall,
+      aired: {
+        start: aired.start ?? new Date(),
+        end: aired.end ?? new Date(),
+      },
+    });
   }
 
   /**

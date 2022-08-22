@@ -7,41 +7,46 @@
     <iframe title="Trailer youtube" *ngIf="detail.trailerYoutube" class="detail__media--video" [src]="'https://www.youtube.com/embed/' + detail.trailerYoutube | safe"></iframe>
   </div>
   <div class="detail__information">
-    <label class="detail__information--label">
-      <span class="detail__information--title">English title: </span>
-      <span class="detail__information--text">{{detail.titleEnglish}}</span>
+    <label class="detail__label">
+      <span class="detail__title">English title: </span>
+      <span class="detail__text">{{detail.titleEnglish}}</span>
     </label>
-    <label class="detail__information--label">
-      <span class="detail__information--title">Japanese title: </span>
-      <span class="detail__information--text">{{detail.titleJapanese}}</span>
+    <label class="detail__label">
+      <span class="detail__title">Japanese title: </span>
+      <span class="detail__text">{{detail.titleJapanese}}</span>
     </label>
-    <label class="detail__information--label">
-      <span class="detail__information--title">Type: </span>
-      <span class="detail__information--text">{{detail.type}}</span>
+    <label class="detail__label">
+      <span class="detail__title">Type: </span>
+      <span class="detail__text">{{detail.type}}</span>
     </label>
-    <label class="detail__information--label">
-      <span class="detail__information--title">Status: </span>
-      <span class="detail__information--text">{{detail.status}}</span>
+    <label class="detail__label">
+      <span class="detail__title">Status: </span>
+      <span class="detail__text">{{detail.status}}</span>
     </label>
-    <label class="detail__information--label">
-      <span class="detail__information--title">Airing: </span>
-      <span class="detail__information--text">{{detail.airing ? 'Yes' : 'No'}}</span>
+    <label class="detail__label">
+      <span class="detail__title">Airing: </span>
+      <span class="detail__text">{{detail.airing ? 'Yes' : 'No'}}</span>
     </label>
-    <label class="detail__information--label">
-      <span class="detail__information--title">Aired start date: </span>
-      <span class="detail__information--text">{{detail.aired.start | date:'short'}}</span>
+    <label class="detail__label">
+      <span class="detail__title">Aired start date: </span>
+      <span class="detail__text">{{detail.aired.start | date:'short'}}</span>
     </label>
-    <label class="detail__information--label">
-      <span class="detail__information--title">Aired end date: </span>
-      <span class="detail__information--text">{{detail.aired.end | date:'short'}}</span>
+    <label class="detail__label">
+      <span class="detail__title">Aired end date: </span>
+      <span class="detail__text">{{detail.aired.end | date:'short'}}</span>
     </label>
-    <label class="detail__information--label">
-      <span class="detail__information--title">Synopsis: </span>
-      <span class="detail__information--text">{{detail.synopsis}}</span>
+    <label class="detail__label">
+      <span class="detail__title">Synopsis: </span>
+      <span class="detail__text">{{detail.synopsis}}</span>
     </label>
-    <label class="detail__information--label">
-      <span class="detail__information--title">Genres: </span>
-      <span class="detail__information--text">{{detail.genresData | pluck:'name'}}</span>
+    <label class="detail__label">
+      <span class="detail__title">Genres: </span>
+      <span class="detail__text">{{detail.genresData | pluck:'name'}}</span>
     </label>
   </div>
 </section>
+
+<div class="action" *ngIf="animeId$ | async as id">
+  <a class="action__option" mat-raised-button [routerLink]="['../../edit/', id]">Edit</a>
+  <button class="action__option" type="button" mat-raised-button color="warn" (click)="onDeleteAnime($event, id)">Delete</button>
+</div>

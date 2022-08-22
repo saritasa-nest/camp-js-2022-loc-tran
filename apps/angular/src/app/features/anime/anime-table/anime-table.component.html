@@ -35,6 +35,8 @@
   </mat-form-field>
 </form>
 
+<a [routerLink]="['./add']">Add new Anime!</a>
+
 <ng-container *ngIf="paginationAnime$ | async as animeList; else loading">
   <table
     aria-label="anime"
@@ -113,14 +115,6 @@
         Status
       </th>
       <td mat-cell *matCellDef="let anime">{{ anime.status | placeholder }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="Option">
-      <th class="table__head-option" mat-header-cell *matHeaderCellDef>Option</th>
-      <td mat-cell *matCellDef="let anime">
-        <a mat-raised-button [routerLink]="'edit/' + anime.id" (click)="onEdit($event)">Edit</a>
-        <button type="button" mat-raised-button color="warn" (click)="onDelete($event, anime.id)">Delete</button>
-      </td>
     </ng-container>
 
     <tr class="table__head" mat-header-row *matHeaderRowDef="columnTitles"></tr>
