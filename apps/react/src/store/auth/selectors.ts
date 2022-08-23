@@ -13,3 +13,9 @@ export const selectAreAuthLoading = createSelector(
   (state: RootState) => state.auth.isLoading,
   isLoading => isLoading,
 );
+
+/** Selects error authorization. */
+export const selectAuthError = createSelector(
+  (state: RootState) => state.auth.error,
+  error => error,
+);

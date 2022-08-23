@@ -1,3 +1,4 @@
+import { FormError } from '@js-camp/core/models/httpError';
 import { Token } from '@js-camp/core/models/token';
 
 /** Auth state. */
@@ -7,7 +8,7 @@ export interface AuthState {
   readonly tokens: Token;
 
   /** Error. */
-  readonly error?: string;
+  readonly error?: FormError;
 
   /** Whether the genres are loading or not. */
   readonly isLoading: boolean;
