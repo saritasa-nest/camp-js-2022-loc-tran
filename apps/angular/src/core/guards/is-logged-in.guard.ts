@@ -4,7 +4,7 @@ import { Observable, tap } from 'rxjs';
 
 import { AuthService } from '../services/auth.service';
 
-const LOGIN_ROUTE = '/login/';
+const LOGIN_ROUTE = '/auth/login/';
 
 /** Check is user logged in or not. */
 @Injectable({
