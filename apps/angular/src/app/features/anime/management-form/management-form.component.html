@@ -27,19 +27,10 @@
       formControlName="trailerYoutube"
       />
     </mat-form-field>
-
-    <mat-label>Image</mat-label>
-    <input #imageInput type="file" id="file">
-
-    <mat-form-field class="form__field" appearance="fill">
-      <mat-label>Image</mat-label>
-      <input
-        type="text"
-        matInput
-        placeholder="Image id"
-        formControlName="image"
-      />
-    </mat-form-field>
+    <div class="form__field">
+      <mat-label>Image: </mat-label>
+      <input #imageInput type="file" id="file">
+    </div>
     <mat-form-field class="form__field" appearance="fill">
       <mat-label class="type__label">Type</mat-label>
       <mat-select disableRipple formControlName="type">

@@ -147,24 +147,32 @@ export class ManagementFormComponent implements OnInit {
     if (this.managementForm.invalid) {
       return;
     }
-    if (this.imageInput.nativeElement.files[0] !== null) {
-      this.animeService.postAnimePoster(this.imageInput.nativeElement.files[0]).pipe(untilDestroyed(this))
+    const { rating, type, status, source, season, aired } =
+      this.managementForm.getRawValue();
+    const animePostData = {
+      ...this.managementForm.getRawValue(),
+      rating: rating ?? RatingType.Unknown,
+      source: source ?? SourceType.Unknown,
+      type: type ?? AnimeType.Tv,
+      status: status ?? AnimeStatus.Airing,
+      season: season ?? SeasonType.Fall,
+      aired: {
+        start: aired.start ?? new Date(),
+        end: aired.end ?? new Date(),
+      },
+    };
+    if (this.imageInput.nativeElement.files[0] !== undefined) {
+      this.animeService
+        .postAnimePoster(this.imageInput.nativeElement.files[0])
+        .pipe(untilDestroyed(this))
         .subscribe(posterUrl => {
-        const { rating, type, status, source, season, aired } = this.managementForm.getRawValue();
-        this.handleSubmit.emit({
-          ...this.managementForm.getRawValue(),
-          image: posterUrl,
-          rating: rating ?? RatingType.Unknown,
-          source: source ?? SourceType.Unknown,
-          type: type ?? AnimeType.Tv,
-          status: status ?? AnimeStatus.Airing,
-          season: season ?? SeasonType.Fall,
-          aired: {
-            start: aired.start ?? new Date(),
-            end: aired.end ?? new Date(),
-          },
+          this.handleSubmit.emit({
+            ...animePostData,
+            image: posterUrl,
+          });
         });
-      });
+    } else {
+      this.handleSubmit.emit(animePostData);
     }
   }
 

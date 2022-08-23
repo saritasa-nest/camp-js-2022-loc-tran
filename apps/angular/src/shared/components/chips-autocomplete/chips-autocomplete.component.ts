@@ -144,9 +144,14 @@ export class ChipsAutocompleteComponent<T> implements OnInit {
   }
 
   private addNewItem(itemName: string): void {
+    if (itemName === '') {
+      return;
+    }
     this.dialog.open(ConfirmModalComponent, {
-      data: () => {
-        this.postItem$.next(itemName);
+      data: {
+        handleAction: () => this.postItem$.next(itemName),
+        title: `Add new ${this.title}`,
+        message: `Add ${itemName} to ${this.title} list?`,
       },
     });
   }

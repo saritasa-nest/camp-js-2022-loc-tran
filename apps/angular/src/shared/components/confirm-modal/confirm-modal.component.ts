@@ -18,16 +18,22 @@ export interface DialogData {
 @Component({
   selector: 'camp-confirm-modal',
   templateUrl: './confirm-modal.component.html',
+  styleUrls: ['./confirm-modal.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmModalComponent {
-  public constructor(@Inject(MAT_DIALOG_DATA) protected data: DialogData, private readonly dialog: MatDialog) {}
+  public constructor(
+    @Inject(MAT_DIALOG_DATA) protected data: DialogData,
+    private readonly dialog: MatDialog,
+  ) {}
 
+  /** Handle action ok click. */
   public onSubmitClick(): void {
-    this.closeModal();
     this.data.handleAction();
+    this.closeModal();
   }
 
+  /** Close modal when click cancel. */
   public closeModal(): void {
     this.dialog.closeAll();
   }
