@@ -20,7 +20,7 @@ const FormTextFieldComponent: FC<Props> = ({ label, ...props }) => {
     <TextField
       variant="standard"
       label={label}
-      helperText={meta.error}
+      helperText={meta.touched && meta.error}
       {...field}
       {...props}
       error={meta.touched && !!meta.error}
