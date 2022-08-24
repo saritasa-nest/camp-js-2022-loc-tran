@@ -20,12 +20,13 @@
       placeholder="Ex. pat@example.com"
       formControlName="email"
       [controlErrorsTpl]="tpl"
+      [controlErrors]="{invalidData: ((errorList$ | async)?.['email'] ?? []).join('\n')}"
     />
-    <mat-error
+    <!-- <mat-error
       *ngFor="let errorMessage of (errorList$ | async)?.['email'] ?? []"
     >
       {{ errorMessage }}
-    </mat-error>
+    </mat-error> -->
   </mat-form-field>
 
   <mat-form-field class="form__field" appearance="fill">
@@ -73,13 +74,14 @@
       matInput
       placeholder="Type your password."
       [controlErrorsTpl]="tpl"
+      [controlErrors]="{invalidData: ((errorList$ | async)?.['password'] ?? []).join('\n')}"
       formControlName="password"
     />
-    <mat-error
+    <!-- <mat-error
       *ngFor="let errorMessage of (errorList$ | async)?.['password'] ?? []"
     >
       {{ errorMessage }}
-    </mat-error>
+    </mat-error> -->
   </mat-form-field>
 
   <mat-form-field class="form__field" appearance="fill">
