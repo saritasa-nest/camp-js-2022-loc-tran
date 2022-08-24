@@ -5,7 +5,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export interface DialogData {
 
   /** Handle action when click ok. */
-  handleAction: Function;
+  handleAction: () => void;
 
   /** Title of dialog. */
   title: string;

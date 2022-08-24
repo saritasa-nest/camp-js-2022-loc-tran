@@ -16,7 +16,10 @@ import { HOME_ROUTE } from '../../auth/register/register.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddComponent {
-  public constructor(private readonly animeService: AnimeService, private readonly router: Router) {}
+  public constructor(
+    private readonly animeService: AnimeService,
+    private readonly router: Router,
+  ) {}
 
   /**
    * Handle submit edit form.
