@@ -22,6 +22,7 @@ import {
 } from 'rxjs';
 
 import { AnimeService } from '../../../../core/services/anime.service';
+import { HOME_ROUTE } from '../../auth/register/register.component';
 
 const DEFAULT_PARAMS = new PaginationParams({
   ordering: '',
@@ -140,7 +141,7 @@ export class AnimeTableComponent implements OnInit {
   public ngOnInit(): void {
     const navigateSideEffect$ = this.queryParams$.pipe(
       tap(query => {
-        this.router.navigate(['/'], { queryParams: { ...query } });
+        this.router.navigate([HOME_ROUTE], { queryParams: { ...query } });
         this.isAnimeLoading$.next(true);
       }),
     );
