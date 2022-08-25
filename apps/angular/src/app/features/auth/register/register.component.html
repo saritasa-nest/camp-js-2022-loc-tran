@@ -20,13 +20,7 @@
       placeholder="Ex. pat@example.com"
       formControlName="email"
       [controlErrorsTpl]="tpl"
-      [controlErrors]="{invalidData: ((errorList$ | async)?.['email'] ?? []).join('\n')}"
-    />
-    <!-- <mat-error
-      *ngFor="let errorMessage of (errorList$ | async)?.['email'] ?? []"
-    >
-      {{ errorMessage }}
-    </mat-error> -->
+      />
   </mat-form-field>
 
   <mat-form-field class="form__field" appearance="fill">
@@ -40,11 +34,6 @@
       formControlName="lastName"
       [controlErrorsTpl]="tpl"
     />
-    <mat-error
-      *ngFor="let errorMessage of (errorList$ | async)?.['last_name'] ?? []"
-    >
-      {{ errorMessage }}
-    </mat-error>
   </mat-form-field>
 
   <mat-form-field class="form__field" appearance="fill">
@@ -58,11 +47,6 @@
       formControlName="firstName"
       [controlErrorsTpl]="tpl"
     />
-    <mat-error
-      *ngFor="let errorMessage of (errorList$ | async)?.['first_name'] ?? []"
-    >
-      {{ errorMessage }}
-    </mat-error>
   </mat-form-field>
 
   <mat-form-field class="form__field" appearance="fill">
@@ -74,14 +58,8 @@
       matInput
       placeholder="Type your password."
       [controlErrorsTpl]="tpl"
-      [controlErrors]="{invalidData: ((errorList$ | async)?.['password'] ?? []).join('\n')}"
       formControlName="password"
     />
-    <!-- <mat-error
-      *ngFor="let errorMessage of (errorList$ | async)?.['password'] ?? []"
-    >
-      {{ errorMessage }}
-    </mat-error> -->
   </mat-form-field>
 
   <mat-form-field class="form__field" appearance="fill">
