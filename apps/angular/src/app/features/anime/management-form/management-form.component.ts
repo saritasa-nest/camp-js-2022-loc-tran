@@ -42,19 +42,19 @@ export class ManagementFormComponent implements OnInit {
   @Output() public handleSubmit = new EventEmitter<AnimeManagementPost>();
 
   /** Anime statuses. */
-  protected animeStatus = Object.values(AnimeStatus);
+  protected readonly animeStatus = Object.values(AnimeStatus);
 
   /** Anime types. */
-  protected animeType = Object.values(AnimeType);
+  protected readonly animeType = Object.values(AnimeType);
 
   /** Anime sources. */
-  protected animeSource = Object.values(SourceType);
+  protected readonly animeSource = Object.values(SourceType);
 
   /** Anime ratings. */
-  protected animeRating = Object.values(RatingType);
+  protected readonly animeRating = Object.values(RatingType);
 
   /** Anime seasons. */
-  protected animeSeason = Object.values(SeasonType);
+  protected readonly animeSeason = Object.values(SeasonType);
 
   @ViewChild('imageInput')
   private imageInput = {} as ElementRef;

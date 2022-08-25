@@ -7,6 +7,11 @@ import { PageNotFoundComponent } from '../shared/components/page-not-found/page-
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: '/anime',
+    pathMatch: 'full',
+  },
+  {
     path: 'anime',
     loadChildren: () => import('./features/anime/anime.module').then(m => m.AnimeModule),
   },
@@ -14,11 +19,6 @@ const routes: Routes = [
     path: 'auth',
     canLoad: [CheckIsNotLoggedInGuard],
     loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule),
-  },
-  {
-    path: '',
-    redirectTo: '/anime',
-    pathMatch: 'full',
   },
   { path: '**', component: PageNotFoundComponent },
 ];
