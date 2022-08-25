@@ -5,6 +5,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
 import { AuthService } from '../../api/services/authService';
+import { TokenService } from '../../api/services/tokenService';
 
 export const login = createAsyncThunk(
   'auth/login',
@@ -22,5 +23,16 @@ export const register = createAsyncThunk(
       }
       return rejectWithValue(error);
     }
+  },
+);
+
+export const getAuthState = createAsyncThunk(
+  'auth/isAuth',
+  async() => {
+    const tokens = await TokenService.getTokensFromStorage();
+    if (tokens !== null) {
+      return true;
+    }
+    return false;
   },
 );

@@ -6,8 +6,7 @@ import { http } from '..';
 
 import { StorageService } from './localStorageService';
 
-const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
-const REFRESH_TOKEN_KEY = 'REFRESH_TOKEN';
+const TOKEN_KEY = 'AUTH_TOKEN';
 
 const REFRESH_URL = 'auth/refresh/';
 
@@ -17,7 +16,7 @@ export namespace TokenService {
    * Return the refreshed token.
    * @param refreshToken Refresh token.
    */
-  export async function getRefreshToken(
+  export async function getRefreshedToken(
     refreshToken: string,
   ): Promise<Token> {
     const response = await http.post<TokenDto>(REFRESH_URL, {
@@ -31,20 +30,15 @@ export namespace TokenService {
    * @param tokens Store Access token and Refresh token received.
    */
   export async function storeTokens(tokens: Token): Promise<void> {
-    await StorageService.save(ACCESS_TOKEN_KEY, tokens.accessToken);
-    await StorageService.save(REFRESH_TOKEN_KEY, tokens.refreshToken);
+    await StorageService.save(TOKEN_KEY, tokens);
   }
 
   /** Get tokens from local storage. */
   export async function getTokensFromStorage(): Promise<Token | null> {
-    const accessToken = await StorageService.get<string>(ACCESS_TOKEN_KEY);
-    const refreshToken = await StorageService.get<string>(REFRESH_TOKEN_KEY);
-    if (accessToken === null || refreshToken === null) {
+    const tokens = await StorageService.get<Token>(TOKEN_KEY);
+    if (tokens === null) {
       return null;
     }
-    return new Token({
-      accessToken,
-      refreshToken,
-    });
+    return tokens;
   }
 }

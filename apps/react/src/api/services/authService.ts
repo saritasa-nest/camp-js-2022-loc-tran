@@ -6,6 +6,8 @@ import { Token } from '@js-camp/core/models/token';
 
 import { http } from '..';
 
+import { TokenService } from './tokenService';
+
 const LOGIN_URL = 'auth/login/';
 const REGISTER_URL = 'auth/register/';
 
@@ -17,7 +19,9 @@ export namespace AuthService {
    */
   export async function login(userData: LoginData): Promise<Token> {
     const { data } = await http.post<TokenDto>(LOGIN_URL, userData);
-    return TokenMapper.fromDto(data);
+    const tokens = TokenMapper.fromDto(data);
+    TokenService.storeTokens(tokens);
+    return tokens;
   }
 
   /**
@@ -26,6 +30,8 @@ export namespace AuthService {
    */
   export async function register(accountData: Account): Promise<Token> {
     const { data } = await http.post<TokenDto>(REGISTER_URL, accountData);
-    return TokenMapper.fromDto(data);
+    const tokens = TokenMapper.fromDto(data);
+    TokenService.storeTokens(tokens);
+    return tokens;
   }
 }
