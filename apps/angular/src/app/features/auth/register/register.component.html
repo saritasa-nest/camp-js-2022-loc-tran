@@ -20,18 +20,13 @@
       placeholder="Ex. pat@example.com"
       formControlName="email"
       [controlErrorsTpl]="tpl"
-    />
-    <mat-error
-      *ngFor="let errorMessage of (errorList$ | async)?.['email'] ?? []"
-    >
-      {{ errorMessage }}
-    </mat-error>
+      />
   </mat-form-field>
 
   <mat-form-field class="form__field" appearance="fill">
     <mat-label class="form__label">Last name</mat-label>
     <input
-      autoComplete="true"
+      autocomplete="true"
       class="form__input"
       type="text"
       matInput
@@ -39,17 +34,12 @@
       formControlName="lastName"
       [controlErrorsTpl]="tpl"
     />
-    <mat-error
-      *ngFor="let errorMessage of (errorList$ | async)?.['last_name'] ?? []"
-    >
-      {{ errorMessage }}
-    </mat-error>
   </mat-form-field>
 
   <mat-form-field class="form__field" appearance="fill">
     <mat-label class="form__label">First name</mat-label>
     <input
-      autoComplete="true"
+      autocomplete="true"
       class="form__input"
       type="text"
       matInput
@@ -57,17 +47,12 @@
       formControlName="firstName"
       [controlErrorsTpl]="tpl"
     />
-    <mat-error
-      *ngFor="let errorMessage of (errorList$ | async)?.['first_name'] ?? []"
-    >
-      {{ errorMessage }}
-    </mat-error>
   </mat-form-field>
 
   <mat-form-field class="form__field" appearance="fill">
     <mat-label class="form__label">Password</mat-label>
     <input
-      autoComplete="true"
+      autocomplete="true"
       class="form__input"
       type="password"
       matInput
@@ -75,17 +60,12 @@
       [controlErrorsTpl]="tpl"
       formControlName="password"
     />
-    <mat-error
-      *ngFor="let errorMessage of (errorList$ | async)?.['password'] ?? []"
-    >
-      {{ errorMessage }}
-    </mat-error>
   </mat-form-field>
 
   <mat-form-field class="form__field" appearance="fill">
     <mat-label class="form__label">Confirm password</mat-label>
     <input
-      autoComplete="true"
+      autocomplete="true"
       class="form__input"
       type="password"
       matInput
