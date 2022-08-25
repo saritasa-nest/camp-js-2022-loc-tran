@@ -17,6 +17,7 @@ const ERROR_TAILOR_CONFIG = {
     useValue: {
       required: 'This field is required',
       notSame: 'Confirm password must matched',
+      invalidData: (error: string) => error,
     },
   },
 };
