@@ -4,16 +4,20 @@ import { FormError } from '@js-camp/core/models/httpError';
 export interface AuthState {
 
   /** Check user is logged in or not. */
-  readonly isAuth: boolean;
+  readonly isAuthorized: boolean;
+
+  /** Whether isAuthorized is checking or not. */
+  readonly isCheckingAuthorized: boolean;
 
   /** Error. */
   readonly error?: FormError;
 
-  /** Whether the genres are loading or not. */
+  /** Whether authorization is loading or not. */
   readonly isLoading: boolean;
 }
 
 export const initialState: AuthState = {
   isLoading: false,
-  isAuth: false,
+  isAuthorized: false,
+  isCheckingAuthorized: false,
 };

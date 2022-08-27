@@ -16,7 +16,7 @@ export const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         if (action.payload instanceof Token) {
-          state.isAuth = true;
+          state.isAuthorized = true;
         }
         state.isLoading = false;
       })
@@ -31,7 +31,7 @@ export const authSlice = createSlice({
       })
       .addCase(register.fulfilled, (state, action) => {
         if (action.payload instanceof Token) {
-          state.isAuth = true;
+          state.isAuthorized = true;
         }
         state.isLoading = false;
       })

@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { Form, Formik } from 'formik';
 import { FC, memo, useState } from 'react';
 import * as Yup from 'yup';
-import { selectAreAuthLoading } from '@js-camp/react/store/auth/selectors';
+import { selectIsAuthLoading } from '@js-camp/react/store/auth/selectors';
 import { FormError } from '@js-camp/core/models/httpError';
 import { AlertColor, Button, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -32,7 +32,7 @@ const RegisterFormComponent: FC = () => {
     severity: 'success',
   });
   const dispatch = useAppDispatch();
-  const isLoading = useAppSelector(selectAreAuthLoading);
+  const isLoading = useAppSelector(selectIsAuthLoading);
   const onRegisterFormSubmit = (
     values: Account,
     {
@@ -49,7 +49,6 @@ const RegisterFormComponent: FC = () => {
       } else if (result.payload instanceof Error) {
         openSnackbar('Unknown error!', 'error');
       } else {
-        openSnackbar('Register successfully!', 'success');
         navigate(HOME_ROUTE);
       }
     });

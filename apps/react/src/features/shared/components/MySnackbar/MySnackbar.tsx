@@ -53,7 +53,7 @@ const SnackbarComponent: FC<Props> = (props: Props) => {
   const snackbar = (
     <Snackbar
       open={props.open}
-      autoHideDuration={props.autoHideDuration ?? 3000}
+      autoHideDuration={props.autoHideDuration ?? 2000}
       onClose={handleClose}
       action={action}
     >
