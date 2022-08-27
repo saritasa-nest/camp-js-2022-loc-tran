@@ -1,0 +1,14 @@
+.form__content {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+}
+
+.form__field {
+  margin: 10px 0;
+  min-width: 400px;
+}
+
+.form__field--submit {
+  margin-top: 50px;
+}

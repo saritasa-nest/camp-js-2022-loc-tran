@@ -1,16 +1,19 @@
 import { FC } from 'react';
-import { Navigate, RouteObject, useRoutes } from 'react-router-dom';
+import { Navigate, Outlet, RouteObject, useRoutes } from 'react-router-dom';
 
 import { authRoutes } from '../features/auth/routes';
-
 import { genresRoutes } from '../features/genres/routes';
+import { Header } from '../shared/components/Header';
 
 const routes: RouteObject[] = [
   {
     path: '*',
-    element: <Navigate to="/genres" />,
+    element: <Navigate to={'/genres'} />,
   },
-  ...genresRoutes,
+  {
+    element: <><Header /><Outlet /></>,
+    children: [...genresRoutes],
+  },
   ...authRoutes,
 ];
 

@@ -1,68 +1,53 @@
-import { Account } from '@js-camp/core/models/account';
 import { FormError } from '@js-camp/core/models/httpError';
-import { register } from '@js-camp/react/store/auth/dispatchers';
+import { LoginData } from '@js-camp/core/models/loginData';
+import { login } from '@js-camp/react/store/auth/dispatchers';
 import { selectIsAuthLoading } from '@js-camp/react/store/auth/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { Button, CircularProgress } from '@mui/material';
 import { Form, Formik } from 'formik';
 import { FC, memo } from 'react';
-import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 import { Token } from '@js-camp/core/models/token';
+import { Button, CircularProgress } from '@mui/material';
 
 import { useSnackbar } from '../../../../hooks/useSnackbar';
 import { HOME_PAGE } from '../../../../routes/guards/IsNotLoggedIn';
-import { MySnackbar } from '../../../../shared/components/MySnackbar/MySnackbar';
+import { MySnackbar } from '../../../../shared/components/MySnackbar';
 import { FormTextField } from '../FormTextField';
 import styles from '../AuthForm.module.css';
 
 const RequiredErrorMessage = 'This field is required!';
 
-const RegisterSchema = Yup.object().shape({
+const LoginSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email.')
     .required(RequiredErrorMessage),
   password: Yup.string().required(RequiredErrorMessage),
-  retypePassword: Yup.string().required(RequiredErrorMessage),
 });
 
-/** Register form component. */
-const RegisterFormComponent: FC = () => {
-  const navigate = useNavigate();
+const LoginFormComponent: FC = () => {
   const { snackbarConfig, openSnackbar, handleCloseSnackbar } = useSnackbar();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsAuthLoading);
-  const onRegisterFormSubmit = (
-    values: Account,
-    {
-      setFieldError,
-    }: { setFieldError: (field: string, errorMsg: string) => void; },
-  ) => {
-    dispatch(register(values)).then(result => {
+  const onLoginFormSubmit = (values: LoginData) => {
+    dispatch(login(values)).then(result => {
       if (result.payload instanceof FormError) {
-        for (const key of Object.keys(result.payload.data)) {
-          result.payload.data[key].forEach(error =>
-            setFieldError(key, error));
-        }
-        openSnackbar(result.payload.detail, 'error', 3000);
+        openSnackbar(result.payload.detail, 'error');
       } else if (result.payload instanceof Token) {
         navigate(HOME_PAGE);
       } else {
-        openSnackbar('Unknown error!', 'error', 3000);
+        openSnackbar('Unknown Error!', 'error');
       }
     });
   };
-
-  const registerForm = (
+  const loginForm = (
     <Formik
       initialValues={{
         email: '',
-        firstName: '',
-        lastName: '',
         password: '',
-        retypePassword: '',
       }}
-      validationSchema={RegisterSchema}
-      onSubmit={onRegisterFormSubmit}
+      onSubmit={onLoginFormSubmit}
+      validationSchema={LoginSchema}
     >
       <Form className={styles['form__content']}>
         <FormTextField
@@ -74,33 +59,11 @@ const RegisterFormComponent: FC = () => {
           className={styles['form__field']}
         />
         <FormTextField
-          label="First name: "
-          id="firstName"
-          name="firstName"
-          placeholder="Jane"
-          className={styles['form__field']}
-        />
-        <FormTextField
-          label="Last name: "
-          id="lastName"
-          name="lastName"
-          placeholder="Doe"
-          className={styles['form__field']}
-        />
-        <FormTextField
           label="Password: "
           id="password"
           name="password"
           type="password"
           placeholder="Enter your password"
-          className={styles['form__field']}
-        />
-        <FormTextField
-          label="Retype password: "
-          id="retypePassword"
-          name="retypePassword"
-          type="password"
-          placeholder="Retype our password"
           className={styles['form__field']}
         />
         <Button
@@ -112,15 +75,16 @@ const RegisterFormComponent: FC = () => {
           {isLoading ? (
             <CircularProgress size={'20px'} color="inherit" />
           ) : (
-            'Submit'
+            'Login'
           )}
         </Button>
       </Form>
     </Formik>
   );
+
   return (
     <>
-      {registerForm}
+      {loginForm}
       <MySnackbar
         open={snackbarConfig.open}
         onClose={handleCloseSnackbar}
@@ -131,4 +95,4 @@ const RegisterFormComponent: FC = () => {
   );
 };
 
-export const RegisterForm = memo(RegisterFormComponent);
+export const LoginForm = memo(LoginFormComponent);

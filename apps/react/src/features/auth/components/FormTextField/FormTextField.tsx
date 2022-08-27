@@ -18,7 +18,7 @@ const FormTextFieldComponent: FC<Props> = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <TextField
-      variant="standard"
+      variant="outlined"
       label={label}
       helperText={meta.touched && meta.error}
       {...field}

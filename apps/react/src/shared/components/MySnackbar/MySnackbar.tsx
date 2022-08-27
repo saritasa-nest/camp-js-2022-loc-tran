@@ -19,7 +19,7 @@ interface Props {
   readonly message: string;
 
   /** Snackbar auto hide after. */
-  readonly autoHideDuration?: number;
+  readonly autoHideDuration?: number | null;
 
   /** Snackbar color. */
   readonly severity?: AlertColor;
@@ -53,7 +53,7 @@ const SnackbarComponent: FC<Props> = (props: Props) => {
   const snackbar = (
     <Snackbar
       open={props.open}
-      autoHideDuration={props.autoHideDuration ?? 2000}
+      autoHideDuration={props.autoHideDuration}
       onClose={handleClose}
       action={action}
     >

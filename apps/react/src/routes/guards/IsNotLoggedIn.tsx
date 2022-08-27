@@ -3,7 +3,7 @@ import { selectIsAuthorized, selectIsCheckingAuthorized } from '@js-camp/react/s
 import { FC, useEffect, memo } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-import { LoadingPage } from '../../features/shared/components/LoadingPage';
+import { LoadingPage } from '../../shared/components/LoadingPage';
 import { useAppDispatch, useAppSelector } from '../../store';
 
 export const HOME_PAGE = '/';

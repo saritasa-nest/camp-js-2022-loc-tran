@@ -9,7 +9,16 @@ import { TokenService } from '../../api/services/tokenService';
 
 export const login = createAsyncThunk(
   'auth/login',
-  (loginData: LoginData) => AuthService.login(loginData),
+  async(account: LoginData, { rejectWithValue }) => {
+    try {
+      return await AuthService.login(account);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        return rejectWithValue(HttpErrorMapper.fromDto(error.response?.data));
+      }
+      return rejectWithValue(error);
+    }
+  },
 );
 
 export const register = createAsyncThunk(
