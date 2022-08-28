@@ -8,7 +8,7 @@ import { StorageService } from './localStorageService';
 
 const TOKEN_KEY = 'AUTH_TOKEN';
 
-const REFRESH_URL = 'auth/refresh/';
+const REFRESH_URL = 'auth/token/refresh/';
 
 export namespace TokenService {
 
@@ -20,7 +20,7 @@ export namespace TokenService {
     refreshToken: string,
   ): Promise<Token> {
     const response = await http.post<TokenDto>(REFRESH_URL, {
-      token: refreshToken,
+      refresh: refreshToken,
     });
     return TokenMapper.fromDto(response.data);
   }
