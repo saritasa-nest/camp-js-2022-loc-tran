@@ -1,0 +1,4 @@
+.anime__list {
+  max-height: var(--anime-list-height);
+  overflow-y: scroll;
+}

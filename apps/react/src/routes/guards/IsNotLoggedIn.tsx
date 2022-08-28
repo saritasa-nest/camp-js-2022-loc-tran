@@ -6,7 +6,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { LoadingPage } from '../../shared/components/LoadingPage';
 import { useAppDispatch, useAppSelector } from '../../store';
 
-export const HOME_PAGE = '/genres';
+export const HOME_PAGE = '/anime';
 
 const IsNotLoggedInComponent: FC = () => {
   const dispatch = useAppDispatch();

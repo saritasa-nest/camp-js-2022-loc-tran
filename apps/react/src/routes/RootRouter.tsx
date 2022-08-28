@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { Navigate, RouteObject, useRoutes } from 'react-router-dom';
 
+import { animeRoutes } from '../features/anime-list/routes';
 import { authRoutes } from '../features/auth/routes';
 import { genresRoutes } from '../features/genres/routes';
 import { PageNotFound } from '../shared/components/PageNotFound';
@@ -21,7 +22,7 @@ const routes: RouteObject[] = [
     element: (
       <IsLoggedIn />
     ),
-    children: [...genresRoutes],
+    children: [...genresRoutes, ...animeRoutes],
   },
   {
     element: (

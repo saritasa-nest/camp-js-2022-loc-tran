@@ -1,4 +1,7 @@
 :root {
+  /* Dimension. */
+  --anime-list-height: calc(100vh - 93px);
+
   /* Font family */
   --header-font: arial, helvetica, sans-serif;
 
