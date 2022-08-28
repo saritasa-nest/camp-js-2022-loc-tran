@@ -1,12 +1,11 @@
 .form__content {
   display: flex;
   flex-direction: column;
-  max-width: 500px;
+  width: 30%;
 }
 
 .form__field {
   margin: 10px 0;
-  min-width: 400px;
 }
 
 .form__field--submit {

@@ -68,7 +68,6 @@ const RegisterFormComponent: FC = () => {
       <Form className={styles['form__content']}>
         <FormTextField
           label="Email: "
-          id="email"
           name="email"
           placeholder="EX: abc@example.com"
           type="email"
@@ -76,21 +75,18 @@ const RegisterFormComponent: FC = () => {
         />
         <FormTextField
           label="First name: "
-          id="firstName"
           name="firstName"
           placeholder="Jane"
           className={styles['form__field']}
         />
         <FormTextField
           label="Last name: "
-          id="lastName"
           name="lastName"
           placeholder="Doe"
           className={styles['form__field']}
         />
         <FormTextField
           label="Password: "
-          id="password"
           name="password"
           type="password"
           placeholder="Enter your password"
@@ -98,7 +94,6 @@ const RegisterFormComponent: FC = () => {
         />
         <FormTextField
           label="Retype password: "
-          id="retypePassword"
           name="retypePassword"
           type="password"
           placeholder="Retype our password"

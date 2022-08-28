@@ -52,7 +52,6 @@ const LoginFormComponent: FC = () => {
       <Form className={styles['form__content']}>
         <FormTextField
           label="Email: "
-          id="email"
           name="email"
           placeholder="EX: abc@example.com"
           type="email"
@@ -60,7 +59,6 @@ const LoginFormComponent: FC = () => {
         />
         <FormTextField
           label="Password: "
-          id="password"
           name="password"
           type="password"
           placeholder="Enter your password"
