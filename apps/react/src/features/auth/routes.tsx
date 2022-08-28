@@ -1,8 +1,6 @@
 import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
 
-import { IsNotLoggedIn } from '../../routes/guards';
-
 const LoginPage = lazy(() =>
   import('./pages/LoginPage').then(module => ({
     default: module.LoginPage,
@@ -15,16 +13,11 @@ const RegisterPage = lazy(() =>
 
 export const authRoutes: RouteObject[] = [
   {
-    element: <IsNotLoggedIn />,
-    children: [
-      {
-        path: 'login',
-        element: <LoginPage />,
-      },
-      {
-        path: 'register',
-        element: <RegisterPage />,
-      },
-    ],
+    path: 'login',
+    element: <LoginPage />,
+  },
+  {
+    path: 'register',
+    element: <RegisterPage />,
   },
 ];

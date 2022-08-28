@@ -71,6 +71,7 @@ const LoginFormComponent: FC = () => {
           variant="contained"
           color="success"
           className={`${styles['form__field']} ${styles['form__field--submit']}`}
+          disabled={isLoading}
         >
           {isLoading ? (
             <CircularProgress size={'20px'} color="inherit" />

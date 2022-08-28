@@ -2,7 +2,7 @@ import { FormError } from '@js-camp/core/models/httpError';
 import { Token } from '@js-camp/core/models/token';
 import { createSlice } from '@reduxjs/toolkit';
 
-import { getAuthState, login, register } from './dispatchers';
+import { getAuthState, login, logout, register } from './dispatchers';
 import { initialState } from './state';
 
 export const authSlice = createSlice({
@@ -47,5 +47,8 @@ export const authSlice = createSlice({
       .addCase(getAuthState.fulfilled, (state, action) => {
         state.isCheckingAuthorized = false;
         state.isAuthorized = action.payload;
+      })
+      .addCase(logout.fulfilled, state => {
+        state.isAuthorized = false;
       }),
 });

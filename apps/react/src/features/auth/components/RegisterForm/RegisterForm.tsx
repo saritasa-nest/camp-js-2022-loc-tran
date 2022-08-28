@@ -22,7 +22,8 @@ const RegisterSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email.')
     .required(RequiredErrorMessage),
   password: Yup.string().required(RequiredErrorMessage),
-  retypePassword: Yup.string().required(RequiredErrorMessage),
+  retypePassword: Yup.string().required(RequiredErrorMessage)
+    .oneOf([Yup.ref('password'), null], 'Passwords must match'),
 });
 
 /** Register form component. */
@@ -108,6 +109,7 @@ const RegisterFormComponent: FC = () => {
           variant="contained"
           color="success"
           className={`${styles['form__field']} ${styles['form__field--submit']}`}
+          disabled={isLoading}
         >
           {isLoading ? (
             <CircularProgress size={'20px'} color="inherit" />

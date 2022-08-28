@@ -41,4 +41,9 @@ export namespace TokenService {
     }
     return tokens;
   }
+
+  /** Remove tokens from local storage. */
+  export async function removeTokens(): Promise<void> {
+    await StorageService.remove(TOKEN_KEY);
+  }
 }

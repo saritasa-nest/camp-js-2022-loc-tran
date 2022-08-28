@@ -1,20 +1,29 @@
 import { FC } from 'react';
-import { Navigate, Outlet, RouteObject, useRoutes } from 'react-router-dom';
+import { RouteObject, useRoutes } from 'react-router-dom';
 
 import { authRoutes } from '../features/auth/routes';
 import { genresRoutes } from '../features/genres/routes';
-import { Header } from '../shared/components/Header';
+import { PageNotFound } from '../shared/components/PageNotFound';
+
+import { IsLoggedIn, IsNotLoggedIn } from './guards';
 
 const routes: RouteObject[] = [
   {
     path: '*',
-    element: <Navigate to={'/genres'} />,
+    element: <PageNotFound />,
   },
   {
-    element: <><Header /><Outlet /></>,
+    element: (
+      <IsLoggedIn />
+    ),
     children: [...genresRoutes],
   },
-  ...authRoutes,
+  {
+    element: (
+      <IsNotLoggedIn />
+    ),
+    children: [...authRoutes],
+  },
 ];
 
 /** Root router component. */

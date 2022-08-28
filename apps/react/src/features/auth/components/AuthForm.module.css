@@ -10,5 +10,6 @@
 }
 
 .form__field--submit {
-  margin-top: 50px;
+  margin-top: 20px;
+  min-height: 50px;
 }

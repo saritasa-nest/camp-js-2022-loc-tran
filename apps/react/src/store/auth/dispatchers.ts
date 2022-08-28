@@ -36,12 +36,19 @@ export const register = createAsyncThunk(
 );
 
 export const getAuthState = createAsyncThunk(
-  'auth/isAuth',
+  'auth/getAuthState',
   async() => {
     const tokens = await TokenService.getTokensFromStorage();
     if (tokens !== null) {
       return true;
     }
     return false;
+  },
+);
+
+export const logout = createAsyncThunk(
+  'auth/logout',
+  async() => {
+    await TokenService.removeTokens();
   },
 );
