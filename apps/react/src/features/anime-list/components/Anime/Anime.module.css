@@ -1,0 +1,19 @@
+.info:hover {
+  background-color: var(--background-color-dark);
+}
+
+.info__data {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.info__data--primary {
+  font-size: 0.9rem;
+}
+
+.info__data--secondary {
+  font-size: 0.7rem;
+  color: var(--font-color-dark-secondary);
+}

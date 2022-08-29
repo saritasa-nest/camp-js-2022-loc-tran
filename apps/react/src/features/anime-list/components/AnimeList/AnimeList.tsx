@@ -1,17 +1,12 @@
 import { fetchAnime } from '@js-camp/react/store/anime/dispatchers';
 import {
   selectAnimeList,
-  selectIsAnimeListLoading,
+  selectIsAnimeListLoading
 } from '@js-camp/react/store/anime/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import {
-  List,
-  ListItem,
-  ListItemAvatar,
-  Avatar,
-  ListItemText,
-} from '@mui/material';
 import { FC, memo, useEffect } from 'react';
+
+import { Anime } from '../Anime';
 
 const AnimeListComponent: FC = () => {
   const dispatch = useAppDispatch();
@@ -22,16 +17,7 @@ const AnimeListComponent: FC = () => {
     dispatch(fetchAnime());
   }, [dispatch, fetchAnime]);
 
-  const list = animeList.map(anime => (
-    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} key={anime.id}>
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar src={anime.image} />
-        </ListItemAvatar>
-        <ListItemText primary={anime.id} secondary="Jan 9, 2014" />
-      </ListItem>
-    </List>
-  ));
+  const list = animeList.map(anime => <Anime anime={anime} key={anime.id} />);
 
   return <>{list}</>;
 };
