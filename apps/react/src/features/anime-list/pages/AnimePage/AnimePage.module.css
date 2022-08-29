@@ -2,3 +2,23 @@
   max-height: var(--anime-list-height);
   overflow-y: scroll;
 }
+
+.anime__list::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Scrollbar track */
+.anime__list::-webkit-scrollbar-track {
+  background-color: var(--scrollbar-track-color);
+}
+
+/* Scrollbar */
+.anime__list::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-color);
+  border-radius: 10px;
+}
+
+/* Scrollbar on hover */
+.anime__list::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-color-hover);
+}

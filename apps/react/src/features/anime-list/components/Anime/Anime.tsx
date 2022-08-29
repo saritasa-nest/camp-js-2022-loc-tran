@@ -13,7 +13,7 @@ interface Props {
 }
 
 const AnimeComponent: FC<Props> = ({ anime }) => (
-  <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} className={styles['info']}>
+  <List sx={{ width: '100%', bgcolor: 'background.paper' }} className={styles['info']}>
     <ListItem>
       <ListItemAvatar>
         <Avatar variant="rounded" alt="" sx={{ width: 100, height: 100 }} src={anime.image} />

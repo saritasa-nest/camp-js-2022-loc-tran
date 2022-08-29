@@ -1,6 +1,6 @@
 :root {
   /* Dimension. */
-  --anime-list-height: calc(100vh - 93px);
+  --anime-list-height: calc(100vh - 75px);
 
   /* Font family */
   --header-font: arial, helvetica, sans-serif;
@@ -18,6 +18,11 @@
   --font-color-dark-secondary: #888;
   --font-color-contrast-primary: #fff;
   --font-color-primary: #000;
+
+  /* Scrollbar color. */
+  --scrollbar-track-color: #eee;
+  --scrollbar-color: #888;
+  --scrollbar-color-hover: #555;
 
   /* Background color. */
   --background-color-dark: #ccc;
