@@ -1,4 +1,7 @@
-import { fetchAnime, fetchMoreAnime } from '@js-camp/react/store/anime/dispatchers';
+import {
+  fetchAnime,
+  fetchMoreAnime,
+} from '@js-camp/react/store/anime/dispatchers';
 import {
   selectAnimeList,
   selectCurrentPage,
@@ -18,7 +21,8 @@ const AnimeListComponent: FC = () => {
   const animeList = useAppSelector(selectAnimeList);
   const isLoading = useAppSelector(selectIsAnimeListLoading);
   const currentPage = useAppSelector(selectCurrentPage);
-  const { setLastElement } = useInfiniteScroll(() => dispatch(fetchMoreAnime(currentPage + 1)));
+  const { setLastElement } = useInfiniteScroll(() =>
+    dispatch(fetchMoreAnime(currentPage + 1)));
 
   useEffect(() => {
     dispatch(fetchAnime());
@@ -26,20 +30,29 @@ const AnimeListComponent: FC = () => {
 
   const list = animeList.map((anime, index) => {
     if (index === animeList.length - 1) {
-      return <div key={anime.id} ref={setLastElement}>
-        <Anime anime={anime} />
-      </div>;
+      return (
+        <div key={anime.id} ref={setLastElement}>
+          <Anime anime={anime} />
+        </div>
+      );
     }
     return <Anime anime={anime} key={anime.id} />;
   });
 
-  const skeleton = <div className={styles['skeleton']}>
-    <Skeleton variant="rectangular" width={100} height={100} />
-    <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-    <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-  </div>;
+  const skeleton = (
+    <div className={styles['skeleton']}>
+      <Skeleton variant="rectangular" width={80} height={80} />
+      <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+      <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+    </div>
+  );
 
-  return <>{list}{isLoading && skeleton}</>;
+  return (
+    <>
+      {list}
+      {isLoading && skeleton}
+    </>
+  );
 };
 
 export const AnimeList = memo(AnimeListComponent);
