@@ -21,7 +21,7 @@ export const animeListSlice = createSlice({
       })
       .addCase(fetchMoreAnime.fulfilled, (state, action) => {
         state.animeList = [...state.animeList, ...action.payload];
-        state.currentPage += 1;
+        state.currentPage++;
         state.isLoading = false;
       }),
 });
