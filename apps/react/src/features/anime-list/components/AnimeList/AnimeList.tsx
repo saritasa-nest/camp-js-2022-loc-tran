@@ -22,7 +22,7 @@ const AnimeListComponent: FC = () => {
 
   if (isLoading) {
     return <div className={styles['skeleton']}>
-      <Skeleton variant="rectangular" width={100} height={100} />
+      <Skeleton variant="rectangular" width={80} height={80} />
       <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
       <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
     </div>;
