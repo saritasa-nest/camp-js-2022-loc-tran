@@ -50,7 +50,6 @@ const HeaderComponent: FC = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -137,13 +136,15 @@ const HeaderComponent: FC = () => {
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map(page => (
-                <Button
-                  key={page.name}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  {page.name}
-                </Button>
+                <Link to={page.path}>
+                  <Button
+                    key={page.name}
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
+                  >
+                    {page.name}
+                  </Button>
+                </Link>
               ))}
             </Box>
 
