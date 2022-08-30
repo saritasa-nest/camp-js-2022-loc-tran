@@ -7,7 +7,6 @@ import { Button, CircularProgress } from '@mui/material';
 import { Form, Formik } from 'formik';
 import { FC, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import * as Yup from 'yup';
 import { Token } from '@js-camp/core/models/token';
 
 import { useSnackbar } from '../../../../hooks/useSnackbar';
@@ -16,15 +15,7 @@ import { MySnackbar } from '../../../../shared/components/MySnackbar/MySnackbar'
 import { FormTextField } from '../FormTextField';
 import styles from '../AuthForm.module.css';
 
-const RequiredErrorMessage = 'This field is required!';
-
-const RegisterSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email.')
-    .required(RequiredErrorMessage),
-  password: Yup.string().required(RequiredErrorMessage),
-  retypePassword: Yup.string().required(RequiredErrorMessage)
-    .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-});
+import { RegisterSchema } from './validationSchema';
 
 /** Register form component. */
 const RegisterFormComponent: FC = () => {
@@ -96,7 +87,7 @@ const RegisterFormComponent: FC = () => {
           label="Retype password: "
           name="retypePassword"
           type="password"
-          placeholder="Retype our password"
+          placeholder="Retype your password"
           className={styles['form__field']}
         />
         <Button

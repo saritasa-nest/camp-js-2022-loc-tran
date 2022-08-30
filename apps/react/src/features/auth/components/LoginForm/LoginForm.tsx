@@ -5,7 +5,6 @@ import { selectIsAuthLoading } from '@js-camp/react/store/auth/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { Form, Formik } from 'formik';
 import { FC, memo } from 'react';
-import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { Token } from '@js-camp/core/models/token';
 import { Button, CircularProgress } from '@mui/material';
@@ -16,19 +15,14 @@ import { MySnackbar } from '../../../../shared/components/MySnackbar';
 import { FormTextField } from '../FormTextField';
 import styles from '../AuthForm.module.css';
 
-const RequiredErrorMessage = 'This field is required!';
-
-const LoginSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email.')
-    .required(RequiredErrorMessage),
-  password: Yup.string().required(RequiredErrorMessage),
-});
+import { LoginSchema } from './validationSchema';
 
 const LoginFormComponent: FC = () => {
   const { snackbarConfig, openSnackbar, handleCloseSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsAuthLoading);
+
   const onLoginFormSubmit = (values: LoginData) => {
     dispatch(login(values)).then(result => {
       if (result.payload instanceof FormError) {
@@ -40,6 +34,7 @@ const LoginFormComponent: FC = () => {
       }
     });
   };
+
   const loginForm = (
     <Formik
       initialValues={{
@@ -53,7 +48,7 @@ const LoginFormComponent: FC = () => {
         <FormTextField
           label="Email: "
           name="email"
-          placeholder="EX: abc@example.com"
+          placeholder="E.g: abc@example.com"
           type="email"
           className={styles['form__field']}
         />
