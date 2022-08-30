@@ -36,9 +36,6 @@ export namespace TokenService {
   /** Get tokens from local storage. */
   export async function getTokensFromStorage(): Promise<Token | null> {
     const tokens = await StorageService.get<Token>(TOKEN_KEY);
-    if (tokens === null) {
-      return null;
-    }
     return tokens;
   }
 

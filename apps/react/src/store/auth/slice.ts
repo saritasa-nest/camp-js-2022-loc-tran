@@ -8,7 +8,11 @@ import { initialState } from './state';
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    clearErrors(state) {
+      state.error = undefined;
+    },
+  },
   extraReducers: builder =>
     builder
       .addCase(login.pending, state => {
@@ -52,3 +56,5 @@ export const authSlice = createSlice({
         state.isAuthorized = false;
       }),
 });
+
+export const { clearErrors } = authSlice.actions;

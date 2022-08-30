@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { LoginForm } from '../../components/LoginForm/LoginForm';
 import styles from '../AuthPage.module.css';
 
-const REGISTER_PAGE = '/register';
+export const REGISTER_PAGE = '/register';
 
 /** Login page component. */
 const LoginPageComponent: FC = () => (

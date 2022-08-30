@@ -1,5 +1,5 @@
 import { HttpErrorDto } from '../dtos/httpError.dto';
-import { FormError } from '../models/httpError';
+import { DataError, FormError } from '../models/httpError';
 
 export namespace HttpErrorMapper {
 
@@ -8,9 +8,18 @@ export namespace HttpErrorMapper {
    * @param httpDto Http Error dto data.
    */
   export function fromDto(httpDto: HttpErrorDto): FormError {
+    let dataError: DataError = {};
+    if (httpDto.data !== undefined) {
+      for (const key of Object.keys(httpDto.data)) {
+        dataError = {
+          ...dataError,
+          [key]: httpDto.data[key].join(''),
+        };
+      }
+    }
     return new FormError({
       detail: httpDto.detail,
-      data: httpDto.data,
+      data: dataError,
     });
   }
 }

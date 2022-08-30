@@ -1,7 +1,7 @@
 a,
 :link,
 .link {
-  --link-color: var(--primary-color);
+  --link-color: var(--font-color-dark-secondary);
 
   color: var(--link-color);
   text-decoration: none;

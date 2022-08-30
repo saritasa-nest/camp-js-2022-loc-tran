@@ -4,9 +4,8 @@ import { FC, useEffect, memo } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
 import { LoadingPage } from '../../shared/components/LoadingPage';
+import { HOME_PAGE } from '../../shared/components/PageNotFound/PageNotFound';
 import { useAppDispatch, useAppSelector } from '../../store';
-
-export const HOME_PAGE = '/anime';
 
 const IsNotLoggedInComponent: FC = () => {
   const dispatch = useAppDispatch();
@@ -15,7 +14,7 @@ const IsNotLoggedInComponent: FC = () => {
 
   useEffect(() => {
     dispatch(getAuthState());
-  }, [dispatch, getAuthState]);
+  }, [dispatch]);
 
   if (isChecking) {
     return <LoadingPage />;
