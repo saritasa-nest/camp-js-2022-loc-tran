@@ -1,110 +1,105 @@
 import { Account } from '@js-camp/core/models/account';
 import { FormError } from '@js-camp/core/models/httpError';
 import { register } from '@js-camp/react/store/auth/dispatchers';
-import { selectIsAuthLoading } from '@js-camp/react/store/auth/selectors';
+import {
+  selectAuthError,
+  selectIsAuthLoading,
+} from '@js-camp/react/store/auth/selectors';
+import { clearErrors } from '@js-camp/react/store/auth/slice';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { Button, CircularProgress } from '@mui/material';
-import { Form, Formik } from 'formik';
-import { FC, memo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import * as Yup from 'yup';
-import { Token } from '@js-camp/core/models/token';
+import { Field, Form, FormikProvider, useFormik } from 'formik';
+import { TextField } from 'formik-mui';
+import { FC, memo, useEffect } from 'react';
 
-import { useSnackbar } from '../../../../hooks/useSnackbar';
-import { HOME_PAGE } from '../../../../routes/guards/IsNotLoggedIn';
-import { MySnackbar } from '../../../../shared/components/MySnackbar/MySnackbar';
-import { FormTextField } from '../FormTextField';
+import { AppSnackbar } from '../../../../shared/components/AppSnackbar/AppSnackbar';
 import styles from '../AuthForm.module.css';
 
-const RequiredErrorMessage = 'This field is required!';
+import { initialFormValues, RegisterSchema } from './registerFormConfig';
 
-const RegisterSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email.')
-    .required(RequiredErrorMessage),
-  password: Yup.string().required(RequiredErrorMessage),
-  retypePassword: Yup.string().required(RequiredErrorMessage)
-    .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-});
+interface RegisterFormSubmitOptions {
+
+  /** Set form errors. */
+  setErrors: (fields: { [field: string]: string; }) => void;
+}
 
 /** Register form component. */
 const RegisterFormComponent: FC = () => {
-  const navigate = useNavigate();
-  const { snackbarConfig, openSnackbar, handleCloseSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsAuthLoading);
+  const error = useAppSelector(selectAuthError);
+
+  useEffect(() => {
+    dispatch(clearErrors());
+  }, []);
+
   const onRegisterFormSubmit = (
     values: Account,
-    {
-      setFieldError,
-    }: { setFieldError: (field: string, errorMsg: string) => void; },
+    { setErrors }: RegisterFormSubmitOptions,
   ) => {
+    formik.setSubmitting(false);
     dispatch(register(values)).then(result => {
       if (result.payload instanceof FormError) {
-        for (const key of Object.keys(result.payload.data)) {
-          result.payload.data[key].forEach(error =>
-            setFieldError(key, error));
-        }
-        openSnackbar(result.payload.detail, 'error', 3000);
-      } else if (result.payload instanceof Token) {
-        navigate(HOME_PAGE);
-      } else {
-        openSnackbar('Unknown error!', 'error', 3000);
+        setErrors(result.payload.data);
       }
     });
   };
 
+  const onCloseSnackbar = () => dispatch(clearErrors());
+
+  const formik = useFormik({
+    initialValues: initialFormValues,
+    validationSchema: RegisterSchema,
+    onSubmit: onRegisterFormSubmit,
+  });
+
   const registerForm = (
-    <Formik
-      initialValues={{
-        email: '',
-        firstName: '',
-        lastName: '',
-        password: '',
-        retypePassword: '',
-      }}
-      validationSchema={RegisterSchema}
-      onSubmit={onRegisterFormSubmit}
-    >
+    <FormikProvider value={formik}>
       <Form className={styles['form__content']}>
-        <FormTextField
+        <Field
+          margin="normal"
+          component={TextField}
           label="Email: "
           name="email"
           placeholder="EX: abc@example.com"
           type="email"
-          className={styles['form__field']}
         />
-        <FormTextField
+        <Field
+          margin="normal"
+          component={TextField}
           label="First name: "
           name="firstName"
           placeholder="Jane"
-          className={styles['form__field']}
         />
-        <FormTextField
+        <Field
+          margin="normal"
+          component={TextField}
           label="Last name: "
           name="lastName"
           placeholder="Doe"
-          className={styles['form__field']}
         />
-        <FormTextField
+        <Field
+          margin="normal"
+          component={TextField}
           label="Password: "
           name="password"
           type="password"
           placeholder="Enter your password"
-          className={styles['form__field']}
         />
-        <FormTextField
+        <Field
+          margin="normal"
+          component={TextField}
           label="Retype password: "
           name="retypePassword"
           type="password"
-          placeholder="Retype our password"
-          className={styles['form__field']}
+          placeholder="Retype your password"
         />
         <Button
           type="submit"
           variant="contained"
           color="success"
-          className={`${styles['form__field']} ${styles['form__field--submit']}`}
           disabled={isLoading}
+          sx={{ my: 3, minHeight: '50px' }}
         >
           {isLoading ? (
             <CircularProgress size={'20px'} color="inherit" />
@@ -113,17 +108,18 @@ const RegisterFormComponent: FC = () => {
           )}
         </Button>
       </Form>
-    </Formik>
+    </FormikProvider>
   );
   return (
     <>
       {registerForm}
-      <MySnackbar
-        open={snackbarConfig.open}
-        onClose={handleCloseSnackbar}
-        message={snackbarConfig.message}
-        severity={snackbarConfig.severity}
-      />
+      {error && (
+        <AppSnackbar
+          message={error.detail}
+          severity="error"
+          onClose={onCloseSnackbar}
+        />
+      )}
     </>
   );
 };

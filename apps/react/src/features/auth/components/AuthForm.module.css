@@ -3,12 +3,3 @@
   flex-direction: column;
   width: 30%;
 }
-
-.form__field {
-  margin: 10px 0;
-}
-
-.form__field--submit {
-  margin-top: 20px;
-  min-height: 50px;
-}

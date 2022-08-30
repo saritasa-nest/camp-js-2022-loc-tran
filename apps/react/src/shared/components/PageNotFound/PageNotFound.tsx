@@ -1,9 +1,9 @@
 import { FC, memo } from 'react';
 import { Link } from 'react-router-dom';
 
-import { HOME_PAGE } from '../../../routes/guards/IsNotLoggedIn';
-
 import styles from './PageNotFound.module.css';
+
+export const HOME_PAGE = '/genres';
 
 const PageNotFoundComponent: FC = () => (
   <div className={styles['main']}>

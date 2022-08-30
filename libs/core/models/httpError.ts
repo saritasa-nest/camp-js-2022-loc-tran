@@ -2,7 +2,7 @@ import { Immerable, OmitImmerable } from './immerable';
 
 /** Interface for error datalist. */
 export interface DataError {
-  readonly [key: string]: string[];
+  readonly [key: string]: string;
 }
 
 /** Error data. */

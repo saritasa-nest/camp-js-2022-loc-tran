@@ -9,14 +9,11 @@ export type MySnackbarConfig = Omit<Props, 'onClose'>;
 
 interface Props {
 
-  /** Open state of snackbar. */
-  readonly open: boolean;
-
-  /** Close snackbar. */
-  readonly onClose: () => void;
-
   /** Snackbar message. */
   readonly message: string;
+
+  /** Handle close snackbar. */
+  readonly onClose: () => void;
 
   /** Snackbar auto hide after. */
   readonly autoHideDuration?: number | null;
@@ -37,7 +34,7 @@ const SnackbarComponent: FC<Props> = (props: Props) => {
   };
   const action = (
     <>
-      <Button color="secondary" size="small" onClick={handleClose}>
+      <Button type="button" color="secondary" size="small" onClick={handleClose}>
         UNDO
       </Button>
       <IconButton
@@ -52,7 +49,7 @@ const SnackbarComponent: FC<Props> = (props: Props) => {
   );
   const snackbar = (
     <Snackbar
-      open={props.open}
+      open={true}
       autoHideDuration={props.autoHideDuration}
       onClose={handleClose}
       action={action}
@@ -72,4 +69,4 @@ const SnackbarComponent: FC<Props> = (props: Props) => {
   return ReactDOM.createPortal(snackbar, portal);
 };
 
-export const MySnackbar = SnackbarComponent;
+export const AppSnackbar = SnackbarComponent;

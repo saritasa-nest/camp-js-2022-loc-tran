@@ -1,75 +1,68 @@
-import { FormError } from '@js-camp/core/models/httpError';
 import { LoginData } from '@js-camp/core/models/loginData';
 import { login } from '@js-camp/react/store/auth/dispatchers';
-import { selectIsAuthLoading } from '@js-camp/react/store/auth/selectors';
+import {
+  selectAuthError,
+  selectIsAuthLoading,
+} from '@js-camp/react/store/auth/selectors';
+import { clearErrors } from '@js-camp/react/store/auth/slice';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { Form, Formik } from 'formik';
-import { FC, memo } from 'react';
-import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
-import { Token } from '@js-camp/core/models/token';
 import { Button, CircularProgress } from '@mui/material';
+import { Field, Form, FormikProvider, useFormik } from 'formik';
+import { FC, memo, useEffect } from 'react';
+import { TextField } from 'formik-mui';
 
-import { useSnackbar } from '../../../../hooks/useSnackbar';
-import { HOME_PAGE } from '../../../../routes/guards/IsNotLoggedIn';
-import { MySnackbar } from '../../../../shared/components/MySnackbar';
-import { FormTextField } from '../FormTextField';
+import { AppSnackbar } from '../../../../shared/components/AppSnackbar';
 import styles from '../AuthForm.module.css';
 
-const RequiredErrorMessage = 'This field is required!';
-
-const LoginSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email.')
-    .required(RequiredErrorMessage),
-  password: Yup.string().required(RequiredErrorMessage),
-});
+import { initialFormValues, LoginSchema } from './loginFormConfig';
 
 const LoginFormComponent: FC = () => {
-  const { snackbarConfig, openSnackbar, handleCloseSnackbar } = useSnackbar();
-  const navigate = useNavigate();
+  const error = useAppSelector(selectAuthError);
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsAuthLoading);
+
+  useEffect(() => {
+    dispatch(clearErrors());
+  }, []);
+
   const onLoginFormSubmit = (values: LoginData) => {
-    dispatch(login(values)).then(result => {
-      if (result.payload instanceof FormError) {
-        openSnackbar(result.payload.detail, 'error');
-      } else if (result.payload instanceof Token) {
-        navigate(HOME_PAGE);
-      } else {
-        openSnackbar('Unknown Error!', 'error');
-      }
-    });
+    formik.setSubmitting(false);
+    dispatch(login(values));
   };
+
+  const onCloseSnackbar = () => dispatch(clearErrors());
+
+  const formik = useFormik({
+    initialValues: initialFormValues,
+    onSubmit: onLoginFormSubmit,
+    validationSchema: LoginSchema,
+  });
+
   const loginForm = (
-    <Formik
-      initialValues={{
-        email: '',
-        password: '',
-      }}
-      onSubmit={onLoginFormSubmit}
-      validationSchema={LoginSchema}
-    >
+    <FormikProvider value={formik}>
       <Form className={styles['form__content']}>
-        <FormTextField
+        <Field
+          margin="normal"
+          component={TextField}
           label="Email: "
           name="email"
-          placeholder="EX: abc@example.com"
+          placeholder="E.g: abc@example.com"
           type="email"
-          className={styles['form__field']}
         />
-        <FormTextField
+        <Field
+          margin="normal"
+          component={TextField}
           label="Password: "
           name="password"
           type="password"
           placeholder="Enter your password"
-          className={styles['form__field']}
         />
         <Button
           type="submit"
           variant="contained"
           color="success"
-          className={`${styles['form__field']} ${styles['form__field--submit']}`}
           disabled={isLoading}
+          sx={{ my: 3, minHeight: '50px' }}
         >
           {isLoading ? (
             <CircularProgress size={'20px'} color="inherit" />
@@ -78,18 +71,19 @@ const LoginFormComponent: FC = () => {
           )}
         </Button>
       </Form>
-    </Formik>
+    </FormikProvider>
   );
 
   return (
     <>
       {loginForm}
-      <MySnackbar
-        open={snackbarConfig.open}
-        onClose={handleCloseSnackbar}
-        message={snackbarConfig.message}
-        severity={snackbarConfig.severity}
-      />
+      {error && (
+        <AppSnackbar
+          message={error.detail}
+          severity="error"
+          onClose={onCloseSnackbar}
+        />
+      )}
     </>
   );
 };
