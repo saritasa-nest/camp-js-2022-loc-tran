@@ -88,7 +88,7 @@ export class RegisterComponent {
     if (error instanceof FormError) {
       this.errorList$.next(error.data);
       for (const key of Object.keys(error.data)) {
-        this.registerForm.get(key)?.setErrors({ invalidData: error.data[key].join(',') });
+        this.registerForm.get(key)?.setErrors({ invalidData: error.data[key] });
       }
     }
   }

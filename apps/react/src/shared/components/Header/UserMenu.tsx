@@ -3,6 +3,8 @@ import { useAppDispatch } from '@js-camp/react/store/store';
 import { Box, Tooltip, IconButton, Avatar, Menu, MenuItem, Typography } from '@mui/material';
 import { FC, memo, useState, MouseEvent } from 'react';
 
+import styles from './UserMenu.module.css';
+
 const UserMenuComponent: FC = () => {
   const dispatch = useAppDispatch();
 
@@ -25,14 +27,14 @@ const UserMenuComponent: FC = () => {
   ];
 
   return (
-    <Box sx={{ flexGrow: 0 }}>
+    <Box>
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar alt="User avatar" />
         </IconButton>
       </Tooltip>
       <Menu
-        sx={{ mt: '45px' }}
+        className={styles['menu']}
         id="menu-appbar"
         anchorEl={anchorElUser}
         anchorOrigin={{
