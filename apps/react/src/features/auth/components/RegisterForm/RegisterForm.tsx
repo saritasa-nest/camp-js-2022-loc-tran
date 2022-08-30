@@ -1,58 +1,61 @@
 import { Account } from '@js-camp/core/models/account';
 import { FormError } from '@js-camp/core/models/httpError';
 import { register } from '@js-camp/react/store/auth/dispatchers';
-import { selectIsAuthLoading } from '@js-camp/react/store/auth/selectors';
+import {
+  selectAuthError,
+  selectIsAuthLoading,
+} from '@js-camp/react/store/auth/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { Button, CircularProgress } from '@mui/material';
+import { clearErrors } from '@js-camp/react/store/auth/slice';
 import { Form, Formik } from 'formik';
-import { FC, memo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Token } from '@js-camp/core/models/token';
+import { FC, memo, useEffect } from 'react';
 
-import { useSnackbar } from '../../../../hooks/useSnackbar';
-import { HOME_PAGE } from '../../../../routes/guards/IsNotLoggedIn';
 import { MySnackbar } from '../../../../shared/components/MySnackbar/MySnackbar';
-import { FormTextField } from '../FormTextField';
 import styles from '../AuthForm.module.css';
+import { FormTextField } from '../FormTextField';
 
 import { RegisterSchema } from './validationSchema';
 
+interface RegisterFormSubmitOptions {
+
+  /** Set form errors. */
+  setErrors: (fields: { [field: string]: string; }) => void;
+}
+
+const initialFormValues = {
+  email: '',
+  firstName: '',
+  lastName: '',
+  password: '',
+  retypePassword: '',
+};
+
 /** Register form component. */
 const RegisterFormComponent: FC = () => {
-  const navigate = useNavigate();
-  const { snackbarConfig, openSnackbar, handleCloseSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsAuthLoading);
+  const error = useAppSelector(selectAuthError);
+
+  useEffect(() => {
+    dispatch(clearErrors());
+  }, []);
   const onRegisterFormSubmit = (
     values: Account,
-    {
-      setFieldError,
-    }: { setFieldError: (field: string, errorMsg: string) => void; },
+    { setErrors }: RegisterFormSubmitOptions,
   ) => {
     dispatch(register(values)).then(result => {
       if (result.payload instanceof FormError) {
-        for (const key of Object.keys(result.payload.data)) {
-          result.payload.data[key].forEach(error =>
-            setFieldError(key, error));
-        }
-        openSnackbar(result.payload.detail, 'error', 3000);
-      } else if (result.payload instanceof Token) {
-        navigate(HOME_PAGE);
-      } else {
-        openSnackbar('Unknown error!', 'error', 3000);
+        setErrors(result.payload.data);
       }
     });
   };
 
+  const onCloseSnackbar = () => dispatch(clearErrors());
+
   const registerForm = (
     <Formik
-      initialValues={{
-        email: '',
-        firstName: '',
-        lastName: '',
-        password: '',
-        retypePassword: '',
-      }}
+      initialValues={initialFormValues}
       validationSchema={RegisterSchema}
       onSubmit={onRegisterFormSubmit}
     >
@@ -109,12 +112,13 @@ const RegisterFormComponent: FC = () => {
   return (
     <>
       {registerForm}
-      <MySnackbar
-        open={snackbarConfig.open}
-        onClose={handleCloseSnackbar}
-        message={snackbarConfig.message}
-        severity={snackbarConfig.severity}
-      />
+      {error && (
+        <MySnackbar
+          message={error.detail}
+          severity="error"
+          onClose={onCloseSnackbar}
+        />
+      )}
     </>
   );
 };

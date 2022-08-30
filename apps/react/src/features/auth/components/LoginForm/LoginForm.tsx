@@ -1,39 +1,29 @@
-import { FormError } from '@js-camp/core/models/httpError';
 import { LoginData } from '@js-camp/core/models/loginData';
 import { login } from '@js-camp/react/store/auth/dispatchers';
-import { selectIsAuthLoading } from '@js-camp/react/store/auth/selectors';
+import { selectAuthError, selectIsAuthLoading } from '@js-camp/react/store/auth/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { Form, Formik } from 'formik';
-import { FC, memo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Token } from '@js-camp/core/models/token';
 import { Button, CircularProgress } from '@mui/material';
+import { Form, Formik } from 'formik';
+import { FC, memo, useEffect } from 'react';
+import { clearErrors } from '@js-camp/react/store/auth/slice';
 
-import { useSnackbar } from '../../../../hooks/useSnackbar';
-import { HOME_PAGE } from '../../../../routes/guards/IsNotLoggedIn';
 import { MySnackbar } from '../../../../shared/components/MySnackbar';
-import { FormTextField } from '../FormTextField';
 import styles from '../AuthForm.module.css';
+import { FormTextField } from '../FormTextField';
 
 import { LoginSchema } from './validationSchema';
 
 const LoginFormComponent: FC = () => {
-  const { snackbarConfig, openSnackbar, handleCloseSnackbar } = useSnackbar();
-  const navigate = useNavigate();
+  const error = useAppSelector(selectAuthError);
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsAuthLoading);
-
+  useEffect(() => {
+    dispatch(clearErrors());
+  }, []);
   const onLoginFormSubmit = (values: LoginData) => {
-    dispatch(login(values)).then(result => {
-      if (result.payload instanceof FormError) {
-        openSnackbar(result.payload.detail, 'error');
-      } else if (result.payload instanceof Token) {
-        navigate(HOME_PAGE);
-      } else {
-        openSnackbar('Unknown Error!', 'error');
-      }
-    });
+    dispatch(login(values));
   };
+  const onCloseSnackbar = () => dispatch(clearErrors());
 
   const loginForm = (
     <Formik
@@ -79,12 +69,13 @@ const LoginFormComponent: FC = () => {
   return (
     <>
       {loginForm}
-      <MySnackbar
-        open={snackbarConfig.open}
-        onClose={handleCloseSnackbar}
-        message={snackbarConfig.message}
-        severity={snackbarConfig.severity}
-      />
+      {error && (
+        <MySnackbar
+          message={error.detail}
+          severity="error"
+          onClose={onCloseSnackbar}
+        />
+      )}
     </>
   );
 };
