@@ -10,7 +10,7 @@
 }
 
 .header__link {
-  color: var(--font-color-contrast-primary);
+  color: var(--primary-color);
   margin: 0 20px;
 }
 
