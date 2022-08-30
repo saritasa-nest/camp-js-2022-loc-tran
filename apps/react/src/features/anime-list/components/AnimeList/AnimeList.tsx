@@ -4,7 +4,6 @@ import {
 } from '@js-camp/react/store/anime/dispatchers';
 import {
   selectAnimeList,
-  selectCurrentPage,
   selectIsAnimeListLoading,
 } from '@js-camp/react/store/anime/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
@@ -20,9 +19,8 @@ const AnimeListComponent: FC = () => {
   const dispatch = useAppDispatch();
   const animeList = useAppSelector(selectAnimeList);
   const isLoading = useAppSelector(selectIsAnimeListLoading);
-  const currentPage = useAppSelector(selectCurrentPage);
   const { setLastElement } = useInfiniteScroll(() =>
-    dispatch(fetchMoreAnime(currentPage + 1)));
+    dispatch(fetchMoreAnime()));
 
   useEffect(() => {
     dispatch(fetchAnime());

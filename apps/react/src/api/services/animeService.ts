@@ -20,6 +20,7 @@ export const DEFAULT_QUERY_PARAMS = new PaginationParams({
 });
 
 export namespace AnimeService {
+  let nextAnimeUrl: string | null = null;
 
   /**
    * Get anime data.
@@ -32,6 +33,27 @@ export namespace AnimeService {
     const { data } = await http.get<PaginationDto<AnimeDto>>(ANIME_URL, {
       params: paramsDto,
     });
-    return paginationMapper.fromDto(data, AnimeMapper.fromDto).results;
+    const paginationAnime = paginationMapper.fromDto(data, AnimeMapper.fromDto);
+    setNextPageUrl(paginationAnime.next);
+    return paginationAnime.results;
+  }
+
+  /** Get next page of anime. */
+  export async function getMoreAnime(): Promise<Anime[]> {
+    if (nextAnimeUrl === null) {
+      return [];
+    }
+    const { data } = await http.get<PaginationDto<AnimeDto>>(nextAnimeUrl);
+    const paginationAnime = paginationMapper.fromDto(data, AnimeMapper.fromDto);
+    setNextPageUrl(paginationAnime.next);
+    return paginationAnime.results;
+  }
+
+  /**
+   * Set next anime page url.
+   * @param url Next page url.
+   */
+  function setNextPageUrl(url: string | null): void {
+    nextAnimeUrl = url;
   }
 }

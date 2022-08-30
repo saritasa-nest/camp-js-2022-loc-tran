@@ -11,13 +11,9 @@ export interface AnimeState {
 
   /** Whether the anime list are loading or not. */
   readonly isLoading: boolean;
-
-  /** Current page of anime list. */
-  readonly currentPage: number;
 }
 
 export const initialState: AnimeState = {
   isLoading: false,
   animeList: [],
-  currentPage: 0,
 };
