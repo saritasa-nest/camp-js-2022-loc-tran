@@ -9,11 +9,13 @@ export namespace HttpErrorMapper {
    */
   export function fromDto(httpDto: HttpErrorDto): FormError {
     let dataError: DataError = {};
-    for (const key of Object.keys(httpDto.data)) {
-      dataError = {
-        ...dataError,
-        [key]: httpDto.data[key].join(''),
-      };
+    if (httpDto.data !== undefined) {
+      for (const key of Object.keys(httpDto.data)) {
+        dataError = {
+          ...dataError,
+          [key]: httpDto.data[key].join(''),
+        };
+      }
     }
     return new FormError({
       detail: httpDto.detail,

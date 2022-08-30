@@ -6,11 +6,9 @@ import {
 import { FC, memo, useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
+import { LOGIN_PAGE } from '../../features/auth/pages/RegisterPage/RegisterPage';
 import { LoadingPage } from '../../shared/components/LoadingPage';
-
 import { useAppDispatch, useAppSelector } from '../../store';
-
-export const LOGIN_PAGE = '/login';
 
 const IsLoggedInComponent: FC = () => {
   const dispatch = useAppDispatch();

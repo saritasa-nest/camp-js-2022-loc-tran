@@ -34,7 +34,7 @@ const SnackbarComponent: FC<Props> = (props: Props) => {
   };
   const action = (
     <>
-      <Button color="secondary" size="small" onClick={handleClose}>
+      <Button type="button" color="secondary" size="small" onClick={handleClose}>
         UNDO
       </Button>
       <IconButton
@@ -69,4 +69,4 @@ const SnackbarComponent: FC<Props> = (props: Props) => {
   return ReactDOM.createPortal(snackbar, portal);
 };
 
-export const MySnackbar = SnackbarComponent;
+export const AppSnackbar = SnackbarComponent;

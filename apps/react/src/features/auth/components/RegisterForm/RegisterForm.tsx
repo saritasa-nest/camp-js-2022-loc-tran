@@ -5,31 +5,23 @@ import {
   selectAuthError,
   selectIsAuthLoading,
 } from '@js-camp/react/store/auth/selectors';
+import { clearErrors } from '@js-camp/react/store/auth/slice';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { Button, CircularProgress } from '@mui/material';
-import { clearErrors } from '@js-camp/react/store/auth/slice';
-import { Form, Formik } from 'formik';
+import { Field, Form, FormikProvider, useFormik } from 'formik';
+import { TextField } from 'formik-mui';
 import { FC, memo, useEffect } from 'react';
 
-import { MySnackbar } from '../../../../shared/components/MySnackbar/MySnackbar';
+import { AppSnackbar } from '../../../../shared/components/AppSnackbar/AppSnackbar';
 import styles from '../AuthForm.module.css';
-import { FormTextField } from '../FormTextField';
 
-import { RegisterSchema } from './validationSchema';
+import { initialFormValues, RegisterSchema } from './registerFormConfig';
 
 interface RegisterFormSubmitOptions {
 
   /** Set form errors. */
   setErrors: (fields: { [field: string]: string; }) => void;
 }
-
-const initialFormValues = {
-  email: '',
-  firstName: '',
-  lastName: '',
-  password: '',
-  retypePassword: '',
-};
 
 /** Register form component. */
 const RegisterFormComponent: FC = () => {
@@ -40,10 +32,12 @@ const RegisterFormComponent: FC = () => {
   useEffect(() => {
     dispatch(clearErrors());
   }, []);
+
   const onRegisterFormSubmit = (
     values: Account,
     { setErrors }: RegisterFormSubmitOptions,
   ) => {
+    formik.setSubmitting(false);
     dispatch(register(values)).then(result => {
       if (result.payload instanceof FormError) {
         setErrors(result.payload.data);
@@ -53,52 +47,59 @@ const RegisterFormComponent: FC = () => {
 
   const onCloseSnackbar = () => dispatch(clearErrors());
 
+  const formik = useFormik({
+    initialValues: initialFormValues,
+    validationSchema: RegisterSchema,
+    onSubmit: onRegisterFormSubmit,
+  });
+
   const registerForm = (
-    <Formik
-      initialValues={initialFormValues}
-      validationSchema={RegisterSchema}
-      onSubmit={onRegisterFormSubmit}
-    >
+    <FormikProvider value={formik}>
       <Form className={styles['form__content']}>
-        <FormTextField
+        <Field
+          margin="normal"
+          component={TextField}
           label="Email: "
           name="email"
           placeholder="EX: abc@example.com"
           type="email"
-          className={styles['form__field']}
         />
-        <FormTextField
+        <Field
+          margin="normal"
+          component={TextField}
           label="First name: "
           name="firstName"
           placeholder="Jane"
-          className={styles['form__field']}
         />
-        <FormTextField
+        <Field
+          margin="normal"
+          component={TextField}
           label="Last name: "
           name="lastName"
           placeholder="Doe"
-          className={styles['form__field']}
         />
-        <FormTextField
+        <Field
+          margin="normal"
+          component={TextField}
           label="Password: "
           name="password"
           type="password"
           placeholder="Enter your password"
-          className={styles['form__field']}
         />
-        <FormTextField
+        <Field
+          margin="normal"
+          component={TextField}
           label="Retype password: "
           name="retypePassword"
           type="password"
           placeholder="Retype your password"
-          className={styles['form__field']}
         />
         <Button
           type="submit"
           variant="contained"
           color="success"
-          className={`${styles['form__field']} ${styles['form__field--submit']}`}
           disabled={isLoading}
+          sx={{ my: 3, minHeight: '50px' }}
         >
           {isLoading ? (
             <CircularProgress size={'20px'} color="inherit" />
@@ -107,13 +108,13 @@ const RegisterFormComponent: FC = () => {
           )}
         </Button>
       </Form>
-    </Formik>
+    </FormikProvider>
   );
   return (
     <>
       {registerForm}
       {error && (
-        <MySnackbar
+        <AppSnackbar
           message={error.detail}
           severity="error"
           onClose={onCloseSnackbar}
