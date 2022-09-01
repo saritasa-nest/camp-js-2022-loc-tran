@@ -4,10 +4,10 @@ import { FC, useEffect, memo } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
 import { LoadingPage } from '../../shared/components/LoadingPage';
-import { HOME_PAGE } from '../../shared/components/PageNotFound/PageNotFound';
 import { useAppDispatch, useAppSelector } from '../../store';
+import { HOME_PAGE } from '../paths';
 
-const IsNotLoggedInComponent: FC = () => {
+const UnauthorizedGuardComponent: FC = () => {
   const dispatch = useAppDispatch();
   const isAuthorized = useAppSelector(selectIsAuthorized);
   const isChecking = useAppSelector(selectIsCheckingAuthorized);
@@ -23,4 +23,4 @@ const IsNotLoggedInComponent: FC = () => {
   return isAuthorized ? <Navigate to={HOME_PAGE}></Navigate> : <Outlet />;
 };
 
-export const IsNotLoggedIn = memo(IsNotLoggedInComponent);
+export const UnauthorizedGuard = memo(UnauthorizedGuardComponent);

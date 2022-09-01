@@ -5,9 +5,9 @@ import { authRoutes } from '../features/auth/routes';
 import { genresRoutes } from '../features/genres/routes';
 import { Header } from '../shared/components/Header';
 import { PageNotFound } from '../shared/components/PageNotFound';
-import { HOME_PAGE } from '../shared/components/PageNotFound/PageNotFound';
 
-import { IsLoggedIn, IsNotLoggedIn } from './guards';
+import { AuthorizedGuard, UnauthorizedGuard } from './guards';
+import { HOME_PAGE } from './paths';
 
 const routes: RouteObject[] = [
   {
@@ -22,14 +22,14 @@ const routes: RouteObject[] = [
     element: (
       <>
         <Header />
-        <IsLoggedIn />
+        <AuthorizedGuard />
       </>
     ),
     children: [...genresRoutes],
   },
   {
     element: (
-      <IsNotLoggedIn />
+      <UnauthorizedGuard />
     ),
     children: [...authRoutes],
   },

@@ -2,9 +2,8 @@ import { FC, memo } from 'react';
 import { Link } from 'react-router-dom';
 
 import { LoginForm } from '../../components/LoginForm/LoginForm';
+import { REGISTER_PAGE } from '../../paths';
 import styles from '../AuthPage.module.css';
-
-export const REGISTER_PAGE = '/register';
 
 /** Login page component. */
 const LoginPageComponent: FC = () => (
