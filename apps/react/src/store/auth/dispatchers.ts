@@ -1,41 +1,55 @@
 import { HttpErrorMapper } from '@js-camp/core/mappers/httpError.mapper';
 import { Account } from '@js-camp/core/models/account';
+import { FormError } from '@js-camp/core/models/httpError';
 import { LoginData } from '@js-camp/core/models/loginData';
+import { Token } from '@js-camp/core/models/token';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
 import { AuthService } from '../../api/services/authService';
 import { TokenService } from '../../api/services/tokenService';
 
-export const login = createAsyncThunk(
+export const login = createAsyncThunk<
+  Token,
+  LoginData,
+  {
+    rejectValue: FormError;
+  }
+>(
   'auth/login',
-  async(account: LoginData, { rejectWithValue }) => {
+  async(account, { rejectWithValue }) => {
     try {
       return await AuthService.login(account);
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         return rejectWithValue(HttpErrorMapper.fromDto(error.response?.data));
       }
-      return rejectWithValue(error);
+      throw error;
     }
   },
 );
 
-export const register = createAsyncThunk(
+export const register = createAsyncThunk<
+Token,
+Account,
+{
+  rejectValue: FormError;
+}
+>(
   'auth/register',
-  async(account: Account, { rejectWithValue }) => {
+  async(account, { rejectWithValue }) => {
     try {
       return await AuthService.register(account);
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         return rejectWithValue(HttpErrorMapper.fromDto(error.response?.data));
       }
-      return rejectWithValue(error);
+      throw error;
     }
   },
 );
 
-export const getAuthState = createAsyncThunk(
+export const getAuthState = createAsyncThunk<boolean>(
   'auth/getAuthState',
   async() => {
     const tokens = await TokenService.getTokensFromStorage();
@@ -46,7 +60,7 @@ export const getAuthState = createAsyncThunk(
   },
 );
 
-export const logout = createAsyncThunk(
+export const logout = createAsyncThunk<void>(
   'auth/logout',
   async() => {
     await TokenService.removeTokens();
