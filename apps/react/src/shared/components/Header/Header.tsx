@@ -20,7 +20,7 @@ const HeaderComponent: FC = () => (
   <div className={styles['header']}>
     <div className={styles['header__pages']}>
       <h1 className={styles['header__title']}>JSCamp</h1>
-      {pages.map(page => <Link className={styles['header__link']} to={page.path}>{page.name}</Link>)}
+      {pages.map(page => <Link className={styles['header__link']} key={page.name} to={page.path}>{page.name}</Link>)}
     </div>
     <UserMenu />
   </div>

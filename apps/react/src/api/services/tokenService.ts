@@ -34,9 +34,8 @@ export namespace TokenService {
   }
 
   /** Get tokens from local storage. */
-  export async function getTokensFromStorage(): Promise<Token | null> {
-    const tokens = await StorageService.get<Token>(TOKEN_KEY);
-    return tokens;
+  export function getTokensFromStorage(): Promise<Token | null> {
+    return StorageService.get<Token>(TOKEN_KEY);
   }
 
   /** Remove tokens from local storage. */

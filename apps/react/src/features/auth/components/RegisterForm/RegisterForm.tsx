@@ -10,9 +10,9 @@ import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { Button, CircularProgress } from '@mui/material';
 import { Field, Form, FormikProvider, useFormik } from 'formik';
 import { TextField } from 'formik-mui';
+import { useSnackbar } from 'notistack';
 import { FC, memo, useEffect } from 'react';
 
-import { AppSnackbar } from '../../../../shared/components/AppSnackbar/AppSnackbar';
 import styles from '../AuthForm.module.css';
 
 import { initialFormValues, RegisterSchema } from './registerFormConfig';
@@ -20,18 +20,22 @@ import { initialFormValues, RegisterSchema } from './registerFormConfig';
 interface RegisterFormSubmitOptions {
 
   /** Set form errors. */
-  setErrors: (fields: { [field: string]: string; }) => void;
+  setErrors: (fields: Record<string, string>) => void;
 }
 
 /** Register form component. */
 const RegisterFormComponent: FC = () => {
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const isLoading = useAppSelector(selectIsAuthLoading);
   const error = useAppSelector(selectAuthError);
 
   useEffect(() => {
     dispatch(clearErrors());
-  }, []);
+    if (error) {
+      enqueueSnackbar(error.detail, { variant: 'error' });
+    }
+  }, [error]);
 
   const onRegisterFormSubmit = (
     values: Account,
@@ -44,8 +48,6 @@ const RegisterFormComponent: FC = () => {
       }
     });
   };
-
-  const onCloseSnackbar = () => dispatch(clearErrors());
 
   const formik = useFormik({
     initialValues: initialFormValues,
@@ -61,7 +63,7 @@ const RegisterFormComponent: FC = () => {
           component={TextField}
           label="Email: "
           name="email"
-          placeholder="EX: abc@example.com"
+          placeholder="e.g. abc@example.com"
           type="email"
         />
         <Field
@@ -110,18 +112,7 @@ const RegisterFormComponent: FC = () => {
       </Form>
     </FormikProvider>
   );
-  return (
-    <>
-      {registerForm}
-      {error && (
-        <AppSnackbar
-          message={error.detail}
-          severity="error"
-          onClose={onCloseSnackbar}
-        />
-      )}
-    </>
-  );
+  return registerForm;
 };
 
 export const RegisterForm = memo(RegisterFormComponent);
