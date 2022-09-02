@@ -13,10 +13,10 @@ interface Props {
 }
 
 const AnimeComponent: FC<Props> = ({ anime }) => (
-  <List sx={{ width: '100%', bgcolor: 'background.paper' }} className={styles['info']}>
+  <List className={styles['info']}>
     <ListItem>
       <ListItemAvatar>
-        <Avatar variant="rounded" alt="" sx={{ width: 100, height: 100 }} src={anime.image} />
+        <Avatar className={styles['info__avatar']} variant="rounded" alt="" src={anime.image} />
       </ListItemAvatar>
       <div className={styles['info__data']}>
         <span className={styles['info__data--primary']}>Title English: {placeholder(anime.titleEnglish)}</span>
