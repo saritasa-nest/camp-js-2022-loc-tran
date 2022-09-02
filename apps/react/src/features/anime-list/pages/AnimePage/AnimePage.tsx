@@ -11,7 +11,6 @@ const AnimePageComponent: FC = () => (
       <AnimeList />
     </Grid>
     <Grid xs={9} item className={styles['anime__detail']}>
-      <span>Detail area (not implemented yet)</span>
     </Grid>
   </Grid>
 );

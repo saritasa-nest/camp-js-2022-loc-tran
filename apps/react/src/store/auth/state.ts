@@ -18,6 +18,6 @@ export interface AuthState {
 
 export const initialState: AuthState = {
   isLoading: false,
-  isAuthorized: true,
-  isCheckingAuthorized: false,
+  isAuthorized: false,
+  isCheckingAuthorized: true,
 };

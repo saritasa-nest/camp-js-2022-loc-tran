@@ -2,9 +2,9 @@ import { createSelector } from '@reduxjs/toolkit';
 
 import { RootState } from '../store';
 
-import { animeAdaptor } from './state';
+import { animeAdapter } from './state';
 
-const { selectAll } = animeAdaptor.getSelectors();
+const { selectAll } = animeAdapter.getSelectors();
 
 /** Selects anime list. */
 export const selectAnimeList = createSelector(
