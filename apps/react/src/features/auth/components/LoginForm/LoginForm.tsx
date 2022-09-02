@@ -10,27 +10,29 @@ import { Button, CircularProgress } from '@mui/material';
 import { Field, Form, FormikProvider, useFormik } from 'formik';
 import { FC, memo, useEffect } from 'react';
 import { TextField } from 'formik-mui';
+import { useSnackbar } from 'notistack';
 
-import { AppSnackbar } from '../../../../shared/components/AppSnackbar';
 import styles from '../AuthForm.module.css';
 
 import { initialFormValues, LoginSchema } from './loginFormConfig';
 
 const LoginFormComponent: FC = () => {
   const error = useAppSelector(selectAuthError);
+  const { enqueueSnackbar } = useSnackbar();
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsAuthLoading);
 
   useEffect(() => {
+    if (error) {
+      enqueueSnackbar(error.detail, { variant: 'error' });
+    }
     dispatch(clearErrors());
-  }, []);
+  }, [error]);
 
   const onLoginFormSubmit = (values: LoginData) => {
     formik.setSubmitting(false);
     dispatch(login(values));
   };
-
-  const onCloseSnackbar = () => dispatch(clearErrors());
 
   const formik = useFormik({
     initialValues: initialFormValues,
@@ -74,18 +76,7 @@ const LoginFormComponent: FC = () => {
     </FormikProvider>
   );
 
-  return (
-    <>
-      {loginForm}
-      {error && (
-        <AppSnackbar
-          message={error.detail}
-          severity="error"
-          onClose={onCloseSnackbar}
-        />
-      )}
-    </>
-  );
+  return loginForm;
 };
 
 export const LoginForm = memo(LoginFormComponent);
