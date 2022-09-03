@@ -24,7 +24,7 @@ const AnimeListComponent: FC = () => {
 
   useEffect(() => {
     dispatch(fetchAnime(searchParams));
-  }, [dispatch]);
+  }, [dispatch, searchParams]);
 
   const list = animeList.map((anime, index) => {
     if (index === animeList.length - 1) {
