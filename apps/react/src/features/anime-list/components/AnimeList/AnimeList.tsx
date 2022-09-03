@@ -8,12 +8,14 @@ import {
 } from '@js-camp/react/store/anime/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { FC, memo, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { useInfiniteScroll } from '../../../../hooks/useInfiniteScroll';
 import { Anime } from '../Anime';
 import { AnimeSkeleton } from '../Anime/AnimeSkeleton';
 
 const AnimeListComponent: FC = () => {
+  const [searchParams] = useSearchParams();
   const dispatch = useAppDispatch();
   const animeList = useAppSelector(selectAnimeList);
   const isLoading = useAppSelector(selectIsAnimeListLoading);
@@ -21,7 +23,7 @@ const AnimeListComponent: FC = () => {
     dispatch(fetchMoreAnime()));
 
   useEffect(() => {
-    dispatch(fetchAnime());
+    dispatch(fetchAnime(searchParams));
   }, [dispatch]);
 
   const list = animeList.map((anime, index) => {

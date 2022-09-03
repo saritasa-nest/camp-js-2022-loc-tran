@@ -4,7 +4,7 @@ import { AnimeService } from '../../api/services/animeService';
 
 export const fetchAnime = createAsyncThunk(
   'animeList/fetchAnime',
-  () => AnimeService.getAnime(),
+  (queryParams: URLSearchParams = new URLSearchParams()) => AnimeService.getAnime(queryParams),
 );
 
 export const fetchMoreAnime = createAsyncThunk(
