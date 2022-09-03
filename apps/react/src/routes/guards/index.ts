@@ -1,2 +1,2 @@
-export { IsLoggedIn } from './IsLoggedIn';
-export { IsNotLoggedIn } from './IsNotLoggedIn';
+export { AuthorizedGuard } from './AuthorizedGuard';
+export { UnauthorizedGuard } from './UnauthorizedGuard';

@@ -1,9 +1,19 @@
+.info {
+  width: 100%;
+  cursor: pointer;
+}
+
 .info:hover {
   background-color: var(--background-color-dark);
 }
 
+.info__avatar {
+  /* I set fit dimension to 80x80 due to the task required. */
+  width: 80px;
+  height: 80px;
+}
+
 .info__data {
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   margin-left: 20px;

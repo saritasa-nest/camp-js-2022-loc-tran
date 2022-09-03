@@ -7,13 +7,11 @@ import {
   selectIsAnimeListLoading,
 } from '@js-camp/react/store/anime/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { Skeleton } from '@mui/material';
 import { FC, memo, useEffect } from 'react';
 
 import { useInfiniteScroll } from '../../../../hooks/useInfiniteScroll';
 import { Anime } from '../Anime';
-
-import styles from './AnimeList.module.css';
+import { AnimeSkeleton } from '../Anime/AnimeSkeleton';
 
 const AnimeListComponent: FC = () => {
   const dispatch = useAppDispatch();
@@ -38,17 +36,20 @@ const AnimeListComponent: FC = () => {
   });
 
   const skeleton = (
-    <div className={styles['skeleton']}>
-      <Skeleton variant="rectangular" width={80} height={80} />
-      <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-      <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-    </div>
+    <>
+      <AnimeSkeleton />
+      <AnimeSkeleton />
+      <AnimeSkeleton />
+      <AnimeSkeleton />
+      <AnimeSkeleton />
+      <AnimeSkeleton />
+    </>
   );
 
   return (
     <>
-      {list}
-      {isLoading && skeleton}
+      {list.length > 0 ? list : skeleton}
+      {isLoading && <AnimeSkeleton />}
     </>
   );
 };

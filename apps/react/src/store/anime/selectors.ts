@@ -2,9 +2,13 @@ import { createSelector } from '@reduxjs/toolkit';
 
 import { RootState } from '../store';
 
+import { animeAdapter } from './state';
+
+const { selectAll } = animeAdapter.getSelectors();
+
 /** Selects anime list. */
 export const selectAnimeList = createSelector(
-  (state: RootState) => state.animeList.animeList,
+  (state: RootState) => selectAll(state.animeList),
   animeList => animeList,
 );
 
@@ -12,9 +16,4 @@ export const selectAnimeList = createSelector(
 export const selectIsAnimeListLoading = createSelector(
   (state: RootState) => state.animeList.isLoading,
   isLoading => isLoading,
-);
-
-export const selectCurrentPage = createSelector(
-  (state: RootState) => state.animeList.currentPage,
-  currentPage => currentPage,
 );
