@@ -23,15 +23,15 @@ export namespace AnimeService {
 
   /**
    * Get anime data.
-   * @param params Query parameters.
+   * @param paginationParams Query parameters.
    */
-  export async function getAnime(
-    params = DEFAULT_QUERY_PARAMS,
-  ): Promise<Anime[]> {
-    const paramsDto = PaginationParamsMapper.toDto(params);
+  export async function getAnime(paginationParams: PaginationParams): Promise<Anime[]> {
+    const paramsDto = PaginationParamsMapper.toDto(paginationParams);
     const { data } = await http.get<PaginationDto<AnimeDto>>(ANIME_URL, {
       params: paramsDto,
     });
-    return paginationMapper.fromDto(data, AnimeMapper.fromDto).results;
+    const paginationAnime = paginationMapper.fromDto(data, AnimeMapper.fromDto);
+
+    return paginationAnime.results;
   }
 }
