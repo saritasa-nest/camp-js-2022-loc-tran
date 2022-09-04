@@ -16,7 +16,7 @@ const AnimeListComponent: FC = () => {
 
   useEffect(() => {
     dispatch(fetchAnime());
-  }, [dispatch, fetchAnime]);
+  }, [dispatch]);
 
   if (isLoading) {
     return (

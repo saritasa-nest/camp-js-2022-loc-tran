@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchAnime, fetchMoreAnime } from './dispatchers';
+import { fetchAnime } from './dispatchers';
 import { animeAdapter, initialState, State } from './state';
 
 export const animeListSlice = createSlice({
@@ -14,13 +14,6 @@ export const animeListSlice = createSlice({
       })
       .addCase(fetchAnime.fulfilled, (state, action) => {
         animeAdapter.setAll(state as State, action.payload);
-        state.isLoading = false;
-      })
-      .addCase(fetchMoreAnime.pending, state => {
-        state.isLoading = true;
-      })
-      .addCase(fetchMoreAnime.fulfilled, (state, action) => {
-        animeAdapter.addMany(state as State, action.payload);
         state.isLoading = false;
       }),
 });
