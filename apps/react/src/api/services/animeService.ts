@@ -8,34 +8,16 @@ import { PaginationParams } from '@js-camp/core/models/paginationParams';
 
 import { http } from '..';
 
-const DEFAULT_QUERY_PARAMS = new PaginationParams({
-  limit: 25,
-  page: 0,
-  ordering: '',
-  sorting: '',
-  type: '',
-  search: '',
-});
-
 const ANIME_URL = 'anime/anime/';
 export namespace AnimeService {
   let nextAnimeUrl: string | null = null;
 
   /**
    * Get anime data.
-   * @param urlSearchParams Query parameters.
+   * @param paginationParams Query parameters.
    */
-  export async function getAnime(urlSearchParams: URLSearchParams): Promise<Anime[]> {
-
-    const paramsMap: Record<string, string> = {};
-    for (const key of Object.keys(DEFAULT_QUERY_PARAMS)) {
-      paramsMap[key] = urlSearchParams.get(key) ?? '';
-    }
-    const paramsDto = PaginationParamsMapper.toDto(new PaginationParams({
-      ...DEFAULT_QUERY_PARAMS,
-      ...paramsMap,
-    }));
-
+  export async function getAnime(paginationParams: PaginationParams): Promise<Anime[]> {
+    const paramsDto = PaginationParamsMapper.toDto(paginationParams);
     const { data } = await http.get<PaginationDto<AnimeDto>>(ANIME_URL, {
       params: paramsDto,
     });
