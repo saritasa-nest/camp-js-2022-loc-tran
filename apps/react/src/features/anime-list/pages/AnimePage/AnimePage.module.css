@@ -3,6 +3,16 @@
   overflow-y: scroll;
 }
 
+.anime__filter {
+  position: sticky;
+  top: 0;
+
+  /* I used z-index here because anime list can override anime filter. */
+  z-index: 1;
+  background-color: var(--background-color-light);
+  box-shadow: 0 0 5px var(--background-color-dark-2);
+}
+
 .anime__list::-webkit-scrollbar {
   width: 7px;
 }
