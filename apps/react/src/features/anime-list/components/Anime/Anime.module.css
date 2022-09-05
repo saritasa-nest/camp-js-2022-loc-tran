@@ -1,10 +1,17 @@
 .info {
   width: 100%;
-  cursor: pointer;
 }
 
 .info:hover {
   background-color: var(--background-color-dark);
+}
+
+.info--active {
+  background-color: var(--background-color-dark-2);
+}
+
+.info__list {
+  background-color: inherit;
 }
 
 .info__avatar {

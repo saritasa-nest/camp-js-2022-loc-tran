@@ -1,5 +1,6 @@
 import { Grid } from '@mui/material';
 import { FC, memo } from 'react';
+import { Outlet } from 'react-router-dom';
 
 import { AnimeFilter } from '../../components/AnimeFilter';
 import { AnimeList } from '../../components/AnimeList';
@@ -14,6 +15,7 @@ const AnimePageComponent: FC = () => <Grid container className={styles['anime']}
     <AnimeList />
   </Grid>
   <Grid lg={9} sm={7} item className={styles['anime__detail']}>
+    <Outlet />
   </Grid>
 </Grid>;
 export const AnimePage = memo(AnimePageComponent);
