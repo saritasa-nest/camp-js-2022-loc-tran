@@ -1,0 +1,1 @@
+export { AnimeEditPage } from './AnimeEditPage';

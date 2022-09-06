@@ -7,6 +7,9 @@ const AnimePage = lazy(() =>
 const AnimeDetailPage = lazy(() =>
   import('./pages/AnimeDetailPage').then(module => ({ default: module.AnimeDetailPage })));
 
+const AnimeEditPage = lazy(() =>
+  import('./pages/AnimeEditPage').then(module => ({ default: module.AnimeEditPage })));
+
 export const animeRoutes: RouteObject[] = [
   {
     path: 'anime',
@@ -15,6 +18,10 @@ export const animeRoutes: RouteObject[] = [
       {
         path: ':animeId',
         element: <AnimeDetailPage />,
+      },
+      {
+        path: 'edit/:animeId',
+        element: <AnimeEditPage />,
       },
     ],
   },
