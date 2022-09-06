@@ -26,6 +26,8 @@ const DetailSkeletonComponent: FC = () => (
         <Skeleton variant='text' className={styles['detail__text']} />
         <Skeleton variant='text' className={styles['detail__text']} />
         <Skeleton variant='text' className={styles['detail__text']} />
+        <Skeleton variant='text' className={styles['detail__text']} />
+        <Skeleton variant='text' className={styles['detail__text']} />
 
       </label>
     </div>

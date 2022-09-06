@@ -11,10 +11,6 @@ const AnimeSkeletonComponent: FC = () => (
       <Skeleton className={`${styles['skeleton__text']} ${styles['skeleton__text--primary']}`} variant="text" />
       <Skeleton className={`${styles['skeleton__text']} ${styles['skeleton__text--secondary']}`} variant="text" />
       <Skeleton className={`${styles['skeleton__text']} ${styles['skeleton__text--secondary']}`} variant="text" />
-      <Skeleton className={`${styles['skeleton__text']} ${styles['skeleton__text--secondary']}`} variant="text" />
-      <Skeleton className={`${styles['skeleton__text']} ${styles['skeleton__text--secondary']}`} variant="text" />
-      <Skeleton className={`${styles['skeleton__text']} ${styles['skeleton__text--secondary']}`} variant="text" />
-      <Skeleton className={`${styles['skeleton__text']} ${styles['skeleton__text--secondary']}`} variant="text" />
     </div>
   </Box>
 );
