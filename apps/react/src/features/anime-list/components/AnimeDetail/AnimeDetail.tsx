@@ -39,6 +39,10 @@ const AnimeDetailComponent: FC = () => {
     return <DetailSkeleton />;
   }
 
+  if (animeDetail === undefined) {
+    return <h1>No anime with given id</h1>;
+  }
+
   return (
     <div className={styles['detail']}>
       <div className={styles['detail__media']}>
