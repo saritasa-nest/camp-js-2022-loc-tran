@@ -12,9 +12,9 @@ Anime['id'],
   rejectValue: string;
 }
 >('animeDetail/fetchAnimeDetail',
-  (animeId, { rejectWithValue }) => {
+  async(animeId, { rejectWithValue }) => {
     try {
-      return AnimeService.getAnimeById(animeId);
+      return await AnimeService.getAnimeById(animeId);
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.message);
