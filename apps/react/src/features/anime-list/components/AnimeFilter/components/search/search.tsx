@@ -15,7 +15,6 @@ interface Props {
 const SearchComponent: FC<Props> = ({ queryParams, onChange }) => (
   <FormControl fullWidth>
     <TextField
-      id=""
       label="Search: "
       placeholder="E.g. Conan, Dragon, ..."
       value={queryParams?.search ?? ''}
