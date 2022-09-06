@@ -7,13 +7,13 @@ import { animeDetailAdapter } from './state';
 const { selectById } = animeDetailAdapter.getSelectors();
 
 /** Selects anime list. */
-export const selectAnimeList = createSelector(
+export const selectAnimeDetail = createSelector(
   (state: RootState, id: EntityId) => selectById(state.animeDetail, id),
-  animeList => animeList,
+  animeDetail => animeDetail,
 );
 
 /** Selects anime list loading state. */
-export const selectIsAnimeListLoading = createSelector(
-  (state: RootState) => state.animeList.isLoading,
+export const selectIsAnimeDetailLoading = createSelector(
+  (state: RootState) => state.animeDetail.isLoading,
   isLoading => isLoading,
 );

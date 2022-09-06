@@ -1,0 +1,10 @@
+@import url("../../AnimeDetail.module.css");
+@import url("../DetailInfo/DetailInfo.module.css");
+
+.detail__image {
+  min-height: 500px;
+}
+
+.detail__text {
+  margin-bottom: 10px;
+}

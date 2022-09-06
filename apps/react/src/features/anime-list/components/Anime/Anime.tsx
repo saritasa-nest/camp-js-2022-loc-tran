@@ -3,10 +3,9 @@ import { Avatar, List, ListItem, ListItemAvatar } from '@mui/material';
 import { FC, memo } from 'react';
 import { NavLink, useSearchParams } from 'react-router-dom';
 
+import { getPlaceholder } from '../../../../utils/utils';
+
 import styles from './Anime.module.css';
-
-const getPlaceholder = (text: string): string => (text ? text : 'Empty');
-
 interface Props {
 
   /** Anime data. */

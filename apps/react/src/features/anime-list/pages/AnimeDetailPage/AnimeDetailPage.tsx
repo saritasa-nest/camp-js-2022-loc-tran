@@ -1,11 +1,7 @@
 import { memo } from 'react';
-import { useParams } from 'react-router-dom';
 
-const AnimeDetailPageComponent = () => {
-  const params = useParams();
-  const { animeId } = params;
+import { AnimeDetail } from '../../components/AnimeDetail/AnimeDetail';
 
-  return <h1>{animeId}</h1>;
-};
+const AnimeDetailPageComponent = () => <AnimeDetail />;
 
 export const AnimeDetailPage = memo(AnimeDetailPageComponent);
