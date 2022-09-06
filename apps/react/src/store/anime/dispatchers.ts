@@ -1,4 +1,4 @@
-import { Sorting } from '@js-camp/core/models/anime';
+import { Anime, Sorting } from '@js-camp/core/models/anime';
 import { PaginationParams } from '@js-camp/core/models/paginationParams';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
@@ -41,4 +41,12 @@ export const fetchAnime = createAsyncThunk(
 export const fetchMoreAnime = createAsyncThunk(
   'animeList/fetchMoreAnime',
   () => AnimeService.getMoreAnime(),
+);
+
+export const deleteAnime = createAsyncThunk(
+  'animeList/deleteAnime',
+  async(animeId: Anime['id']) => {
+    await AnimeService.deleteAnime(animeId);
+    return animeId;
+  },
 );

@@ -34,3 +34,30 @@
   font-size: 0.7rem;
   color: var(--font-color-dark-secondary);
 }
+
+.info__modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.info__popup {
+  background-color: var(--background-color-light);
+  color: var(--font-color-primary);
+  padding: 20px;
+  border: 2px solid var(--border-color);
+}
+
+.info__button {
+  margin: 5px;
+}
+
+.info__action {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.info__warning {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}

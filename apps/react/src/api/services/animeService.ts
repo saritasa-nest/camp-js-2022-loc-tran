@@ -51,6 +51,14 @@ export namespace AnimeService {
   }
 
   /**
+   * Delete anime by id.
+   * @param id Anime id.
+   */
+  export async function deleteAnime(id: Anime['id']): Promise<void> {
+    await http.delete(`${ANIME_URL}${id}/`);
+  }
+
+  /**
    * Set next anime page url.
    * @param url Next page url.
    */
