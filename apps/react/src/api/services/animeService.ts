@@ -55,7 +55,7 @@ export namespace AnimeService {
    * @param id Anime id.
    */
   export async function deleteAnime(id: Anime['id']): Promise<void> {
-    await http.delete(`${ANIME_URL}${id}/`);
+    // await http.delete(`${ANIME_URL}${id}/`);
   }
 
   /**

@@ -46,6 +46,7 @@
   color: var(--font-color-primary);
   padding: 20px;
   border: 2px solid var(--border-color);
+  border-radius: 10px;
 }
 
 .info__button {
@@ -53,6 +54,7 @@
 }
 
 .info__action {
+  flex: 1;
   display: flex;
   justify-content: flex-end;
 }
