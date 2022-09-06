@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 import { AnimeDetail } from '@js-camp/core/models/animeDetail';
+import { Chip } from '@mui/material';
 
-import { Genre } from '../Genre/Genre';
 import { getPlaceholder } from '../../../../../../utils/utils';
 
 import styles from './DetailInfo.module.css';
@@ -62,7 +62,7 @@ const DetailInfoComponent: FC<Props> = ({ detail }) => <>
       <span className={styles['detail__title']}>Genres: </span>
       <span className={styles['detail__text']}>
         {detail?.genresData.map(genre => (
-          <Genre key={genre.id} genre={genre} />
+          <Chip key={genre.id} color='primary' label={genre.name} />
         ))}
       </span>
     </label>
