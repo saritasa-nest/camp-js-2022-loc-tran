@@ -11,6 +11,9 @@ export interface AnimeDetailState {
   /** Error. */
   readonly error?: string;
 
+  /** Error code. */
+  readonly errorCode?: number;
+
   /** Whether the anime list are loading or not. */
   readonly isLoading: boolean;
 }

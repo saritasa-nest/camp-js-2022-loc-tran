@@ -8,9 +8,10 @@ import { Button, Modal } from '@mui/material';
 import { FC, memo, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import styles from './AnimeDetail.module.css';
-import { DetailInfo } from './components/DetailInfo/DetailInfo';
 import { DetailSkeleton } from './components/DetailSkeleton/DetailSkeleton';
+import { DetailInfo } from './components/DetailInfo/DetailInfo';
+import styles from './AnimeDetail.module.css';
+import { DetailNotFound } from './components/DetailNotFound/DetailNotFound';
 
 const AnimeDetailComponent: FC = () => {
   const params = useParams();
@@ -20,7 +21,7 @@ const AnimeDetailComponent: FC = () => {
     animeIdParams === undefined ||
     isNaN(Number.parseInt(animeIdParams, 10))
   ) {
-    throw new Error('Invalid anime id!');
+    return <DetailNotFound />;
   }
   const animeId = Number.parseInt(animeIdParams, 10);
 
