@@ -1,9 +1,0 @@
-.genre {
-  display: inline-block;
-  margin: 0 3px;
-  padding: 5px;
-  border-radius: 10px;
-  background-color: var(--primary-color);
-  color: var(--font-color-contrast-primary);
-  cursor: pointer;
-}
