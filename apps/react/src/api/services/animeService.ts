@@ -6,6 +6,7 @@ import { DetailMapper } from '@js-camp/core/mappers/detail.mapper';
 import { paginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 import { PaginationParamsMapper } from '@js-camp/core/mappers/paginationParams.mapper';
 import { Anime } from '@js-camp/core/models/anime';
+import { AnimeDetail } from '@js-camp/core/models/animeDetail';
 import { PaginationParams } from '@js-camp/core/models/paginationParams';
 
 import { http } from '..';
@@ -44,7 +45,7 @@ export namespace AnimeService {
    * Get anime detail by id.
    * @param id Anime id.
    */
-  export async function getAnimeById(id: Anime['id']): Promise<Anime> {
+  export async function getAnimeById(id: Anime['id']): Promise<AnimeDetail> {
     const { data } = await http.get<AnimeDetailDto>(`${ANIME_URL}${id}`);
     return DetailMapper.fromDto(data);
   }
