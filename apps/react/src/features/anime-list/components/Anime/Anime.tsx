@@ -33,16 +33,16 @@ const AnimeComponent: FC<Props> = ({ anime }) => {
           </ListItemAvatar>
           <div className={styles['info__data']}>
             <span className={styles['info__data--primary']}>
-            Title English: {getPlaceholder(anime.titleEnglish)}
+              Title English: {getPlaceholder(anime.titleEnglish)}
             </span>
             <span className={styles['info__data--primary']}>
-            Title Japanese: {getPlaceholder(anime.titleJapanese)}
+              Title Japanese: {getPlaceholder(anime.titleJapanese)}
             </span>
             <span className={styles['info__data--secondary']}>
-            Type: {anime.type}
+              Type: {anime.type}
             </span>
             <span className={styles['info__data--secondary']}>
-            Status: {anime.status}
+              Status: {anime.status}
             </span>
           </div>
         </ListItem>

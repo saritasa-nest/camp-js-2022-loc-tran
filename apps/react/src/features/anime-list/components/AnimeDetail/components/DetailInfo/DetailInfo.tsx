@@ -14,12 +14,12 @@ interface Props {
 
 const DetailInfoComponent: FC<Props> = ({ detail }) => <>
   <div className={styles['detail__info']}>
-    <label className={styles['detail__label']}>
+    <div className={styles['detail__label']}>
       <span className={styles['detail__title']}>English title: </span>
       <span className={styles['detail__text']}>
         {getPlaceholder(detail?.titleEnglish)}
       </span>
-    </label>
+    </div>
     <label className={styles['detail__label']}>
       <span className={styles['detail__title']}>Japanese title: </span>
       <span className={styles['detail__text']}>
