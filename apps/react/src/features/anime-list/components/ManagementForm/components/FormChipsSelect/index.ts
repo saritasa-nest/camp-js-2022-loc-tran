@@ -1,0 +1,1 @@
+export { FormChipsSelect } from './FormChipsSelect';
