@@ -74,7 +74,7 @@ export namespace AnimeService {
   ): Promise<AnimeManagement> {
     const { data } = await http.put<AnimeManagementDto>(
       `${ANIME_URL}${animeData.id}/`,
-      animeData,
+      AnimeManagementMapper.toPostDto(animeData),
     );
     return AnimeManagementMapper.fromDto(data);
   }

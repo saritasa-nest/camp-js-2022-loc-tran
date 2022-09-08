@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchGenres } from './dispatchers';
+import { addNewGenre, fetchGenres, fetchGenresByKey } from './dispatchers';
 import { genreAdapter, initialState, State } from './state';
 
 export const genresSlice = createSlice({
@@ -19,6 +19,26 @@ export const genresSlice = createSlice({
       if (action.error.message) {
         state.error = action.error.message;
       }
+      state.isLoading = false;
+    })
+    .addCase(fetchGenresByKey.pending, state => {
+      state.isLoading = true;
+    })
+    .addCase(fetchGenresByKey.fulfilled, (state, action) => {
+      genreAdapter.addMany(state as State, action.payload);
+      state.isLoading = false;
+    })
+    .addCase(fetchGenresByKey.rejected, (state, action) => {
+      if (action.error.message) {
+        state.error = action.error.message;
+      }
+      state.isLoading = false;
+    })
+    .addCase(addNewGenre.pending, state => {
+      state.isLoading = true;
+    })
+    .addCase(addNewGenre.fulfilled, (state, action) => {
+      genreAdapter.addOne(state as State, action.payload);
       state.isLoading = false;
     }),
 });

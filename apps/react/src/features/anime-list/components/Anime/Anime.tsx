@@ -11,7 +11,7 @@ import {
   Modal,
 } from '@mui/material';
 import { FC, memo, MouseEvent, useState } from 'react';
-import { NavLink, useSearchParams } from 'react-router-dom';
+import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
 import { Delete, Edit } from '@mui/icons-material';
 import { deleteAnime } from '@js-camp/react/store/anime/dispatchers';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
@@ -31,6 +31,7 @@ const AnimeComponent: FC<Props> = ({ anime }) => {
   const dispatch = useAppDispatch();
   const isDeleting = useAppSelector(selectIsDeletingAnime);
   const [openDelete, setOpenDelete] = useState(false);
+  const navigate = useNavigate();
 
   const handleDeleteAnime = (event: MouseEvent) => {
     event.stopPropagation();
@@ -41,6 +42,11 @@ const AnimeComponent: FC<Props> = ({ anime }) => {
   const onDeleteAnime = () => {
     setOpenDelete(false);
     dispatch(deleteAnime(anime.id));
+  };
+  const handleEditAnime = (event: MouseEvent) => {
+    event.stopPropagation();
+    event.preventDefault();
+    navigate(`edit/${anime.id}/`);
   };
 
   return (
@@ -76,7 +82,7 @@ const AnimeComponent: FC<Props> = ({ anime }) => {
               </span>
             </div>
             <div className={styles['info__action']}>
-              <Fab size="small" color="primary">
+              <Fab size="small" color="primary" onClick={handleEditAnime}>
                 <Edit />
               </Fab>
               <Fab size="small" color="error" onClick={handleDeleteAnime}>

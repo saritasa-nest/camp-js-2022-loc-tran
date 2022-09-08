@@ -1,4 +1,4 @@
-import { Genre } from '@js-camp/core/models/genre';
+import { Genre, GenrePost } from '@js-camp/core/models/genre';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 import { GenreDto } from '@js-camp/core/dtos/genre.dto';
 import { GenreMapper } from '@js-camp/core/mappers/genre.mapper';
@@ -15,15 +15,28 @@ export namespace GenresService {
     return data.results.map(dto => GenreMapper.fromDto(dto));
   }
 
-  /** Fetches all existed genres. */
-  export async function fetchAllGenres(): Promise<Genre[]> {
-    const { data } = await http.get<PaginationDto<GenreDto>>(GENRE_URL);
-    const length = data.count;
-    const { data: allGenres } = await http.get<PaginationDto<GenreDto>>(GENRE_URL, {
+  /**
+   * Fetches genres by search key.
+   * @param key Search key.
+   */
+  export async function getGenresByKey(key: string): Promise<Genre[]> {
+    const { data } = await http.get<PaginationDto<GenreDto>>(GENRE_URL, {
       params: {
-        limit: length,
+        search: key,
       },
     });
-    return allGenres.results.map(dto => GenreMapper.fromDto(dto));
+    return data.results.map(dto => GenreMapper.fromDto(dto));
+  }
+
+  /**
+   * Add new genre.
+   * @param genrePost Genre post data.
+   */
+  export async function addGenre(genrePost: GenrePost): Promise<Genre> {
+    const { data } = await http.post<GenreDto>(GENRE_URL, {
+      name: genrePost.name,
+      type: 'GENRES',
+    });
+    return GenreMapper.fromDto(data);
   }
 }

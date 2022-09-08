@@ -39,6 +39,7 @@
     "@material/data-table": "^14.0.0",
     "@mui/icons-material": "^5.10.2",
     "@mui/material": "^5.10.2",
+    "@mui/x-date-pickers": "^5.0.0",
     "@ngneat/error-tailor": "^2.2.1",
     "@ngneat/until-destroy": "^9.2.1",
     "@reduxjs/toolkit": "^1.8.2",
