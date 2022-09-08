@@ -2,6 +2,7 @@ import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
 import { AnimeDetailDto } from '@js-camp/core/dtos/animeDetail.dto';
 import { AnimeManagementDto } from '@js-camp/core/dtos/animeManagement.dto';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
+import { S3UploadDto } from '@js-camp/core/dtos/S3Upload.dto';
 import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
 import { AnimeManagementMapper } from '@js-camp/core/mappers/animeManagement.mapper';
 import { DetailMapper } from '@js-camp/core/mappers/detail.mapper';
@@ -16,7 +17,10 @@ import { PaginationParams } from '@js-camp/core/models/paginationParams';
 
 import { http } from '..';
 
+import { S3CloudService } from './s3CloudService';
+
 const ANIME_URL = 'anime/anime/';
+const S3_URL = '/s3direct/get_params/';
 export namespace AnimeService {
   let nextAnimeUrl: string | null = null;
 
@@ -94,5 +98,17 @@ export namespace AnimeService {
    */
   function setNextPageUrl(url: string | null): void {
     nextAnimeUrl = url;
+  }
+
+  /**
+   * Post anime poster to s3 cloud.
+   * @param image Image file.
+   */
+  export async function postAnimePoster(image: File): Promise<string> {
+    const { data: s3UploadData } = await http.post<S3UploadDto>(S3_URL, {
+      dest: 'anime_images',
+      filename: image.name,
+    });
+    return S3CloudService.uploadImage(s3UploadData, image);
   }
 }

@@ -50,3 +50,8 @@ export const deleteAnime = createAsyncThunk(
     return animeId;
   },
 );
+
+export const postAnimePoster = createAsyncThunk(
+  'animeList/postAnimePoster',
+  (poster: File) => AnimeService.postAnimePoster(poster),
+);

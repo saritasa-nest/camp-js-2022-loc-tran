@@ -3,6 +3,9 @@ import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { CONFIG } from './config';
 import { TokenService } from './services/tokenService';
 
+const authRoute = 'auth/';
+const s3UploadRoute = 'https://s3.us-west-2.amazonaws.com/camp-js-backend-files-dev';
+
 /**
  * Interceptor for request.
  * @param config Config variable for axios.
@@ -58,7 +61,7 @@ export async function refreshTokenInterceptor(error: unknown): Promise<void> {
  * @param url Url address of request.
  */
 function shouldPassTokens(url: string | undefined): boolean {
-  if (url === undefined || url.includes('auth/')) {
+  if (url === undefined || url.includes(authRoute) || url.includes(s3UploadRoute)) {
     return false;
   }
   return true;

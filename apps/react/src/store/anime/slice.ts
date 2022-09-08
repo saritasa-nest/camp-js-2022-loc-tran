@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { deleteAnime, fetchAnime, fetchMoreAnime } from './dispatchers';
+import { deleteAnime, fetchAnime, fetchMoreAnime, postAnimePoster } from './dispatchers';
 import { animeAdapter, initialState, State } from './state';
 
 export const animeListSlice = createSlice({
@@ -29,5 +29,11 @@ export const animeListSlice = createSlice({
       .addCase(deleteAnime.fulfilled, (state, action) => {
         animeAdapter.removeOne(state as State, action.payload);
         state.isDeleting = false;
+      })
+      .addCase(postAnimePoster.pending, state => {
+        state.isPostingPoster = true;
+      })
+      .addCase(postAnimePoster.fulfilled, state => {
+        state.isPostingPoster = false;
       }),
 });

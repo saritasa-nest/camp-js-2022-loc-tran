@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import { AnimeStatus, AnimeType } from '@js-camp/core/models/anime';
 import {
   AnimeManagementPost,
@@ -7,6 +8,7 @@ import {
 } from '@js-camp/core/models/animeManagement';
 import { Genre } from '@js-camp/core/models/genre';
 import { Studio } from '@js-camp/core/models/studio';
+import { postAnimePoster } from '@js-camp/react/store/anime/dispatchers';
 import { selectIsAnimeManagementLoading } from '@js-camp/react/store/animeManagement/selectors';
 import {
   addNewGenre,
@@ -18,12 +20,18 @@ import {
   selectGenres,
 } from '@js-camp/react/store/genre/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { addNewStudio, fetchStudiosByKey } from '@js-camp/react/store/studio/dispatchers';
-import { selectAreStudiosLoading, selectStudios } from '@js-camp/react/store/studio/selectors';
+import {
+  addNewStudio,
+  fetchStudiosByKey,
+} from '@js-camp/react/store/studio/dispatchers';
+import {
+  selectAreStudiosLoading,
+  selectStudios,
+} from '@js-camp/react/store/studio/selectors';
 import { Button, CircularProgress } from '@mui/material';
 import { Field, Form, FormikProvider, useFormik } from 'formik';
 import { TextField } from 'formik-mui';
-import { FC, memo, useEffect } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 
 import { FormChipsSelect } from './components/FormChipsSelect';
 import { FormDateSelect } from './components/FormDateSelect';
@@ -61,10 +69,22 @@ const ManagementFormComponent: FC<Props> = ({ managementData, onSubmit }) => {
   const genres = useAppSelector(selectGenres);
   const studios = useAppSelector(selectStudios);
   const isStudiosLoading = useAppSelector(selectAreStudiosLoading);
+  const [poster, setPoster] = useState<File>();
 
   const onManagementFormSubmit = (data: AnimeManagementPost) => {
     formik.setSubmitting(false);
-    onSubmit(data);
+    if (poster) {
+      dispatch(postAnimePoster(poster)).then(result => {
+        if (typeof result.payload === 'string') {
+          onSubmit({
+            ...data,
+            image: result.payload,
+          });
+        }
+      });
+    } else {
+      onSubmit(data);
+    }
   };
 
   useEffect(() => {
@@ -92,8 +112,12 @@ const ManagementFormComponent: FC<Props> = ({ managementData, onSubmit }) => {
   const handleStartDateChange = (date: Date) => {
     formik.setFieldValue('aired.start', new Date(date));
   };
+  const handleEndDateChange = (date: Date) => {
+    formik.setFieldValue('aired.end', new Date(date));
+  };
+  const handlePosterChange = (animePoster: File) => setPoster(animePoster);
 
-  const form = (
+  return (
     <FormikProvider value={formik}>
       <Form className={styles['form']}>
         <Field
@@ -126,14 +150,14 @@ const ManagementFormComponent: FC<Props> = ({ managementData, onSubmit }) => {
         <FormSelect label="Season: " name="season" dataSource={SeasonType} />
         <FormSelect label="Rating: " name="rating" dataSource={RatingType} />
         <FormDateSelect
-          name='aired.start'
+          name="aired.start"
           initialValue={new Date(formik.getFieldMeta('aired.start').value)}
           handleDateChange={handleStartDateChange}
         />
         <FormDateSelect
-          name='aired.end'
+          name="aired.end"
           initialValue={new Date(formik.getFieldMeta('aired.end').value)}
-          handleDateChange={handleStartDateChange}
+          handleDateChange={handleEndDateChange}
         />
         <FormChipsSelect
           label="Genre select"
@@ -153,7 +177,8 @@ const ManagementFormComponent: FC<Props> = ({ managementData, onSubmit }) => {
           fetchByKey={fetchStudioByKey}
           addOption={addStudio}
         />
-        <ImageSelect />
+
+        <ImageSelect initialImage={managementData?.image} handleChange={handlePosterChange} />
         <Button
           type="submit"
           variant="contained"
@@ -170,8 +195,6 @@ const ManagementFormComponent: FC<Props> = ({ managementData, onSubmit }) => {
       </Form>
     </FormikProvider>
   );
-
-  return form;
 };
 
 export const ManagementForm = memo(ManagementFormComponent);

@@ -3,9 +3,18 @@ import { ChangeEvent, FC, memo, useState } from 'react';
 
 import styles from './ImageSelect.module.css';
 
-const ImageSelectComponent: FC = () => {
-  const [imageUrl, setImageUrl] = useState<string>('');
-  const handleUpload = (event: ChangeEvent<HTMLInputElement>) => {
+interface Props {
+
+  /** Initial image. */
+  readonly initialImage?: string;
+
+  /** Change handler. */
+  readonly handleChange: (image: File) => void;
+}
+
+const ImageSelectComponent: FC<Props> = ({ initialImage, handleChange }) => {
+  const [imageUrl, setImageUrl] = useState<string>(initialImage ?? '');
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files === null) {
       return;
     }
@@ -16,6 +25,7 @@ const ImageSelectComponent: FC = () => {
     };
     if (file) {
       reader.readAsDataURL(file);
+      handleChange(file);
     }
   };
   return (
@@ -23,7 +33,7 @@ const ImageSelectComponent: FC = () => {
       {imageUrl && (
         <img className={styles['selector__image']} src={imageUrl} />
       )}
-      <Input className={styles['selector__input']} type='file' onChange={handleUpload} />
+      <Input className={styles['selector__input']} type='file' onChange={onChange} />
     </div>
   );
 };
