@@ -49,6 +49,7 @@ const AnimeDetailComponent: FC = () => {
         <div className={styles['detail__poster']}>
           <img
             onClick={() => setPosterOpen(true)}
+            role="button"
             className={styles['detail__image']}
             alt="Anime poster"
             src={animeDetail?.image}

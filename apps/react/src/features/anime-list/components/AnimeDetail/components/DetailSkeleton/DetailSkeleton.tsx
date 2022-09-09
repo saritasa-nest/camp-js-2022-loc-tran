@@ -18,7 +18,7 @@ const DetailSkeletonComponent: FC = () => (
       />
     </div>
     <div className={styles['detail__info']}>
-      <label className={styles['detail__label']}>
+      <div className={styles['detail__label']}>
         <Skeleton variant='text' className={styles['detail__text']} />
         <Skeleton variant='text' className={styles['detail__text']} />
         <Skeleton variant='text' className={styles['detail__text']} />
@@ -28,8 +28,7 @@ const DetailSkeletonComponent: FC = () => (
         <Skeleton variant='text' className={styles['detail__text']} />
         <Skeleton variant='text' className={styles['detail__text']} />
         <Skeleton variant='text' className={styles['detail__text']} />
-
-      </label>
+      </div>
     </div>
   </div>
 );
