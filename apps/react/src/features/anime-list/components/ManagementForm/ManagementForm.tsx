@@ -116,10 +116,10 @@ const ManagementFormComponent: FC<Props> = ({ managementData, onSubmit }) => {
     dispatch(addNewStudio({ name }));
   };
   const handleStartDateChange = (date: Date) => {
-    formik.setFieldValue('aired.start', new Date(date));
+    formik.setFieldValue('aired.start', date);
   };
   const handleEndDateChange = (date: Date) => {
-    formik.setFieldValue('aired.end', new Date(date));
+    formik.setFieldValue('aired.end', date);
   };
   const handlePosterChange = (animePoster: File) => setPoster(animePoster);
 
@@ -129,7 +129,7 @@ const ManagementFormComponent: FC<Props> = ({ managementData, onSubmit }) => {
         <div className={styles['form__poster']}>
           <ImageSelect
             initialImage={managementData?.image}
-            handleChange={handlePosterChange}
+            onChange={handlePosterChange}
           />
         </div>
         <div className={styles['form__inputs']}>

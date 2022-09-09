@@ -9,12 +9,12 @@ interface Props {
   readonly initialImage?: string;
 
   /** Change handler. */
-  readonly handleChange: (image: File) => void;
+  readonly onChange: (image: File) => void;
 }
 
-const ImageSelectComponent: FC<Props> = ({ initialImage, handleChange }) => {
+const ImageSelectComponent: FC<Props> = ({ initialImage, onChange }) => {
   const [imageUrl, setImageUrl] = useState<string>(initialImage ?? '');
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const onImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files === null) {
       return;
     }
@@ -25,15 +25,15 @@ const ImageSelectComponent: FC<Props> = ({ initialImage, handleChange }) => {
     };
     if (file) {
       reader.readAsDataURL(file);
-      handleChange(file);
+      onChange(file);
     }
   };
   return (
     <div className={styles['selector']}>
       {imageUrl && (
-        <img className={styles['selector__image']} src={imageUrl} />
+        <img className={styles['selector__image']} src={imageUrl} alt="upload poster" />
       )}
-      <Input className={styles['selector__input']} type='file' onChange={onChange} />
+      <Input className={styles['selector__input']} type='file' onChange={onImageChange} />
     </div>
   );
 };
