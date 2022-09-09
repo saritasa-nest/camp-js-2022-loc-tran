@@ -66,6 +66,14 @@ const DetailInfoComponent: FC<Props> = ({ detail }) => <>
         ))}
       </span>
     </div>
+    <div className={styles['detail__label']}>
+      <span className={styles['detail__title']}>Studios: </span>
+      <span className={styles['detail__text']}>
+        {detail?.studiosData.map(studio => (
+          <Chip key={studio.id} color='primary' label={studio.name} />
+        ))}
+      </span>
+    </div>
   </div>
 </>;
 
