@@ -9,7 +9,7 @@ import styles from './DetailInfo.module.css';
 interface Props {
 
   /** Anime detail data. */
-  readonly detail: AnimeDetail | undefined;
+  readonly detail?: AnimeDetail;
 }
 
 const DetailInfoComponent: FC<Props> = ({ detail }) => <>
