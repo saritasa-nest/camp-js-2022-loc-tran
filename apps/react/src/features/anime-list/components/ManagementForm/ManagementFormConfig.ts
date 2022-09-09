@@ -5,6 +5,16 @@ import * as Yup from 'yup';
 const RequiredErrorMessage = 'This field is required!';
 
 export const ManagementSchema = Yup.object().shape({
+  type: Yup.string()
+    .required(RequiredErrorMessage),
+  status: Yup.string()
+    .required(RequiredErrorMessage),
+  source: Yup.string()
+    .required(RequiredErrorMessage),
+  rating: Yup.string()
+    .required(RequiredErrorMessage),
+  season: Yup.string()
+    .required(RequiredErrorMessage),
   aired: Yup.object().shape({
     start: Yup.date().required(RequiredErrorMessage),
     end: Yup.date().required(RequiredErrorMessage),
