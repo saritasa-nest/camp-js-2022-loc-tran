@@ -17,7 +17,9 @@ export const ManagementSchema = Yup.object().shape({
     .required(RequiredErrorMessage),
   aired: Yup.object().shape({
     start: Yup.date().required(RequiredErrorMessage),
-    end: Yup.date().required(RequiredErrorMessage),
+    end: Yup.date()
+      .required(RequiredErrorMessage)
+      .min(Yup.ref('aired.start'), 'End date must after start date'),
   }),
   synopsis: Yup.string()
     .required(RequiredErrorMessage),
