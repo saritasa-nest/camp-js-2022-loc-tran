@@ -5,35 +5,20 @@ import {
   SeasonType,
   SourceType,
 } from '@js-camp/core/models/animeManagement';
-import { Genre } from '@js-camp/core/models/genre';
-import { Studio } from '@js-camp/core/models/studio';
 import { postAnimePoster } from '@js-camp/react/store/anime/dispatchers';
 import { selectIsEditingAnime } from '@js-camp/react/store/anime/selectors';
 import { selectIsPostingPoster } from '@js-camp/react/store/animeDetail/selectors';
 import {
-  addNewGenre,
   fetchGenres,
-  fetchGenresByKey,
 } from '@js-camp/react/store/genre/dispatchers';
-import {
-  selectAreGenresLoading,
-  selectGenres,
-} from '@js-camp/react/store/genre/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import {
-  addNewStudio,
-  fetchStudiosByKey,
-} from '@js-camp/react/store/studio/dispatchers';
-import {
-  selectAreStudiosLoading,
-  selectStudios,
-} from '@js-camp/react/store/studio/selectors';
 import { Button, CircularProgress } from '@mui/material';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { useSnackbar } from 'notistack';
 import { FC, memo, useEffect, useState } from 'react';
 
-import { FormChipsSelect } from './components/FormChipsSelect';
+import { ChipsEditor } from './components/ChipsEditor/ChipsEditor';
+
 import { FormDateSelect } from './components/FormDateSelect';
 import { FormInputGroup } from './components/FormInputGroup';
 import { FormSelect } from './components/FormSelect';
@@ -66,11 +51,8 @@ interface Props {
 
 const ManagementFormComponent: FC<Props> = ({ managementData, onSubmit }) => {
   const dispatch = useAppDispatch();
-  const genres = useAppSelector(selectGenres);
-  const studios = useAppSelector(selectStudios);
   const [poster, setPoster] = useState<File>();
-  const isGenresLoading = useAppSelector(selectAreGenresLoading);
-  const isStudiosLoading = useAppSelector(selectAreStudiosLoading);
+
   const isPostingPoster = useAppSelector(selectIsPostingPoster);
   const isLoading = useAppSelector(selectIsEditingAnime);
   const { enqueueSnackbar } = useSnackbar();
@@ -103,18 +85,6 @@ const ManagementFormComponent: FC<Props> = ({ managementData, onSubmit }) => {
     dispatch(fetchGenres());
   }, []);
 
-  const fetchGenreByKey = (key: string) => {
-    dispatch(fetchGenresByKey(key));
-  };
-  const addGenre = (name: string) => {
-    dispatch(addNewGenre({ name }));
-  };
-  const fetchStudioByKey = (key: string) => {
-    dispatch(fetchStudiosByKey(key));
-  };
-  const addStudio = (name: string) => {
-    dispatch(addNewStudio({ name }));
-  };
   const handleStartDateChange = (date: Date) => {
     formik.setFieldValue('aired.start', date);
   };
@@ -142,33 +112,25 @@ const ManagementFormComponent: FC<Props> = ({ managementData, onSubmit }) => {
           <FormDateSelect
             name="aired.start"
             label="Aired start"
-            initialValue={new Date(formik.getFieldMeta('aired.start').value)}
+            initialValue={
+              formik.getFieldMeta('aired.start').value ?
+                new Date(formik.getFieldMeta('aired.start').value) :
+                null
+            }
             handleDateChange={handleStartDateChange}
           />
           <FormDateSelect
             name="aired.end"
             label="Aired end"
-            initialValue={new Date(formik.getFieldMeta('aired.end').value)}
+            initialValue={
+              formik.getFieldMeta('aired.end').value ?
+                new Date(formik.getFieldMeta('aired.end').value) :
+                null
+            }
             handleDateChange={handleEndDateChange}
+            error={formik.errors.aired?.end}
           />
-          <FormChipsSelect
-            label="Genre select"
-            name="genresData"
-            options={genres}
-            getOptionName={(genreOption: Genre) => genreOption.name}
-            isLoading={isGenresLoading}
-            fetchByKey={fetchGenreByKey}
-            addOption={addGenre}
-          />
-          <FormChipsSelect
-            label="Studio select"
-            name="studiosData"
-            options={studios}
-            getOptionName={(studioOption: Studio) => studioOption.name}
-            isLoading={isStudiosLoading}
-            fetchByKey={fetchStudioByKey}
-            addOption={addStudio}
-          />
+          <ChipsEditor />
           <FormSynopsis />
         </div>
         <Button

@@ -9,13 +9,16 @@ import styles from './FormDateSelect.module.css';
 interface Props {
 
   /** Initial value. */
-  readonly initialValue: Date;
+  readonly initialValue: Date | null;
 
   /** Label name. */
   readonly label: string;
 
   /** Field name. */
   readonly name: string;
+
+  /** Field error. */
+  readonly error?: string;
 
   /** Handle date change. */
   readonly handleDateChange: (date: Date) => void;
@@ -26,6 +29,7 @@ const FormDateSelectComponent: FC<Props> = ({
   initialValue,
   name,
   label,
+  error,
 }) => {
   const [value, setValue] = useState<Date | null>(initialValue);
 
@@ -51,6 +55,7 @@ const FormDateSelectComponent: FC<Props> = ({
         onChange={onDateChange}
         renderInput={params => <TextField {...params} />}
       />
+      <span className={styles['date__error']}>{error}</span>
     </Field>
   );
 };

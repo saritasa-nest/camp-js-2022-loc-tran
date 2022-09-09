@@ -9,8 +9,8 @@ export namespace DateRangeMapper {
    */
   export function fromDto(dto: DateRangeDto): DateRange {
     return {
-      start: new Date(dto.start),
-      end: new Date(dto.end),
+      start: dto.start ? new Date(dto.start) : null,
+      end: dto.end ? new Date(dto.end) : null,
     };
   }
 
@@ -20,8 +20,8 @@ export namespace DateRangeMapper {
    */
   export function toDto(model: DateRange): DateRangeDto {
     return {
-      start: model.start.toISOString(),
-      end: model.end.toISOString(),
+      start: model.start ? model.start.toISOString() : null,
+      end: model.end ? model.end.toISOString() : null,
     };
   }
 }

@@ -2,3 +2,7 @@
   width: 30%;
   margin: 10px;
 }
+
+.date__error {
+  color: var(--font-color-error);
+}
