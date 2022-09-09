@@ -11,13 +11,14 @@ import {
   Modal,
 } from '@mui/material';
 import { FC, memo, MouseEvent, useState } from 'react';
-import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
+import { NavLink, useSearchParams } from 'react-router-dom';
 import { Delete, Edit } from '@mui/icons-material';
 import { deleteAnime } from '@js-camp/react/store/anime/dispatchers';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { selectIsDeletingAnime } from '@js-camp/react/store/anime/selectors';
+import { selectIsEditingAnime } from '@js-camp/react/store/anime/selectors';
 
 import { getPlaceholder } from '../../../../utils/utils';
+import { useAppNavigate } from '../../../../hooks/useAppNavigate';
 
 import styles from './Anime.module.css';
 interface Props {
@@ -29,9 +30,9 @@ interface Props {
 const AnimeComponent: FC<Props> = ({ anime }) => {
   const [searchParams] = useSearchParams();
   const dispatch = useAppDispatch();
-  const isDeleting = useAppSelector(selectIsDeletingAnime);
+  const isDeleting = useAppSelector(selectIsEditingAnime);
   const [openDelete, setOpenDelete] = useState(false);
-  const navigate = useNavigate();
+  const { navigateWithSearchParams } = useAppNavigate();
 
   const handleDeleteAnime = (event: MouseEvent) => {
     event.stopPropagation();
@@ -46,7 +47,7 @@ const AnimeComponent: FC<Props> = ({ anime }) => {
   const handleEditAnime = (event: MouseEvent) => {
     event.stopPropagation();
     event.preventDefault();
-    navigate(`edit/${anime.id}/`);
+    navigateWithSearchParams(`edit/${anime.id}/`);
   };
 
   return (

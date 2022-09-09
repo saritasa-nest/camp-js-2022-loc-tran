@@ -17,3 +17,8 @@ export const selectIsAnimeDetailLoading = createSelector(
   (state: RootState) => state.animeDetail.isLoading,
   isLoading => isLoading,
 );
+
+export const selectIsPostingPoster = createSelector(
+  (state: RootState) => state.animeList.isPostingPoster,
+  isPosting => isPosting,
+);

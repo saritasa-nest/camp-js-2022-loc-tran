@@ -1,10 +1,12 @@
 import { AnimeManagement, AnimeManagementPost } from '@js-camp/core/models/animeManagement';
-import { editAnime, getAnimeManagement } from '@js-camp/react/store/animeManagement/dispatchers';
+import { editAnime } from '@js-camp/react/store/anime/dispatchers';
+import { getAnimeManagement } from '@js-camp/react/store/animeManagement/dispatchers';
 import { selectAnimeManagement, selectIsAnimeManagementLoading } from '@js-camp/react/store/animeManagement/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { FC, memo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { useAppNavigate } from '../../../../hooks/useAppNavigate';
 import { LoadingPage } from '../../../../shared/components/LoadingPage';
 import { ManagementForm } from '../../components/ManagementForm';
 
@@ -12,6 +14,7 @@ const AnimeEditPageComponent: FC = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsAnimeManagementLoading);
+  const { navigateWithSearchParams } = useAppNavigate();
 
   const animeIdParams = params['animeId'];
   if (
@@ -30,11 +33,10 @@ const AnimeEditPageComponent: FC = () => {
   }, [animeId]);
 
   const onEditFormSubmit = (data: AnimeManagementPost) => {
-    console.log(data);
     dispatch(editAnime(new AnimeManagement({
       id: animeId,
       ...data,
-    })));
+    }))).then(() => navigateWithSearchParams(`/anime/${animeId}`));
   };
 
   if (isLoading) {

@@ -5,18 +5,18 @@ import * as Yup from 'yup';
 const RequiredErrorMessage = 'This field is required!';
 
 export const ManagementSchema = Yup.object().shape({
-  titleEnglish: Yup.string()
-    .required(RequiredErrorMessage),
   aired: Yup.object().shape({
     start: Yup.date().required(RequiredErrorMessage),
     end: Yup.date().required(RequiredErrorMessage),
   }),
+  synopsis: Yup.string()
+    .required(RequiredErrorMessage),
 });
 
 export const initialFormValues = {
   titleEnglish: '',
   titleJapanese: '',
-  trailerYoutube: '',
+  trailerYoutube: null,
   image: '',
   type: AnimeType.Tv,
   status: AnimeStatus.NotYetAired,

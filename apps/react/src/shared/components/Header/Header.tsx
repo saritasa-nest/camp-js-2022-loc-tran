@@ -14,6 +14,11 @@ const pages = [
     name: 'Genres',
     path: '/genres',
   },
+
+  {
+    name: 'Add Anime',
+    path: '/anime/add',
+  },
 ];
 
 const HeaderComponent: FC = () => (

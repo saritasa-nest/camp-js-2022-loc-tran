@@ -12,8 +12,8 @@ export interface AnimeState {
   /** Whether the anime list are loading or not. */
   readonly isLoading: boolean;
 
-  /** Deleting item or not. */
-  readonly isDeleting: boolean;
+  /** Editing item or not. */
+  readonly isEditing: boolean;
 
   /** Posting poster or not. */
   readonly isPostingPoster: boolean;
@@ -21,8 +21,8 @@ export interface AnimeState {
 
 export const initialState = animeAdapter.getInitialState<AnimeState>({
   isLoading: false,
-  isDeleting: false,
   isPostingPoster: false,
+  isEditing: false,
 });
 
 export type State = typeof initialState;

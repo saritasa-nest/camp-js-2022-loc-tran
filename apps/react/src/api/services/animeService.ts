@@ -12,6 +12,7 @@ import { Anime } from '@js-camp/core/models/anime';
 import { AnimeDetail } from '@js-camp/core/models/animeDetail';
 import {
   AnimeManagement,
+  AnimeManagementPost,
 } from '@js-camp/core/models/animeManagement';
 import { PaginationParams } from '@js-camp/core/models/paginationParams';
 
@@ -84,10 +85,26 @@ export namespace AnimeService {
   }
 
   /**
+   * Add anime.
+   * @param animePostData Data of new anime.
+   */
+  export async function addAnime(
+    animePostData: AnimeManagementPost,
+  ): Promise<AnimeManagement> {
+    const { data } = await http.post<AnimeManagementDto>(
+      `${ANIME_URL}`,
+      AnimeManagementMapper.toPostDto(animePostData),
+    );
+    return AnimeManagementMapper.fromDto(data);
+  }
+
+  /**
    * Get anime management data.
    * @param id Id of anime.
    */
-  export async function getAnimeManagement(id: Anime['id']): Promise<AnimeManagement> {
+  export async function getAnimeManagement(
+    id: Anime['id'],
+  ): Promise<AnimeManagement> {
     const { data } = await http.get<AnimeManagementDto>(`${ANIME_URL}${id}/`);
     return AnimeManagementMapper.fromDto(data);
   }

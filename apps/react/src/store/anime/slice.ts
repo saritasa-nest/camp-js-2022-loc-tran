@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { deleteAnime, fetchAnime, fetchMoreAnime, postAnimePoster } from './dispatchers';
+import { addAnime, deleteAnime, editAnime, fetchAnime, fetchMoreAnime, postAnimePoster } from './dispatchers';
 import { animeAdapter, initialState, State } from './state';
 
 export const animeListSlice = createSlice({
@@ -24,11 +24,33 @@ export const animeListSlice = createSlice({
         animeAdapter.addMany(state as State, action.payload);
       })
       .addCase(deleteAnime.pending, state => {
-        state.isDeleting = true;
+        state.isEditing = true;
       })
       .addCase(deleteAnime.fulfilled, (state, action) => {
         animeAdapter.removeOne(state as State, action.payload);
-        state.isDeleting = false;
+        state.isEditing = false;
+      })
+      .addCase(editAnime.pending, state => {
+        state.isEditing = true;
+      })
+      .addCase(editAnime.rejected, (state, action) => {
+        state.isEditing = false;
+        state.error = action.payload;
+      })
+      .addCase(editAnime.fulfilled, (state, action) => {
+        state.isEditing = false;
+        animeAdapter.setOne(state as State, action.payload);
+      })
+      .addCase(addAnime.rejected, (state, action) => {
+        state.isEditing = false;
+        state.error = action.payload;
+      })
+      .addCase(addAnime.pending, state => {
+        state.isEditing = true;
+      })
+      .addCase(addAnime.fulfilled, (state, action) => {
+        animeAdapter.addOne(state as State, action.payload);
+        state.isEditing = false;
       })
       .addCase(postAnimePoster.pending, state => {
         state.isPostingPoster = true;

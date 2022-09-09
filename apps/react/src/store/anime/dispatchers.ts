@@ -1,6 +1,8 @@
 import { Anime, Sorting } from '@js-camp/core/models/anime';
+import { AnimeManagement, AnimeManagementPost } from '@js-camp/core/models/animeManagement';
 import { PaginationParams } from '@js-camp/core/models/paginationParams';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { AxiosError } from 'axios';
 
 import { AnimeService } from '../../api/services/animeService';
 
@@ -55,3 +57,37 @@ export const postAnimePoster = createAsyncThunk(
   'animeList/postAnimePoster',
   (poster: File) => AnimeService.postAnimePoster(poster),
 );
+
+export const editAnime = createAsyncThunk<
+  AnimeManagement,
+  AnimeManagement,
+  {
+    rejectValue: string;
+  }
+>('animeManagement/editAnime', async(animeData, { rejectWithValue }) => {
+  try {
+    return await AnimeService.editAnime(animeData);
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      return rejectWithValue(error.message);
+    }
+    throw error;
+  }
+});
+
+export const addAnime = createAsyncThunk<
+  AnimeManagement,
+  AnimeManagementPost,
+  {
+    rejectValue: string;
+  }
+>('animeManagement/addAnime', async(animeData, { rejectWithValue }) => {
+  try {
+    return await AnimeService.addAnime(animeData);
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      return rejectWithValue(error.message);
+    }
+    throw error;
+  }
+});

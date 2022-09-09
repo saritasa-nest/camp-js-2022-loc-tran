@@ -5,6 +5,8 @@ import { SyntheticEvent, useEffect, useState } from 'react';
 
 import { AddOption } from '../AddOption/AddOption';
 
+import styles from './FormChipsSelect.module.css';
+
 interface Props<T> {
 
   /** Field labe. */
@@ -55,6 +57,7 @@ export const FormChipsSelect = <T extends object>({
 
   return (
     <Field
+      className={styles['chip']}
       name={name}
       component={Autocomplete}
       options={options}

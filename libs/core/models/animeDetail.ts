@@ -9,7 +9,7 @@ export type AnimeDetailPost = Omit<AnimeDetail, 'id'>;
 export class AnimeDetail extends Anime {
 
   /** Link trailer on youtube. */
-  public readonly trailerYoutube: string;
+  public readonly trailerYoutube: string | null;
 
   /** The anime is airing or not. */
   public readonly airing: boolean;

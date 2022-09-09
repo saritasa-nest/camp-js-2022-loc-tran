@@ -8,7 +8,7 @@ export type AnimeDetailPostDto = Omit<AnimeDetailDto, 'id' | 'studios_data' | 'g
 export interface AnimeDetailDto extends AnimeDto {
 
   /** Link trailer on youtube. */
-  readonly trailer_youtube_id: string;
+  readonly trailer_youtube_id: string | null;
 
   /** The anime is airing or not. */
   readonly airing: boolean;

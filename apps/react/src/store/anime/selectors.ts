@@ -18,8 +18,8 @@ export const selectIsAnimeListLoading = createSelector(
   isLoading => isLoading,
 );
 
-/** Selects anime deleting state. */
-export const selectIsDeletingAnime = createSelector(
-  (state: RootState) => state.animeList.isDeleting,
-  isDeleting => isDeleting,
+/** Selects anime editing state. */
+export const selectIsEditingAnime = createSelector(
+  (state: RootState) => state.animeList.isEditing,
+  isEditing => isEditing,
 );

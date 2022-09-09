@@ -1,0 +1,1 @@
+export { AnimeAddPage } from './AnimeAddPage';
