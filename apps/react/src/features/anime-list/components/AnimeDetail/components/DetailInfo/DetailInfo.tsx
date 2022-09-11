@@ -49,7 +49,7 @@ const DetailInfoComponent: FC<Props> = ({ detail }) => <>
     <div className={styles['detail__label']}>
       <span className={styles['detail__title']}>Aired end date: </span>
       <span className={styles['detail__text']}>
-        (getPlaceholder{detail?.aired?.end.toLocaleString()}
+        (getPlaceholder{detail?.aired?.end?.toLocaleString()}
       </span>
     </div>
     <div className={styles['detail__label']}>
