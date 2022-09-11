@@ -53,9 +53,14 @@ const FormDateSelectComponent: FC<Props> = ({
         views={['year', 'month', 'day']}
         value={value}
         onChange={handleDateChange}
-        renderInput={params => <TextField {...params} />}
+        renderInput={params => (
+          <TextField
+            {...params}
+            FormHelperTextProps={{ className: styles['date__error'] }}
+            helperText={error}
+          />
+        )}
       />
-      <span className={styles['date__error']}>{error}</span>
     </Field>
   );
 };
