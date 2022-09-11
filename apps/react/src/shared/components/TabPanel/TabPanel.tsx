@@ -18,11 +18,11 @@ const TabPanelComponent = (props: TabPanelProps) => {
 
   return (
     <div
+      {...other}
       role="tabpanel"
       hidden={value !== index}
       id={`tabpanel-${index}`}
       aria-labelledby={`tab-${index}`}
-      {...other}
     >
       {value === index && (
         <Typography component={'span'}>{children}</Typography>
