@@ -8,9 +8,7 @@ import {
 import { postAnimePoster } from '@js-camp/react/store/anime/dispatchers';
 import { selectIsEditingAnime } from '@js-camp/react/store/anime/selectors';
 import { selectIsPostingPoster } from '@js-camp/react/store/animeDetail/selectors';
-import {
-  fetchGenres,
-} from '@js-camp/react/store/genre/dispatchers';
+import { fetchGenres } from '@js-camp/react/store/genre/dispatchers';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { Button, CircularProgress } from '@mui/material';
 import { Form, FormikProvider, useFormik } from 'formik';
@@ -88,10 +86,20 @@ const ManagementFormComponent: FC<Props> = ({ managementData, onSubmit }) => {
   const handleStartDateChange = (date: Date) => {
     formik.setFieldValue('aired.start', date);
   };
+
   const handleEndDateChange = (date: Date) => {
     formik.setFieldValue('aired.end', date);
   };
+
   const handlePosterChange = (animePoster: File) => setPoster(animePoster);
+
+  const initialAiredStart = formik.getFieldMeta('aired.start').value ?
+    new Date(formik.getFieldMeta('aired.start').value) :
+    null;
+
+  const initialAiredEnd = formik.getFieldMeta('aired.end').value ?
+    new Date(formik.getFieldMeta('aired.end').value) :
+    null;
 
   return (
     <FormikProvider value={formik}>
@@ -112,22 +120,14 @@ const ManagementFormComponent: FC<Props> = ({ managementData, onSubmit }) => {
           <FormDateSelect
             name="aired.start"
             label="Aired start"
-            initialValue={
-              formik.getFieldMeta('aired.start').value ?
-                new Date(formik.getFieldMeta('aired.start').value) :
-                null
-            }
-            handleDateChange={handleStartDateChange}
+            initialValue={initialAiredStart}
+            onDateChange={handleStartDateChange}
           />
           <FormDateSelect
             name="aired.end"
             label="Aired end"
-            initialValue={
-              formik.getFieldMeta('aired.end').value ?
-                new Date(formik.getFieldMeta('aired.end').value) :
-                null
-            }
-            handleDateChange={handleEndDateChange}
+            initialValue={initialAiredEnd}
+            onDateChange={handleEndDateChange}
             error={formik.errors.aired?.end}
           />
           <ChipsEditor />

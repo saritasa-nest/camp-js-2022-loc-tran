@@ -21,11 +21,11 @@ interface Props {
   readonly error?: string;
 
   /** Handle date change. */
-  readonly handleDateChange: (date: Date) => void;
+  readonly onDateChange: (date: Date) => void;
 }
 
 const FormDateSelectComponent: FC<Props> = ({
-  handleDateChange,
+  onDateChange,
   initialValue,
   name,
   label,
@@ -33,10 +33,10 @@ const FormDateSelectComponent: FC<Props> = ({
 }) => {
   const [value, setValue] = useState<Date | null>(initialValue);
 
-  const onDateChange = (newValue: Date | null) => {
+  const handleDateChange = (newValue: Date | null) => {
     setValue(newValue);
     if (newValue !== null) {
-      handleDateChange(newValue);
+      onDateChange(newValue);
     }
   };
   return (
@@ -52,7 +52,7 @@ const FormDateSelectComponent: FC<Props> = ({
         openTo="year"
         views={['year', 'month', 'day']}
         value={value}
-        onChange={onDateChange}
+        onChange={handleDateChange}
         renderInput={params => <TextField {...params} />}
       />
       <span className={styles['date__error']}>{error}</span>

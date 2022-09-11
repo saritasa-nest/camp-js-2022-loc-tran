@@ -39,21 +39,26 @@ const AnimeComponent: FC<Props> = ({ anime }) => {
     event.preventDefault();
     setOpenDelete(true);
   };
+
   const handleCloseDeleteAnime = () => setOpenDelete(false);
+
   const onDeleteAnime = () => {
     setOpenDelete(false);
     dispatch(deleteAnime(anime.id));
   };
+
   const handleEditAnime = (event: MouseEvent) => {
     event.stopPropagation();
     event.preventDefault();
     navigateWithSearchParams(`edit/${anime.id}/`);
   };
 
+  const animeDetailUrl = `${anime.id}?${searchParams.toString()}`;
+
   return (
     <>
       <NavLink
-        to={`${anime.id}?${searchParams.toString()}`}
+        to={animeDetailUrl}
         className={({ isActive }) =>
           `${isActive ? styles['info--active'] : ''} ${styles['info']}`
         }

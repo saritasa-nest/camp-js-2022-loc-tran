@@ -22,35 +22,35 @@ interface Props<T> {
   readonly getOptionName: (option: T) => string;
 
   /** Get new options with search key. */
-  readonly fetchByKey: (value: string) => void;
+  readonly onFetchByKey: (value: string) => void;
 
   /** Is loading options or not. */
   readonly isLoading?: boolean;
 
   /** Add new option. */
-  readonly addOption: (name: string) => void;
+  readonly onAddOption: (name: string) => void;
 }
 
 /** Delay time while search option (ms). */
-const delayOnSearch = 300;
+const DELAY_ON_SEARCH = 300;
 
 export const FormChipsSelect = <T extends object>({
   label,
   name,
   options,
   getOptionName,
-  fetchByKey,
+  onFetchByKey,
   isLoading,
-  addOption,
+  onAddOption,
 }: Props<T>) => {
   const [search, setSearch] = useState<string>('');
 
   useEffect(() => {
-    const searchOption = setTimeout(() => fetchByKey(search), delayOnSearch);
+    const searchOption = setTimeout(() => onFetchByKey(search), DELAY_ON_SEARCH);
     return () => clearTimeout(searchOption);
   }, [search]);
 
-  const onSearchChange = (event: SyntheticEvent, value: string) => {
+  const handleSearchChange = (event: SyntheticEvent, value: string) => {
     setSearch(value);
   };
   const validateOption = (option: T, value: T) => getOptionName(option) === getOptionName(value);
@@ -61,11 +61,11 @@ export const FormChipsSelect = <T extends object>({
       name={name}
       component={Autocomplete}
       options={options}
-      onInputChange={onSearchChange}
+      onInputChange={handleSearchChange}
       inputValue={search}
       loading={isLoading}
       loadingText={<CircularProgress />}
-      noOptionsText={<AddOption optionName={search} onAddOption={addOption}/>}
+      noOptionsText={<AddOption optionName={search} onAddOption={onAddOption}/>}
       multiple
       autoSelect
       autoHighlight

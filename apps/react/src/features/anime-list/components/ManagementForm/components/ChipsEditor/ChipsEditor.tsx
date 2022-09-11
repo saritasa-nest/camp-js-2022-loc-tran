@@ -15,16 +15,20 @@ const ChipsEditorComponent: FC = () => {
   const isGenresLoading = useAppSelector(selectAreGenresLoading);
   const isStudiosLoading = useAppSelector(selectAreStudiosLoading);
   const dispatch = useAppDispatch();
-  const fetchGenreByKey = (key: string) => {
+
+  const handleFetchGenreByKey = (key: string) => {
     dispatch(fetchGenresByKey(key));
   };
-  const addGenre = (name: string) => {
+
+  const handleAddGenre = (name: string) => {
     dispatch(addNewGenre({ name }));
   };
-  const fetchStudioByKey = (key: string) => {
+
+  const handleFetchStudioByKey = (key: string) => {
     dispatch(fetchStudiosByKey(key));
   };
-  const addStudio = (name: string) => {
+
+  const handleAddStudio = (name: string) => {
     dispatch(addNewStudio({ name }));
   };
 
@@ -36,8 +40,8 @@ const ChipsEditorComponent: FC = () => {
         options={genres}
         getOptionName={(genreOption: Genre) => genreOption.name}
         isLoading={isGenresLoading}
-        fetchByKey={fetchGenreByKey}
-        addOption={addGenre}
+        onFetchByKey={handleFetchGenreByKey}
+        onAddOption={handleAddGenre}
       />
       <FormChipsSelect
         label="Studio select"
@@ -45,8 +49,8 @@ const ChipsEditorComponent: FC = () => {
         options={studios}
         getOptionName={(studioOption: Studio) => studioOption.name}
         isLoading={isStudiosLoading}
-        fetchByKey={fetchStudioByKey}
-        addOption={addStudio}
+        onFetchByKey={handleFetchStudioByKey}
+        onAddOption={handleAddStudio}
       />
     </>
   );
