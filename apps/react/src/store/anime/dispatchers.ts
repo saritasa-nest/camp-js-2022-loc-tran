@@ -1,16 +1,7 @@
 import { PaginationParams } from '@js-camp/core/models/paginationParams';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { AnimeService } from '../../api/services/animeService';
-
-const DEFAULT_QUERY_PARAMS = new PaginationParams({
-  limit: 25,
-  page: 0,
-  ordering: '',
-  sorting: '',
-  type: '',
-  search: '',
-});
+import { AnimeService, DEFAULT_QUERY_PARAMS } from '../../api/services/animeService';
 
 export const fetchAnime = createAsyncThunk(
   'animeList/fetchAnime',
