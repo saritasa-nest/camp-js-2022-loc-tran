@@ -1,3 +1,4 @@
+import { SortDirection, Sorting } from './anime';
 import { Immerable, OmitImmerable } from './immerable';
 
 /** Params for query. */
@@ -7,10 +8,10 @@ export class PaginationParams extends Immerable {
   public readonly limit: number;
 
   /** Sorting type for anime list. (Sort by status, title, ...). */
-  public readonly ordering: string;
+  public readonly ordering: SortDirection;
 
   /** Ordering type for anime list. (Ordering by ascending, descending. ). */
-  public readonly sorting: string;
+  public readonly sorting: Sorting;
 
   /** Filter anime list by type. */
   public readonly type: string;

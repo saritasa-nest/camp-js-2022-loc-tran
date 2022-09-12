@@ -26,6 +26,12 @@ export enum Sorting {
   Status = 'status',
 }
 
+/** Specify order type for sort option. */
+export enum SortDirection {
+  Ascending = 'asc',
+  Descending = 'desc',
+}
+
 export type AnimePost = Omit<Anime, 'id'>;
 
 /** Define data in class Anime. */
