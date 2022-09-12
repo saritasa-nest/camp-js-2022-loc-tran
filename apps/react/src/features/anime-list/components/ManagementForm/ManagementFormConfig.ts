@@ -24,7 +24,6 @@ export const ManagementSchema = Yup.object().shape({
       .required(RequiredErrorMessage),
     end: Yup.date()
       .nullable()
-      .required(RequiredErrorMessage)
       .min(Yup.ref('start'), 'End date must after start date'),
   }),
   synopsis: Yup.string().required(RequiredErrorMessage),
