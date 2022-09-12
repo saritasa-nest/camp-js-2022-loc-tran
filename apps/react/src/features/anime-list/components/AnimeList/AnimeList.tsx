@@ -14,6 +14,8 @@ import { useInfiniteScroll } from '../../../../hooks/useInfiniteScroll';
 import { Anime } from '../Anime';
 import { AnimeSkeleton } from '../Anime/AnimeSkeleton';
 
+const NUMBER_OF_SKELETONS = 10;
+
 const AnimeListComponent: FC = () => {
   const [searchParams] = useSearchParams();
   const dispatch = useAppDispatch();
@@ -37,20 +39,21 @@ const AnimeListComponent: FC = () => {
     return <Anime anime={anime} key={anime.id} />;
   });
 
-  const skeleton = (
-    <>
-      <AnimeSkeleton />
-      <AnimeSkeleton />
-      <AnimeSkeleton />
-      <AnimeSkeleton />
-      <AnimeSkeleton />
-      <AnimeSkeleton />
-    </>
+  /** I used index as a key here because component skeleton does'nt have identifier values .
+   * and they are not computed and do not change. */
+  const skeleton = Array.from(new Array(NUMBER_OF_SKELETONS)).map(
+    (value, index) => <AnimeSkeleton key={index} />,
   );
+
+  let listPlaceholder;
+  if (animeList.length === 0) {
+    listPlaceholder = isLoading ? skeleton : 'No anime found!';
+  }
 
   return (
     <>
-      {list.length > 0 ? list : skeleton}
+      {listPlaceholder}
+      {list}
       {isLoading && <AnimeSkeleton />}
     </>
   );

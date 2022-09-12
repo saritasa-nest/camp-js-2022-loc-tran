@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material';
-import { memo } from 'react';
+import { memo, ReactNode } from 'react';
 
 interface TabPanelProps {
 
   /** Tab panel children. */
-  readonly children?: React.ReactNode;
+  readonly children?: ReactNode;
 
   /** Index of tab panel in tabs. */
   readonly index: number;
