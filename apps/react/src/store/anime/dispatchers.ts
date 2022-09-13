@@ -1,16 +1,10 @@
-import { Anime, Sorting } from '@js-camp/core/models/anime';
+import { Anime, Sorting, SortDirection } from '@js-camp/core/models/anime';
 import { AnimeManagement, AnimeManagementPost } from '@js-camp/core/models/animeManagement';
 import { PaginationParams } from '@js-camp/core/models/paginationParams';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
 import { AnimeService } from '../../api/services/animeService';
-
-/** Specify order type for sort option. */
-export enum SortDirection {
-  Ascending = 'asc',
-  Descending = 'desc',
-}
 
 export const DEFAULT_QUERY_PARAMS = new PaginationParams({
   limit: 25,
