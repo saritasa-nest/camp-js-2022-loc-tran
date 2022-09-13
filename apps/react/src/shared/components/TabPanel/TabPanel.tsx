@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material';
-import { memo } from 'react';
+import { memo, ReactNode } from 'react';
 
 interface TabPanelProps {
 
   /** Tab panel children. */
-  readonly children?: React.ReactNode;
+  readonly children?: ReactNode;
 
   /** Index of tab panel in tabs. */
   readonly index: number;
@@ -18,11 +18,11 @@ const TabPanelComponent = (props: TabPanelProps) => {
 
   return (
     <div
+      {...other}
       role="tabpanel"
       hidden={value !== index}
       id={`tabpanel-${index}`}
       aria-labelledby={`tab-${index}`}
-      {...other}
     >
       {value === index && (
         <Typography component={'span'}>{children}</Typography>
