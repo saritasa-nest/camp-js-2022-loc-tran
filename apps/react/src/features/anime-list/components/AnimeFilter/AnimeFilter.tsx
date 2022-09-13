@@ -18,15 +18,15 @@ import { useSearchParams } from 'react-router-dom';
 
 import { TabPanel } from '../../../../shared/components/TabPanel';
 
-import { Search } from './components/search/search';
+import { Search as AnimeSearch } from './components/search/search';
 import { Sort } from './components/sort/sort';
-import { Type, typeSelectSeparator } from './components/type/type';
+import { Type as AnimeType, typeSelectSeparator } from './components/type/type';
 
 /** Filter identifier props. */
 enum TabType {
-  SearchTab = 0,
-  FieldTab = 1,
-  TypeTab = 2,
+  Search = 0,
+  Field = 1,
+  Type = 2,
 }
 
 /** Delay time after filter (ms). */
@@ -108,18 +108,18 @@ const AnimeFilterComponent: FC = () => {
   return (
     <>
       <Tabs value={tabValue} onChange={handleTabChange}>
-        <Tab label="Search" {...passTabIdentifierProps(TabType.SearchTab)} />
-        <Tab label="Field" {...passTabIdentifierProps(TabType.FieldTab)} />
-        <Tab label="Type" {...passTabIdentifierProps(TabType.TypeTab)} />
+        <Tab label="Search" {...passTabIdentifierProps(TabType.Search)} />
+        <Tab label="Field" {...passTabIdentifierProps(TabType.Field)} />
+        <Tab label="Type" {...passTabIdentifierProps(TabType.Type)} />
       </Tabs>
-      <TabPanel value={tabValue} index={TabType.SearchTab}>
-        <Search search={queryParams.search} onChange={handleSearchChange} />
+      <TabPanel value={tabValue} index={TabType.Search}>
+        <AnimeSearch search={queryParams.search} onChange={handleSearchChange} />
       </TabPanel>
-      <TabPanel value={tabValue} index={TabType.FieldTab}>
+      <TabPanel value={tabValue} index={TabType.Field}>
         <Sort sorting={queryParams.sorting} ordering={queryParams.ordering} onFieldChange={handleSortParamsChange} />
       </TabPanel>
-      <TabPanel value={tabValue} index={TabType.TypeTab}>
-        <Type type={queryParams.type} handleTypeChange={handleTypeChange}/>
+      <TabPanel value={tabValue} index={TabType.Type}>
+        <AnimeType type={queryParams.type} handleTypeChange={handleTypeChange}/>
       </TabPanel>
     </>
   );
