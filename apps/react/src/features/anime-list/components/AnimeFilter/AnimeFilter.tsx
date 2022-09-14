@@ -3,14 +3,12 @@ import {
   DEFAULT_QUERY_PARAMS,
   getPaginationFromURLSearch,
 } from '@js-camp/react/store/anime/dispatchers';
-import {
-  Tab,
-  Tabs,
-} from '@mui/material';
+import { Tab, Tabs } from '@mui/material';
 import {
   FC,
   memo,
   SyntheticEvent,
+  useCallback,
   useEffect,
   useState,
 } from 'react';
@@ -44,13 +42,18 @@ const passTabIdentifierProps = (index: number) => ({
 const AnimeFilterComponent: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [tabValue, setTabValue] = useState<number>(0);
-  const [queryParams, setQueryParams] = useState<PaginationParams>(getPaginationFromURLSearch(searchParams));
+  const [queryParams, setQueryParams] = useState<PaginationParams>(
+    getPaginationFromURLSearch(searchParams),
+  );
 
   useEffect(() => {
-    setQueryParams(prev => new PaginationParams({
-      ...prev,
-      ...getPaginationFromURLSearch(searchParams),
-    }));
+    setQueryParams(
+      prev =>
+        new PaginationParams({
+          ...prev,
+          ...getPaginationFromURLSearch(searchParams),
+        }),
+    );
   }, [searchParams]);
 
   useEffect(() => {
@@ -72,18 +75,21 @@ const AnimeFilterComponent: FC = () => {
     return () => clearTimeout(filter);
   }, [queryParams]);
 
-  const handleSortParamsChange =
+  const handleSortParamsChange = useCallback(
     (key: keyof PaginationParams): ((value: string) => void) =>
       value =>
-      setQueryParams(
-        prev =>
-          new PaginationParams({
-            ...(prev ?? DEFAULT_QUERY_PARAMS),
-            [key]: value,
-          }),
-      );
+        setQueryParams(
+          prev =>
+            new PaginationParams({
+              ...(prev ?? DEFAULT_QUERY_PARAMS),
+              [key]: value,
+            }),
+        ),
+    [setQueryParams],
+  );
 
-  const handleTypeChange = (value: readonly string[]): void => {
+  const handleTypeChange = useCallback(
+    (value: readonly string[]): void => {
       setQueryParams(
         prev =>
           new PaginationParams({
@@ -91,16 +97,21 @@ const AnimeFilterComponent: FC = () => {
             type: value.join(typeSelectSeparator),
           }),
       );
-    };
+    },
+    [setQueryParams],
+  );
 
-  const handleSearchChange = (searchKey: string) =>
-    setQueryParams(
-      prev =>
-        new PaginationParams({
-          ...(prev ?? DEFAULT_QUERY_PARAMS),
-          search: searchKey,
-        }),
-    );
+  const handleSearchChange = useCallback(
+    (searchKey: string) =>
+      setQueryParams(
+        prev =>
+          new PaginationParams({
+            ...(prev ?? DEFAULT_QUERY_PARAMS),
+            search: searchKey,
+          }),
+      ),
+    [setQueryParams],
+  );
 
   const handleTabChange = (event: SyntheticEvent, newValue: number) =>
     setTabValue(newValue);
@@ -113,13 +124,23 @@ const AnimeFilterComponent: FC = () => {
         <Tab label="Type" {...passTabIdentifierProps(TabType.Type)} />
       </Tabs>
       <TabPanel value={tabValue} index={TabType.Search}>
-        <AnimeSearch search={queryParams.search} onChange={handleSearchChange} />
+        <AnimeSearch
+          search={queryParams.search}
+          onChange={handleSearchChange}
+        />
       </TabPanel>
       <TabPanel value={tabValue} index={TabType.Field}>
-        <Sort sorting={queryParams.sorting} ordering={queryParams.ordering} onFieldChange={handleSortParamsChange} />
+        <Sort
+          sorting={queryParams.sorting}
+          ordering={queryParams.ordering}
+          onFieldChange={handleSortParamsChange}
+        />
       </TabPanel>
       <TabPanel value={tabValue} index={TabType.Type}>
-        <AnimeType type={queryParams.type} handleTypeChange={handleTypeChange}/>
+        <AnimeType
+          type={queryParams.type}
+          handleTypeChange={handleTypeChange}
+        />
       </TabPanel>
     </>
   );
