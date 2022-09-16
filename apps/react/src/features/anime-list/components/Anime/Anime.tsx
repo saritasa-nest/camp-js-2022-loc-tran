@@ -42,7 +42,7 @@ const AnimeComponent: FC<Props> = ({ anime }) => {
 
   const handleCloseDeleteAnime = () => setOpenDelete(false);
 
-  const onDeleteAnime = () => {
+  const handleConfirmDeleteAnime = () => {
     setOpenDelete(false);
     dispatch(deleteAnime(anime.id));
   };
@@ -116,7 +116,7 @@ const AnimeComponent: FC<Props> = ({ anime }) => {
               className={styles['info__button']}
               variant="contained"
               color="error"
-              onClick={onDeleteAnime}
+              onClick={handleConfirmDeleteAnime}
             >
               {isDeleting ? <CircularProgress /> : 'Ok'}
             </Button>

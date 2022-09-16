@@ -3,7 +3,7 @@ import { Field } from 'formik';
 import { Autocomplete, AutocompleteRenderInputParams } from 'formik-mui';
 import { SyntheticEvent, useEffect, useState } from 'react';
 
-import { AddOption } from '../AddOption/AddOption';
+import { AddOption } from './AddOption/AddOption';
 
 import styles from './FormChipsSelect.module.css';
 
