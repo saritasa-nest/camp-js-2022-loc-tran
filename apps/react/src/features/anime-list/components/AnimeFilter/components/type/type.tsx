@@ -11,14 +11,14 @@ interface Props {
   readonly type: string;
 
   /** Handle type change. */
-  readonly handleTypeChange: (value: readonly string[]) => void;
+  readonly handleTypeChange: (value: readonly AnimeType[]) => void;
 }
 
 const TypeComponent: FC<Props> = ({ type, handleTypeChange }) => {
 
   const handleChange = (event: SelectChangeEvent<string[]>) => {
     const { value } = event.target;
-    handleTypeChange(typeof value === 'string' ? [value] : value);
+    handleTypeChange((typeof value === 'string' ? [value] : value) as AnimeType[]);
   };
 
   return <FormControl fullWidth>

@@ -1,3 +1,4 @@
+import { AnimeType } from '@js-camp/core/models/anime';
 import { PaginationParams } from '@js-camp/core/models/paginationParams';
 import {
   DEFAULT_QUERY_PARAMS,
@@ -18,7 +19,7 @@ import { TabPanel } from '../../../../shared/components/TabPanel';
 
 import { Search as AnimeSearch } from './components/search/search';
 import { Sort } from './components/sort/sort';
-import { Type as AnimeType, typeSelectSeparator } from './components/type/type';
+import { Type as AnimeTypePicker, typeSelectSeparator } from './components/type/type';
 
 /** Filter identifier props. */
 enum TabType {
@@ -89,7 +90,7 @@ const AnimeFilterComponent: FC = () => {
   );
 
   const handleTypeChange = useCallback(
-    (value: readonly string[]): void => {
+    (value: readonly AnimeType[]): void => {
       setQueryParams(
         prev =>
           new PaginationParams({
@@ -137,7 +138,7 @@ const AnimeFilterComponent: FC = () => {
         />
       </TabPanel>
       <TabPanel value={tabValue} index={TabType.Type}>
-        <AnimeType
+        <AnimeTypePicker
           type={queryParams.type}
           handleTypeChange={handleTypeChange}
         />
